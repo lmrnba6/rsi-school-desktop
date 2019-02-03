@@ -1,0 +1,22 @@
+
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<h2>{{'weekday.title' | translate}} - {{weekday.time}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<mat-tab-group *ngIf="weekday" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-info-sign"></span> {{'weekday-management.information' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-weekday-form [weekday]="weekday"></app-weekday-form>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-ok-circle"></span> {{'weekday-management.attendance' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-attendance [weekday]="weekday"></app-attendance>
+    </div>
+  </mat-tab>
+</mat-tab-group>

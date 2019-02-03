@@ -1,0 +1,64 @@
+<h2>{{'weekday.title'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="weekdayForm">
+        <div class="container">
+            <button [disabled]="weekdayForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field>
+                <mat-select (selectionChange)="onSessionChange()" formControlName="session_id" [(ngModel)]="weekday.session_id"
+                            placeholder="{{'weekday.placeholder.session_id' | translate}}" name="session_id" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let session of sessions" [value]="session.id">
+                        {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select (selectionChange)="onChange()" formControlName="room_id" [(ngModel)]="weekday.room_id"
+                            placeholder="{{'weekday.placeholder.room_id' | translate}}" name="room_id" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let room of rooms" [value]="room.id">
+                        {{room.number}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="room_id.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select (selectionChange)="onChange()" formControlName="name" [(ngModel)]="weekday.name"
+                            placeholder="{{'weekday.placeholder.name' | translate}}" name="name" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let day of days" [value]="day">
+                        {{'weekday.placeholder.'+ day | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="name.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select formControlName="time" [(ngModel)]="weekday.time"
+                            placeholder="{{'weekday.placeholder.time' | translate}}" name="time" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let time of times" [value]="time">
+                        {{ time }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="time.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+        </div>
+    </form>
+</mat-card>

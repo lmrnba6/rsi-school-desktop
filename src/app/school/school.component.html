@@ -1,0 +1,31 @@
+<h2 *ngIf="!isOnEdit">{{'administration.school'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card id="contentToConvert">
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="schoolForm">
+        <div class="container">
+            <button [disabled]="schoolForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <div class="pull-right" style="clear: both">
+                <mat-card style="width:200px;height:200px;">
+                    <img style="width:170px;height:170px;" [src]="photo" />
+                </mat-card>
+                <button style="background: #6fbbff; width: 100%; border-radius: 20px; margin-top: 5px;"
+                        type="button" (click)="openFile()" mat-button>
+                    <span class="glyphicon glyphicon-picture"></span>
+                </button>
+            </div>
+            <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
+            <mat-form-field>
+                <input id="name" name="name" formControlName="name" [(ngModel)]="school.name" matInput
+                       placeholder="{{'intern.placeholder.name' | translate}}" required autofocus>
+                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-card>

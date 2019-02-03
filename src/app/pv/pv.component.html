@@ -1,0 +1,298 @@
+<h2>{{'pv.information' | translate}}</h2>
+<app-loader *ngIf="block" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<mat-card class="pv">
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'pv.edit' | translate}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{'pv.edit_description' | translate}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="container">
+                <mat-form-field>
+                    <input id="test" [(ngModel)]="date" matInput
+                           placeholder="{{'pv.date' | translate}}" required [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
+                </mat-form-field>
+                <br>
+                <mat-form-field *ngIf="pvName!=='receipt'">
+                    <input [(ngModel)]="title" matInput
+                           placeholder="{{'pv.title' | translate}}" required>
+                </mat-form-field>
+                <br>
+                <mat-form-field *ngIf="pvName !=='form'">
+                <input [(ngModel)]="center" matInput
+                       placeholder="{{'pv.center' | translate}}" required>
+            </mat-form-field>
+                <br>
+                <mat-form-field *ngIf="pvName==='receipt'">
+                    <mat-select (selectionChange)="onPaymentChange()" [(ngModel)]="payment" placeholder="{{'payment.title' | translate}}">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let payment of payments" [value]="payment">
+                            {{payment.amount}} -> {{payment.date}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+                <mat-form-field *ngIf="pvName==='form'">
+                    <mat-select [(ngModel)]="session"
+                                placeholder="{{'enrollment.placeholder.session_id' | translate}}">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let session of sessions" [value]="session">
+                            {{session.training + ' ' + session.session}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <br>
+    <button class="pull-right print" (click)="print()" mat-button>
+        <span class="glyphicon glyphicon-print"></span>
+    </button>
+    <button class="pull-right cancel" type="button" (click)="goBack()" mat-button>
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <h2>{{'pv.document' | translate}}</h2>
+    <mat-card style="border: solid">
+        <div id="intern" *ngIf="pvName === 'intern'">
+            <table width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
+                                style="font-size: 20.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif; color: black;">{{center}} </span></strong>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p style="text-align: right; direction: rtl; unicode-bidi: embed;">&nbsp;</p>
+            <p style="margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none; direction: rtl; unicode-bidi: embed;">
+                &nbsp;</p>
+            <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{title}} </span></u></strong>
+            </p>
+            <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.group' | translate}}: </u></span></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;"></span></u></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{session?.name}}</span></u></strong><strong><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; </span></strong>
+            </p>
+            <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.instructor' | translate}}: </u></span></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;"></span></u></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{instructor?.name}}</span></u></strong><strong><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; </span></strong>
+            </p>
+            <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.training' | translate}}: </u></span></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;"></span></u></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{training?.name}}</span></u></strong><strong><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; </span></strong>
+            </p>
+            <p style="direction: rtl; unicode-bidi: embed; text-align: center;"><strong><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></strong>
+            </p>
+            <table class="tables" style="border-collapse: collapse; border: none; margin-left: 4.8pt; margin-right: 4.8pt;"
+                   width="0">
+                <tbody>
+                <tr>
+                    <td style="width: 28.4pt; border: solid black 1.0pt; background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
+                        width="38">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{'pv.number' | translate}}</span></strong>
+                        </p>
+                    </td>
+                    <td style="width: 92.15pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
+                        width="123">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{'intern.placeholder.name' | translate}}</span></strong>
+                        </p>
+                    </td>
+                    <td style="width: 70.9pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
+                        width="95">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{'intern.placeholder.phone' | translate}}</span></strong>
+                        </p>
+                    </td>
+                    <td *ngFor="let i of attendances" style="width: 92.15pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
+                        width="123">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{i.date}}</span></strong>
+                        </p>
+                    </td>
+                </tr>
+                <tr *ngFor="let intern of interns; let i = index;" style="height: 23.15pt;">
+                    <td style="width: 28.4pt; border: solid black 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;" width="38">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 10.0pt; font-family: 'Traditional Arabic',serif;">{{i+1}}</span></strong>
+                        </p>
+                    </td>
+                    <td style="width: 92.15pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
+                        width="123">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern?.name}}</span></strong>
+                        </p>
+                    </td>
+                    <td style="width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
+                        width="95">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern.phone}}</span></strong>
+                        </p>
+                    </td>
+                    <td *ngFor="let i of attendances; let x = index" style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
+                        width="95">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern.attendances[x] ?
+                            intern.attendances[x].present === 1 ? 'P' :
+                            intern.attendances[x].present === 0 ? 'A' : 'N/O' : 'N/O'}}</span></strong>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p style="text-align: right; direction: rtl; unicode-bidi: embed;"><strong><span
+                    style="font-size: 14.0pt; line-height: 115%; font-family: 'Simplified Arabic',serif;">&nbsp;</span></strong>
+            </p>
+            <p style="text-align: right; direction: rtl; unicode-bidi: embed;"><strong><span
+                    style="font-size: 14.0pt; line-height: 115%; font-family: 'Simplified Arabic',serif;">&nbsp;</span></strong>
+            </p>
+            <p style="margin-bottom: .0001pt; text-align: justify; line-height: normal; direction: rtl; unicode-bidi: embed;">
+                <span style="font-size: 16.0pt; font-family: 'Traditional Arabic',serif;">&nbsp;</span></p>
+            <p style="margin-bottom: .0001pt; text-align: justify; line-height: normal; direction: rtl; unicode-bidi: embed;">
+                <strong><span style="font-size: 16.0pt; font-family: 'Traditional Arabic',serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{date?.toLocaleDateString('fr-FR')}} </span></strong>
+            </p>
+        </div>
+        <div id="receipt" *ngIf="pvName === 'receipt' && payment">
+            <p><img style="margin-left: 50px;" src="{{logo}}" alt="" width="100" height="100"></p>
+            <p style="margin-left: 50px;">{{center}}</p>
+            <p style="margin-left: 50px;">{{payment_code}}</p>
+            <table>
+                <tbody>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Date:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{date.toLocaleDateString('fr-FR')}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Nom:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{intern?.name}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Langue:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.training}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Mois:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.month}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Nature:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.comment}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Montant:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.amount}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Solde:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{intern.sold}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>-------</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">--------</p>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Total:</strong></p>
+                    </td>
+                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
+                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.amount}} DA</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p style="margin-left: 50px;">Have a nice day :)</p>
+            <p>05 61 63 11 11 / 033 28 36 36</p>
+            <p>&nbsp;</p>
+        </div>
+        <div id="card" *ngIf="pvName === 'card'">
+            <table style="border: solid; width: 405pt; border-collapse: collapse; height: 220px;" width="0">
+                <tbody>
+                <tr style="height: 30.0pt;">
+                    <td style="width: 200.625px; padding: 0cm 5.4pt; height: 130px;" rowspan="5">
+                        <img style="width: 100%;  height: 100%; border-radius: 20%;" src="data:image/png;base64,{{intern.photo}}" alt="" width="119" height="128" /></td>
+                    <td style="width: 307.625px; border-top: 1pt solid #a6a6a6; border-left: none; border-bottom: none; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong><span style="font-family: 'Arial',sans-serif; color: #404040;">{{center}}</span></strong></p>
+                    </td>
+                </tr>
+                <tr style="height: 30.0pt;">
+                    <td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 10px;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern?.name}}</span></p>
+                    </td>
+                </tr>
+                <tr style="height: 30.0pt;">
+                    <td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">
+                        <p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern.phone}}</span></p>
+                    </td>
+                </tr>
+                </tbody>
+                <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
+            </table>
+            <p>&nbsp;</p>
+        </div>
+        <div id="form" *ngIf="pvName === 'form'">
+            <p style="text-align: center;">&nbsp;</p>
+            <p style="text-align: center;"><img src="{{logo}}" alt="" width="91" height="91" /></p>
+            <p style="text-align: center;"><u><span style="font-size: 28.0pt; line-height: 107%;">{{title}}</span></u></p>
+            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img style="float: right;" src="data:image/png;base64,{{intern.photo}}" alt="" width="92" height="92" /></p>
+            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode2"/></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Nom et pr&eacute;nom:   {{intern?.name}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Date de naissance&nbsp;:  {{intern.birth}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">T&eacute;l&eacute;phone&nbsp;:   {{intern.phone}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Nom en deuxi&egrave;me langue&nbsp;:   {{intern.name_arabic}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Niveau scolaire&nbsp;:   {{'intern.placeholder.'+intern.scholar | translate}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Formation&nbsp;:   {{session.training}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Groupe&nbsp;:   {{session.session}}</span></p>
+        </div>
+    </mat-card>
+
+

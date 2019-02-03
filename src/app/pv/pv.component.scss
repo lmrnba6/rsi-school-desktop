@@ -1,0 +1,29 @@
+@import "../../assets/sass/style";
+.mat-icon {
+    padding-right: 3%;
+}
+
+.mat-nav-list {
+    padding-top: 0px;
+}
+
+.pv .tables td {
+border-right: solid 1px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.print {
+    background: $edit;
+    color: #FFFFFF;
+    width: 10%;
+}
+
+.cancel {
+    color: #FFFFFF;
+    margin-right: 2px !important;
+    width: 10%;
+    padding: 0px 10px 0 0 !important;
+}

@@ -1,0 +1,80 @@
+<h2>{{'exam.title'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="examForm">
+        <div class="container">
+            <button [disabled]="examForm.invalid && !internSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+                <input name="intern_id" formControlName="intern_id" matInput
+                       (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
+                       placeholder="{{'exam.placeholder.intern_id' | translate}}" required>
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                  (optionSelected)="internOnSelect($event.option.value)">
+                    <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
+                        {{intern?.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <div *ngIf="isOnEdit">
+                <mat-label>{{'exam.placeholder.intern' | translate}}</mat-label>
+                <h4>{{internSelected.name}}</h4>
+            </div>
+            <br>
+            <mat-form-field>
+                <mat-select formControlName="session_id" [(ngModel)]="exam.session_id"
+                            placeholder="{{'exam.placeholder.session_id' | translate}}" name="session_id" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let session of sessions" [value]="session.id">
+                        {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="date" formControlName="date" [(ngModel)]="exam.date" matInput
+                       placeholder="{{'exam.placeholder.date' | translate}}" required [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker2></mat-datepicker>
+                <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="time" type="number" formControlName="time"
+                       [(ngModel)]="exam.time" matInput
+                       placeholder="{{'exam.placeholder.time' | translate}}" required>
+                <span matSuffix>h</span>
+                <mat-error *ngIf="time.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="mark" type="number" (blur)="parseAmount($event.target.value)" formControlName="mark"
+                       [ngModel]="exam.mark" matInput
+                       placeholder="{{'exam.placeholder.mark' | translate}}" required>
+                <span matSuffix>/100</span>
+                <mat-error *ngIf="mark.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="comment" formControlName="comment" [(ngModel)]="exam.comment" matInput
+                       placeholder="{{'exam.placeholder.comment' | translate}}">
+                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+    <div class="container">
+        <mat-checkbox [(ngModel)]="exam.result">{{'exam.placeholder.result' | translate}}</mat-checkbox>
+        <br>
+        <mat-checkbox [(ngModel)]="exam.retake">{{'exam.placeholder.retake' | translate}}</mat-checkbox>
+    </div>
+</mat-card>

@@ -1,0 +1,67 @@
+<h2>{{'enrollment.title'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="enrollmentForm">
+        <div class="container">
+            <button [disabled]="enrollmentForm.invalid && !internSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+                <input name="intern_id" formControlName="intern_id" matInput
+                       (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
+                       placeholder="{{'enrollment.placeholder.intern_id' | translate}}" required>
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                  (optionSelected)="internOnSelect($event.option.value)">
+                    <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
+                        {{intern?.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <div *ngIf="isOnEdit">
+                <mat-label>{{'enrollment.placeholder.intern_id' | translate}}</mat-label>
+                <h4>{{internSelected?.name}}</h4>
+            </div>
+            <br>
+            <mat-form-field>
+                <mat-select (selectionChange)="onSessionChange()" formControlName="session_id" [(ngModel)]="enrollment.session_id"
+                            placeholder="{{'enrollment.placeholder.session_id' | translate}}" name="session_id" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let session of sessions" [value]="session.id">
+                        {{session.name + ' ' + session.training + ' ' + session.instructor}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="date" formControlName="date" [(ngModel)]="enrollment.date" matInput
+                       placeholder="{{'enrollment.placeholder.date' | translate}}" required [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker2></mat-datepicker>
+                <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="comment" formControlName="comment" [(ngModel)]="enrollment.comment" matInput
+                       placeholder="{{'enrollment.placeholder.comment' | translate}}">
+                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+    <br>
+    <div *ngIf="!isOnEdit" class="container">
+        <mat-checkbox [(ngModel)]="training_fees">{{'intern.placeholder.fees' | translate}}</mat-checkbox>
+        <br>
+        <mat-checkbox [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>
+        <br>
+        <mat-checkbox [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>
+    </div>
+</mat-card>

@@ -1,0 +1,91 @@
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+             {{'chart.bar' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <mat-card>
+                <div class="container">
+                    <div class="col-sm-12 text-center">
+                        <h2 class="text-center">{{title}}</h2>
+                        <canvas baseChart
+                                [data]="chartData"
+                                [labels]="chartLabels"
+                                [options]="chartOptions"
+                                [colors]="chartColors"
+                                [chartType]="'bar'"
+                                (chartHover)="chartHovered($event)"
+                                (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+             {{'chart.pie' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <mat-card>
+                <div class="container">
+                    <div class="col-sm-12 text-center">
+                        <h2 class="text-center">{{title}}</h2>
+                        <canvas baseChart
+                                [data]="chartData"
+                                [labels]="chartLabels"
+                                [colors]="chartColors"
+                                [options]="chartOptions"
+                                [chartType]="'pie'"
+                                (chartHover)="chartHovered($event)"
+                                (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+             {{'chart.doughnut' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <mat-card>
+                <div class="container">
+                    <div class="col-sm-12 text-center">
+                        <h2 class="text-center">{{title}}</h2>
+                        <canvas baseChart
+                                [data]="chartData"
+                                [labels]="chartLabels"
+                                [colors]="chartColors"
+                                [options]="chartOptions"
+                                [chartType]="'doughnut'"
+                                (chartHover)="chartHovered($event)"
+                                (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+             {{'chart.polarArea' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <mat-card>
+                <div class="container">
+                    <div class="col-sm-12 text-center">
+                        <h2 class="text-center">{{title}}</h2>
+                        <canvas baseChart
+                                [data]="chartData"
+                                [labels]="chartLabels"
+                                [colors]="chartColors"
+                                [options]="chartOptions"
+                                [chartType]="'polarArea'"
+                                (chartHover)="chartHovered($event)"
+                                (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+

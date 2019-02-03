@@ -1,0 +1,35 @@
+<h2 *ngIf="!isOnEdit">{{'visitor.title'| translate}} - {{visitor?.name}} -</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="internForm">
+        <div class="container">
+            <button [disabled]="internForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field>
+                <input id="name" name="name" formControlName="name" [(ngModel)]="visitor.name" matInput
+                       placeholder="{{'visitor.placeholder.name' | translate}}" required autofocus>
+                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="phone" type="number" formControlName="phone" (keyup)="phoneParse()" [(ngModel)]="visitor.phone" matInput
+                       placeholder="{{'visitor.placeholder.phone' | translate}}"  required>
+                <span matPrefix>+213</span>
+                <mat-error *ngIf="phone.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="comment" formControlName="comment" [(ngModel)]="visitor.comment" matInput
+                       placeholder="{{'visitor.placeholder.comment' | translate}}"  required>
+                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+        </div>
+    </form>
+</mat-card>

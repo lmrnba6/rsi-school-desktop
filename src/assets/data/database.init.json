@@ -1,0 +1,22 @@
+{
+    "name": "./database.db",
+    "version": 1,
+    "tables": {
+        "user": [
+		    {
+		        "id": "1",
+		        "name": "test",
+				"username": "admin",
+				"password": "admin",
+				"role": "admin"
+		    }
+		],
+		"school": [
+			{
+				"id": "1",
+				"name": "",
+				"photo": ""
+			}
+		]
+	}
+}

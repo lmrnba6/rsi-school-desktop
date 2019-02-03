@@ -1,0 +1,56 @@
+.radio-group {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+  .radio-button {
+    margin: 5px;
+  }
+  
+  .selected-value {
+    margin: 15px 0;
+  }
+
+  .save {
+    color: #FFFFFF;
+    width: 10%;
+  }
+  
+  .cancel {
+    color: #FFFFFF;
+    margin-right: 2px;
+    width: 10%;
+  }
+
+  .roles {
+      background: #cccccc5e;
+      margin-left: 10%;
+      padding: 10%;
+      border-radius: 10px;
+      overflow: auto;
+
+  }
+
+  .users {
+      background: #cccccc5e;
+      padding: 10%;
+      margin-left: 10%;
+      border-radius: 10px;
+      overflow: auto;
+  }
+
+  .mat-card {
+      padding-bottom: 10%;
+  }
+
+  ::ng-deep .mat-grid-tile .mat-figure {
+    display: -webkit-box !important;
+  }
+  
+  ::ng-deep .mat-card-list {
+    padding-top: 5% !important;
+  }
+
+  .mat-list-item {
+    height: 30px;
+  }

@@ -1,0 +1,45 @@
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<h2>{{'instructor.title' | translate}} - {{instructor?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<mat-tab-group *ngIf="instructor" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-info-sign"></span> {{'instructor-management.information' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-instructor-form [instructor]="instructor"></app-instructor-form>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-th"></span> {{'instructor-management.session' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-session [instructor]="instructor"></app-session>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-ok-circle"></span> {{'instructor-management.attendance' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-attendance [instructor]="instructor"></app-attendance>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-calendar"></span> {{'instructor-management.weekday' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-weekday [instructor]="instructor"></app-weekday>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-usd"></span> {{'intern-management.payment' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-payment-instructor [instructor]="instructor"></app-payment-instructor>
+    </div>
+  </mat-tab>
+</mat-tab-group>

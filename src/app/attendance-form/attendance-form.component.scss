@@ -1,0 +1,43 @@
+.save {
+  color: #FFFFFF;
+  width: 10%;
+}
+
+.cancel {
+  color: #FFFFFF;
+  margin-right: 2px !important;
+  width: 10%;
+  padding: 0px 10px 0 0 !important;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 30px;
+  td {
+    white-space: pre;
+  }
+}
+
+.container .mat-form-field {
+  width: 50%;
+  font-size: 14px;
+}
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}

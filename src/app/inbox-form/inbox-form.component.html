@@ -1,0 +1,60 @@
+<h2>{{'inbox.title'| translate}} - {{inbox?.subject}} -</h2>
+<mat-divider></mat-divider>
+<mat-card style="height: 93%">
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="inboxForm">
+        <div class="container">
+            <button *ngIf="!isOnEdit" [disabled]="(inboxForm.invalid && userSelected)" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field>
+                <input name="subject" type="text" formControlName="subject"
+                       [(ngModel)]="inbox.subject" matInput
+                       placeholder="{{'inbox.subject' | translate}}" required autofocus>
+                <mat-error *ngIf="subject.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+                <input name="to" formControlName="to" matInput
+                       (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
+                       placeholder="{{'inbox.to' | translate}}" required>
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                  (optionSelected)="userOnSelect($event.option.value)">
+                    <mat-option *ngFor="let to of usersFiltered" [value]="to">
+                        {{to?.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="to.invalid || !userSelected">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <div *ngIf="isOnEdit">
+                <mat-label>{{(inbox.from === user.id ? 'inbox.to' : 'inbox.from') | translate}}</mat-label>
+                <h4>{{inbox.from === user.id ? inbox.to_user : inbox.from_user}}</h4>
+            </div>
+            <br>
+            <mat-form-field>
+                <textarea style="height: 100px" name="content" type="text" formControlName="content"
+                       [(ngModel)]="inbox.content" matInput
+                           placeholder="{{'inbox.content' | translate}}" required></textarea>
+                <mat-error *ngIf="content.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+    <br>
+    <button *ngIf="!isOnEdit" style="background: none; border: none; margin-bottom: 10px;  margin-left: 5%;" onclick="document.getElementById('fileUpload').click()">
+        <span class="glyphicon glyphicon-paperclip"></span>
+    </button>
+    <input id="fileUpload" *ngIf="!isOnEdit" style="display:none; background: #b9b9b9; width: 15%; border-radius: 20px; float: left"
+           type="file" (change)="onUpload($event)" #fileInput>
+    <mat-chip-list style="float: left" *ngIf="attachments.length">
+        <mat-chip [removable]="true" style="cursor: pointer" *ngFor="let file of attachments"
+                  (click)="downloadFile(file)"
+                  (removed)="removeAttachment(file)">{{file.name}}
+            <span *ngIf="!isOnEdit" style="margin-bottom: 5px;" matChipRemove  class="glyphicon glyphicon-remove"></span>
+        </mat-chip>
+    </mat-chip-list>
+</mat-card>

@@ -1,0 +1,26 @@
+<h2>{{'room.title'| translate}} - {{room?.number}} -</h2>
+<mat-divider></mat-divider>
+<mat-card>
+  <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+  </app-loader>
+  <form [formGroup]="roomForm">
+      <div class="container">
+      <button [disabled]="roomForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+      </button>
+      <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+          <span class="glyphicon glyphicon-remove"></span>
+      </button>
+      <mat-form-field>
+        <input name="number" formControlName="number" [(ngModel)]="room.number" matInput placeholder="{{'room.placeholder.number' | translate}}" autofocus required>
+        <mat-error *ngIf="number.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input name="capacity" formControlName="capacity" type="number" [(ngModel)]="room.capacity" matInput placeholder="{{'room.placeholder.capacity' | translate}}" required>
+          <span matSuffix>{{'room.placeholder.intern' | translate}}</span>
+          <mat-error *ngIf="capacity.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-card>

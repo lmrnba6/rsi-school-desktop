@@ -1,0 +1,29 @@
+<h2>Gestion des Roles</h2>
+<mat-divider></mat-divider>
+<mat-card>
+  <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+  </app-loader>
+  <button class="pull-right save" (click)="onSave()" type="button" mat-button>
+    <mat-icon>save</mat-icon>
+  </button>
+  <button class="pull-right cancel" (click)="onCancel()" mat-button>
+    <mat-icon>cancel</mat-icon>
+  </button>
+  <br><br><br><br>
+  <form>
+    <mat-form-field class="example-full-width">
+      <input type="text" placeholder="Entrer le nom d'utilisateur" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <span matSuffix class="glyphicon glyphicon-search"></span>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="userOnChange($event.option.value)">
+        <mat-option *ngFor="let user of usersFiltered" [value]="user">
+          {{user.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <br>
+  <div *ngFor="let role of roles">
+    <mat-checkbox [(ngModel)]="user.role">{{'role.' + role | translate}}</mat-checkbox>
+  </div>
+</mat-card>

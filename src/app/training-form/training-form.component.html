@@ -1,0 +1,59 @@
+<h2>{{'training.title'| translate}} - {{training?.name}} -</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="trainingForm">
+        <div class="container">
+            <button [disabled]="trainingForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field>
+                <input name="name" formControlName="name" [(ngModel)]="training.name" matInput
+                       placeholder="{{'training.placeholder.name' | translate}}" required autofocus>
+                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="time" formControlName="time" type="number" [(ngModel)]="training.time" matInput
+                       placeholder="{{'training.placeholder.time' | translate}}" required>
+                <span matSuffix>h</span>
+                <mat-error *ngIf="time.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="enrollment_fees" formControlName="enrollment_fees" type="number" [(ngModel)]="training.enrollment_fees" matInput
+                       placeholder="{{'training.placeholder.enrollment_fees' | translate}}" required>
+                <span matSuffix>DA</span>
+                <mat-error *ngIf="enrollment_fees.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="training_fees" formControlName="training_fees" type="number" [(ngModel)]="training.training_fees" matInput
+                       placeholder="{{'training.placeholder.training_fees' | translate}}" required>
+                <span matSuffix>DA</span>
+                <mat-error *ngIf="training_fees.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="books_fees" formControlName="books_fees" type="number" [(ngModel)]="training.books_fees" matInput
+                       placeholder="{{'training.placeholder.books_fees' | translate}}" required>
+                <span matSuffix>DA</span>
+                <mat-error *ngIf="books_fees.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select formControlName="type" [(ngModel)]="training.type" placeholder="{{'training.placeholder.type' | translate}}" name="type" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let type of types" [value]="type">
+                        {{'training.' + type | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="type.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-card>

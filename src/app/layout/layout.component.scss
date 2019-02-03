@@ -1,0 +1,85 @@
+@import "../../assets/sass/style";
+
+.example-container {
+  position: absolute;
+  top: 7%;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  flex: 1;
+}
+
+.mat-drawer-container {
+  position: absolute !important;
+}
+
+.example-sidenav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  //width: 20%;
+  background: #252525;
+  margin-top: 1px;
+  margin-right: 5%;
+  a {
+    color: #ffff;
+    padding-left: 3%;
+    font-size: 20px;
+    font-family: monospace;
+    font-weight: bold;
+  }
+}
+
+.mat-drawer-content {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+.btn-add {
+  width: 100%;
+  background: #f93e3e;
+}
+
+.mat-icon {
+  margin-right: 1%;
+}
+
+.btnMenu {
+  position: relative;
+  background: #f93e3e;
+  left: -1%;
+  top: 5px;
+}
+
+.menuIcon {
+  color: #ffff;
+}
+
+a, .mat-list-item {
+  font-size: 14px;
+}
+
+.navList {
+  height: 25%;
+  color: white;
+}
+
+.glyphicon {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.example-container .nav_item .mat-list-item-content{
+  color: white;
+  margin-top: 5px;
+  padding: 0;
+  &:hover {
+    border: solid 2px $secondary;
+  }
+}
+
+::ng-deep .mat-tooltip {
+  font-size: x-large !important;
+}
+

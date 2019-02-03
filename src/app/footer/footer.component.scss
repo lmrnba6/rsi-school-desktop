@@ -1,0 +1,16 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #252525;
+  .copyright {
+    font-size: 10px;
+    color: #ffff;
+    margin-left: 50%;
+  }
+  img {
+    width: 3%;
+    margin-right: 1%;
+  }
+}

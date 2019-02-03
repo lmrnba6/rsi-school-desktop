@@ -1,0 +1,26 @@
+export class AbstractTableSetting {
+    constructor() {
+        this.paging = true;
+        this.tools = true;
+    }
+  settingColumn: boolean;
+  addRow: boolean;
+  editRow: boolean;
+  deleteRow: boolean;
+  tableName: string;
+  filter: boolean;
+  cols: Array<any>;
+  columns: Array<any>;
+  paging: boolean;
+  tools: boolean;
+}
+
+export class AbstractTableEvent {
+    filters: any;
+    first: number;
+    globalFilter: string;
+    multiSortMeta: Array<{field: string, order: number}>
+    rows: number;
+}
+
+

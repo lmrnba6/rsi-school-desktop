@@ -1,0 +1,22 @@
+
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<h2>{{'room.title' | translate}} - {{room.number}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<mat-tab-group *ngIf="room" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-modal-window"></span> {{'room-management.information' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-room-form [room]="room"></app-room-form>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-calendar"></span> {{'room-management.weekday' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-weekday [room]="room"></app-weekday>
+    </div>
+  </mat-tab>
+</mat-tab-group>

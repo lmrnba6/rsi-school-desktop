@@ -1,0 +1,15 @@
+@import "../../assets/sass/style";
+
+i[class*='mfb-component__main-icon--'], .mfb-component__child-icon {
+  margin: 0;
+  color: white;
+  font-size: 25px;
+}
+
+.mfb-component--br {
+  bottom: 50px !important;
+}
+
+.mfb-component__button--main, .mfb-component__button--child, component__button--main {
+  background: $primary !important;
+}

@@ -1,0 +1,37 @@
+<h2>{{'course.title'| translate}} - {{course?.name}} -</h2>
+<mat-divider></mat-divider>
+<mat-card>
+  <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+  </app-loader>
+  <form [formGroup]="courseForm">
+      <div class="container">
+      <button [disabled]="courseForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+      </button>
+      <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+          <span class="glyphicon glyphicon-remove"></span>
+      </button>
+      <mat-form-field>
+        <input name="name" formControlName="name" [(ngModel)]="course.name" matInput placeholder="{{'course.placeholder.name' | translate}}" required>
+        <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+          <input name="time" formControlName="time" type="number" [(ngModel)]="course.time" matInput placeholder="{{'course.placeholder.time' | translate}}" required>
+          <span matSuffix>h</span>
+          <mat-error *ngIf="time.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+          <mat-select formControlName="training_id" [(ngModel)]="course.training_id" placeholder="{{'course.placeholder.training_id' | translate}}" name="training_id" required>
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let training of trainings" [value]="training.id">
+                  {{training.name | translate}}
+              </mat-option>
+          </mat-select>
+          <mat-error *ngIf="training_id.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
+      </mat-form-field>
+
+    </div>
+  </form>
+</mat-card>

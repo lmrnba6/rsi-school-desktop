@@ -1,0 +1,386 @@
+
+/* BASIC */
+
+@import "../../assets/sass/style";
+
+html {
+  background: $primary;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+a {
+  color: $primary;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display:inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
+}
+
+
+
+/* STRUCTURE */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: rgba(255, 255, 255, 0.8);;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 20px 0 0 0;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+
+
+/* TABS */
+
+h2.inactive {
+  color: #cccccc;
+}
+
+h2.active {
+  color: #0d0d0d;
+  border-bottom: 2px solid $primary;
+}
+
+
+
+/* FORM TYPOGRAPHY*/
+
+input[type=button], input[type=submit], input[type=reset]  {
+  background-color: #d20017;
+  border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+  background: $primary;
+}
+
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+/* ANIMATIONS */
+
+/* Simple CSS3 Fade-in-down Animation */
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+/* Simple CSS3 Fade-in Animation */
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fadeIn {
+  opacity:0;
+  -webkit-animation:fadeIn ease-in 1;
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:1s;
+  -moz-animation-duration:1s;
+  animation-duration:1s;
+}
+
+.fadeIn.first {
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.fadeIn.second {
+  -webkit-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+.fadeIn.third {
+  -webkit-animation-delay: 0.8s;
+  -moz-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+}
+
+.fadeIn.fourth {
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+/* Simple CSS3 Fade-in Animation */
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background: $primary;
+  content: "";
+  transition: width 0.2s;
+}
+
+.underlineHover:hover {
+  color: #0d0d0d;
+}
+
+.underlineHover:hover:after{
+  width: 100%;
+}
+
+
+
+/* OTHERS */
+
+*:focus {
+  outline: none;
+}
+
+#icon {
+  width:50%;
+  margin-bottom: 10%;
+}
+
+.form-group .mat-form-field {
+  width: 70% !important;
+}
+
+.form-group .mat-form-field-infix {
+  background: #efefefa3;
+  height: 60px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.saveLogin {
+  background: $primary !important;
+  width: 70% !important;
+  height: 50px !important;
+  margin: 25px 70px 41px 0 !important;
+  color: #FFFFFF;
+}
+
+.mat-error {
+  font-size: 11px !important;
+}
+
+
+
+/*Lets start with the cloud formation rather*/
+
+/*The container will also serve as the SKY*/
+
+*{ margin: 0; padding: 0;}
+
+#clouds{
+  padding: 50px 0;
+  background: #c9dbe9;
+  background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+  background: -o-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+  background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+  height: 100%;
+  background-size: 100%;
+  //background-image: url(https://wallpapertag.com/wallpaper/full/8/e/3/569868-harvard-university-wallpapers-3840x2160-for-iphone-7.jpg);
+}
+
+///*Time to finalise the cloud shape*/
+//.cloud {
+//  width: 200px; height: 60px;
+//  background: #fff;
+//
+//  border-radius: 200px;
+//  -moz-border-radius: 200px;
+//  -webkit-border-radius: 200px;
+//
+//  position: relative;
+//}
+//
+//.cloud:before, .cloud:after {
+//  content: '';
+//  position: absolute;
+//  background: #fff;
+//  width: 100px; height: 80px;
+//  position: absolute; top: -15px; left: 10px;
+//
+//  border-radius: 100px;
+//  -moz-border-radius: 100px;
+//  -webkit-border-radius: 100px;
+//
+//  -webkit-transform: rotate(30deg);
+//  transform: rotate(30deg);
+//  -moz-transform: rotate(30deg);
+//}
+//
+//.cloud:after {
+//  width: 120px; height: 120px;
+//  top: -55px; left: auto; right: 15px;
+//}
+//
+///*Time to animate*/
+//.x1 {
+//  -webkit-animation: moveclouds 15s linear infinite;
+//  -moz-animation: moveclouds 15s linear infinite;
+//  -o-animation: moveclouds 15s linear infinite;
+//}
+//
+///*variable speed, opacity, and position of clouds for realistic effect*/
+//.x2 {
+//  left: 200px;
+//
+//  -webkit-transform: scale(0.6);
+//  -moz-transform: scale(0.6);
+//  transform: scale(0.6);
+//  opacity: 0.6; /*opacity proportional to the size*/
+//
+//  /*Speed will also be proportional to the size and opacity*/
+//  /*More the speed. Less the time in 's' = seconds*/
+//  -webkit-animation: moveclouds 25s linear infinite;
+//  -moz-animation: moveclouds 25s linear infinite;
+//  -o-animation: moveclouds 25s linear infinite;
+//}
+//
+//.x3 {
+//  left: -250px; top: -200px;
+//
+//  -webkit-transform: scale(0.8);
+//  -moz-transform: scale(0.8);
+//  transform: scale(0.8);
+//  opacity: 0.8; /*opacity proportional to the size*/
+//
+//  -webkit-animation: moveclouds 20s linear infinite;
+//  -moz-animation: moveclouds 20s linear infinite;
+//  -o-animation: moveclouds 20s linear infinite;
+//}
+//
+//.x4 {
+//  left: 470px; top: -250px;
+//
+//  -webkit-transform: scale(0.75);
+//  -moz-transform: scale(0.75);
+//  transform: scale(0.75);
+//  opacity: 0.75; /*opacity proportional to the size*/
+//
+//  -webkit-animation: moveclouds 18s linear infinite;
+//  -moz-animation: moveclouds 18s linear infinite;
+//  -o-animation: moveclouds 18s linear infinite;
+//}
+//
+//.x5 {
+//  left: -150px; top: -150px;
+//
+//  -webkit-transform: scale(0.8);
+//  -moz-transform: scale(0.8);
+//  transform: scale(0.8);
+//  opacity: 0.8; /*opacity proportional to the size*/
+//
+//  -webkit-animation: moveclouds 20s linear infinite;
+//  -moz-animation: moveclouds 20s linear infinite;
+//  -o-animation: moveclouds 20s linear infinite;
+//}
+//
+//@-webkit-keyframes moveclouds {
+//  0% {margin-left: 1000px;}
+//  100% {margin-left: -1000px;}
+//}
+//@-moz-keyframes moveclouds {
+//  0% {margin-left: 1000px;}
+//  100% {margin-left: -1000px;}
+//}
+//@-o-keyframes moveclouds {
+//  0% {margin-left: 1000px;}
+//  100% {margin-left: -1000px;}
+//}
+//.bottom {
+//  width:100%; margin:0 auto; text-align:center; padding:10px 0; height:100px; position:absolute;
+//}
+//.bottom h3 {color:white; font-size:30px; font-weight:bold; margin-top:45px; padding-bottom:45px;}
+//.blue { color:#09c;}

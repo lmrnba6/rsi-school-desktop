@@ -1,0 +1,46 @@
+
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<h2>{{'intern.title' | translate}} - {{intern?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<mat-tab-group *ngIf="intern" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-info-sign"></span> {{'intern-management.information' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-intern-form [intern]="intern"></app-intern-form>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-asterisk"></span> {{'intern-management.enrollment' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-enrollment [intern]="intern"></app-enrollment>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-ok-circle"></span> {{'intern-management.attendance' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-attendance [intern]="intern"></app-attendance>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-pencil"></span> {{'intern-management.exam' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-exam [intern]="intern"></app-exam>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-usd"></span> {{'intern-management.payment' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-payment [intern]="intern"></app-payment>
+    </div>
+  </mat-tab>
+</mat-tab-group>

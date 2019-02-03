@@ -1,0 +1,388 @@
+{
+  "nav": {
+    "home": "home",
+    "logout": "exit",
+    "title": "Title",
+    "help": "help"
+  },
+  "login": {
+    "login": "login",
+    "username": "user name",
+    "password": "password"
+  },
+  "abstractTable": {
+    "filter": "Research"
+  },
+  "inbox": {
+    "title": "Messages",
+    "inbox": "Inbox",
+    "sent": "Sent",
+    "deleted": "Deleted",
+    "from": "From",
+    "to": "to",
+    "content": "Message",
+    "subject": "Subject",
+    "date": "Date",
+    "attachments": "Attachments"
+  },
+  "menu": {
+    "settings": "settings",
+    "intern": "students",
+    "instructor": "teachers",
+    "document": "Documents",
+    "room": "Classes",
+    "session": "Groupe",
+    "training": "Formations",
+    "course": "levels",
+    "enrollment": "registration",
+    "payment": "Payment",
+    "exam": "exams",
+    "test": "tests",
+    "attendance": "Presences",
+    "result": "Statistical",
+    "weekday": "Program",
+    "visitors": "Visitors",
+    "accounting": "Accounting",
+    "inbox": "Inbox"
+  },
+  "administration": {
+    "title": "Administration",
+    "reception": "home",
+    "school": "School",
+    "database": "Database",
+    "user_management": "user management"
+  },
+  "intern": {
+    "title": "student",
+    "documents": "required document",
+    "years": "Years old",
+    "placeholder": {
+      "birth": "birth date ",
+      "name" : "name",
+      "email": "email",
+      "address": "Address",
+      "name_arabic": "name with anothre language ",
+      "permit_number": "permi number",
+      "permit_delivery": "date of issue",
+      "status": "Type",
+      "phone": "Phone",
+      "phone2": "Second phone",
+      "form": "handwritten request",
+      "certificate": "has a patent",
+      "medical": "medical certificate",
+      "residence": "copy of the cart stay (for foreigners)",
+      "fees": "Training fees",
+      "fees_enrollment": "Enrollment fees",
+      "fees_books": "Books fees",
+      "isAllowed": "Blocked",
+      "photo": "Photo",
+      "scholar": "Scholar level",
+      "sold": "sold",
+      "elementary": "Elementary school",
+      "secondary": "Secondary school",
+      "high": "High school",
+      "bachelor": "Bachelor",
+      "master": "Master",
+      "phd": "Phd",
+      "parent": "Parent"
+    }
+  },
+  "visitor": {
+    "title": "Visitors",
+    "placeholder": {
+      "name" : "Name",
+      "phone": "Phone",
+      "comment": "comment"
+    }
+  },
+  "instructor": {
+    "title": "teacher",
+    "placeholder": {
+      "name" : "name",
+      "email": "email",
+      "address": "Adresse",
+      "name_arabic": "name in arabic",
+      "phone": "phone",
+      "sold": "Sold"
+    }
+  },
+  "payment": {
+    "title": "Payment",
+    "placeholder": {
+      "amount" : "amount",
+      "date": "Date",
+      "comment": "Comment",
+      "training": "Training",
+      "month": "Month",
+      "intern_id": "student"
+    }
+  },
+  "payments": {
+    "title": "Payments",
+    "intern": "Student",
+    "instructor": "Teacher"
+  },
+  "payment_instructor": {
+    "title": "Payment",
+    "placeholder": {
+      "amount" : "amount",
+      "date": "Date",
+      "comment": "Comment",
+      "instructor_id": "Teacher"
+    }
+  },
+  "session": {
+    "title": "Groups",
+    "placeholder": {
+      "name" : "name",
+      "start": "start",
+      "end": "end",
+      "limit": "Max",
+      "intern": "Étudaints",
+      "instructor_id": "teacher",
+      "training_id": "Formation"
+    }
+  },
+  "user": {
+    "admin": "Administrator",
+    "user": "User",
+    "student": "Student",
+    "teacher": "Teacher",
+    "parent": "Parent",
+    "username": "user name",
+    "name": "name",
+    "role": "Role",
+    "placeholder": {
+      "username": "user name",
+      "name" : "Name",
+      "password": "password",
+      "role": "Role"
+    }
+  },
+  "training": {
+    "individual": "Individual",
+    "group": "Groupe",
+    "mini_group": "Mini group",
+    "title": "Formation",
+    "placeholder": {
+      "name": "name",
+      "time" : "Volume of the session",
+      "type": "Type",
+      "training_fees": "Training fees",
+      "books_fees": "Books fees",
+      "enrollment_fees": "Enrollment fees"
+    }
+  },
+  "room": {
+    "title": "Classes",
+    "placeholder": {
+      "number": "Number",
+      "capacity" : "Capacity",
+      "intern": "Étudiants"
+    }
+  },
+  "exam": {
+    "title": "Exams",
+    "placeholder": {
+      "type" : "Type",
+      "mark": "Note",
+      "result": "Accepted",
+      "retake": "picking up",
+      "training_id": "Formation",
+      "comment": "comment",
+      "date": "Date",
+      "time": "Duration",
+      "intern_id": "student",
+      "session_id": "Groupe"
+    }
+  },
+  "course": {
+    "title": "levels",
+    "placeholder": {
+      "name" : "Title",
+      "time": "Duration",
+      "training_id": "Formation"
+    }
+  },
+  "attendance": {
+    "title": "attendance",
+    "by_seance": "Global",
+    "by_date": " By Group",
+    "placeholder": {
+      "time" : "Duration",
+      "present" : "Present",
+      "day_id": "day",
+      "weekday_id": "hour",
+      "absent" : "Absent",
+      "off": "Not enrolled",
+      "date": "Date",
+      "intern_id": "student",
+      "instructor_id": "teacher",
+      "training_id": "Formation",
+      "room_id": "Classroom",
+      "session_id": "Group",
+      "saturday": "saturday",
+      "sunday": "sunday",
+      "monday": "monday",
+      "tuesday": "tuesday",
+      "wednesday": "wednesday",
+      "thursday": "thursday",
+      "friday": "friday",
+      "name": "Name"
+    }
+  },
+  "weekday": {
+    "title": "Program",
+    "placeholder": {
+      "time" : "hour",
+      "name" : "day",
+      "room_id": "Classroom",
+      "session_id": "Group",
+      "saturday": "saturday",
+      "sunday": "sunday",
+      "monday": "monday",
+      "tuesday": "tuesday",
+      "wednesday": "wednesday",
+      "thursday": "friday",
+      "friday": "thursday",
+      "training": "Training",
+      "instructor": "Teacher"
+    }
+  },
+  "enrollment": {
+    "title": "registration",
+    "done": "Done",
+    "start": "Begin",
+    "placeholder": {
+      "comment" : "Comments",
+      "date": "Date",
+      "intern_id": "student",
+      "training_id": "Formation",
+      "session_id": "Group",
+      "instructor_id": "Teacher"
+    }
+  },
+  "intern-management": {
+    "information" : "Information",
+    "enrollment": "registration",
+    "attendance": "Présence",
+    "exam": "Examination",
+    "payment": "Payment"
+  },
+  "instructor-management": {
+    "information" : "Information",
+    "attendance": "Présence",
+    "session": "Groups",
+    "weekday": "Schedule"
+  },
+  "session-management": {
+    "information" : "Information",
+    "weekday": "Program",
+    "intern": "student",
+    "attendance": "Attendance"
+  },
+  "weekday-management": {
+    "information" : "Information",
+    "attendance": "Présences"
+  },
+  "room-management": {
+    "information" : "Information",
+    "weekday": "Program"
+  },
+  "document": {
+    "title" : "Document",
+    "intern": "list of students",
+    "session_open_pv": "loging PV",
+    "session_open": "sign in document",
+    "session_close_pv": "PV de cloture  de session",
+    "session_close": "Document de cloture  de session",
+    "session_result_pv": "PV de délibération  de session",
+    "session_result": "Document de délibération  de session",
+    "card": "Student card",
+    "form": "Student form",
+    "receipt": "Student Receipt"
+  },
+  "pv": {
+    "information" : "Information",
+    "session" : "Group",
+    "document": "preview",
+    "edit": "Document",
+    "date": "Date",
+    "title": "Title",
+    "edit_description": "edit document",
+    "center": "",
+    "group": "Group",
+    "student_list": "student list",
+    "present": "Présent?",
+    "number": "number",
+    "instructor": "Teacher",
+    "training": "Formation",
+    "card": "Student card",
+    "form": "Enrollment From",
+    "receipt": "Student Receipt"
+  },
+  "result": {
+    "title": "Statistics",
+    "edit_description": "modify setting",
+    "edit": "setting",
+    "from": "from",
+    "to": "to",
+    "result": "Results",
+    "student": "Student number by training",
+    "instructor": "Teacher number by training",
+    "student_title": "Statististics per student",
+    "instructor_title": "statistics per teacher",
+    "list": "List",
+    "graph": "Graph",
+    "name": "Name",
+    "count": "Number"
+  },
+  "chart": {
+    "pie": "Circular",
+    "bar": "bars",
+    "doughnut": "Donut",
+    "polarArea": "Polar"
+  },
+  "accounting": {
+    "title": "Accounting",
+    "month": "Month",
+    "January": "January",
+    "February": "February",
+    "March": "March",
+    "April": "April",
+    "May": "May",
+    "June": "June",
+    "July": "July",
+    "August": "August",
+    "September": "September",
+    "October": "October",
+    "November": "November",
+    "December": "December",
+    "classRate": "Seance fees",
+    "instructorRate": "Teacher rate",
+    "salary": "Salary"
+  },
+  "messages": {
+    "error_field_required": "this field is required",
+    "error_login": "wrong username or password",
+    "field_required_error": "you must enter a value",
+    "remove_row_warning_message": "do you really want to delete this ligne?",
+    "warning_title": "warning",
+    "operation_success_message": "successful : Operation success",
+    "something_went_wrong_message": "an error has occurred",
+    "no_intern_registered": "Ano student enrolled at this level",
+    "no_result": "no résults",
+    "sync_database_warning_message": "Do you want to sync the server database with the local one?",
+    "change_local_database_warning_message": "Do you want to change the source of your database?",
+    "network.offline": "Connection lost!",
+    "go_to_receipt_message": "Would you like to print the receipt?",
+    "intern_already_enrolled": "Student already enrolled to this group"
+  },
+  "buttons": {
+    "save": "save",
+    "cancel": "cancel",
+    "yes": "yes",
+    "cancel":"cancel",
+    "no": "Non"
+  }
+}

@@ -1,0 +1,41 @@
+.start {
+  margin-right: 60% !important;
+  background: #ff4081;
+  width: 40%;
+  height: 100px;
+  font-size: 40px;
+  color: white;
+  margin-top: 15px !important;
+}
+
+
+.container .mat-form-field {
+  width: 50%;
+  font-size: 14px;
+}
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}
+
+
+.mat-step-header{
+    pointer-events: none !important;
+  }
+
+  .mat-step-icon {
+    background-color: black !important;
+  }
+
+  .mat-horizontal-stepper-header-container {
+    background: rgba(255, 64, 129, 0.2);
+  }

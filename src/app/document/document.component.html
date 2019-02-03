@@ -1,0 +1,97 @@
+<h2>{{'document.title'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <div class="container doc">
+        <mat-divider></mat-divider>
+        <mat-nav-list>
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="" (click)="attendanceForm = !attendanceForm"><span
+                        class="glyphicon glyphicon-user"></span>{{'document.intern' | translate}}</a>
+                <mat-form-field *ngIf="attendanceForm">
+                    <mat-select (selectionChange)="onAttendanceForm()" *ngIf="attendanceForm" [(ngModel)]="session_id"
+                                placeholder="{{'attendance.placeholder.session_id' | translate}}">
+                        <mat-option *ngFor="let session of sessions" [value]="session.id">
+                            {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-nav-list>
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="" (click)="card = !card"><span
+                        class="glyphicon glyphicon-barcode"></span>{{'document.card' | translate}}</a>
+                <mat-form-field *ngIf="card" class="example-full-width">
+                    <input matInput
+                           (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
+                           placeholder="{{'payment.placeholder.intern_id' | translate}}" required>
+                    <span matSuffix class="glyphicon glyphicon-search"></span>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                      (optionSelected)="internOnSelect($event.option.value)">
+                        <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
+                            {{intern?.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-nav-list>
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="" (click)="receipt = !receipt"><span
+                        class="glyphicon glyphicon-usd"></span>{{'document.receipt' | translate}}</a>
+                <mat-form-field *ngIf="receipt" class="example-full-width">
+                    <input matInput
+                           (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
+                           placeholder="{{'payment.placeholder.intern_id' | translate}}" required>
+                    <span matSuffix class="glyphicon glyphicon-search"></span>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                      (optionSelected)="internOnSelect($event.option.value)">
+                        <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
+                            {{intern?.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-nav-list>
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="" (click)="form = !form"><span
+                        class="glyphicon glyphicon-list-alt"></span>{{'document.form' | translate}}</a>
+                <mat-form-field *ngIf="form" class="example-full-width">
+                    <input matInput
+                           (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
+                           placeholder="{{'payment.placeholder.intern_id' | translate}}" required>
+                    <span matSuffix class="glyphicon glyphicon-search"></span>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                      (optionSelected)="internOnSelect($event.option.value)">
+                        <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
+                            {{intern?.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-nav-list>
+            <!--<mat-nav-list>-->
+                <!--<a mat-list-item routerLink="/document/pv/session_open_pv/{{session_id}}"><span-->
+                        <!--class="glyphicon glyphicon-list-alt"></span>{{'document.session_open_pv' | translate}}</a>-->
+            <!--</mat-nav-list>-->
+            <!--<mat-nav-list>-->
+                <!--<a mat-list-item routerLink="/document/pv/session_open/{{session_id}}"><span-->
+                        <!--class="glyphicon glyphicon-log-in"></span>{{'document.session_open' | translate}}</a>-->
+            <!--</mat-nav-list>-->
+            <!--<mat-nav-list>-->
+                <!--<a mat-list-item routerLink="/document/pv/session_close_pv/{{session_id}}"><span-->
+                        <!--class="glyphicon glyphicon-list-alt"></span>{{'document.session_close_pv' | translate}}</a>-->
+            <!--</mat-nav-list>-->
+            <!--<mat-nav-list>-->
+                <!--<a mat-list-item routerLink="/document/pv/session_close/{{session_id}}"><span-->
+                        <!--class="glyphicon glyphicon glyphicon glyphicon-log-out"></span>{{'document.session_close' |-->
+                    <!--translate}}</a>-->
+            <!--</mat-nav-list>-->
+            <!--<mat-nav-list>-->
+                <!--<a mat-list-item routerLink="/document/pv/session_result_pv/{{session_id}}"><span-->
+                        <!--class="glyphicon glyphicon-user"></span>{{'document.session_result_pv' | translate}}</a>-->
+            <!--</mat-nav-list>-->
+            <!--<mat-nav-list>-->
+                <!--<a mat-list-item routerLink="/document/pv/session_result/{{session_id}}"><span-->
+                        <!--class="glyphicon glyphicon-check"></span>{{'document.session_result' | translate}}</a>-->
+            <!--</mat-nav-list>-->
+        </mat-nav-list>
+    </div>
+</mat-card>
+

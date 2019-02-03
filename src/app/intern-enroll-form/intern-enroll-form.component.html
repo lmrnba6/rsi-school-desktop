@@ -1,0 +1,26 @@
+<mat-horizontal-stepper  #stepper>
+  <mat-step [completed]="false">
+    <ng-template matStepLabel>{{'enrollment.start' | translate}}</ng-template>
+    <div class="spinner">
+      <img src="{{logo}}"/>
+      <button class="pull-right start" (click)="goForward(stepper)"  mat-button > {{'enrollment.start' | translate}}
+      </button>
+    </div>
+  </mat-step>
+  <mat-step [completed]="false">
+      <ng-template matStepLabel>{{'intern.title' | translate}}</ng-template>
+     <app-intern-form (next)="goForward(stepper)"></app-intern-form>
+  </mat-step>
+  <mat-step [completed]="false">
+      <ng-template matStepLabel>{{'enrollment.title' | translate}}</ng-template>
+      <app-enrollment-form (next)="goForward(stepper)"></app-enrollment-form>
+  </mat-step>
+  <mat-step [completed]="false">
+    <ng-template matStepLabel>{{'enrollment.done' | translate}}</ng-template>
+    <div class="spinner">
+      <img src="{{logo}}"/>
+      <button class="pull-right start" (click)="reset(stepper)"  mat-button > {{'enrollment.done' | translate}}
+      </button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

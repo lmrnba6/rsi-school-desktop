@@ -1,0 +1,69 @@
+<h2>{{'session.title'| translate}} - {{session?.name}} -</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="sessionForm">
+        <div class="container">
+            <button [disabled]="sessionForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field>
+                <input name="name" formControlName="name" [(ngModel)]="session.name" matInput
+                       placeholder="{{'session.placeholder.name' | translate}}" required autofocus>
+                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="limit" formControlName="limit" type="number" [(ngModel)]="session.limit" matInput
+                       placeholder="{{'session.placeholder.limit' | translate}}" required >
+                <span matSuffix>{{'session.placeholder.intern' | translate}}</span>
+                <mat-error *ngIf="limit.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select formControlName="training_id" [(ngModel)]="session.training_id"
+                            placeholder="{{'session.placeholder.training_id' | translate}}" name="training_id" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let training of trainings" [value]="training.id">
+                        {{training.name | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="training_id.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select formControlName="instructor_id" [(ngModel)]="session.instructor_id"
+                            placeholder="{{'session.placeholder.instructor_id' | translate}}" name="instructor_id" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let instructor of instructors" [value]="instructor.id">
+                        {{instructor.name | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="instructor_id.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="start" formControlName="start" [(ngModel)]="session.start" matInput
+                       placeholder="{{'session.placeholder.start' | translate}}" required [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker2></mat-datepicker>
+                <mat-error *ngIf="start.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="end" formControlName="end" [min]="session.start" [(ngModel)]="session.end" matInput
+                       placeholder="{{'session.placeholder.end' | translate}}" required [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+                <mat-error *ngIf="end.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+        </div>
+    </form>
+</mat-card>

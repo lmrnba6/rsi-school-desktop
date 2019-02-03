@@ -1,0 +1,38 @@
+
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<h2>{{'session.title' | translate}} - {{session?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<mat-tab-group *ngIf="session" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+  <mat-tab *ngIf="isAdmin">
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-info-sign"></span> {{'session-management.information' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-session-form [session]="session"></app-session-form>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-calendar"></span> {{'session-management.weekday' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-weekday [session]="session"></app-weekday>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-user"></span> {{'session-management.intern' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-intern [session]="session"></app-intern>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-check"></span> {{'session-management.attendance' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-attendance [session]="session"></app-attendance>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,141 @@
+<div *ngIf="setting.tools" class="abstract-table-header">
+    <mat-form-field *ngIf="setting?.filter" style="font-size:15px;">
+        <input class="pull-left" matInput (keyup)="applyFilter($event)"
+               placeholder="{{'abstractTable.filter' | translate}}">
+        <span matSuffix class="glyphicon glyphicon-search"></span>
+    </mat-form-field>
+    <a *ngIf="setting?.filter" class="pull-right" [routerLink]="" (click)="onAddRow()">
+    <span class="glyphicon glyphicon-plus" style="    font-size: 30px;
+      -webkit-text-fill-color: black;
+    margin-top: 10px;"></span>
+    </a>
+    <a class="pull-right" [routerLink]="" (click)="captureScreen()">
+    <span class="glyphicon glyphicon-print" style="    font-size: 30px;
+      -webkit-text-fill-color: black;
+    margin-top: 10px;"></span>
+    </a>
+</div>
+
+
+<div *ngIf="data?.items?.length === 0">
+    <h4 style="color: gray; font-style: italic; text-align: center; margin-top: 20px;">{{'messages.no_result' | translate}}</h4>
+</div>
+<div *ngIf="data?.items?.length > 0" class="abstract-table-container mat-elevation-z8">
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <mat-table id="contentToConvert" [dataSource]="dataSource" matSort>
+        <ng-container *ngFor="let column of setting.cols" [matColumnDef]="column.columnDef">
+            <ng-container *ngIf="column.columnDef==='settings'">
+                <mat-header-cell *matHeaderCellDef mat-sort-header disabled>
+                        <span class="glyphicon glyphicon-flash"
+                              style="font-weight: bold;font-size:20px; -webkit-text-fill-color: yellow"></span>
+                </mat-header-cell>
+            </ng-container>
+            <ng-container *ngIf="column.columnDef!=='settings'">
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortOnChange(column.columnDef)">
+                    {{column.header | translate}}
+                </mat-header-cell>
+            </ng-container>
+            <ng-container *ngIf="setting.settingColumn && column.type==='settings' ">
+                <mat-cell *matCellDef="let row">
+                    <a *ngIf="column.delete" [routerLink]="" (click)="onDeleteRow(row.id)">
+                        <span style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e"
+                              class="glyphicon glyphicon-trash"></span>
+                    </a>
+                    <a *ngIf="column.editRow" [routerLink]="" (click)="onEditRow(row)">
+                        <span style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#007bff"
+                              class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                </mat-cell>
+            </ng-container>
+            <ng-container *ngIf="column.type==='boolean'">
+                <mat-cell *matCellDef="let row">
+                    <span class="glyphicon glyphicon-remove" *ngIf="column.cell(row)==='0'"
+                          style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e"></span>
+                    <span class="glyphicon glyphicon-minus" *ngIf="column.cell(row)!=='0' && column.cell(row)!=='1'"
+                          style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#000"> </span>
+                    <span class="glyphicon glyphicon-ok" *ngIf="column.cell(row)==='1'"
+                          style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#49cc90"> </span>
+                </mat-cell>
+            </ng-container>
+            <ng-container *ngIf="column.type==='icon'">
+                <mat-cell *matCellDef="let row">
+                    <span [class]="'glyphicon glyphicon-' + column.cell(row)" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#0000"></span>
+                </mat-cell>
+            </ng-container>
+            <ng-container *ngIf="column.type==='text'">
+                <mat-cell *matCellDef="let row"> {{ column.cell(row) }}</mat-cell>
+            </ng-container>
+            <ng-container *ngIf="column.type==='date'">
+                <mat-cell *matCellDef="let row"> {{ integerToString(column.cell(row)) }}</mat-cell>
+            </ng-container>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+                [ngStyle]="{'background-color':row?.sold > 0 ? 'orange' : row?.isAllowed && 'rgba(244, 67, 54, 0.43', 'background-color': row?.read === 0 && 'rgba(214, 217, 0, 0.45)' }"
+                *matRowDef="let row; columns: displayedColumns;" row>
+        </mat-row>
+
+    </mat-table>
+    <mat-paginator *ngIf="setting.paging" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                   [showFirstLastButtons]="true"
+                   (page)="pageEvent = pageOnChange($event)">
+    </mat-paginator>
+</div>
+
+<!--<p-table #dt [columns]="colsSelected" [reorderableColumns]="true" [value]="data?.items" sortMode="multiple" [lazy]="true" (onLazyLoad)="tableOnChange($event)" [paginator]="true"-->
+<!--[scrollable]="true" scrollHeight="800px" [resizableColumns]="true" selectionMode="single" [(selection)]="rowSelected" stateStorage="local" stateKey="statedemo-local"-->
+<!--[rows]="pageSize" [totalRecords]="data?.paging?.totalCount" [loading]="block">-->
+<!--<ng-template pTemplate="caption">-->
+<!--<div style="text-align:left">-->
+<!--<p-multiSelect [options]="cols" [(ngModel)]="colsSelected" optionLabel="header"-->
+<!--selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect>-->
+<!--<span (click)="search = !search" class="glyphicon glyphicon-search" style="float: right; ursor: pointer;"></span>-->
+<!--</div>-->
+<!--</ng-template>-->
+<!--<ng-template pTemplate="colgroup" let-columns>-->
+<!--<colgroup>-->
+<!--<col *ngFor="let col of columns" [style.width]="col.width">-->
+<!--</colgroup>-->
+<!--</ng-template>-->
+<!--<ng-template pTemplate="header" let-columns>-->
+<!--<tr>-->
+<!--<th *ngFor="let col of columns" pResizableColumn pReorderableColumn [pSortableColumn]="col.columnDef" [ngStyle]="{'pointer-events': col.type === 'settings' ? 'none' : ''}">-->
+<!--<div *ngIf="setting.settingColumn && col.type !== 'settings'">-->
+<!--{{col.header | translate}}-->
+<!--<p-sortIcon [field]="col.columnDef"></p-sortIcon>-->
+<!--</div>-->
+<!--<div *ngIf="col.type === 'settings'">-->
+<!--<span  class="glyphicon glyphicon-flash" style="font-weight: bold;font-size:20px; -webkit-text-fill-color: #000000;"></span>-->
+<!--</div>-->
+<!--</th>-->
+<!--</tr>-->
+<!--<th *ngFor="let col of columns" [ngSwitch]="col.columnDef" class="ui-fluid">-->
+<!--<div class="ui-inputgroup" *ngIf="search && col.type !== 'settings'">-->
+<!--<input pInputText type="text" (input)="dt.filter($event.target.value, col.columnDef, col.filterMatchMode)" [value]="dt.filters[col.columnDef]?.value">-->
+<!--</div>-->
+<!--</th>-->
+<!--</ng-template>-->
+<!--<ng-template pTemplate="body" let-rowData let-columns="columns">-->
+<!--<tr [pSelectableRow]="rowData">-->
+<!--<td *ngFor="let col of columns" class="ui-resizable-column">-->
+<!--<div *ngIf="col.type === 'date'">-->
+<!--{{ integerToString(rowData[col.columnDef]) }}-->
+<!--</div>-->
+<!--<div *ngIf="col.type === 'text'">-->
+<!--{{ rowData[col.columnDef] }}-->
+<!--</div>-->
+<!--<div *ngIf="col.type === 'boolean'">-->
+<!--<span class="glyphicon glyphicon-remove" *ngIf="rowData[col.columnDef]===0" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e"></span>-->
+<!--<span class="glyphicon glyphicon-minus" *ngIf="rowData[col.columnDef]!==0 && rowData[col.columnDef]!==1" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#000"> </span>-->
+<!--<span class="glyphicon glyphicon-ok" *ngIf="rowData[col.columnDef]===1" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#49cc90"> </span>-->
+<!--</div>-->
+<!--<div *ngIf="setting.settingColumn && col.type === 'settings'">-->
+<!--<span *ngIf="col.delete" (click)="onDeleteRow(rowData.id)" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e" class="glyphicon glyphicon-trash"></span>-->
+<!--<span *ngIf="col.editRow" (click)="onEditRow(rowData)" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#ff9b32" class="glyphicon glyphicon-info-sign"></span>-->
+<!--</div>-->
+<!--</td>-->
+<!--</tr>-->
+<!--</ng-template>-->
+<!--</p-table>-->

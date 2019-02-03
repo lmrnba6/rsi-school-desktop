@@ -1,0 +1,124 @@
+<h2 *ngIf="!isOnEdit">{{'intern.title'| translate}} - {{intern?.name}} -</h2>
+<mat-divider></mat-divider>
+<mat-card id="contentToConvert">
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="internForm">
+        <div class="container">
+            <button *ngIf="!isIntern" [disabled]="internForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button *ngIf="!isIntern" class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <!--<button class="pull-right print" type="button" (click)="captureScreen()" mat-button>-->
+                <!--<span class="glyphicon glyphicon-print"></span>-->
+            <!--</button>-->
+            <div class="pull-right" style="clear: both">
+                <mat-card *ngIf="saveCamera" style="width:200px;height:200px;" id="camera">
+                </mat-card>
+                <mat-card *ngIf="!saveCamera" style="width:200px;height:200px;">
+                    <img style="width:170px;height:170px;" [src]="photo | safe" />
+                </mat-card>
+                <button *ngIf="!saveCamera" style="background: -webkit-linear-gradient(top, rgba(203,96,179,1) 0%,rgba(193,70,161,1) 50%,rgba(168,0,119,1) 51%,rgba(219,54,164,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                        type="button" (click)="openFile()" mat-button>
+                    <span class="glyphicon glyphicon-picture"></span>
+                </button>
+                <button *ngIf="!saveCamera" style="background: -webkit-linear-gradient(top, rgba(203,96,179,1) 0%,rgba(193,70,161,1) 50%,rgba(168,0,119,1) 51%,rgba(219,54,164,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                        type="button" (click)="openCamera()" mat-button>
+                    <span class="glyphicon glyphicon-camera"></span>
+                </button>
+                <button *ngIf="saveCamera" style="background: -webkit-linear-gradient(top, rgba(247,62,29,1) 0%,rgba(239,97,79,1) 50%,rgba(246,41,12,1) 51%,rgba(240,47,23,1) 71%,rgba(226,27,13,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                        type="button" (click)="cancelPhoto()" mat-button>
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button *ngIf="saveCamera" style="background: -webkit-linear-gradient(top, rgba(155,206,84,1) 0%,rgba(100,186,42,1) 49%,rgba(56,168,0,1) 51%,rgba(119,198,45,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                        type="button" (click)="savePhoto()" mat-button>
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>
+            <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
+            <mat-form-field>
+                <input id="name" name="name" formControlName="name" [(ngModel)]="intern.name" matInput
+                       placeholder="{{'intern.placeholder.name' | translate}}" required autofocus>
+                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="address" formControlName="address" [(ngModel)]="intern.address" matInput
+                       placeholder="{{'intern.placeholder.address' | translate}}">
+                <mat-error *ngIf="address.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="birth" formControlName="birth" [(ngModel)]="intern.birth" matInput
+                       placeholder="{{'intern.placeholder.birth' | translate}}" [matDatepicker]="picker" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+                <span matSuffix>{{getAge(intern.birth)}} {{'intern.years' | translate}}</span>
+                <mat-error *ngIf="birth.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="phone" type="number" formControlName="phone" (keyup)="phoneParse()" [(ngModel)]="intern.phone" matInput
+                       placeholder="{{'intern.placeholder.phone' | translate}}" required>
+                <span matPrefix>+213</span>
+                <mat-error *ngIf="phone.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="phone2" type="number" formControlName="phone2" (keyup)="phoneParse()" [(ngModel)]="intern.phone2" matInput
+                       placeholder="{{'intern.placeholder.phone2' | translate}}">
+                <span matPrefix>+213</span>
+                <mat-error *ngIf="phone2.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="email" formControlName="email" [(ngModel)]="intern.email" matInput
+                       placeholder="{{'intern.placeholder.email' | translate}}" >
+                <mat-error *ngIf="email.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="name_arabic" formControlName="name_arabic" [(ngModel)]="intern.name_arabic" matInput
+                       placeholder="{{'intern.placeholder.name_arabic' | translate}}" required>
+                <mat-error *ngIf="name_arabic.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select formControlName="scholar" [(ngModel)]="intern.scholar" placeholder="{{'intern.placeholder.scholar' | translate}}" name="scholar" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let scholar of scholars" [value]="scholar">
+                        {{'intern.placeholder.' + scholar | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="scholar.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="sold" type="number" formControlName="sold" [(ngModel)]="intern.sold" matInput
+                       placeholder="{{'intern.placeholder.sold' | translate}}" [disabled]="!isAdmin">
+                <span matSuffix>DA</span>
+                <mat-error *ngIf="sold.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field class="example-full-width">
+                <input name="parent" formControlName="parent" matInput [ngModel]="userSelected"
+                       (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
+                       placeholder="{{'intern.placeholder.parent' | translate}}">
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                  (optionSelected)="userOnSelect($event.option.value)">
+                    <mat-option *ngFor="let parent of usersFiltered" [value]="parent">
+                        {{parent?.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </form>
+    <!--<h4 style="font-weight: bold">{{'intern.documents' | translate}}</h4>-->
+    <br>
+    <div class="container">
+        <mat-checkbox [(ngModel)]="intern.isAllowed">{{'intern.placeholder.isAllowed' | translate}}</mat-checkbox>
+    </div>
+</mat-card>

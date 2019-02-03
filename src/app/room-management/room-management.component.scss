@@ -1,0 +1,22 @@
+
+@import "../../assets/sass/style";
+.tab-content {
+  padding: 1%;
+}
+
+.mat-card {
+  padding: 5px;
+}
+
+.mat-tab-group {
+  width: 100%;
+  padding-top: 20px;
+}
+
+.mat-tab-body {
+  background:#FFFFFF;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background: $primary !important;
+}

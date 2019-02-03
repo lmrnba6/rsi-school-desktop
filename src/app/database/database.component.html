@@ -1,0 +1,16 @@
+<h2>{{'administration.database'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card id="contentToConvert">
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <div class="container">
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </div>
+        <mat-slide-toggle [(ngModel)]="isDatabaseLocal" (change)="onDatabaseLocalChange()">Database on local machine?</mat-slide-toggle>
+        <br>
+        <button style="margin-top: 20px; background: aquamarine"  type="button" (click)="syncDatabase()" mat-button>
+            <span class="glyphicon glyphicon-refresh"></span> Sync
+        </button>
+</mat-card>

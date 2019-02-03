@@ -1,0 +1,388 @@
+{
+  "nav": {
+    "home": "Acceuil",
+    "logout": "Déconnexion",
+    "title": "Titre",
+    "help": "Aide"
+  },
+  "login": {
+    "login": "Se connecter",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe"
+  },
+  "abstractTable": {
+    "filter": "Recherche"
+  },
+  "inbox": {
+    "title": "Messages",
+    "inbox": "Reçus",
+    "sent": "Envoyés",
+    "deleted": "Supprimés",
+    "from": "De",
+    "to": "À",
+    "content": "Message",
+    "subject": "Objet",
+    "date": "Date",
+    "attachments": "Pièces jointes"
+  },
+  "menu": {
+    "settings": "Paramètre",
+    "intern": "Étudiants",
+    "instructor": "Enseignants",
+    "document": "Documents",
+    "room": "Classes",
+    "session": "Groupe",
+    "training": "Formations",
+    "course": "Niveaux",
+    "enrollment": "Inscriptions",
+    "payment": "Paiement",
+    "exam": "Examens",
+    "test": "Épreuves",
+    "attendance": "Présences",
+    "result": "Statistiques",
+    "weekday": "Programme",
+    "visitors": "Visiteurs",
+    "accounting": "Comptabilité",
+    "inbox": "Messages"
+  },
+  "administration": {
+    "title": "Administration",
+    "reception": "Acceuil",
+    "school": "École",
+    "database": "Base de données",
+    "user_management": "Gestion des utilisateurs"
+  },
+  "intern": {
+    "title": "Étudiants",
+    "documents": "Documents requis",
+    "years": "Années",
+    "placeholder": {
+      "birth": "Date de naissance",
+      "name" : "Nom",
+      "email": "Courriel",
+      "address": "Adresse",
+      "name_arabic": "Nom en deuxième langue ",
+      "permit_number": "Numéro du permis",
+      "permit_delivery": "Date de délivrnce",
+      "status": "Type",
+      "phone": "Téléphone",
+      "phone2": "Deuxième téléphone",
+      "form": "Demande manuscrite",
+      "certificate": "Possède un brevet",
+      "medical": "Certificat medical",
+      "residence": "Copie de la cate séjour (pour les étrangers)",
+      "fees": "Frais de formation",
+      "fees_enrollment": "Frais d'inscription",
+      "fees_books": "Frais des livres",
+      "isAllowed": "Bloqué(e)",
+      "photo": "Photo",
+      "scholar": "Niveau scolaire",
+      "sold": "solde",
+      "elementary": "Elementary school",
+      "secondary": "Secondary school",
+      "high": "High school",
+      "bachelor": "Bachelor",
+      "master": "Master",
+      "phd": "Phd",
+      "parent": "Parent"
+    }
+  },
+  "visitor": {
+    "title": "Visiteurs",
+    "placeholder": {
+      "name" : "Nom",
+      "phone": "Téléphone",
+      "comment": "Commentaire"
+    }
+  },
+  "instructor": {
+    "title": "Enseignant",
+    "placeholder": {
+      "name" : "Nom",
+      "email": "Courriel",
+      "address": "Adresse",
+      "name_arabic": "Nom en deuxième langue",
+      "phone": "Téléphone",
+      "sold": "Solde"
+    }
+  },
+  "payment": {
+    "title": "Paiement",
+    "placeholder": {
+      "amount" : "Montant",
+      "date": "Date",
+      "comment": "Commentaire",
+      "training": "Formation",
+      "month": "Mois",
+      "intern_id": "Étudiant"
+    }
+  },
+  "payments": {
+    "title": "Paiement",
+    "intern": "Étudiant",
+    "instructor": "Enseignant"
+  },
+  "payment_instructor": {
+    "title": "Paiement",
+    "placeholder": {
+      "amount" : "Montant",
+      "date": "Date",
+      "comment": "Commentaire",
+      "intern_id": "Étudiant"
+    }
+  },
+  "session": {
+    "title": "Groupes",
+    "placeholder": {
+      "name" : "Nom",
+      "start": "Début",
+      "end": "Fin",
+      "limit": "Max",
+      "intern": "Students",
+      "instructor_id": "Enseignant",
+      "training_id": "Formation"
+    }
+  },
+  "user": {
+    "admin": "Administrateur",
+    "user": "Utilisateur",
+    "username": "Nom d'utilisateur",
+    "student": "Étudiant",
+    "teacher": "Enseignant",
+    "parent": "Parent",
+    "name": "Nom",
+    "role": "Role",
+    "placeholder": {
+      "username": "Nom d'utilisateur",
+      "name" : "Nom",
+      "password": "Mot de passe",
+      "role": "Role"
+    }
+  },
+  "training": {
+    "individual": "Individuel",
+    "group": "Groupe",
+    "mini_group": "Mini group",
+    "title": "Formation",
+    "placeholder": {
+      "name": "Nom",
+      "time" : "Volume de la seance",
+      "type": "Type",
+      "training_fees": "Frais de formation",
+      "books_fees": "Frais des livres",
+      "enrollment_fees": "Frais d'inscription"
+    }
+  },
+  "room": {
+    "title": "Classes",
+    "placeholder": {
+      "number": "Numéro",
+      "capacity" : "Capacité",
+      "intern": "Étudiants"
+    }
+  },
+  "exam": {
+    "title": "Examens",
+    "placeholder": {
+      "type" : "Type",
+      "mark": "Note",
+      "result": "Admis(e)",
+      "retake": "Rattrapage",
+      "training_id": "Formation",
+      "comment": "commentaire",
+      "date": "Date",
+      "time": "Durée",
+      "intern_id": "Étudiant",
+      "session_id": "Groupe"
+    }
+  },
+  "course": {
+    "title": "Niveaux",
+    "placeholder": {
+      "name" : "Titre",
+      "time": "Durée",
+      "training_id": "Formation"
+    }
+  },
+  "attendance": {
+    "title": "Présences",
+    "by_seance": "Global",
+    "by_date": " Par groupe",
+    "placeholder": {
+      "time" : "Durée",
+      "present" : "Présent",
+      "day_id": "Jour",
+      "weekday_id": "Heure",
+      "absent" : "Absent",
+      "off": "Non inscrit(e)",
+      "date": "Date",
+      "intern_id": "Étudiant",
+      "instructor_id": "Enseignant",
+      "training_id": "Formation",
+      "room_id": "Classe",
+      "session_id": "Groupe",
+      "saturday": "Samedi",
+      "sunday": "Dimanche",
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "name": "Nom"
+    }
+  },
+  "weekday": {
+    "title": "Programme",
+    "placeholder": {
+      "time" : "Heure",
+      "name" : "Jour",
+      "room_id": "Classe",
+      "session_id": "Groupe",
+      "saturday": "Samedi",
+      "sunday": "Dimanche",
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "training": "Formation",
+      "instructor": "Enseignant"
+    }
+  },
+  "enrollment": {
+    "title": "Inscription",
+    "done": "Terminé",
+    "start": "Commencer",
+    "placeholder": {
+      "comment" : "Commentaire",
+      "date": "Date",
+      "intern_id": "Étudiant",
+      "training_id": "Formation",
+      "session_id": "Groupe",
+      "instructor_id": "Enseignant"
+    }
+  },
+  "intern-management": {
+    "information" : "Information",
+    "enrollment": "Inscription",
+    "attendance": "Présence",
+    "exam": "Examen",
+    "payment": "Paiement"
+  },
+  "instructor-management": {
+    "information" : "Information",
+    "attendance": "Présence",
+    "session": "Groupes",
+    "weekday": "Programme"
+  },
+  "session-management": {
+    "information" : "Information",
+    "weekday": "Programme",
+    "intern": "Étudiants"
+  },
+  "weekday-management": {
+    "information" : "Information",
+    "attendance": "Présences"
+  },
+  "room-management": {
+    "information" : "Information",
+    "weekday": "Programme",
+    "attendance": "Présence"
+  },
+  "document": {
+    "title" : "Document",
+    "intern": "Liste des étudiants",
+    "session_open_pv": "PV d'ouverture  de session",
+    "session_open": "Document d'ouverture de session",
+    "session_close_pv": "PV de cloture  de session",
+    "session_close": "Document de cloture  de session",
+    "session_result_pv": "PV de délibération  de session",
+    "session_result": "Document de délibération  de session",
+    "card": "Carte d'étudiant",
+    "form": "Fiche d'inscription",
+    "receipt": "Bon de paiement"
+  },
+  "pv": {
+    "information" : "Information",
+    "session" : "Groupe",
+    "document": "Aperçu",
+    "edit": "Document",
+    "date": "Date",
+    "title": "Titre",
+    "edit_description": "Modifier le document",
+    "center": "",
+    "group": "Groupe",
+    "student_list": "Liste des étudiants",
+    "present": "Présent?",
+    "number": "Numéro",
+    "instructor": "Teacher",
+    "training": "Formation",
+    "card": "Carte d'étudiant",
+    "form": "Fiche d'inscription",
+    "receipt": "Bon de paiement"
+  },
+  "result": {
+    "title": "Statistques",
+    "edit_description": "Modifier les paramètres",
+    "edit": "Paramètres",
+    "from": "De",
+    "to": "À",
+    "result": "Résultat",
+    "student": "Nombre d'étudiants par formation",
+    "instructor": "Nombre d'enseignants par formation",
+    "student_title": "Statistiques par étudiant",
+    "instructor_title": "Statistiques par Enseignant",
+    "list": "Liste",
+    "graph": "Graph",
+    "name": "Nom",
+    "count": "Nombre"
+  },
+  "chart": {
+    "pie": "Circulaire",
+    "bar": "Barres",
+    "doughnut": "Donut",
+    "polarArea": "Polaire"
+  },
+  "accounting": {
+    "title": "Comptabilité",
+    "month": "Mois",
+    "January": "Janvier",
+    "February": "Février",
+    "March": "Mars",
+    "April": "Avril",
+    "May": "Mai",
+    "June": "Juin",
+    "July": "Juillet",
+    "August": "Août",
+    "September": "Septembre",
+    "October": "Octobre",
+    "November": "Novembre",
+    "December": "Décembre",
+    "classRate": "Frais par seance",
+    "instructorRate": "Pourcentage de l'enseignant",
+    "salary": "Salaire"
+  },
+  "messages": {
+    "error_field_required": "Ce champ est obligatoir",
+    "error_login": "Mauvais nom d'utilisateur ou mot de passe",
+    "field_required_error": "Vous devez rentrer une valeur",
+    "remove_row_warning_message": "Voulez-vous vraiment supprimer cette ligne?",
+    "warning_title": "Attention",
+    "operation_success_message": "Succès: Opération réussie",
+    "something_went_wrong_message": "Une erreur est survenue",
+    "no_intern_registered": "Aucun étudiant inscrit a ce niveau",
+    "no_result": "Aucun résultat",
+    "sync_database_warning_message": "Voulez-vous vraiment sync votre base de donneés avec le serveur?",
+    "change_local_database_warning_message": "Voulez-vous vraiment changer la source de votre base de donneés?",
+    "network.offline": "Connexion perdue!",
+    "go_to_receipt_message": "Voulez-vous imprimer le reçu?",
+    "intern_already_enrolled": "Étudiant déja inscrit à ce groupe"
+  },
+  "buttons": {
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "yes": "Oui",
+    "cancel":"Annuler",
+    "no": "Non"
+  }
+}

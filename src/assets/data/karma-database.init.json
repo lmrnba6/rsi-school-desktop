@@ -1,0 +1,75 @@
+{
+	"name": "./database.db",
+	"version": 1,
+	"tables": {
+		"user": [
+			{
+				"id": "1",
+				"name": "Mr. b",
+				"username": "1",
+				"password": "1",
+				"role": "admin"
+			}
+		],
+		"room": [
+			{
+				"id": "1",
+				"number": "1",
+				"capacity": "15"
+			}
+		],
+		"training": [
+			{
+				"id": "1",
+				"name": "1",
+				"time": "1",
+				"requirement": "1"
+			}
+		],
+		"course": [
+			{
+				"id": "1",
+				"name": "1",
+				"time": "1",
+				"training_id": 1
+			}
+		],
+		"session": [
+			{
+				"id": "1",
+				"name": "1",
+				"start": "1",
+				"end": "1"
+			}
+		],
+		"intern": [
+			{
+				"id": "1",
+				"name": "1",
+				"birth": "1",
+				"name_arabic": "1",
+				"address": "1",
+				"phone": "1",
+				"email": "1",
+				"form": "1",
+				"photo": "1",
+				"permit": "1",
+				"scholar": "1",
+				"certificate": "1" ,
+				"medical": "1",
+				"residence": "1",
+				"fees": "1"
+			}
+		],
+		"instructor": [
+			{
+				"id": "1",
+				"name": "1",
+				"name_arabic": "1",
+				"address": "1",
+				"phone": "1",
+				"email": "1"
+			}
+		]
+	}
+}
