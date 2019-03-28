@@ -312,14 +312,21 @@
     "edit_description": "edit document",
     "center": "",
     "group": "Group",
-    "student_list": "student list",
+    "student_list": "Student list",
     "present": "Présent?",
     "number": "number",
     "instructor": "Teacher",
     "training": "Formation",
     "card": "Student card",
     "form": "Enrollment From",
-    "receipt": "Student Receipt"
+    "receipt": "Student Receipt",
+    "birth": "Date of birth",
+    "name" : "Full name",
+    "email": "Email",
+    "address": "Address",
+    "name_arabic": "name with anothre language",
+    "phone": "Phone",
+    "scholar": "Scholar level"
   },
   "result": {
     "title": "Statistics",

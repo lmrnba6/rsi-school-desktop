@@ -107,7 +107,7 @@ export class InternComponent implements OnInit, OnChanges {
         this.setting.cols = [
             {columnDef: 'name', header: 'intern.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
             {columnDef: 'birth', header: 'intern.placeholder.birth', type: 'date', cell: (row: any) => `${row.birth}`},
-            {columnDef: 'phone', header: 'intern.placeholder.phone', type: 'text', cell: (row: any) => `${row.phone}`},
+            {columnDef: 'phone', header: 'intern.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},
             {columnDef: 'sold', header: 'intern.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold}`},
             {columnDef: 'name_arabic', header: 'intern.placeholder.name_arabic', type: 'text', cell: (row: any) => `${row.name_arabic}`}
         ];

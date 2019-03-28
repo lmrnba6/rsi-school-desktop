@@ -29,6 +29,7 @@ export class AttendanceFormComponent implements OnInit {
     public weekdays: Array<Room> = [];
     public sessions: Array<Session> = [];
     public internSelected: Intern;
+    public instructorId: number;
     public day = '';
     public days = [
         'saturday',
@@ -67,8 +68,11 @@ export class AttendanceFormComponent implements OnInit {
     }
 
     getSessions() {
-        Session.getAll().then((sessions: any) => {
+        Session.getAll().then(sessions => {
             this.sessions = sessions;
+            if(this.instructorId) {
+                this.sessions = this.sessions.filter(session => session.instructor_id === this.instructorId);
+            }
         });
     }
 
@@ -80,6 +84,10 @@ export class AttendanceFormComponent implements OnInit {
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
+            }else if(res.instructorId) {
+                this.instructorId = Number(res.instructorId)
+                this.isOnEdit = false;
+                this.attendance = new Attendance();
             } else {
                 this.isOnEdit = false;
                 this.attendance = new Attendance();
@@ -192,7 +200,7 @@ export class AttendanceFormComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['attendance']);
+        this.router.navigate([this.instructorId ? 'attendance-instructor/'+ this.instructorId : 'attendance']);
     }
 
 

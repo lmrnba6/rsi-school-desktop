@@ -66,7 +66,9 @@ export class PvComponent implements OnInit {
     }
 
     onPaymentChange() {
-        this.payment_code = new Date().getFullYear().toString().slice(2) + '/' + (new Date().getMonth() + 1) + '/' + this.payment.id.toString();
+        if(this.payment) {
+            this.payment_code = new Date().getFullYear().toString().slice(2) + '/' + (new Date().getMonth() + 1) + '/' + this.payment.id.toString();
+        }
     }
 
     getSessions() {
@@ -187,6 +189,12 @@ export class PvComponent implements OnInit {
 
     goBack() {
         this.router.navigate(['document']);
+    }
+
+    getDate(date: number) {
+
+        return date ? new Date(date).toISOString().slice(0, 10) : ''
+
     }
 
 }

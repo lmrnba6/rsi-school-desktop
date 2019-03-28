@@ -78,10 +78,10 @@
       "photo": "Photo",
       "scholar": "Niveau scolaire",
       "sold": "solde",
-      "elementary": "Elementary school",
-      "secondary": "Secondary school",
-      "high": "High school",
-      "bachelor": "Bachelor",
+      "elementary": "Prémaire",
+      "secondary": "Secondaire",
+      "high": "Lycée",
+      "bachelor": "Licence",
       "master": "Master",
       "phd": "Phd",
       "parent": "Parent"
@@ -315,11 +315,19 @@
     "student_list": "Liste des étudiants",
     "present": "Présent?",
     "number": "Numéro",
-    "instructor": "Teacher",
+    "instructor": "Enseignant",
     "training": "Formation",
     "card": "Carte d'étudiant",
     "form": "Fiche d'inscription",
-    "receipt": "Bon de paiement"
+    "receipt": "Bon de paiement",
+    "birth": "Date de naissance",
+    "name" : "Nom et prénom",
+    "email": "Courriel",
+    "address": "Adresse",
+    "name_arabic": "Nom en deuxième langue ",
+    "phone": "Téléphone",
+    "scholar": "Niveau scolaire"
+
   },
   "result": {
     "title": "Statistques",

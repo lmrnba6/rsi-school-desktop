@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {DialogsService} from '../_services/dialogs.service';
 import {MessagesService} from "../_services/messages.service";
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractTableSetting} from "../model/abstractTableSetting";
 import './attendance.component.scss';
 import {TranslateService} from "@ngx-translate/core";
@@ -13,6 +13,7 @@ import {Session} from "../model/session";
 import {Weekday} from "../model/weekday";
 import {Enrollment} from "../model/enrollment";
 import {AuthenticationService} from "../_services/authentication.service";
+import {User} from "../model/user";
 
 
 @Component({
@@ -47,17 +48,24 @@ export class AttendanceComponent implements OnInit, OnChanges {
     public sessions: Array<Session> = [];
     public attendances: Array<Attendance> = [];
     public isAdmin: boolean;
+    public isInstructor: boolean;
+    public instructorId: number;
+    public user: User;
 
     constructor(
         private dialogsService: DialogsService,
         public messagesService: MessagesService,
         private router: Router,
         private translate: TranslateService,
-        private authService: AuthenticationService) {
+        private authService: AuthenticationService,
+        private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.user = this.authService.getCurrentUser();
+        this.isAdmin = this.user.role === 'admin';
+        this.isInstructor = this.user.role === 'teacher';
+        this.getParams();
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
         this.getSessions();
@@ -73,11 +81,23 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.initSettingByDate();
     }
 
+    /**
+     * getParams
+     */
+    public getParams(): void {
+        this.route.params.subscribe(res => {
+           if(res.instructorId) {
+                this.instructorId = Number(res.instructorId)
+            }
+        });
+    }
+
     getSessions() {
         Session.getAll().then(sessions => {
             this.sessions = sessions;
-            if(this.instructor) {
-                this.sessions = this.sessions.filter(session => session.instructor_id === this.instructor.id);
+            const instructorId: number = this.instructor ? this.instructor.id : this.instructorId;
+            if(instructorId) {
+                this.sessions = this.sessions.filter(session => session.instructor_id === instructorId);
             }
         });
     }
@@ -287,7 +307,8 @@ export class AttendanceComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        this.router.navigate(['attendance/form']);
+        const id: string = String(this.instructor ? this.instructor.id : this.instructorId);
+        this.router.navigate([`attendance/form-instructor/${id}`]);
     }
 
     /**

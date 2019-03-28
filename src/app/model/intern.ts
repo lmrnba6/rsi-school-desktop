@@ -160,6 +160,27 @@ export class Intern {
             });
     }
 
+    public static getAllPagedBySessions(pageIndex: number, pageSize: number, sort: string, order: string,filter: string, sessions: string): Promise<Intern[]> {
+        const sql = `SELECT i.id, i.name, i.birth, i.email, i.phone, i.phone2, i.name_arabic, i.sold, i."isAllowed" FROM "enrollment" as e 
+                            INNER JOIN "intern" as i ON e.intern_id = i.id
+                            INNER JOIN "session" as s ON e.session_id = s.id
+                            WHERE s.id in (${sessions}) and i.name LIKE '%${filter}%'
+                           
+                            ORDER BY i.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+        const values = {
+        };
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: Intern[] = [];
+                for (const row of rows) {
+                    const intern = new Intern().fromRow(row);
+                    users.push(intern);
+                }
+                return users;
+            });
+    }
+
     public insert(): Promise<void> {
         const sql = `
             INSERT INTO "intern" (name, birth, name_arabic, address, phone, phone2, email, sold, "isAllowed", scholar, photo, parent)

@@ -93,7 +93,7 @@ export class InstructorComponent implements OnInit {
         columnDef: 'phone',
         header: 'instructor.placeholder.phone',
         type: 'text',
-        cell: (row: any) => `${row.phone}`
+        cell: (row: any) => `0${row.phone}`
       },
       { columnDef: 'email', header: 'instructor.placeholder.email', type: 'text', cell: (row: any) => `${row.email}` },
         { columnDef: 'sold', header: 'instructor.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold}` },

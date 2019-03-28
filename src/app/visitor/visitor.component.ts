@@ -95,7 +95,7 @@ export class VisitorComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'name', header: 'visitor.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
-            {columnDef: 'phone', header: 'visitor.placeholder.phone', type: 'text', cell: (row: any) => `${row.phone}`},
+            {columnDef: 'phone', header: 'visitor.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},
             {columnDef: 'comment', header: 'visitor.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
         ];
         !this.session &&

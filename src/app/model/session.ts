@@ -81,6 +81,25 @@ export class Session {
             });
     }
 
+    public static getAllSessionsByInstructor(id: number): Promise<Session[]> {
+        const sql = `SELECT s.id FROM "session" as s 
+				inner join "training" as t on s.training_id = t.id
+                inner join "instructor" as i on s.instructor_id = i.id 
+                where i.id = ${id}`
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: Session[] = [];
+                for (const row of rows) {
+                    const session = new Session().fromRow(row);
+                    users.push(session);
+                }
+                return users;
+            });
+    }
+
+
     public static getAllOpenSessions(): Promise<Session[]> {
         const sql = Settings.isDbLocal ? `SELECT s.*, ins.name as instructor, t.name as training, count(i.id) as interns FROM "session" as s 
 				left join "enrollment" as e On e.session_id = s.id 

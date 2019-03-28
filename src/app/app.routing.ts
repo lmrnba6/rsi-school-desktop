@@ -218,6 +218,14 @@ const appRoutes: Routes = [
                 component: AttendanceComponent
             },
             {
+                path: 'attendance-instructor/:instructorId',
+                component: AttendanceComponent
+            },
+            {
+                path: 'attendance/form-instructor/:instructorId',
+                component: AttendanceFormComponent
+            },
+            {
                 path: 'attendance/form/:id',
                 component: AttendanceFormComponent
             },

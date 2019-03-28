@@ -13,14 +13,14 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div class="container">
-                <mat-form-field>
+                <mat-form-field  *ngIf="pvName !=='form'">
                     <input id="test" [(ngModel)]="date" matInput
                            placeholder="{{'pv.date' | translate}}" required [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker></mat-datepicker>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName!=='receipt'">
+                <mat-form-field *ngIf="pvName!=='receipt' && pvName!=='form'">
                     <input [(ngModel)]="title" matInput
                            placeholder="{{'pv.title' | translate}}" required>
                 </mat-form-field>
@@ -61,22 +61,20 @@
     <h2>{{'pv.document' | translate}}</h2>
     <mat-card style="border: solid">
         <div id="intern" *ngIf="pvName === 'intern'">
-            <table width="100%">
-                <tbody>
-                <tr>
-                    <td>
+
                         <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
-                                style="font-size: 20.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif; color: black;">{{center}} </span></strong>
+                                style="font-size: 20.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif; color: black;">{{center?.toUpperCase()}} </span></strong>
                         </p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+
+                        <p style="text-align: center;"><img src="{{logo}}" alt="" width="91" height="91" /></p>
+
+
             <p style="text-align: right; direction: rtl; unicode-bidi: embed;">&nbsp;</p>
             <p style="margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none; direction: rtl; unicode-bidi: embed;">
                 &nbsp;</p>
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><u><span
-                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{title}} </span></u></strong>
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{'pv.student_list' | translate}} </span></u></strong>
             </p>
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.group' | translate}}: </u></span></strong><strong><u><span
@@ -127,6 +125,12 @@
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{i.date}}</span></strong>
                         </p>
                     </td>
+                    <td style="width: 70.9pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
+                        width="95">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">P/A</span></strong>
+                        </p>
+                    </td>
                 </tr>
                 <tr *ngFor="let intern of interns; let i = index;" style="height: 23.15pt;">
                     <td style="width: 28.4pt; border: solid black 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;" width="38">
@@ -143,7 +147,7 @@
                     <td style="width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
                         width="95">
                         <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
-                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern.phone}}</span></strong>
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">0{{intern.phone}}</span></strong>
                         </p>
                     </td>
                     <td *ngFor="let i of attendances; let x = index" style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
@@ -152,6 +156,11 @@
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern.attendances[x] ?
                             intern.attendances[x].present === 1 ? 'P' :
                             intern.attendances[x].present === 0 ? 'A' : 'N/O' : 'N/O'}}</span></strong>
+                        </p>
+                    </td>
+                    <td style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"  width="95">
+                        <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;"></span></strong>
                         </p>
                     </td>
                 </tr>
@@ -282,16 +291,16 @@
         <div id="form" *ngIf="pvName === 'form'">
             <p style="text-align: center;">&nbsp;</p>
             <p style="text-align: center;"><img src="{{logo}}" alt="" width="91" height="91" /></p>
-            <p style="text-align: center;"><u><span style="font-size: 28.0pt; line-height: 107%;">{{title}}</span></u></p>
+            <p style="text-align: center;"><u><span style="font-size: 28.0pt; line-height: 107%;">{{'pv.form' | translate}}</span></u></p>
             <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img style="float: right;" src="data:image/png;base64,{{intern.photo}}" alt="" width="92" height="92" /></p>
             <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode2"/></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Nom et pr&eacute;nom:   {{intern?.name}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Date de naissance&nbsp;:  {{intern.birth}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">T&eacute;l&eacute;phone&nbsp;:   {{intern.phone}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Nom en deuxi&egrave;me langue&nbsp;:   {{intern.name_arabic}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Niveau scolaire&nbsp;:   {{'intern.placeholder.'+intern.scholar | translate}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Formation&nbsp;:   {{session.training}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">Groupe&nbsp;:   {{session.session}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name' | translate}}:   {{intern?.name}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.birth' | translate}}&nbsp;:  {{getDate(intern?.birth)}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.phone' | translate}}&nbsp;:   0{{intern?.phone}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name_arabic' | translate}}&nbsp;:   {{intern?.name_arabic}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.scholar' | translate}}&nbsp;:   {{'intern.placeholder.'+intern?.scholar | translate}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.training' | translate}}&nbsp;:   {{session?.training}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.session' | translate}}&nbsp;:   {{session?.session}}</span></p>
         </div>
     </mat-card>
 

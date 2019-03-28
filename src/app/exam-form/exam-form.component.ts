@@ -7,6 +7,9 @@ import './exam-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
 import {Intern} from "../model/intern";
 import {Session} from "../model/session";
+import {AuthenticationService} from "../_services/authentication.service";
+import {Instructor} from "../model/instructor";
+import {User} from "../model/user";
 
 @Component({
     selector: 'app-exam-form',
@@ -31,17 +34,32 @@ export class ExamFormComponent implements OnInit {
     public value: number = 100;
     public internSelected: Intern;
     public sessions: Array<Session> = [];
+    public instructor: Instructor;
+    public sessionsString: string = '';
 
 
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private translate: TranslateService) {
+                private translate: TranslateService,
+                private auth: AuthenticationService) {
     }
 
     public ngOnInit(): void {
         this.getParams();
+        const user: User = this.auth.getCurrentUser();
+        if(user.role === 'teacher') {
+            Instructor.getByPhone(Number(user.password)).then((ins: Instructor) => {
+                this.instructor = ins;
+                Session.getAllSessionsByInstructor(ins.id).then(sessions =>  sessions.forEach((s, i) => {
+                    this.sessionsString = this.sessionsString +  String(s.id)
+                    if(i < sessions.length-1) {
+                        this.sessionsString += ','
+                    }
+                }));
+            });
+        }
     }
 
     parseAmount(amount: number) {
@@ -115,7 +133,7 @@ export class ExamFormComponent implements OnInit {
     public internOnChange(event: any): void {
         if(event.keyCode == 13) {
             this.block = true;
-            Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
+            Intern.getAllPagedBySessions(0, 5, 'name', '', event.target.value, this.sessionsString).then(
                 users => {
                     this.block = false;
                     this.internsFiltered = users
