@@ -180,81 +180,81 @@
         </div>
         <div id="receipt" *ngIf="pvName === 'receipt' && payment">
             <p><img style="margin-left: 50px;" src="{{logo}}" alt="" width="100" height="100"></p>
-            <p style="margin-left: 50px;">{{center}}</p>
+            <!--<p style="margin-left: 50px;">{{center}}</p>-->
             <p style="margin-left: 50px;">{{payment_code}}</p>
             <table>
                 <tbody>
                 <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Date:</strong></p>
+                    <td>
+                        <p ><strong>Date:</strong></p>
                     </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{date.toLocaleDateString('fr-FR')}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Nom:</strong></p>
-                    </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{intern?.name}}</p>
+                    <td>
+                        <p >{{date.toLocaleDateString('fr-FR')}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Langue:</strong></p>
+                    <td >
+                        <p><strong>Nom:</strong></p>
                     </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.training}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Mois:</strong></p>
-                    </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.month}}</p>
+                    <td >
+                        <p>{{intern?.name}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Nature:</strong></p>
+                    <td>
+                        <p ><strong>Langue:</strong></p>
                     </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.comment}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Montant:</strong></p>
-                    </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.amount}} DA</p>
+                    <td >
+                        <p >{{payment.training}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Solde:</strong></p>
+                    <td >
+                        <p ><strong>Mois:</strong></p>
                     </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{intern.sold}} DA</p>
+                    <td >
+                        <p >{{payment.month}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>-------</strong></p>
+                    <td >
+                        <p ><strong>Nature:</strong></p>
                     </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">--------</p>
+                    <td >
+                        <p >{{payment.comment}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <p ><strong>Montant:</strong></p>
+                    </td>
+                    <td >
+                        <p >{{payment.amount}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <p ><strong>Solde:</strong></p>
+                    </td>
+                    <td >
+                        <p >{{intern.sold}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <p ><strong>-------</strong></p>
+                    </td>
+                    <td >
+                        <p >--------</p>
                     </td>
 
                 </tr>
                 <tr>
-                    <td style="width: 99.0pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong>Total:</strong></p>
+                    <td >
+                        <p ><strong>Total:</strong></p>
                     </td>
-                    <td style="width: 120.5pt; padding: 0cm 5.4pt 0cm 5.4pt;">
-                        <p style="margin-bottom: .0001pt; text-align: left; line-height: normal;">{{payment.amount}} DA</p>
+                    <td >
+                        <p >{{payment.amount}} DA</p>
                     </td>
                 </tr>
                 </tbody>
@@ -264,29 +264,64 @@
             <p>&nbsp;</p>
         </div>
         <div id="card" *ngIf="pvName === 'card'">
-            <table style="border: solid; width: 405pt; border-collapse: collapse; height: 220px;" width="0">
-                <tbody>
-                <tr style="height: 30.0pt;">
-                    <td style="width: 200.625px; padding: 0cm 5.4pt; height: 130px;" rowspan="5">
-                        <img style="width: 100%;  height: 100%; border-radius: 20%;" src="data:image/png;base64,{{intern.photo}}" alt="" width="119" height="128" /></td>
-                    <td style="width: 307.625px; border-top: 1pt solid #a6a6a6; border-left: none; border-bottom: none; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><strong><span style="font-family: 'Arial',sans-serif; color: #404040;">{{center}}</span></strong></p>
-                    </td>
-                </tr>
-                <tr style="height: 30.0pt;">
-                    <td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 10px;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern?.name}}</span></p>
-                    </td>
-                </tr>
-                <tr style="height: 30.0pt;">
-                    <td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">
-                        <p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern.phone}}</span></p>
-                    </td>
-                </tr>
-                </tbody>
-                <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
-            </table>
-            <p>&nbsp;</p>
+            <!--<table style="border: solid; width: 405pt; border-collapse: collapse; height: 220px;" width="0">-->
+                <!--<tbody>-->
+                <!--<tr style="height: 30.0pt;">-->
+                    <!--<td style="width: 200.625px; padding: 0cm 5.4pt; height: 130px;" rowspan="5">-->
+                        <!--<img style="width: 100%;  height: 100%; border-radius: 20%;" src="data:image/png;base64,{{intern.photo}}" alt="" width="119" height="128" /></td>-->
+                    <!--<td style="width: 307.625px; border-top: 1pt solid #a6a6a6; border-left: none; border-bottom: none; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">-->
+                        <!--<p style="margin-bottom: .0001pt; line-height: normal;"><strong><span style="font-family: 'Arial',sans-serif; color: #404040;">{{center}}</span></strong></p>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr style="height: 30.0pt;">-->
+                    <!--<td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 10px;">-->
+                        <!--<p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern?.name}}</span></p>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr style="height: 30.0pt;">-->
+                    <!--<td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">-->
+                        <!--<p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern.phone}}</span></p>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--<img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>-->
+            <!--</table>-->
+            <!--<p>&nbsp;</p>-->
+            <div id="holder" style="width: 250px; margin: 90px auto; display: block; text-align: center;">
+                <div class="box" style=" width: 250px; height: 440px; border-radius: 25px 25px 8px 8px; background: -webkit-linear-gradient(top,#eee,#fff, #ddd);">
+                    <div class="tie"></div>
+                    <h1>{{center}}</h1>
+                    <img style=" width: 120px;
+                        margin: 18px 0 0 0;
+                        border:1px solid #eee;
+                        border-radius: 2px;
+                        background-color:rgba(255,255,255,0.5);
+                        padding: 4px;" [src]="intern?.photo | safe" />
+                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
+                        font-weight: normal;
+                        font-size: 22px;
+                        margin: 15px 0 3px 0;
+                        background-image: -webkit-linear-gradient(top,#999,#666);
+                        height: 50px;"
+                        class="rname">{{intern?.name}}</h1>
+                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
+                        font-weight: normal;
+                        font-size: 22px;
+                        margin: 15px 0 3px 0;"  class="postitle">0{{intern?.phone}}</h1>
+                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
+                        font-weight: normal;
+                        font-size: 22px;
+                        margin: 15px 0 3px 0;"  class="sig">{{intern?.email}}</h1>
+                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
+                        font-weight: normal;
+                        font-size: 22px;
+                        margin: 15px 0 3px 0;
+                        font-size: 12px;
+                        font-weight: bold;
+                        margin:0; padding:0;
+                        text-transform: uppercase;"  class="postitle"><img id="barcode"/></h1>
+                </div>
+            </div>
         </div>
         <div id="form" *ngIf="pvName === 'form'">
             <p style="text-align: center;">&nbsp;</p>

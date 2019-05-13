@@ -193,3 +193,12 @@ CREATE TABLE IF NOT EXISTS "enrollment" (
     FOREIGN KEY(intern_id) REFERENCES "intern"(id),
 	PRIMARY KEY("id")
 );
+
+DROP TABLE IF EXISTS "register";
+  CREATE TABLE IF NOT EXISTS "register" (
+  	"id"	SERIAL NOT NULL,
+  	"date"  TEXT NOT NULL,
+      "amount"  NUMERIC NOT NULL,
+      "comment"	TEXT NOT NULL,
+  	PRIMARY KEY("id")
+  );

@@ -99,6 +99,8 @@ import {FabComponent} from "./fab/fab.component";
 import {FloatingActionMenuModule} from "ng2-floating-action-menu";
 import {MessagesComponent} from "./messages/messages.component";
 import {SafePipe} from "./_pipes/safe.pipe";
+import {RegisterComponent} from "./register/register.component";
+import {RegisterFormComponent} from "./register-form/register-form.component";
 
 
 
@@ -228,7 +230,9 @@ import {SafePipe} from "./_pipes/safe.pipe";
         InboxFormComponent,
         IndicatorComponent,
         FabComponent,
-        MessagesComponent
+        MessagesComponent,
+        RegisterComponent,
+        RegisterFormComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent],
     providers: [

@@ -59,6 +59,10 @@
                     <span class="glyphicon glyphicon-usd"></span>
                     <span *ngIf="iconsShown">{{'menu.payment' | translate}}</span>
                 </a>
+                <a mat-list-item matTooltip="{{'menu.register' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/register">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                    <span *ngIf="iconsShown">{{'menu.register' | translate}}</span>
+                </a>
                 <a mat-list-item matTooltip="{{'menu.document' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/document">
                     <span class="glyphicon glyphicon-list-alt"></span>
                     <span *ngIf="iconsShown">{{'menu.document' | translate}}</span>

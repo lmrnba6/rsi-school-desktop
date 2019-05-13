@@ -43,7 +43,8 @@
     "weekday": "Programme",
     "visitors": "Visiteurs",
     "accounting": "Comptabilité",
-    "inbox": "Messages"
+    "inbox": "Messages",
+    "register": "Caisse"
   },
   "administration": {
     "title": "Administration",
@@ -116,6 +117,16 @@
       "month": "Mois",
       "intern_id": "Étudiant"
     }
+  },
+  "register": {
+    "title": "Caisse",
+    "placeholder": {
+      "amount" : "Montant",
+      "date": "Date",
+      "comment": "Commentaire"
+    },
+    "soldAll":"Solde total",
+    "sold":"Solde de la periode"
   },
   "payments": {
     "title": "Paiement",

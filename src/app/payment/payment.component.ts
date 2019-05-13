@@ -99,7 +99,7 @@ export class PaymentComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'payment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'amount', header: 'payment.placeholder.amount', type: 'text', cell: (row: any) => `${row.amount}`},
+            {columnDef: 'amount', header: 'payment.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(2)} DA`},
             {columnDef: 'comment', header: 'payment.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
             {columnDef: 'intern_id', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
         ];

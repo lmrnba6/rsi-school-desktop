@@ -43,7 +43,8 @@
     "weekday": "Program",
     "visitors": "Visitors",
     "accounting": "Accounting",
-    "inbox": "Inbox"
+    "inbox": "Inbox",
+    "register": "Register"
   },
   "administration": {
     "title": "Administration",
@@ -116,6 +117,17 @@
       "month": "Month",
       "intern_id": "student"
     }
+  },
+  "register": {
+    "title": "Register",
+    "placeholder": {
+      "amount" : "Amount",
+      "date": "Date",
+      "comment": "Comment"
+    },
+    "soldAll":"Total sold",
+    "sold":"period sold"
+
   },
   "payments": {
     "title": "Payments",

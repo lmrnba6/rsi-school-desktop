@@ -1,0 +1,19 @@
+<h2>{{'register.title'| translate}} - {{'register.soldAll' | translate}} = <strong style="color: red;"> {{soldAll?.toFixed(2)}} DA</strong></h2>
+<mat-divider></mat-divider>
+<mat-card>
+  <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+  </app-loader>
+  <div class="container">
+    <br>
+    <h3>{{'register.sold' | translate}} = <strong style="color: red;"> {{getSold().toFixed(2)}} DA</strong></h3>
+    <br>
+    <mat-form-field class="register_search">
+      <input [(ngModel)]="from" matInput (dateChange)="search()"
+             placeholder="{{'register.placeholder.fate' | translate}}" required [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+  </div>
+  <app-abstract-table (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
+</mat-card>

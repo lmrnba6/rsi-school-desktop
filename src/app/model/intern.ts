@@ -6,7 +6,7 @@ import { TheDb } from './thedb';
  * @export
  * @class Intern
  */
-export class Intern {
+export class Intern{
     public id = -1;
     public name = '';
     public birth: Date | number;

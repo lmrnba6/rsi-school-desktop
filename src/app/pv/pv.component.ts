@@ -179,11 +179,7 @@ export class PvComponent implements OnInit {
 
     print() {
         let modal = window.open('', 'modal');
-        modal!.document.write('<html><head><title>my div</title>');
-        modal!.document.write('</head><body >');
-            modal!.document.write('<style type="text/css">tables {color: red;}</style>');
-        modal!.document.write(document.getElementById(this.pvName)!.innerHTML );
-        modal!.document.write('</body></html>');
+        modal!.document.write(document.getElementById(this.pvName)!.outerHTML );
         modal!.print();
     }
 

@@ -195,4 +195,22 @@ CREATE TABLE IF NOT EXISTS `enrollment` (
 	PRIMARY KEY(`id`)
 );
 
+DROP TABLE IF EXISTS `register`;
+CREATE TABLE IF NOT EXISTS `register` (
+	`id`	INTEGER NOT NULL,
+	`date`  TEXT NOT NULL,
+    `amount`  NUMERIC NOT NULL,
+    `comment`	TEXT NOT NULL,
+	PRIMARY KEY(`id`)
+);
+
+DROP TABLE IF EXISTS `notes`;
+CREATE TABLE IF NOT EXISTS `notes` (
+	`id`	INTEGER NOT NULL,
+	`date`  TEXT NOT NULL,
+    `amount`  NUMERIC NOT NULL,
+    `comment`	TEXT NOT NULL,
+	PRIMARY KEY(`id`)
+);
+
 COMMIT;

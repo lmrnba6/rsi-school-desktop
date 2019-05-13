@@ -43,6 +43,13 @@ export class LayoutComponent implements OnInit {
                 }
             },
             {
+                iconClass: 'glyphicon glyphicon-shopping-cart',
+                label: this.translate.instant('register.title'),
+                onClick: function () {
+                    _this.router.navigate(['register/form']);
+                }
+            },
+            {
                 iconClass: 'glyphicon glyphicon-usd',
                 label: this.translate.instant('payment.title'),
                 onClick: function () {

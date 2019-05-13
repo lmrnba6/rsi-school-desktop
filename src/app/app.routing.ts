@@ -50,6 +50,8 @@ import {SchoolComponent} from "./school/school.component";
 import {InboxComponent} from "./inbox/inbox.component";
 import {InboxFormComponent} from "./inbox-form/inbox-form.component";
 import {MessagesComponent} from "./messages/messages.component";
+import {RegisterComponent} from "./register/register.component";
+import {RegisterFormComponent} from "./register-form/register-form.component";
 
 const appRoutes: Routes = [
     {
@@ -300,6 +302,18 @@ const appRoutes: Routes = [
             {
                 path: 'payments',
                 component: PaymentsComponent
+            },
+            {
+                path: 'register',
+                component: RegisterComponent
+            },
+            {
+                path: 'register/form',
+                component: RegisterFormComponent
+            },
+            {
+                path: 'register/form/:id',
+                component: RegisterFormComponent
             },
             {
                 path: 'payments/intern',

@@ -20,6 +20,25 @@ import './abstract-table.component.scss';
 import {AbstractTableSetting} from "../model/abstractTableSetting";
 import {MessagesService} from "../_services/messages.service";
 import {Settings} from "../model/settings";
+import {Intern} from "../model/intern";
+import {DialogsService} from "../_services/dialogs.service";
+import {TranslateService} from "@ngx-translate/core";
+import {Attendance} from "../model/attendance";
+import {Attachment} from "../model/attachment";
+import {Enrollment} from "../model/enrollment";
+import {Exam} from "../model/exam";
+import {Inbox} from "../model/inbox";
+import {Instructor} from "../model/instructor";
+import {Payment} from "../model/payment";
+import {Payment_instructor} from "../model/paymentInstructor";
+import {Room} from "../model/room";
+import {Session} from "../model/session";
+import {Training} from "../model/training";
+import {User} from "../model/user";
+import {Visitor} from "../model/visitor";
+import {AuthenticationService} from "../_services/authentication.service";
+import {Register} from "../model/register";
+import {Weekday} from "../model/weekday";
 
 @Component({
   selector: 'app-abstract-table',
@@ -37,8 +56,10 @@ export class AbstractTableComponent
   @Output() addRow: EventEmitter<any> = new EventEmitter<any>();
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
   @Output() filter: EventEmitter<any> = new EventEmitter<any>();
+    @Output() deleteAll: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   public dataSource: MatTableDataSource<any>;
@@ -51,14 +72,18 @@ export class AbstractTableComponent
   public pageSize: number = 5;
   public colsSelected: any = [];
   public search: boolean;
+  public select: boolean;
   public  rowSelected: any;
     public cols: any = [];
     public pageSizeOptions: Array<number> = [5, 10, 25, 100];
   public pageEvent: PageEvent;
+  public isAdmin: boolean;
 
-  constructor(public messagesService: MessagesService, /*private translate: TranslateService*/) { }
+  constructor(public messagesService: MessagesService, private translate: TranslateService, private dialogsService: DialogsService, private auth: AuthenticationService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+      this.isAdmin = this.auth.getCurrentUser().role === 'admin';
+  }
 
   ngOnChanges(): void {
     //prime table
@@ -72,6 +97,7 @@ export class AbstractTableComponent
       //end prime table
       this.displayedColumns = this.setting.cols.map((x: any) => x.columnDef);
       if (this.data) {
+          this.select = false;
       this.dataSource = new MatTableDataSource<any>(this.data.items);
       this.length = this.data.paging.totalCount;
     }
@@ -102,6 +128,87 @@ export class AbstractTableComponent
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
   }
+
+  public selectAll(event: any): void{
+    this.data.items.forEach((item: any) => item['selected'] = event.checked);
+  }
+
+    public deleteMultiple(): void {
+        const promises: Array<Promise<any>> = [];
+        this.data.items.forEach((item: any) => {
+            if (item.selected) {
+                if(item instanceof Attachment){
+                    promises.push(Attachment.delete(item.id));
+                }
+                if(item instanceof Attendance){
+                    promises.push(Attendance.delete(item.id));
+                }
+                if(item instanceof Enrollment){
+                    promises.push(Enrollment.delete(item.id));
+                }
+                if(item instanceof Exam){
+                    promises.push(Exam.delete(item.id));
+                }
+                if(item instanceof Inbox){
+                    promises.push(Inbox.delete(item.id));
+                }
+                if(item instanceof Instructor){
+                    promises.push(Instructor.delete(item.id));
+                }
+                if(item instanceof Intern){
+                    promises.push(Intern.delete(item.id));
+                }
+                if(item instanceof Payment){
+                    promises.push(Payment.delete(item.id));
+                }
+                if(item instanceof Payment_instructor){
+                    promises.push(Payment_instructor.delete(item.id));
+                }
+                if(item instanceof Room){
+                    promises.push(Room.delete(item.id));
+                }
+                if(item instanceof Session){
+                    promises.push(Session.delete(item.id));
+                }
+                if(item instanceof Training){
+                    promises.push(Training.delete(item.id));
+                }
+                if(item instanceof User){
+                    promises.push(User.delete(item.id));
+                }
+                if(item instanceof Visitor){
+                    promises.push(Visitor.delete(item.id));
+                }
+                if(item instanceof Weekday){
+                    promises.push(Weekday.delete(item.id));
+                }
+                if(item instanceof Register){
+                    promises.push(Register.delete(item.id));
+                }
+            }
+        });
+        if(promises.length > 0) {
+            this.dialogsService
+                .confirm('messages.warning_title', 'messages.remove_row_warning_message', true, 'warning-sign')
+                .subscribe(confirm => {
+                    if (confirm) {
+
+                        this.block = true;
+                        Promise.all(promises).then(() => {
+                                this.block = false;
+                                this.deleteAll.emit();
+                                this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                            },
+                            () => {
+                                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                                this.block = false;
+                            });
+                    }
+                });
+        }
+
+    }
+
 
   public applyFilter(filter: any): void {
       if(filter.keyCode == 13) {
