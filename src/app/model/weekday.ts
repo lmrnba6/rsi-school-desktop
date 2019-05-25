@@ -45,6 +45,18 @@ export class Weekday {
             .then((count: any) => count);
     }
 
+    public static getCountByIntern(intern: number): Promise<Weekday[]> {
+        return TheDb.selectAll(`SELECT count(*) as count FROM "weekday" AS w 
+                            INNER JOIN "session" AS s ON w.session_id = s.id
+                            INNER JOIN "room" AS r ON w.room_id = r.id
+                            INNER JOIN "training" AS t ON s.training_id = t.id
+                            INNER JOIN "instructor" AS i ON s.instructor_id = i.id  
+                            INNER JOIN "enrollment" AS e ON e.session_id = s.id    
+                            INNER JOIN "intern" AS int ON e.intern_id = int.id                               
+                            WHERE int.id = ${intern}`, {})
+            .then((count: any) => count);
+    }
+
     public static get(id: number): Promise<Weekday> {
         const sql = `SELECT * FROM "weekday" WHERE id = ${id}`;
         const values = {};
@@ -188,6 +200,31 @@ export class Weekday {
                             INNER JOIN "training" AS t ON s.training_id = t.id
                             INNER JOIN "instructor" AS i ON s.instructor_id = i.id                           
                             WHERE s.instructor_id = ${instructor}
+                            ORDER BY w.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+        const values = {
+        };
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const weekdays: Weekday[] = [];
+                for (const row of rows) {
+                    const weekday = new Weekday().fromRow(row);
+                    weekdays.push(weekday);
+                }
+                return weekdays;
+            });
+    }
+
+    public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Weekday[]> {
+        const sql = `SELECT w.id, w.name, w.time, w.session_id, w.room_id, s.name as session, r.number as room, t.name as training, int.name as intern, i.name as instructor
+                            FROM "weekday" AS w 
+                            INNER JOIN "session" AS s ON w.session_id = s.id
+                            INNER JOIN "room" AS r ON w.room_id = r.id
+                            INNER JOIN "training" AS t ON s.training_id = t.id
+                            INNER JOIN "instructor" AS i ON s.instructor_id = i.id  
+                            INNER JOIN "enrollment" AS e ON e.session_id = s.id    
+                            INNER JOIN "intern" AS int ON e.intern_id = int.id                      
+                            WHERE int.id = ${intern}
                             ORDER BY w.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };

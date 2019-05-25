@@ -278,7 +278,8 @@
     "enrollment": "Inscription",
     "attendance": "Présence",
     "exam": "Examen",
-    "payment": "Paiement"
+    "payment": "Paiement",
+    "weekday": "Programme"
   },
   "instructor-management": {
     "information" : "Information",

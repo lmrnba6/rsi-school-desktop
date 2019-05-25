@@ -20,6 +20,7 @@ export class Settings {
     public static serialNumber: string = '';
     public static isDbLocal = false;
     public static isDbLocalServer = true;
+    public static isHerokuServer = true;
     public static client: Client;
     public static dbClientLocal: {
         user: string,
@@ -33,6 +34,22 @@ export class Settings {
         database: 'postgres',
         password: '',
         port: 5432
+    }
+
+    public static dbHeroku: {
+        user: string,
+        host: string,
+        database: string,
+        password: string,
+        port: number,
+        ssl: boolean
+    } = {
+        user: 'latzitreotobui',
+        host: 'ec2-54-235-247-209.compute-1.amazonaws.com',
+        database: 'dcstelqbrl059n',
+        password: '8557229a9742e809556e1ec790de4ac8c29463b5af8ffbadf5cae1c3158492f9',
+        port: 5432,
+        ssl: true
     }
     public static dbClientServer: {
         user: string,
@@ -113,7 +130,11 @@ export class Settings {
         }
         if (!Settings.isDbLocal) {
             if (Settings.isDbLocalServer) {
-                Settings.client = new Client(Settings.dbClientLocal);
+                if(this.isHerokuServer){
+                    Settings.client = new Client(Settings.dbHeroku);
+                } else {
+                    Settings.client = new Client(Settings.dbClientLocal);
+                }
                 Settings.client.connect();
             } else {
                 Settings.client = new Client(Settings.dbClientServer);
@@ -179,9 +200,11 @@ export class Settings {
                 serialNumber: Settings.serialNumber,
                 isDbLocal: Settings.isDbLocal,
                 isDbLocalServer: Settings.isDbLocalServer,
+                isHerokuServer: Settings.isHerokuServer,
                 dbClientLocal: Settings.dbClientLocal,
                 dbClientServer: Settings.dbClientServer,
-                dbSshTunnel: Settings.dbSshTunnel
+                dbSshTunnel: Settings.dbSshTunnel,
+                dbHeroku: Settings.dbHeroku
             }, undefined, 4));
     }
 
@@ -308,9 +331,11 @@ export class Settings {
         Settings.dbPath = settings['dbPath'];
         Settings.isDbLocal = settings['isDbLocal'];
         Settings.isDbLocalServer = settings['isDbLocalServer'];
+        Settings.isHerokuServer = settings['isHerokuServer'];
         Settings.dbClientLocal = settings['dbClientLocal'];
         Settings.dbClientServer = settings['dbClientServer'];
         Settings.dbSshTunnel = settings['dbSshTunnel'];
         Settings.serialNumber = settings['serialNumber'];
+        Settings.dbHeroku = settings['dbHeroku'];
     }
 }

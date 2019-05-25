@@ -39,6 +39,16 @@ export class Intern{
             .then((count: any) => count);
     }
 
+    public static getCountInternByParent(parent: number): Promise<Intern[]> {
+        return TheDb.selectAll(`SELECT count(i.id) as count
+                                                   FROM "enrollment" AS e 
+                                                   INNER JOIN "session" AS s ON e.session_id = s.id
+                                                   INNER JOIN "intern" AS i ON e.intern_id = i.id
+                                                   INNER JOIN "training" AS t ON s.training_id = t.id
+                    WHERE i.parent = ${parent}`, {})
+            .then((count: any) => count);
+    }
+
     public static get(id: number): Promise<Intern> {
         const sql = `SELECT * FROM "intern" WHERE id = ${id}`;
         const values = {};

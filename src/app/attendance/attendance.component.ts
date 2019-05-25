@@ -126,7 +126,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
     }
 
     onByDate() {
-        Attendance.getAlldBySession(this.session_id).then(attendances => {
+        Attendance.getAllBySession(this.session_id).then(attendances => {
             this.attendances = attendances;
             this.initSettingByDate();
             this.getDataTableByDate();
@@ -137,7 +137,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.dataByDate = {items: [], paging: {totalCount: 0}};
         this.dataByDateCopy = {items: [], paging: {totalCount: 0}};
         this.block = true;
-        Promise.all([Enrollment.getAllBySession(this.session_id), Attendance.getAlldBySession(this.session_id)])
+        Promise.all([Enrollment.getAllBySession(this.session_id), Attendance.getAllBySession(this.session_id)])
             .then(values => {
                     this.block = false;
                     this.dataByDate.paging.totalCount = values[0].length;

@@ -29,9 +29,9 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header disabled>
                         <span class="glyphicon glyphicon-flash"
                               style="font-weight: bold;font-size:20px; -webkit-text-fill-color: yellow"></span>
-                    <mat-checkbox *ngIf="isAdmin" [checked]="select" (change)="selectAll($event)"></mat-checkbox>
                     <span (click)="deleteMultiple()" *ngIf="isAdmin" class="glyphicon glyphicon-trash"
                           style="font-weight: bold;font-size:20px;-webkit-text-fill-color:yellow"></span>
+                    <mat-checkbox *ngIf="isAdmin" [checked]="select" (change)="selectAll($event)"></mat-checkbox>
                 </mat-header-cell>
             </ng-container>
             <ng-container *ngIf="column.columnDef!=='settings'">

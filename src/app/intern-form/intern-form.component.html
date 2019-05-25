@@ -5,34 +5,34 @@
     </app-loader>
     <form [formGroup]="internForm">
         <div class="container">
-            <button *ngIf="!isIntern" [disabled]="internForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button *ngIf="!isIntern && !isParent" [disabled]="internForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
-            <button *ngIf="!isIntern" class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+            <button *ngIf="!isIntern && !isParent" class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
             <!--<button class="pull-right print" type="button" (click)="captureScreen()" mat-button>-->
                 <!--<span class="glyphicon glyphicon-print"></span>-->
             <!--</button>-->
-            <div class="pull-right" style="clear: both">
+            <div  class="pull-right" style="clear: both">
                 <mat-card *ngIf="saveCamera" style="width:200px;height:200px;" id="camera">
                 </mat-card>
                 <mat-card *ngIf="!saveCamera" style="width:200px;height:200px;">
                     <img style="width:170px;height:170px;" [src]="photo | safe" />
                 </mat-card>
-                <button *ngIf="!saveCamera" style="background: -webkit-linear-gradient(top, rgba(203,96,179,1) 0%,rgba(193,70,161,1) 50%,rgba(168,0,119,1) 51%,rgba(219,54,164,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                <button *ngIf="!saveCamera && !isIntern && !isParent" style="background: -webkit-linear-gradient(top, rgba(203,96,179,1) 0%,rgba(193,70,161,1) 50%,rgba(168,0,119,1) 51%,rgba(219,54,164,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
                         type="button" (click)="openFile()" mat-button>
                     <span class="glyphicon glyphicon-picture"></span>
                 </button>
-                <button *ngIf="!saveCamera" style="background: -webkit-linear-gradient(top, rgba(203,96,179,1) 0%,rgba(193,70,161,1) 50%,rgba(168,0,119,1) 51%,rgba(219,54,164,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                <button *ngIf="!saveCamera && !isIntern && !isParent" style="background: -webkit-linear-gradient(top, rgba(203,96,179,1) 0%,rgba(193,70,161,1) 50%,rgba(168,0,119,1) 51%,rgba(219,54,164,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
                         type="button" (click)="openCamera()" mat-button>
                     <span class="glyphicon glyphicon-camera"></span>
                 </button>
-                <button *ngIf="saveCamera" style="background: -webkit-linear-gradient(top, rgba(247,62,29,1) 0%,rgba(239,97,79,1) 50%,rgba(246,41,12,1) 51%,rgba(240,47,23,1) 71%,rgba(226,27,13,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                <button *ngIf="saveCamera && !isIntern && !isParent" style="background: -webkit-linear-gradient(top, rgba(247,62,29,1) 0%,rgba(239,97,79,1) 50%,rgba(246,41,12,1) 51%,rgba(240,47,23,1) 71%,rgba(226,27,13,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
                         type="button" (click)="cancelPhoto()" mat-button>
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
-                <button *ngIf="saveCamera" style="background: -webkit-linear-gradient(top, rgba(155,206,84,1) 0%,rgba(100,186,42,1) 49%,rgba(56,168,0,1) 51%,rgba(119,198,45,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
+                <button *ngIf="saveCamera && !isIntern && !isParent" style="background: -webkit-linear-gradient(top, rgba(155,206,84,1) 0%,rgba(100,186,42,1) 49%,rgba(56,168,0,1) 51%,rgba(119,198,45,1) 100%); width: 50%; border-radius: 20px; margin-top: 5px;"
                         type="button" (click)="savePhoto()" mat-button>
                     <span class="glyphicon glyphicon-ok"></span>
                 </button>

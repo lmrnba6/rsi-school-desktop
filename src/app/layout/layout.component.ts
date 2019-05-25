@@ -16,6 +16,7 @@ export class LayoutComponent implements OnInit {
     public user: any;
     public isInstructor: boolean;
     public isIntern: boolean;
+    public isParent: boolean;
     public iconsShown: boolean = true;
 
     public buttons: Array<FloatingActionButton> = [];
@@ -28,6 +29,7 @@ export class LayoutComponent implements OnInit {
         this.user = this.auth.getCurrentUser();
         this.isInstructor = this.user.role === 'teacher';
         this.isIntern = this.user.role === 'student';
+        this.isParent = this.user.role === 'parent';
         this.options = {
             fixed: false,
             top: 0,

@@ -8,6 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Intern} from "../model/intern";
 import {Session} from "../model/session";
 import {AuthenticationService} from "../_services/authentication.service";
+import {User} from "../model/user";
 
 @Component({
     selector: 'app-intern',
@@ -30,6 +31,8 @@ export class InternComponent implements OnInit, OnChanges {
     public sortName: string = 'name';
     public sortDirection: string = 'ASC';
     public isAdmin: boolean;
+    public isParent: boolean;
+    public user: User;
 
     constructor(
         private dialogsService: DialogsService,
@@ -40,7 +43,9 @@ export class InternComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        if(this.authService.getCurrentUser().role === 'student') {
+        this.user = this.authService.getCurrentUser();
+        this.isParent = this.user.role === 'parent';
+        if(this.user.role === 'student') {
             Intern.getByPhone(this.authService.getCurrentUser().username).then(intern => {
                 intern && this.router.navigate(['intern-management/' + intern.id]);
             })
@@ -60,9 +65,12 @@ export class InternComponent implements OnInit, OnChanges {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        Promise.all([this.session ? Intern.getAllPagedBySession(offset, limit, sort, order, this.session.id) :
+        Promise.all([this.isParent ? Intern.getByParent(this.user.id) :
+            this.session ? Intern.getAllPagedBySession(offset, limit, sort, order, this.session.id) :
             Intern
-            .getAllPaged(offset, limit, sort, order, filter), this.session ? Intern.getCountInternBySession(this.session.id) :
+            .getAllPaged(offset, limit, sort, order, filter),
+            this.isParent ? Intern.getCountInternByParent(this.user.id) :
+            this.session ? Intern.getCountInternBySession(this.session.id) :
             Intern.getCount(this.filter)])
             .then(
                 values => {
@@ -102,8 +110,8 @@ export class InternComponent implements OnInit, OnChanges {
         this.setting = new AbstractTableSetting();
         this.setting.settingColumn = !this.session;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.session;
-        this.setting.addRow = true;
+        this.setting.filter = !this.session && !this.isParent;
+        this.setting.addRow = !this.isParent;
         this.setting.cols = [
             {columnDef: 'name', header: 'intern.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
             {columnDef: 'birth', header: 'intern.placeholder.birth', type: 'date', cell: (row: any) => `${row.birth}`},

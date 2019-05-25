@@ -118,7 +118,7 @@ export class PvComponent implements OnInit {
     getDataTableByDate() {
         this.interns = [];
         this.block = true;
-        Promise.all([Enrollment.getAllBySession(this.id), Attendance.getAlldBySession(this.id)])
+        Promise.all([Enrollment.getAllBySession(this.id), Attendance.getAllBySession(this.id)])
             .then(values => {
                 this.attendances = values[1];
                 this.attendances.forEach(attendance => attendance.date = new Date(Number(attendance.date)).toLocaleDateString('fr-FR') as any);

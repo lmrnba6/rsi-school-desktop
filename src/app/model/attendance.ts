@@ -218,7 +218,7 @@ export class Attendance {
             });
     }
 
-    public static getAlldBySession(id: number): Promise<Attendance[]> {
+    public static getAllBySession(id: number): Promise<Attendance[]> {
         const sql = `SELECT a.date  FROM "attendance" AS a INNER JOIN session AS s ON a.session_id = s.id 
                                                    INNER JOIN weekday AS w ON a.weekday_id = w.id                                            
                                                    INNER JOIN intern AS i ON a.intern_id = i.id

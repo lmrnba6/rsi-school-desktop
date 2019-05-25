@@ -58,10 +58,13 @@ export class WeekdayComponent implements OnInit, OnChanges {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        Promise.all([this.instructor ? Weekday.getAllPagedByInstructor(offset, limit, sort, order,this.instructor.id) :
+        Promise.all([this.intern ? Weekday.getAllPagedByIntern(offset, limit, sort, order,this.intern.id) :
+            this.instructor ? Weekday.getAllPagedByInstructor(offset, limit, sort, order,this.instructor.id) :
             this.room ? Weekday.getAllPagedByRoom(offset, limit, sort, order, this.room.id) :
             this.session ? Weekday.getAllPagedBySession(offset, limit, sort, order, this.session.id) :
-            Weekday.getAllPaged(offset, limit, sort, order, filter),this.instructor ? Weekday.getCountByInstructor(this.instructor.id) :
+            Weekday.getAllPaged(offset, limit, sort, order, filter),
+            this.intern ? Weekday.getCountByIntern(this.intern.id) :
+            this.instructor ?  Weekday.getCountByInstructor(this.instructor.id) :
             this.room ? Weekday.getCountByRoom(this.room.id) :
             this.session ? Weekday.getCountBySession(this.session.id) :
             Weekday.getCount(this.filter)])
@@ -98,19 +101,19 @@ export class WeekdayComponent implements OnInit, OnChanges {
 
     public initSetting(): void {
         this.setting = new AbstractTableSetting();
-        this.setting.settingColumn = !this.session && !this.room && !this.instructor;
+        this.setting.settingColumn = !this.session && !this.room && !this.instructor && !this.intern;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.session && !this.room  && !this.instructor;
+        this.setting.filter = !this.session && !this.room  && !this.instructor && !this.intern;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'name', header: 'weekday.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
+            {columnDef: 'name', header: 'weekday.placeholder.name', type: 'text', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.name)}`},
             {columnDef: 'time', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
             {columnDef: 'session_id', header: 'weekday.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`},
             {columnDef: 'instructor', header: 'weekday.placeholder.instructor', type: 'text', cell: (row: any) => `${row.instructor}`},
             {columnDef: 'training', header: 'weekday.placeholder.training', type: 'text', cell: (row: any) => `${row.training}`},
             {columnDef: 'room_id', header: 'weekday.placeholder.room_id', type: 'text', cell: (row: any) => `${row.room}`}
         ];
-        !this.session && !this.room && !this.instructor &&
+        !this.session && !this.room && !this.instructor && !this.intern &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});
     }
 

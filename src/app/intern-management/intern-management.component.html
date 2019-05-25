@@ -29,6 +29,14 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-calendar"></span> {{'intern-management.weekday' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-weekday [intern]="intern"></app-weekday>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
       <span class="glyphicon glyphicon-pencil"></span> {{'intern-management.exam' | translate}}
     </ng-template>
     <div class="tab-content">

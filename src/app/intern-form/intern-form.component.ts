@@ -49,9 +49,11 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
         'phd'
     ];
     public isIntern: boolean;
+    public isParent: boolean;
     public users: Array<User> = [];
     public usersFiltered: Array<User> = [];
     public userSelected: User;
+    public user: User;
 
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,
@@ -61,8 +63,10 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.isIntern = this.authService.getCurrentUser().role === 'student';
-        this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.user = this.authService.getCurrentUser();
+        this.isIntern = this.user.role === 'student';
+        this.isAdmin = this.user.role === 'admin';
+        this.isParent = this.user.role === 'parent';
         this.initForm();
         this.getParams();
         //this.readFile(__dirname + '/assets/images/profile.png')
@@ -101,7 +105,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
             User.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
-                    this.usersFiltered = users
+                    this.usersFiltered = users.filter(u => u.role === 'parent')
                 }, () => {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false

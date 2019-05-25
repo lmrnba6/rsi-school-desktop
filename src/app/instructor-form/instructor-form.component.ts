@@ -129,7 +129,9 @@ export class InstructorFormComponent implements OnInit, OnChanges {
             () => {
                 this.block = false;
                 this.goBack();
-                this.createUser();
+                if(!this.isOnEdit){
+                    this.createUser();
+                }
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {

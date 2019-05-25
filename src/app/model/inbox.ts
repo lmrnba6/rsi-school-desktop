@@ -117,7 +117,7 @@ export class Inbox {
         const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
         const sql = `
             INSERT INTO "inbox" (subject, date, content, ${fromCol}, ${toCol}, deleted, read)
-            VALUES('${this.subject}', ${this.date}, '${this.content}',${this.from}, ${this.to}, ${this.deleted}, ${this.read})`;
+            VALUES('${this.subject}', ${this.date}, '${this.content}',${this.from}, ${this.to}, ${this.deleted}, ${this.read}) ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
 
         const values = {
         };

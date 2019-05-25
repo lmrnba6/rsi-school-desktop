@@ -7,7 +7,7 @@
                      [fixedInViewport]="options.fixed" [fixedTopGap]="options.top"
                      [fixedBottomGap]="options.bottom">
             <mat-nav-list (onmouseenter)="menuMouseEnter($event)" (onmouseleave)="menuMouseLeave($event)" class="navList">
-                <a mat-list-item matTooltip="{{'menu.enrollment' | translate}}"  matTooltipPosition="after" *ngIf="!isInstructor && !isIntern" class="nav_item" routerLink="/enrollment">
+                <a mat-list-item matTooltip="{{'menu.enrollment' | translate}}"  matTooltipPosition="after" *ngIf="!isInstructor && !isIntern && !isParent" class="nav_item" routerLink="/enrollment">
                     <span class="glyphicon glyphicon-asterisk"></span>
                     <span *ngIf="iconsShown">{{'menu.enrollment' | translate}}</span>
                 </a>
@@ -15,11 +15,11 @@
                     <span class="glyphicon glyphicon-user"></span>
                     <span *ngIf="iconsShown">{{'menu.intern' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.visitors' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/visitor">
+                <a mat-list-item matTooltip="{{'menu.visitors' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/visitor">
                     <span class="glyphicon glyphicon-sort"></span>
                     <span *ngIf="iconsShown">{{'menu.visitors' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.instructor' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern" routerLink="/instructor">
+                <a mat-list-item matTooltip="{{'menu.instructor' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/instructor">
                     <span class="glyphicon glyphicon-briefcase"></span>
                     <span *ngIf="iconsShown">{{'menu.instructor' | translate}}</span>
                 </a>
@@ -27,27 +27,27 @@
                     <span class="glyphicon glyphicon-envelope"></span>
                     <span *ngIf="iconsShown">{{'menu.inbox' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.session' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/session">
+                <a mat-list-item matTooltip="{{'menu.session' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/session">
                     <span class="glyphicon glyphicon-th"></span>
                     <span *ngIf="iconsShown">{{'menu.session' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.training' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/training">
+                <a mat-list-item matTooltip="{{'menu.training' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/training">
                     <span class="glyphicon glyphicon-education"></span>
                     <span *ngIf="iconsShown">{{'menu.training' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.weekday' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/weekday">
+                <a mat-list-item matTooltip="{{'menu.weekday' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/weekday">
                     <span class="glyphicon glyphicon-calendar"></span>
                     <span *ngIf="iconsShown">{{'menu.weekday' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.exam' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern" routerLink="/exam">
+                <a mat-list-item matTooltip="{{'menu.exam' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/exam">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <span *ngIf="iconsShown">{{'menu.exam' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.room' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/room">
+                <a mat-list-item matTooltip="{{'menu.room' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/room">
                     <span class="glyphicon glyphicon-modal-window"></span>
                     <span *ngIf="iconsShown">{{'menu.room' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.attendance' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/attendance">
+                <a mat-list-item matTooltip="{{'menu.attendance' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/attendance">
                     <span class="glyphicon glyphicon-ok-circle"></span>
                     <span *ngIf="iconsShown">{{'menu.attendance' | translate}}</span>
                 </a>
@@ -55,19 +55,19 @@
                     <span class="glyphicon glyphicon glyphicon-stats"></span>
                     <span *ngIf="iconsShown">{{'menu.result' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.payment' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/payments">
+                <a mat-list-item matTooltip="{{'menu.payment' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/payments">
                     <span class="glyphicon glyphicon-usd"></span>
                     <span *ngIf="iconsShown">{{'menu.payment' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.register' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/register">
+                <a mat-list-item matTooltip="{{'menu.register' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/register">
                     <span class="glyphicon glyphicon-shopping-cart"></span>
                     <span *ngIf="iconsShown">{{'menu.register' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.document' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/document">
+                <a mat-list-item matTooltip="{{'menu.document' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/document">
                     <span class="glyphicon glyphicon-list-alt"></span>
                     <span *ngIf="iconsShown">{{'menu.document' | translate}}</span>
                 </a>
-                <a mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern" routerLink="/accounting">
+                <a mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/accounting">
                     <span class="glyphicon glyphicon-equalizer"></span>
                     <span *ngIf="iconsShown">{{'menu.accounting' | translate}}</span>
                 </a>
@@ -91,6 +91,6 @@
             <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
-    <app-fab [buttons]="buttons" *ngIf="!isIntern && !isInstructor"></app-fab>
+    <app-fab [buttons]="buttons" *ngIf="!isIntern && !isParent && !isInstructor"></app-fab>
     <app-footer></app-footer>
 </div>

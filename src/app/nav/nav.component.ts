@@ -22,6 +22,9 @@ export class NavComponent{
   user: User;
   messages: number = 0;
   connected = true;
+  isTeacher = false;
+  isIntern = false;
+  isParent = false;
 
   constructor(private authService: AuthenticationService,
               private router: Router,
@@ -32,6 +35,9 @@ export class NavComponent{
     this.lang = this.translate.currentLang;
     this.languageText = this.lang === 'fr' ? 'English' : 'Français';
     this.user = authService.getCurrentUser();
+    this.isIntern = this.user.role === 'student';
+    this.isParent = this.user.role === 'parent';
+    this.isTeacher = this.user.role === 'teacher'
     this.getCenter();
     this.getMessages();
     this.messagesService.messagesSubject.subscribe(() => this.getMessages());
