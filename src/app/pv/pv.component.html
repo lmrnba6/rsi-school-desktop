@@ -2,7 +2,7 @@
 <app-loader *ngIf="block" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
 <mat-card class="pv">
-    <mat-accordion>
+    <mat-accordion *ngIf="pvName !== 'card'">
         <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -25,7 +25,7 @@
                            placeholder="{{'pv.title' | translate}}" required>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName !=='form'">
+                <mat-form-field *ngIf="pvName !=='form' && pvName!=='card'" >
                 <input [(ngModel)]="center" matInput
                        placeholder="{{'pv.center' | translate}}" required>
             </mat-form-field>
@@ -69,10 +69,6 @@
 
                         <p style="text-align: center;"><img src="{{logo}}" alt="" width="91" height="91" /></p>
 
-
-            <p style="text-align: right; direction: rtl; unicode-bidi: embed;">&nbsp;</p>
-            <p style="margin-bottom: .0001pt; text-align: center; line-height: normal; text-autospace: none; direction: rtl; unicode-bidi: embed;">
-                &nbsp;</p>
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{'pv.student_list' | translate}} </span></u></strong>
             </p>
@@ -107,7 +103,7 @@
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{'pv.number' | translate}}</span></strong>
                         </p>
                     </td>
-                    <td style="width: 92.15pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
+                    <td style="width: 150.15pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
                         width="123">
                         <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{'intern.placeholder.name' | translate}}</span></strong>
@@ -179,9 +175,9 @@
             </p>
         </div>
         <div id="receipt" *ngIf="pvName === 'receipt' && payment">
-            <p><img style="margin-left: 50px;" src="{{logo}}" alt="" width="100" height="100"></p>
-            <!--<p style="margin-left: 50px;">{{center}}</p>-->
-            <p style="margin-left: 50px;">{{payment_code}}</p>
+            <p><img style="margin-left: 3%;" src="{{logo}}" alt="" width="50" height="50"></p>
+            <p style="margin-left: 3%;">{{center}}</p>
+            <p style="margin-left: 3%;">{{payment_code}}</p>
             <table>
                 <tbody>
                 <tr>
@@ -259,9 +255,6 @@
                 </tr>
                 </tbody>
             </table>
-            <p style="margin-left: 50px;">Have a nice day :)</p>
-            <p>05 61 63 11 11 / 033 28 36 36</p>
-            <p>&nbsp;</p>
         </div>
         <div id="card" *ngIf="pvName === 'card'">
             <!--<table style="border: solid; width: 405pt; border-collapse: collapse; height: 220px;" width="0">-->
@@ -287,39 +280,38 @@
                 <!--<img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>-->
             <!--</table>-->
             <!--<p>&nbsp;</p>-->
-            <div id="holder" style="width: 250px; margin: 90px auto; display: block; text-align: center;">
-                <div class="box" style=" width: 250px; height: 440px; border-radius: 25px 25px 8px 8px; background: -webkit-linear-gradient(top,#eee,#fff, #ddd);">
+            <div id="holder" style="text-align: center;">
+                <div class="box" style=" width: 250px; height: 330px; border: 1px solid black; background: -webkit-linear-gradient(top,#eee,#fff, #ddd);">
                     <div class="tie"></div>
-                    <h1>{{center}}</h1>
+                    <h1 style="margin: 5px auto">{{center}}</h1>
                     <img style=" width: 120px;
-                        margin: 18px 0 0 0;
+                        margin: 0px 0 0 0;
                         border:1px solid #eee;
                         border-radius: 2px;
                         background-color:rgba(255,255,255,0.5);
                         padding: 4px;" [src]="intern?.photo | safe" />
                     <h1 style=" font-family: 'trebuchet ms', 'sans serif';
                         font-weight: normal;
-                        font-size: 22px;
-                        margin: 15px 0 3px 0;
-                        background-image: -webkit-linear-gradient(top,#999,#666);
-                        height: 50px;"
+                        font-size: 18px;
+                        margin: 5px 0 3px 0;
+                        background-image: -webkit-linear-gradient(top,#999,#666);"
                         class="rname">{{intern?.name}}</h1>
                     <h1 style=" font-family: 'trebuchet ms', 'sans serif';
                         font-weight: normal;
-                        font-size: 22px;
-                        margin: 15px 0 3px 0;"  class="postitle">0{{intern?.phone}}</h1>
+                        font-size: 18px;
+                        margin: 5px 0 3px 0;"  class="postitle">0{{intern?.phone}}</h1>
                     <h1 style=" font-family: 'trebuchet ms', 'sans serif';
                         font-weight: normal;
-                        font-size: 22px;
-                        margin: 15px 0 3px 0;"  class="sig">{{intern?.email}}</h1>
+                        font-size: 18px;
+                        margin: 5px 0 3px 0;"  class="sig">{{intern?.email}}</h1>
                     <h1 style=" font-family: 'trebuchet ms', 'sans serif';
                         font-weight: normal;
-                        font-size: 22px;
-                        margin: 15px 0 3px 0;
+                        font-size: 18px;
+                        margin: 5px 0 3px 0;
                         font-size: 12px;
                         font-weight: bold;
                         margin:0; padding:0;
-                        text-transform: uppercase;"  class="postitle"><img id="barcode"/></h1>
+                        text-transform: uppercase;"  class="postitle"><img style="height: 60px; width: 80%;" id="barcode"/></h1>
                 </div>
             </div>
         </div>
@@ -327,7 +319,7 @@
             <p style="text-align: center;">&nbsp;</p>
             <p style="text-align: center;"><img src="{{logo}}" alt="" width="91" height="91" /></p>
             <p style="text-align: center;"><u><span style="font-size: 28.0pt; line-height: 107%;">{{'pv.form' | translate}}</span></u></p>
-            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img style="float: right;" src="data:image/png;base64,{{intern.photo}}" alt="" width="92" height="92" /></p>
+            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img style="float: right;" [src]="intern?.photo | safe" alt="" width="92" height="92" /></p>
             <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode2"/></p>
             <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name' | translate}}:   {{intern?.name}}</span></p>
             <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.birth' | translate}}&nbsp;:  {{getDate(intern?.birth)}}</span></p>

@@ -18,7 +18,16 @@
                 <mat-error *ngIf="subject.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit">
+                <mat-label>{{'session.title' | translate}}</mat-label>
+                <mat-select formControlName="groups" (selectionChange)="onGroupChange($event)">
+                    <mat-option *ngFor="let group of groupList" [value]="group.value">
+                        {{group.viewValue | translate}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field *ngIf="!isOnEdit && (groupSelected === 'individual' || groupSelected === 'groups')" class="example-full-width">
                 <input name="to" formControlName="to" matInput
                        (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
                        placeholder="{{'inbox.to' | translate}}" required>
@@ -26,14 +35,14 @@
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="userOnSelect($event.option.value)">
                     <mat-option *ngFor="let to of usersFiltered" [value]="to">
-                        {{to?.name}}
+                        {{to?.name + ' ' + (to?.training || '') + ' ' + (to?.instructor || '')}}
                     </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="to.invalid || !userSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <div *ngIf="isOnEdit">
                 <mat-label>{{(inbox.from === user.id ? 'inbox.to' : 'inbox.from') | translate}}</mat-label>
-                <h4>{{inbox.from === user.id ? inbox.to_user : inbox.from_user}}</h4>
+                <h4>{{inbox.from === user.id ? inbox.to : inbox.from}}</h4>
             </div>
             <br>
             <mat-form-field>

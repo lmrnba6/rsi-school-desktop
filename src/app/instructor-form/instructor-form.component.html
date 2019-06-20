@@ -24,7 +24,7 @@
             </mat-form-field>
             <br>
             <mat-form-field>
-                <input name="phone" formControlName="phone" type="number" [(ngModel)]="instructor.phone" (keyup)="phoneParse()" matInput
+                <input name="phone" formControlName="phone" type="number" [(ngModel)]="instructor.phone" (keyup)="phoneParse()" (blur)="onPhoneChanged()" matInput
                        placeholder="{{'instructor.placeholder.phone' | translate}}" required>
                 <span matPrefix>+213</span>
                 <mat-error *ngIf="phone.invalid">{{'messages.field_required_error' | translate}}</mat-error>

@@ -1,8 +1,9 @@
 
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
+<h1 *ngIf="intern.isAllowed" class="block"> <span class="glyphicon glyphicon-ban-circle"></span>{{'messages.blocked' | translate}}</h1>
 <h2>{{'intern.title' | translate}} - {{intern?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
-<mat-tab-group *ngIf="intern" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+<mat-tab-group [ngStyle]="{'opacity': intern.isAllowed ? '0.4' : '1'}" *ngIf="intern" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
       <span class="glyphicon glyphicon-info-sign"></span> {{'intern-management.information' | translate}}

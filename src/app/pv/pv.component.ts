@@ -180,7 +180,8 @@ export class PvComponent implements OnInit {
     print() {
         let modal = window.open('', 'modal');
         modal!.document.write(document.getElementById(this.pvName)!.outerHTML );
-        modal!.print();
+        modal!.document.close();
+        setTimeout(() => {modal!.print();}, 100);
     }
 
     goBack() {

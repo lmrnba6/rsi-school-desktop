@@ -76,9 +76,9 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row
-                [ngStyle]="{'background-color':row?.sold > 0 ? 'orange' : row?.isAllowed && 'rgba(244, 67, 54, 0.43', 'background-color': row?.read === 0 && 'rgba(214, 217, 0, 0.45)' }"
-                *matRowDef="let row; columns: displayedColumns;" row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" row
+                [ngStyle]="{'background-color' : row?.isAllowed ? 'rgba(244, 67, 54, 0.43)' : (row?.sold > 0  || row?.read === 0) && 'rgba(214, 217, 0, 0.45)'}"
+                >
         </mat-row>
 
     </mat-table>

@@ -171,10 +171,11 @@ export class Intern{
     }
 
     public static getAllPagedBySessions(pageIndex: number, pageSize: number, sort: string, order: string,filter: string, sessions: string): Promise<Intern[]> {
+        const where: string = sessions ? `s.id in (${sessions}) and` : '';
         const sql = `SELECT i.id, i.name, i.birth, i.email, i.phone, i.phone2, i.name_arabic, i.sold, i."isAllowed" FROM "enrollment" as e 
                             INNER JOIN "intern" as i ON e.intern_id = i.id
                             INNER JOIN "session" as s ON e.session_id = s.id
-                            WHERE s.id in (${sessions}) and i.name LIKE '%${filter}%'
+                            WHERE ${where} i.name LIKE '%${filter}%'
                            
                             ORDER BY i.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
@@ -195,7 +196,7 @@ export class Intern{
         const sql = `
             INSERT INTO "intern" (name, birth, name_arabic, address, phone, phone2, email, sold, "isAllowed", scholar, photo, parent)
             VALUES('${this.name}', '${this.birth}', '${this.name_arabic}','${this.address}', 
-            '${this.phone}', '${this.phone2}', '${this.email}','${this.sold}', ${this.isAllowed}, '${this.scholar}', '${this.photo}', ${this.parent})`;
+            '${this.phone}', '${this.phone2}', '${this.email}', ${this.sold}, ${this.isAllowed}, '${this.scholar}', '${this.photo}', ${this.parent})`;
 
         const values = {
         };
@@ -215,7 +216,7 @@ export class Intern{
             UPDATE "intern"
                SET name = '${this.name}', birth = '${this.birth}', name_arabic = '${this.name_arabic}', 
                address = '${this.address}', phone = '${this.phone}',  phone2 = '${this.phone2}', "isAllowed" = ${this.isAllowed}, 
-               email = '${this.email}', sold = '${this.sold}',  scholar = '${this.scholar}',  photo = '${this.photo}', parent = ${this.parent}   
+               email = '${this.email}', sold = ${this.sold},  scholar = '${this.scholar}',  photo = '${this.photo}', parent = ${this.parent}   
              WHERE id = ${this.id}`;
 
         const values = {

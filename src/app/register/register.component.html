@@ -9,7 +9,7 @@
     <br>
     <mat-form-field class="register_search">
       <input [(ngModel)]="from" matInput (dateChange)="search()"
-             placeholder="{{'register.placeholder.fate' | translate}}" required [matDatepicker]="picker">
+             placeholder="{{'register.placeholder.date' | translate}}" required [matDatepicker]="picker">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker touchUi #picker></mat-datepicker>
     </mat-form-field>

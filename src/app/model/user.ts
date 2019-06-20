@@ -33,6 +33,65 @@ export class User {
             });
     }
 
+    public static getByUsername(id: number): Promise<User> {
+        const sql = `SELECT * FROM "user" WHERE username = '${id}'`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return new User().fromRow(row);
+                } else {
+                    throw new Error('Expected to find 1 User. Found 0.');
+                }
+            });
+    }
+
+    public static getAllTeachers(): Promise<Array<User>> {
+        const sql = `SELECT * FROM "user" WHERE role = 'teacher'`;
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: User[] = [];
+                for (const row of rows) {
+                    const user = new User().fromRow(row);
+                    users.push(user);
+                }
+                return users;
+            });
+    }
+
+    public static getAllStudents(): Promise<Array<User>> {
+        const sql = `SELECT * FROM "user" WHERE role = 'student'`;
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: User[] = [];
+                for (const row of rows) {
+                    const user = new User().fromRow(row);
+                    users.push(user);
+                }
+                return users;
+            });
+    }
+
+    public static getAllParents(): Promise<Array<User>> {
+        const sql = `SELECT * FROM "user" WHERE role = 'parent'`;
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: User[] = [];
+                for (const row of rows) {
+                    const user = new User().fromRow(row);
+                    users.push(user);
+                }
+                return users;
+            });
+    }
+
     public static verify(username: string, password: string): Promise<User> {
         const sql = `SELECT * FROM "user" WHERE username = '${username}' AND password = '${password}'`;
         const values = {};

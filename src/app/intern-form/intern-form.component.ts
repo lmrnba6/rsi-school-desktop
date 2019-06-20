@@ -82,6 +82,14 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
         this.saveCamera = false;
     }
 
+    public onPhoneChanged(): void {
+        Intern.getByPhone(Number(this.intern.phone)).then(() => {
+            this.intern.phone = '';
+            this.messagesService.notifyMessage(this.translate.instant('messages.phone_exist'), '', 'error');
+        }
+        )
+    }
+
     /**
      * getParams
      */

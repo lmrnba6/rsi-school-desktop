@@ -20,3 +20,15 @@
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background: $primary !important;
 }
+
+.block {
+  color: red;
+  transform: rotate(30deg);
+  margin: 20%;
+  font-size: 80px;
+  position: absolute;
+  z-index: 1;
+  span {
+    font-size: 80px;
+  }
+}

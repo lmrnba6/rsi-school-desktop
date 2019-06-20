@@ -140,6 +140,14 @@ export class InstructorFormComponent implements OnInit, OnChanges {
             });
     }
 
+    public onPhoneChanged(): void {
+        Instructor.getByPhone(Number(this.instructor.phone)).then(() => {
+                this.instructor.phone = '';
+                this.messagesService.notifyMessage(this.translate.instant('messages.phone_exist'), '', 'error');
+            }
+        )
+    }
+
     createUser() {
         const user: User = new User();
         user.role = 'teacher';

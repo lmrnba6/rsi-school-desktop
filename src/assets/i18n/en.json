@@ -23,7 +23,13 @@
     "content": "Message",
     "subject": "Subject",
     "date": "Date",
-    "attachments": "Attachments"
+    "attachments": "Attachments",
+    "all": "Everyone",
+    "parents": "All parents",
+    "teachers": "All teachers",
+    "students": "All students",
+    "groups": "By group",
+    "individual": "Individual"
   },
   "menu": {
     "settings": "settings",
@@ -396,7 +402,10 @@
     "change_local_database_warning_message": "Do you want to change the source of your database?",
     "network.offline": "Connection lost!",
     "go_to_receipt_message": "Would you like to print the receipt?",
-    "intern_already_enrolled": "Student already enrolled to this group"
+    "intern_already_enrolled": "Student already enrolled to this group",
+    "blocked": "Blocked",
+    "phone_exist": "This phone number exist already",
+    "session_full": "This group is full"
   },
   "buttons": {
     "save": "save",

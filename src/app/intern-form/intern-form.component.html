@@ -60,7 +60,7 @@
             </mat-form-field>
             <br>
             <mat-form-field>
-                <input name="phone" type="number" formControlName="phone" (keyup)="phoneParse()" [(ngModel)]="intern.phone" matInput
+                <input name="phone" type="number" formControlName="phone" (keyup)="phoneParse()" [(ngModel)]="intern.phone" (blur)="onPhoneChanged()" matInput
                        placeholder="{{'intern.placeholder.phone' | translate}}" required>
                 <span matPrefix>+213</span>
                 <mat-error *ngIf="phone.invalid">{{'messages.field_required_error' | translate}}</mat-error>

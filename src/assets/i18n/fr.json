@@ -23,7 +23,13 @@
     "content": "Message",
     "subject": "Objet",
     "date": "Date",
-    "attachments": "Pièces jointes"
+    "attachments": "Pièces jointes",
+    "all": "Tous",
+    "parents": "Tous les parents",
+    "teachers": "Tous les enseignants",
+    "students": "Tous les étudiants",
+    "groups": "Par groupe",
+    "individual": "Individuel"
   },
   "menu": {
     "settings": "Paramètre",
@@ -396,7 +402,10 @@
     "change_local_database_warning_message": "Voulez-vous vraiment changer la source de votre base de donneés?",
     "network.offline": "Connexion perdue!",
     "go_to_receipt_message": "Voulez-vous imprimer le reçu?",
-    "intern_already_enrolled": "Étudiant déja inscrit à ce groupe"
+    "intern_already_enrolled": "Étudiant déja inscrit à ce groupe",
+    "blocked": "Bloqué(e)",
+    "phone_exist": "Ce numéro de téléphone est existant",
+    "session_full": "Ce groupe est complet"
   },
   "buttons": {
     "save": "Sauvegarder",

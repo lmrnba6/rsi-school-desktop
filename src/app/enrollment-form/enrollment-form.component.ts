@@ -51,7 +51,7 @@ export class EnrollmentFormComponent implements OnInit {
 
     getSessions() {
         this.block = true;
-        Session.getAllOpenSessions().then(values => {
+        Session.getAll().then(values => {
             this.block = false;
             this.sessions = values;
         }, ()=> {
@@ -76,6 +76,12 @@ export class EnrollmentFormComponent implements OnInit {
             }, () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
+            })
+            Promise.all([Enrollment.getAllBySession(Number(this.enrollment.session_id)), Session.get(Number(this.enrollment.session_id))]).then(values => {
+                if(values[0].length >= values[1].limit){
+                    (this.enrollment.session_id as any) = undefined;
+                    this.messagesService.notifyMessage(this.translate.instant('messages.session_full'), '', 'error');
+                }
             })
         }
     }
