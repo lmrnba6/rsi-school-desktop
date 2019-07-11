@@ -73,6 +73,7 @@ export class InboxComponent implements OnInit, OnChanges {
 
 
     public getDataTable(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): void {
+        this.messagesService.messagesSubject.next(null);
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;

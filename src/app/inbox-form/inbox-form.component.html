@@ -54,9 +54,9 @@
         </div>
     </form>
     <br>
-    <button *ngIf="!isOnEdit" style="background: none; border: none; margin-bottom: 10px;  margin-left: 5%;" onclick="document.getElementById('fileUpload').click()">
-        <span class="glyphicon glyphicon-paperclip"></span>
-    </button>
+<!--    <button *ngIf="!isOnEdit" style="background: none; border: none; margin-bottom: 10px;  margin-left: 5%;" onclick="document.getElementById('fileUpload').click()">-->
+<!--        <span class="glyphicon glyphicon-paperclip"></span>-->
+<!--    </button>-->
     <input id="fileUpload" *ngIf="!isOnEdit" style="display:none; background: #b9b9b9; width: 15%; border-radius: 20px; float: left"
            type="file" (change)="onUpload($event)" #fileInput>
     <mat-chip-list style="float: left" *ngIf="attachments.length">

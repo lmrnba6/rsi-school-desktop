@@ -4,6 +4,9 @@ import {AuthenticationService} from "../_services/authentication.service";
 import {FloatingActionButton} from "ng2-floating-action-menu";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
+import {Intern} from "../model/intern";
+import {MessagesService} from "../_services/messages.service";
+declare var $: any;
 
 @Component({
     selector: 'app-layout',
@@ -21,9 +24,46 @@ export class LayoutComponent implements OnInit {
 
     public buttons: Array<FloatingActionButton> = [];
 
-    constructor(private auth: AuthenticationService, private router: Router, private translate: TranslateService) {
-
+    constructor(private auth: AuthenticationService, private router: Router, private translate: TranslateService, private messagesService: MessagesService) {
+        let pressed = false;
+        let chars: any = [];
+        const This: any = this;
+        $(window).keypress(function (e: any) {
+            if (e.which >= 48 && e.which <= 57) {
+                chars.push(String.fromCharCode(e.which));
+            }
+            if (pressed == false) {
+                setTimeout(function () {
+                    if (chars.length === 12) {
+                        const barcode = chars.join("");
+                        console.log("Barcode Scanned: " + barcode);
+                        This.goToIntern(barcode);
+                        // assign value to some input (or do whatever you want)
+                        $("#barcode").val(barcode);
+                    }
+                    chars = [];
+                    pressed = false;
+                }, 500);
+            }
+            pressed = true;
+        });
+        $("#barcode").keypress(function (e: any) {
+            if (e.which === 13) {
+                console.log("Prevent form submit.");
+                e.preventDefault();
+            }
+        });
     }
+
+    goToIntern(code: any) {
+        code = code.slice(0,9);
+        Intern.getByPhone(Number(code)).then(i => {
+            this.router.navigate(['intern-management/' + i.id]);
+        }).catch(
+            () => this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error')
+        );
+    }
+
 
     ngOnInit(): void {
         this.user = this.auth.getCurrentUser();

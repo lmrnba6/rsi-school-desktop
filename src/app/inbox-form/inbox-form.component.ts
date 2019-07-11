@@ -257,8 +257,8 @@ export class InboxFormComponent implements OnInit {
             })
         }else if(this.groupSelected === 'teachers') {
             this.block = true;
-            User.getAllTeachers().then(interns => {
-                interns.forEach( i => {
+            User.getAllTeachers().then(teach => {
+                teach.forEach( i => {
                         this.inbox.date = new Date().getTime();
                         this.inbox.from = this.user.id;
                         this.inbox.to = i.id;
@@ -285,8 +285,8 @@ export class InboxFormComponent implements OnInit {
             })
         }else if(this.groupSelected === 'all') {
             this.block = true;
-            User.getAll().then(interns => {
-                interns.forEach( i => {
+            User.getAll().then(all => {
+                all.forEach( i => {
                         this.inbox.date = new Date().getTime();
                         this.inbox.from = this.user.id;
                         this.inbox.to = i.id;

@@ -8,6 +8,8 @@ import {School} from "../model/school";
 import {Inbox} from "../model/inbox";
 import {MessagesService} from "../_services/messages.service";
 import {NetworkService} from "../_services/network.service";
+
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html'
@@ -24,7 +26,8 @@ export class NavComponent{
   connected = true;
   isTeacher = false;
   isIntern = false;
-  isParent = false;
+    isParent = false;
+    isUser = false;
 
   constructor(private authService: AuthenticationService,
               private router: Router,
@@ -36,7 +39,8 @@ export class NavComponent{
     this.languageText = this.lang === 'fr' ? 'English' : 'Français';
     this.user = authService.getCurrentUser();
     this.isIntern = this.user.role === 'student';
-    this.isParent = this.user.role === 'parent';
+      this.isUser = this.user.role === 'user';
+      this.isParent = this.user.role === 'parent';
     this.isTeacher = this.user.role === 'teacher'
     this.getCenter();
     this.getMessages();
@@ -45,6 +49,7 @@ export class NavComponent{
         !connected && alert(this.translate.instant('messages.network.offline'))
         this.connected = connected;
     });
+
   }
 
   getMessages() {

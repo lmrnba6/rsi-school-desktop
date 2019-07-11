@@ -103,8 +103,6 @@ import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
 
 
-
-
 @NgModule({
     imports: [
         BrowserModule,
