@@ -105,7 +105,7 @@
                 <mat-error *ngIf="sold.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field class="example-full-width" style="display: none">
+            <mat-form-field appearance = "outline" class="example-full-width" style="display: none">
                 <input name="parent" formControlName="parent" matInput [ngModel]="userSelected"
                        (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
                        placeholder="{{'intern.placeholder.parent' | translate}}">

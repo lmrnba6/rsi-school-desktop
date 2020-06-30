@@ -25,7 +25,7 @@
 
 
 <div class="container">
-    <mat-form-field *ngIf="!intern">
+    <mat-form-field *ngIf="!intern && !session">
       <mat-select id="session" (selectionChange)="onByDate()" [(ngModel)]="session_id"
                   placeholder="{{'attendance.placeholder.session_id' | translate}}">
         <mat-option *ngFor="let session of sessions" [value]="session.id">
