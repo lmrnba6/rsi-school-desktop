@@ -3,5 +3,5 @@
 <mat-card>
   <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
   </app-loader>
-  <app-abstract-table (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
+  <app-abstract-table [page]="'course'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
 </mat-card>

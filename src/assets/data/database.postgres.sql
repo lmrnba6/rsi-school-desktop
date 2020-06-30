@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS "instructor" (
     "phone"	TEXT NOT NULL,
     "email"	TEXT NOT NULL,
     "sold"	INTEGER NOT NULL,
+    "isFullTime" INTEGER,
 	PRIMARY KEY("id")
 );
 
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS "session" (
 	"limit"  INTEGER NOT NULL,
 	"instructor_id"  INTEGER NOT NULL,
 	"training_id"  INTEGER NOT NULL,
+	"closed"  BOOLEAN,
 	FOREIGN KEY(instructor_id) REFERENCES "instructor"(id),
 	FOREIGN KEY(training_id) REFERENCES "training"(id),
 	PRIMARY KEY("id")
@@ -106,6 +108,8 @@ CREATE TABLE IF NOT EXISTS "intern" (
 	"scholar"	TEXT,
 	"sold"	NUMERIC NOT NULL,
     "isAllowed"	INTEGER NOT NULL,
+    "isPromo"	INTEGER NOT NULL,
+    "isVip"	INTEGER NOT NULL,
     "parent"	INTEGER,
     FOREIGN KEY(parent) REFERENCES "user"(id),
 	PRIMARY KEY("id")
@@ -124,6 +128,7 @@ DROP TABLE IF EXISTS "school";
 CREATE TABLE IF NOT EXISTS "school" (
 	"id"	SERIAL NOT NULL,
 	"name"	TEXT NOT NULL,
+	"dist"	TEXT,
 	"photo"  BYTEA,
 	PRIMARY KEY("id")
 );
@@ -132,6 +137,8 @@ DROP TABLE IF EXISTS "payment";
 CREATE TABLE IF NOT EXISTS "payment" (
 	"id"	SERIAL NOT NULL,
 	"amount"	NUMERIC NOT NULL,
+	"rest"	NUMERIC,
+	"username" TEXT,
 	"date"  TEXT NOT NULL,
 	"comment"  TEXT NOT NULL,
 	"training"  TEXT NOT NULL,
@@ -200,5 +207,10 @@ DROP TABLE IF EXISTS "register";
   	"date"  TEXT NOT NULL,
       "amount"  NUMERIC NOT NULL,
       "comment"	TEXT NOT NULL,
+      "intern"	TEXT,
+      "training"    TEXT,
+      "sold"  NUMERIC,
+      "rest"  NUMERIC,
+      "username" TEXT,
   	PRIMARY KEY("id")
   );

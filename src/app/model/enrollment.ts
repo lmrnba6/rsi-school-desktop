@@ -16,7 +16,15 @@ export class Enrollment {
     public intern_id: Intern | number;
 
     public static getCount(filter: string): Promise<Enrollment[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "enrollment" WHERE date LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "enrollment" AS e 
+                                                   INNER JOIN "intern" AS i ON e.intern_id = i.id
+                                                   INNER JOIN "session" AS s ON e.session_id = s.id
+                                                   INNER JOIN "training" AS t ON s.training_id = t.id
+                                                   INNER JOIN "instructor" AS ins ON s.instructor_id = ins.id
+                                                   WHERE e.date ILIKE '%${filter}%' OR 
+                                                    i.name ILIKE '%${filter}%' OR 
+                                                    t.name ILIKE '%${filter}%' OR
+                                                    s.name ILIKE '%${filter}%' `, {})
             .then((count: any) => count);
     }
 
@@ -60,7 +68,7 @@ export class Enrollment {
     }
 
     public static getAllBySession(session: number): Promise<Enrollment[]> {
-        const sql = `SELECT e.id, e.comment, e.date, e.intern_id, s.training_id, e.session_id  FROM "enrollment" AS e 
+        const sql = `SELECT e.id, e.comment, e.date, e.intern_id, s.training_id, e.session_id, s.closed  FROM "enrollment" AS e 
                                                     INNER JOIN "intern" AS i ON e.intern_id = i.id
                                                    INNER JOIN "session" AS s ON e.session_id = s.id
                                                    INNER JOIN "training" AS t ON s.training_id = t.id
@@ -79,7 +87,7 @@ export class Enrollment {
     }
 
     public static getAllByIntern(intern: number): Promise<Enrollment[]> {
-        const sql = `SELECT e.*, t.name as training, s.name as session FROM "enrollment" AS e 
+        const sql = `SELECT e.*, t.name as training, s.name as session, s.closed FROM "enrollment" AS e 
                                                     INNER JOIN "intern" AS i ON e.intern_id = i.id
                                                    INNER JOIN "session" AS s ON e.session_id = s.id
                                                    INNER JOIN "training" AS t ON s.training_id = t.id
@@ -102,7 +110,7 @@ export class Enrollment {
 				inner join "session" as s On e.session_id = s.id 
 				inner join "training" as t on s.training_id = t.id
                 inner join "intern" as i on e.intern_id = i.id 
-                where e.date between '${date1}' and '${date2}'
+                where (e.date between '${date1}' and '${date2}') and s.closed = false 
                 group by t.name`
         const values = {};
 
@@ -119,15 +127,15 @@ export class Enrollment {
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Enrollment[]> {
         const sql = `SELECT e.id, e.comment, e.date, e.intern_id, s.training_id, e.session_id , t.name as training_id, 
-                                            s.name as session, i.name as intern, ins.name as instructor  FROM "enrollment" AS e 
+                                            s.name as session, s.closed, i.name as intern, ins.name as instructor  FROM "enrollment" AS e 
                                                    INNER JOIN "intern" AS i ON e.intern_id = i.id
                                                    INNER JOIN "session" AS s ON e.session_id = s.id
                                                    INNER JOIN "training" AS t ON s.training_id = t.id
                                                    INNER JOIN "instructor" AS ins ON s.instructor_id = ins.id
-                                                   WHERE e.date LIKE '%${filter}%' OR 
-                                                    i.name LIKE '%${filter}%' OR 
-                                                    t.name LIKE '%${filter}%' OR
-                                                    s.name LIKE '%${filter}%' 
+                                                   WHERE e.date ILIKE '%${filter}%' OR 
+                                                    i.name ILIKE '%${filter}%' OR 
+                                                    t.name ILIKE '%${filter}%' OR
+                                                    s.name ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -145,7 +153,7 @@ export class Enrollment {
 
     public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Enrollment[]> {
         const sql = `SELECT e.id, e.comment, e.date, e.intern_id, s.training_id, e.session_id, t.name as training_id,
-                                                s.name as session, i.name as intern, ins.name as instructor  FROM "enrollment" AS e 
+                                                s.name as session,s.closed, i.name as intern, ins.name as instructor  FROM "enrollment" AS e 
                                                     INNER JOIN "intern" AS i ON e.intern_id = i.id
                                                    INNER JOIN "session" AS s ON e.session_id = s.id
                                                    INNER JOIN "training" AS t ON s.training_id = t.id
@@ -170,7 +178,7 @@ export class Enrollment {
     public insert(): Promise<void> {
         const sql = `
             INSERT INTO "enrollment" (date, comment, intern_id, session_id)
-            VALUES('${this.date}', '${this.comment}', ${this.intern_id}, ${this.session_id})`;
+            VALUES('${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', ${this.intern_id}, ${this.session_id})`;
 
         const values = {
         };
@@ -188,7 +196,7 @@ export class Enrollment {
     public update(): Promise<void> {
         const sql = `
             UPDATE "enrollment"
-               SET date = '${this.date}', comment = '${this.comment}', intern_id = ${this.intern_id}, session_id = ${this.session_id}
+               SET date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''"): ''}', intern_id = ${this.intern_id}, session_id = ${this.session_id}
              WHERE id = ${this.id}`;
 
         const values = {
@@ -231,6 +239,7 @@ export class Enrollment {
         this['intern'] = row['intern'];
         this['instructor'] = row['instructor'];
         this['training'] = row['training'];
+        this['closed'] = row['closed'];
         return this;
     }
 }

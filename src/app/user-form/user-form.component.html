@@ -11,10 +11,12 @@
       <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
           <span class="glyphicon glyphicon-remove"></span>
       </button>
-      <mat-form-field>
-        <input name="username" formControlName="username" [(ngModel)]="user.username" matInput placeholder="{{'user.placeholder.username' | translate}}" autofocus required>
+      <mat-form-field *ngIf="!isOnEdit">
+        <input name="username" formControlName="username" (blur)="checkUserName()" [(ngModel)]="user.username" matInput placeholder="{{'user.placeholder.username' | translate}}" autofocus required>
         <mat-error *ngIf="username.invalid">{{'messages.field_required_error' | translate}}</mat-error>
       </mat-form-field>
+          <label>{{'user.placeholder.username' | translate}}</label>
+          <h2 *ngIf="isOnEdit">{{user?.username}}</h2>
       <br>
       <mat-form-field>
         <input name="name" formControlName="name" [(ngModel)]="user.name" matInput placeholder="{{'user.placeholder.name' | translate}}" required>
@@ -27,7 +29,7 @@
           </mat-form-field>
           <br>
           <mat-form-field>
-              <mat-select formControlName="role" [(ngModel)]="user.role" placeholder="{{'user.placeholder.role' | translate}}" name="role" required>
+              <mat-select [disabled]="isOnEdit" formControlName="role" [(ngModel)]="user.role" placeholder="{{'user.placeholder.role' | translate}}" name="role" required>
                   <mat-option>--</mat-option>
                   <mat-option *ngFor="let role of roles" [value]="role">
                       {{'user.' + role | translate}}

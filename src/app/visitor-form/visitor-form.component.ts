@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MessagesService} from "../_services/messages.service";
-import { Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Visitor} from "../model/visitor";
 import './visitor-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
+import {DialogsService} from "../_services/dialogs.service";
 
 @Component({
     selector: 'app-visitor-form',
@@ -20,6 +21,7 @@ export class VisitorFormComponent implements OnInit, OnChanges {
     public name: FormControl;
     public phone: FormControl;
     public comment: FormControl;
+    public date: FormControl;
 
 
     public color: string = 'warn';
@@ -30,8 +32,10 @@ export class VisitorFormComponent implements OnInit, OnChanges {
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,
                 private router: Router,
-                private translate: TranslateService
-                ) {
+                private translate: TranslateService,
+                private route: ActivatedRoute,
+                private dialogsService: DialogsService,
+    ) {
     }
 
     public ngOnInit(): void {
@@ -52,13 +56,15 @@ export class VisitorFormComponent implements OnInit, OnChanges {
      * getParams
      */
     public getParams(): void {
-        if (this.visitor) {
-            this.getData(this.visitor.id);
-            this.isOnEdit = true;
-        } else {
-            this.isOnEdit = false;
-            this.visitor = new Visitor();
-        }
+        this.route.params.subscribe(res => {
+            if (res.id) {
+                this.getData(res.id);
+                this.isOnEdit = true;
+            } else {
+                this.isOnEdit = false;
+                this.visitor = new Visitor();
+            }
+        });
     }
 
     /**
@@ -72,6 +78,7 @@ export class VisitorFormComponent implements OnInit, OnChanges {
             .get(id)
             .then((val: Visitor) => {
                 this.visitor = val;
+                this.visitor.date = new Date(Number(this.visitor.date));
             });
     }
 
@@ -79,12 +86,13 @@ export class VisitorFormComponent implements OnInit, OnChanges {
         this.name = new FormControl(null, [Validators.required]);
         this.phone = new FormControl(null, [Validators.required, Validators.maxLength(10)]);
         this.comment = new FormControl(null, [Validators.required]);
-
+        this.date = new FormControl(null, [Validators.required]);
 
         this.internForm = this.fb.group({
             name: this.name,
             phone: this.phone,
             comment: this.comment,
+            date: this.date,
         });
     }
 
@@ -96,9 +104,23 @@ export class VisitorFormComponent implements OnInit, OnChanges {
     }
 
     /**
+     * onTransfer
+     */
+    public onTransfer(): void {
+        this.dialogsService
+            .confirm('messages.warning_title', 'messages.transfer_intern_message', true, 'warning-sign')
+            .subscribe(confirm => {
+                if (confirm) {
+                    this.router.navigate(['intern-transfer/' + this.visitor.name + '/' + this.visitor.phone+ '/' + this.visitor.id]);
+                }
+            });
+    }
+
+    /**
      * onSave
      */
     public onSaveOrUpdate(): void {
+        this.visitor.date = (this.visitor.date as Date).getTime();
         let internPromise: Promise<any>;
         if (this.isOnEdit) {
             internPromise = this.visitor.update();

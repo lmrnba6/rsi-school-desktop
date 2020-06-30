@@ -20,6 +20,8 @@
     "deleted": "Deleted",
     "from": "From",
     "to": "to",
+    "from_user": "From",
+    "to_user": "to",
     "content": "Message",
     "subject": "Subject",
     "date": "Date",
@@ -32,18 +34,18 @@
     "individual": "Individual"
   },
   "menu": {
-    "settings": "settings",
-    "intern": "students",
-    "instructor": "teachers",
+    "settings": "Settings",
+    "intern": "Students",
+    "instructor": "Teachers",
     "document": "Documents",
     "room": "Classes",
-    "session": "Groupe",
+    "session": "Group",
     "training": "Formations",
-    "course": "levels",
-    "enrollment": "registration",
+    "course": "Levels",
+    "enrollment": "Registration",
     "payment": "Payment",
-    "exam": "exams",
-    "test": "tests",
+    "exam": "Exams",
+    "test": "Tests",
     "attendance": "Presences",
     "result": "Statistical",
     "weekday": "Program",
@@ -54,7 +56,7 @@
   },
   "administration": {
     "title": "Administration",
-    "reception": "home",
+    "reception": "Home",
     "school": "School",
     "database": "Database",
     "user_management": "user management"
@@ -64,10 +66,14 @@
     "documents": "required document",
     "years": "Years old",
     "placeholder": {
+      "comment": "Comment",
+      "isVip": "VIP",
+      "isPromo": "Promotion",
       "birth": "birth date ",
       "name" : "name",
       "email": "email",
       "address": "Address",
+      "enrollments": "Enrollments",
       "name_arabic": "name with anothre language ",
       "permit_number": "permi number",
       "permit_delivery": "date of issue",
@@ -78,20 +84,24 @@
       "certificate": "has a patent",
       "medical": "medical certificate",
       "residence": "copy of the cart stay (for foreigners)",
-      "fees": "Training fees",
-      "fees_enrollment": "Enrollment fees",
-      "fees_books": "Books fees",
+      "backpack": "Received a backpack?",
+      "fees": "Need to pay training fees?",
+      "fees_enrollment": "Need to pay enrollment fees?",
+      "fees_books": "Need to pay books fees?",
       "isAllowed": "Blocked",
       "photo": "Photo",
       "scholar": "Scholar level",
       "sold": "sold",
+      "kindergarten": "Preschool",
       "elementary": "Elementary school",
-      "secondary": "Secondary school",
-      "high": "High school",
+      "secondary": "Middle school",
+      "high": "Secondary school",
       "bachelor": "Bachelor",
       "master": "Master",
       "phd": "Phd",
-      "parent": "Parent"
+      "parent": "Parent",
+      "dist": "Images Folder",
+      "isPhoneOptional": "Optional"
     }
   },
   "visitor": {
@@ -99,12 +109,15 @@
     "placeholder": {
       "name" : "Name",
       "phone": "Phone",
-      "comment": "comment"
+      "comment": "comment",
+      "date": "Date"
     }
   },
   "instructor": {
     "title": "teacher",
     "placeholder": {
+      "fullTime": "Full time",
+      "partTime": "Part time",
       "name" : "name",
       "email": "email",
       "address": "Adresse",
@@ -116,6 +129,7 @@
   "payment": {
     "title": "Payment",
     "placeholder": {
+      "offer": "Offer / Promotion (Do not include it to the register)",
       "amount" : "amount",
       "date": "Date",
       "comment": "Comment",
@@ -127,8 +141,14 @@
   "register": {
     "title": "Register",
     "placeholder": {
+      "rest": "Rest",
+      "sold": "Sold",
+      "intern": "Student",
+      "training": "Training",
       "amount" : "Amount",
       "date": "Date",
+      "from": "From",
+      "to": "to",
       "comment": "Comment"
     },
     "soldAll":"Total sold",
@@ -156,9 +176,12 @@
       "start": "start",
       "end": "end",
       "limit": "Max",
-      "intern": "Étudaints",
+      "intern": "Students",
+      "interns": "Students",
+      "enrollments": "Enrollments",
       "instructor_id": "teacher",
-      "training_id": "Formation"
+      "training_id": "Formation",
+      "closed": "Closed"
     }
   },
   "user": {
@@ -181,6 +204,7 @@
     "individual": "Individual",
     "group": "Groupe",
     "mini_group": "Mini group",
+    "leisure": "Leisure",
     "title": "Formation",
     "placeholder": {
       "name": "name",
@@ -228,6 +252,7 @@
     "by_date": " By Group",
     "placeholder": {
       "time" : "Duration",
+      "day" : "Day",
       "present" : "Present",
       "day_id": "day",
       "weekday_id": "hour",
@@ -396,16 +421,22 @@
     "warning_title": "warning",
     "operation_success_message": "successful : Operation success",
     "something_went_wrong_message": "an error has occurred",
-    "no_intern_registered": "Ano student enrolled at this level",
+    "no_intern_registered": "No student enrolled at this level",
     "no_result": "no résults",
     "sync_database_warning_message": "Do you want to sync the server database with the local one?",
     "change_local_database_warning_message": "Do you want to change the source of your database?",
     "network.offline": "Connection lost!",
     "go_to_receipt_message": "Would you like to print the receipt?",
+    "go_to_enrollment_message": "Would you like to enroll this student?",
+    "go_to_payment_message": "Would you like to make a payment for this student?",
     "intern_already_enrolled": "Student already enrolled to this group",
     "blocked": "Blocked",
     "phone_exist": "This phone number exist already",
-    "session_full": "This group is full"
+    "name_exist": "This group name exist already",
+    "username_exist": "This username exist already",
+    "session_full": "This group is full",
+    "notEnrolled_message": "This student is not registered for this training",
+    "transfer_intern_message": "do you really want to create a new student and delete this visitor?"
   },
   "buttons": {
     "save": "save",

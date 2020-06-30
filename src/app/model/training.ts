@@ -16,8 +16,8 @@ export class Training {
     public enrollment_fees = 0;
 
     public static getCount(filter: string): Promise<Training[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "training" WHERE name LIKE '%${filter}%' OR 
-                                        time LIKE '%${filter}%' OR type LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "training" WHERE name ILIKE '%${filter}%' OR 
+                                        time ILIKE '%${filter}%' OR type ILIKE '%${filter}%'`, {})
             .then((count: any) => count);
     }
 
@@ -51,9 +51,9 @@ export class Training {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Training[]> {
-        const sql = `SELECT * FROM "training" WHERE name LIKE '%${filter}%' OR 
-                            time LIKE '%${filter}%' OR
-                            type LIKE '%${filter}%' 
+        const sql = `SELECT * FROM "training" WHERE name ILIKE '%${filter}%' OR 
+                            time ILIKE '%${filter}%' OR
+                            type ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };

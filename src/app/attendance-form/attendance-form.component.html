@@ -13,7 +13,7 @@
             </button>
             <mat-form-field>
                 <mat-select (selectionChange)="onInternsChange()" formControlName="session_id" [(ngModel)]="attendance.session_id"
-                            placeholder="{{'attendance.placeholder.session_id' | translate}}" name="session_id" required>
+                            placeholder="{{'attendance.placeholder.session_id' | translate}}" name="session_id" required [disabled]="isOnEdit">
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
                         {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
@@ -38,7 +38,7 @@
             <mat-select formControlName="weekday_id" [(ngModel)]="attendance.weekday_id"
                         placeholder="{{'attendance.placeholder.weekday_id' | translate}}" name="weekday_id" required>
                 <mat-option>--</mat-option>
-                <mat-option *ngFor="let weekday of weekdays" [value]="weekday.id">
+                <mat-option *ngFor="let weekday of weekdays" [value]="weekday['weekday_id']">
                     {{weekday.time | translate}}
                 </mat-option>
             </mat-select>

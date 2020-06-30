@@ -63,6 +63,7 @@ export class SessionFormComponent implements OnInit, OnChanges {
             } else {
                 this.isOnEdit = false;
                 this.session = new Session();
+                this.session.closed = false;
             }
         });
     }
@@ -110,6 +111,13 @@ export class SessionFormComponent implements OnInit, OnChanges {
             instructor_id: this.instructor_id,
             training_id: this.training_id,
         });
+    }
+
+    onNameChange(){
+        Session.nameExist(this.session.name).catch(() => {
+            this.session.name = '';
+            this.messagesService.notifyMessage(this.translate.instant('messages.name_exist'), '', 'error');
+        })
     }
 
     /**

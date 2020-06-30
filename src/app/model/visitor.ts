@@ -10,13 +10,15 @@ export class Visitor {
     public id = -1;
     public name = '';
     public comment = '';
+    public date: Date| number;
     public phone = '';
 
 
 
     public static getCount(filter: string): Promise<Visitor[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "visitor" WHERE name LIKE '%${filter}%' OR 
-                                        phone LIKE '%${filter}%' OR comment LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "visitor" WHERE name ILIKE '%${filter}%' OR 
+                            phone ILIKE '%${filter}%' OR                          
+                            comment ILIKE '%${filter}%' `, {})
             .then((count: any) => count);
     }
 
@@ -51,9 +53,9 @@ export class Visitor {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Visitor[]> {
-        const sql = `SELECT * FROM "visitor" WHERE name LIKE '%${filter}%' OR 
-                            phone LIKE '%${filter}%' OR                          
-                            comment LIKE '%${filter}%' 
+        const sql = `SELECT * FROM "visitor" WHERE name ILIKE '%${filter}%' OR 
+                            phone ILIKE '%${filter}%' OR                          
+                            comment ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -71,8 +73,8 @@ export class Visitor {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "visitor" (name, phone, comment)
-            VALUES('${this.name}', '${this.phone}', '${this.comment}')`;
+            INSERT INTO "visitor" (name, phone, comment, date)
+            VALUES('${this.name}', '${this.phone}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', '${this.date}')`;
 
         const values = {
         };
@@ -90,7 +92,7 @@ export class Visitor {
     public update(): Promise<void> {
         const sql = `
             UPDATE "visitor"
-               SET name = '${this.name}', phone = '${this.phone}', comment = ${this.comment}   
+               SET name = '${this.name}', date = '${this.date}', phone = '${this.phone}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}'   
              WHERE id = ${this.id}`;
 
         const values = {
@@ -124,6 +126,7 @@ export class Visitor {
         this.name = row['name'];
         this.phone = row['phone'];
         this.comment = row['comment'];
+        this.date = row['date'];
         return this;
     }
 }

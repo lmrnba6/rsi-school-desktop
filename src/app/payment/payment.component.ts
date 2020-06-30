@@ -145,7 +145,7 @@ export class PaymentComponent implements OnInit, OnChanges {
     manageInternSold(payment: Payment) {
         this.block = true;
         Intern.get(payment.intern_id as number).then(intern => {
-            intern.sold += payment.amount;
+            intern.sold = Number(intern.sold) + Number(payment.amount);
             intern.update().then(() => this.block = false,
                 () => {
                     this.block = false;

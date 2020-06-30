@@ -11,16 +11,20 @@ import {Settings} from "./settings";
 export class Payment {
     public id = -1;
     public amount: number;
+    public rest: number;
     public date: Date| number;
     public comment = '';
     public training = '';
     public month = '';
+    public username = '';
     public intern_id: number | Intern;
 
     public static getCount(filter: string): Promise<Payment[]> {
         const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "payment" WHERE amount LIKE '%${filter}%' OR 
                                         date LIKE '%${filter}%'` :
-            `SELECT count(*) as count FROM "payment"`;
+            `SELECT count(*) as count FROM "payment" AS p 
+                            INNER JOIN "intern" AS i ON p.intern_id = i.id 
+                            WHERE  i.name ILIKE '%${filter}%' `;
         return TheDb.selectAll(sql, {})
             .then((count: any) => count);
     }
@@ -69,7 +73,7 @@ export class Payment {
     }
 
     public static getAllByIntern(intern: number): Promise<Payment[]> {
-        const sql = `SELECT * FROM "payment" WHERE intern_id = ${intern} ORDER BY date DESC`;
+        const sql = `SELECT * FROM "payment" WHERE intern_id = ${intern} ORDER BY date ASC`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -90,11 +94,11 @@ export class Payment {
                             WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern 
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
                             WHERE  
-                            i.name LIKE '%${filter}%' 
+                            i.name ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -111,7 +115,7 @@ export class Payment {
     }
 
     public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Payment[]> {
-        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern 
+        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
                             WHERE i.id = ${intern}
@@ -151,8 +155,8 @@ export class Payment {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "payment" (amount, date, comment, training, month, intern_id)
-            VALUES(${this.amount}, '${this.date}', '${this.comment}','${this.training}','${this.month}', ${this.intern_id})`;
+            INSERT INTO "payment" (amount,rest, username, date, comment, training, month, intern_id)
+            VALUES(${this.amount}, ${this.rest}, '${this.username}', '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}','${this.training}','${this.month.replace(/\'/g, "''")}', ${this.intern_id})`;
 
         const values = {
         };
@@ -170,8 +174,8 @@ export class Payment {
     public update(): Promise<void> {
         const sql = `
             UPDATE "payment"
-               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment}', training = '${this.training}'
-               , month = '${this.month}', intern_id = '${this.intern_id}'
+               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', training = '${this.training}'
+               , month = '${this.month ? this.month.replace(/\'/g, "''") : ''}', intern_id = '${this.intern_id}'
              WHERE id = ${this.id}`;
 
         const values = {
@@ -203,6 +207,8 @@ export class Payment {
     public fromRow(row: object): Payment {
         this.id = row['id'];
         this.amount = row['amount'];
+        this.rest = row['rest'];
+        this.username = row['username'];
         this.date = row['date'];
         this.comment = row['comment'];
         this.month = row['month'];

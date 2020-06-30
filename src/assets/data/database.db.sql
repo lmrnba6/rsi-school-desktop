@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `session` (
 	`limit`  INTEGER NOT NULL,
 	`instructor_id`  INTEGER NOT NULL,
 	`training_id`  INTEGER NOT NULL,
+	`closed`  INTEGER NOT NULL,
 	FOREIGN KEY(instructor_id) REFERENCES instructor(id),
 	FOREIGN KEY(training_id) REFERENCES training(id),
 	PRIMARY KEY(`id`)
@@ -113,6 +114,7 @@ DROP TABLE IF EXISTS `school`;
 CREATE TABLE IF NOT EXISTS `school` (
 	`id`	INTEGER NOT NULL,
 	`name`	TEXT NOT NULL,
+	`dist`	TEXT,
 	`photo`  BLOB,
 	PRIMARY KEY(`id`)
 );

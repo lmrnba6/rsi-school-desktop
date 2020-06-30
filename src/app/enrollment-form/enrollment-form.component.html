@@ -11,7 +11,7 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width">
                 <input name="intern_id" formControlName="intern_id" matInput
                        (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
                        placeholder="{{'enrollment.placeholder.intern_id' | translate}}" required>
@@ -24,9 +24,9 @@
                 </mat-autocomplete>
                 <mat-error *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <div *ngIf="isOnEdit">
+            <div *ngIf="isOnEdit || express">
                 <mat-label>{{'enrollment.placeholder.intern_id' | translate}}</mat-label>
-                <h4>{{internSelected?.name}}</h4>
+                <h2 style="margin: 0">{{internSelected?.name}}</h2>
             </div>
             <br>
             <mat-form-field>
@@ -63,5 +63,7 @@
         <mat-checkbox [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>
         <br>
         <mat-checkbox [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>
+        <br>
+        <mat-checkbox [(ngModel)]="backpack">{{'intern.placeholder.backpack' | translate}}</mat-checkbox>
     </div>
 </mat-card>

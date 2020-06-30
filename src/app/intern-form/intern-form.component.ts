@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MessagesService} from "../_services/messages.service";
-import { Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Intern} from "../model/intern";
 import './intern-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
@@ -12,6 +12,9 @@ import * as JsBarcode from "jsbarcode";
 import {User} from "../model/user";
 import {Settings} from "../model/settings";
 import * as path from "path";
+import {School} from "../model/school";
+import {DialogsService} from "../_services/dialogs.service";
+import {Visitor} from "../model/visitor";
 const WebCamera = require("webcamjs");
 @Component({
     selector: 'app-intern-form',
@@ -23,6 +26,8 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     @Output() public next: EventEmitter<any> = new EventEmitter()
     public block: boolean;
     public isOnEdit: boolean;
+    public isTransfer: boolean;
+    public visitorId: number;
     public internForm: FormGroup;
     public name: FormControl;
     public phone: FormControl;
@@ -31,16 +36,20 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     public parent: FormControl;
     public email: FormControl;
     public address: FormControl;
+    public comment: FormControl;
     public birth: FormControl;
     public name_arabic: FormControl;
     public scholar: FormControl;
+    public phoneOptional: FormControl;
     public isAdmin: boolean;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
     public  photo: any;
+    public dist: string;
     public saveCamera: boolean;
     public scholars = [
+        'kindergarten',
         'elementary',
         'secondary',
         'high',
@@ -54,10 +63,13 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     public usersFiltered: Array<User> = [];
     public userSelected: User;
     public user: User;
+    public isPhoneOptional: boolean;
 
     constructor(private fb: FormBuilder,
+                private dialogsService: DialogsService,
                 public messagesService: MessagesService,
                 private router: Router,
+                private route: ActivatedRoute,
                 private translate: TranslateService,
                 private authService: AuthenticationService) {
     }
@@ -69,9 +81,17 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
         this.isParent = this.user.role === 'parent';
         this.initForm();
         this.getParams();
+        this.getImagesDist();
         //this.readFile(__dirname + '/assets/images/profile.png')
     }
 
+    public getImagesDist() {
+        School.getAll().then(school => {
+            if(school.length > 0){
+                this.dist = school[0].dist
+            }
+        });
+    }
     public ngOnChanges() {
         this.initForm();
         this.getParams();
@@ -83,24 +103,37 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public onPhoneChanged(): void {
-        Intern.getByPhone(Number(this.intern.phone)).then(() => {
-            this.intern.phone = '';
-            this.messagesService.notifyMessage(this.translate.instant('messages.phone_exist'), '', 'error');
+        if(!this.isPhoneOptional){
+            Intern.getByPhone(Number(this.intern.phone)).then(() => {
+                    this.intern.phone = '';
+                    this.messagesService.notifyMessage(this.translate.instant('messages.phone_exist'), '', 'error');
+                }
+            )
         }
-        )
     }
 
     /**
      * getParams
      */
     public getParams(): void {
-        if (this.intern) {
-            this.getData(this.intern.id);
-            this.isOnEdit = true;
-        } else {
-            this.isOnEdit = false;
-            this.intern = new Intern();
-        }
+        this.route.params.subscribe(res => {
+            if (res.name && res.phone && res.visitor) {
+                this.isOnEdit = false;
+                this.isTransfer = true;
+                this.visitorId = res.visitor;
+                this.intern = new Intern();
+                this.intern.phone = res.phone;
+                this.intern.name = res.name;
+            } else if (this.intern) {
+                this.getData(this.intern.id);
+                this.isOnEdit = true;
+                this.isTransfer = false;
+            } else {
+                this.isOnEdit = false;
+                this.isTransfer = false;
+                this.intern = new Intern();
+            }
+        });
     }
 
     public displayFn(user: User) {
@@ -108,7 +141,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public userOnChange(event: any): void {
-        if(event.keyCode == 13) {
+        //if(event.keyCode == 13) {
             this.block = true;
             User.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
@@ -118,7 +151,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        }
+        //}
         //this.usersFiltered = this.users.filter(users => users.name.toLowerCase().includes(event.toLowerCase()));
     }
 
@@ -138,10 +171,12 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
             .then((val: Intern) => {
                 this.intern = val;
                 this.intern.isAllowed = this.intern.isAllowed === 1 ? true : false;
+                this.intern.isPromo = this.intern.isPromo === 1 ? true : false;
+                this.intern.isVip = this.intern.isVip === 1 ? true : false;
                 this.intern.birth = new Date(Number(this.intern.birth));
                 //this.photo = 'data:image/png;base64,' + this.intern.photo;
                 this.photo = this.intern.photo;
-                JsBarcode("#barcode", this.intern.phone.toString() + this.intern.id.toString());
+                JsBarcode("#barcode", this.intern.id.toString().padStart(10, '0'));
                 this.intern.parent && User.get(this.intern.parent).then(user => this.userSelected = user);
             });
     }
@@ -159,28 +194,42 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
 
     public initForm(): void {
         this.name = new FormControl(null, [Validators.required]);
-        this.email = new FormControl(null, [Validators.email]);
+        this.email = new FormControl(null);
         this.address = new FormControl(null);
+        this.comment = new FormControl(null);
         this.phone = new FormControl(null, [Validators.required]);
         this.phone2 = new FormControl(null);
         this.sold = new FormControl({value: 0, disabled:!this.isAdmin});
         this.birth = new FormControl(null, [Validators.required]);
-        this.name_arabic = new FormControl(null, [Validators.required]);
+        this.name_arabic = new FormControl(null);
         this.scholar = new FormControl(null);
         this.parent = new FormControl(null);
+        this.phoneOptional = new FormControl(null);
 
         this.internForm = this.fb.group({
             name: this.name,
             name_arabic: this.name_arabic,
             address: this.address,
+            comment: this.comment,
             phone: this.phone,
             phone2: this.phone2,
             sold: this.sold,
             email: this.email,
             birth: this.birth,
             scholar: this.scholar,
-            parent: this.parent
+            parent: this.parent,
+            phoneOptional: this.phoneOptional
         });
+    }
+
+    goToEnrollment(id: number) {
+        this.dialogsService
+            .confirm('messages.warning_title', 'messages.go_to_enrollment_message', true, 'pencil')
+            .subscribe(confirm => {
+                if (confirm) {
+                    this.router.navigate(['/enrollment/express/' + id]);
+                }
+            });
     }
 
     /**
@@ -195,9 +244,13 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
      */
     public onSaveOrUpdate(): void {
         this.intern.isAllowed = this.intern.isAllowed ? 1 : 0;
+        this.intern.isPromo = this.intern.isPromo ? 1 : 0;
+        this.intern.isVip = this.intern.isVip ? 1 : 0;
         this.intern.birth = (this.intern.birth as Date).getTime();
         if(this.userSelected) {
             this.intern.parent = this.userSelected.id;
+        } else {
+            this.intern.parent = null;
         }
         let internPromise: Promise<any>;
         if (this.isOnEdit) {
@@ -209,7 +262,11 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     internPromise.then(
         () => {
             this.block = false;
-            !this.isOnEdit && this.createUser();
+            if(this.isTransfer){
+                this.deleteVisitor();
+            }
+            this.intern.id && this.goToEnrollment(this.intern.id);
+            this.createUser();
             this.goBack();
             this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
         },
@@ -220,19 +277,35 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
 
     }
 
-    createUser() {
-        const user: User = new User();
-        user.role = 'student';
-        user.name = this.intern.name;
-        user.username = this.intern.phone;
-        user.password = this.intern.phone;
+    public deleteVisitor(): void {
         this.block = true;
-        user.insert().then(
-            () => this.block = false,
+        Visitor.delete(this.visitorId).then(
             () => {
                 this.block = false;
+            },
+            () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-            })
+                this.block = false;
+            });
+    }
+
+    createUser() {
+        if(!this.isOnEdit && !this.isPhoneOptional){
+            const user: User = new User();
+            user.role = 'student';
+            user.name = this.intern.name;
+            user.username = this.intern.id.toString();
+            user.password = this.intern.id.toString();
+            this.block = true;
+            user.insert().then(
+                () => {
+                    this.block = false
+                },
+                () => {
+                    this.block = false;
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                })
+        }
     }
 
     getPhoto(data: any) {
@@ -273,7 +346,11 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     goBack() {
-        this.router.navigate(['intern']);
+        if(this.isTransfer) {
+            this.router.navigate(['visitor']);
+        }else {
+            this.router.navigate(['intern']);
+        }
     }
 
     cancelPhoto() {
@@ -336,10 +413,10 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
 
     downloadFile(name: string, data: any) {
         const sampleArr = this.base64ToArrayBuffer(data);
-        fs.writeFile(path.join(Settings.imgFolder, name), sampleArr, (err) => {
+        fs.writeFile(path.join(this.dist || Settings.imgFolder, name), sampleArr, (err) => {
             if (err) throw err;
             console.log('The file has been saved!');
-            this.photo = path.join(Settings.imgFolder, name);
+            this.photo = path.join(this.dist || Settings.imgFolder, name);
             this.intern.photo = this.photo;
             (document.getElementById('name') as HTMLElement).focus();
         });

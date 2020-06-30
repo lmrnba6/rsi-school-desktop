@@ -21,8 +21,16 @@ export class Attendance {
 
 
     public static getCount(filter: string): Promise<Attendance[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "attendance" WHERE  
-                                        date LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "attendance" AS a INNER JOIN "weekday" AS w ON a.weekday_id = w.id
+                                                   INNER JOIN "session" AS s ON a.session_id = s.id
+                                                   INNER JOIN "intern" AS i ON a.intern_id = i.id
+                                                   INNER JOIN "room" AS r ON w.room_id = r.id
+                                                     INNER JOIN "training" AS t ON s.training_id = t.id
+                                                    INNER JOIN "instructor" AS ins ON s.instructor_id = ins.id
+                                                   WHERE a.date ILIKE '%${filter}%' OR 
+                            w.name ILIKE '%${filter}%' OR
+                            s.name ILIKE '%${filter}%' OR
+                            i.name ILIKE '%${filter}%'`, {})
             .then((count: any) => count);
     }
 
@@ -104,17 +112,17 @@ export class Attendance {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Attendance[]> {
-        const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, r.number ,s.name as session, t.name as training, ins.name as instructor, i.name as intern 
+        const sql = `SELECT a.id, a.date,w.name as day, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, r.number ,s.name as session, t.name as training, ins.name as instructor, i.name as intern 
                                                     FROM "attendance" AS a INNER JOIN "weekday" AS w ON a.weekday_id = w.id
                                                    INNER JOIN "session" AS s ON a.session_id = s.id
                                                    INNER JOIN "intern" AS i ON a.intern_id = i.id
                                                    INNER JOIN "room" AS r ON w.room_id = r.id
                                                      INNER JOIN "training" AS t ON s.training_id = t.id
                                                     INNER JOIN "instructor" AS ins ON s.instructor_id = ins.id
-                                                   WHERE a.date LIKE '%${filter}%' OR 
-                            w.name LIKE '%${filter}%' OR
-                            s.name LIKE '%${filter}%' OR
-                            i.name LIKE '%${filter}%'
+                                                   WHERE a.date ILIKE '%${filter}%' OR 
+                            w.name ILIKE '%${filter}%' OR
+                            s.name ILIKE '%${filter}%' OR
+                            i.name ILIKE '%${filter}%'
                            
                             ORDER BY a.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
@@ -132,8 +140,8 @@ export class Attendance {
     }
 
     public static getAllPagedByInstructor(pageIndex: number, pageSize: number, sort: string, order: string, instructor: number): Promise<Attendance[]> {
-        const groupBy = Settings.isDbLocal ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name';
-        const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, r.number,s.name as session, t.name as training, ins.name as instructor, i.name as intern 
+        const groupBy = Settings.isDbLocal ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name, w.name';
+        const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, w.name as day, r.number,s.name as session, t.name as training, ins.name as instructor, i.name as intern 
                                                     FROM "attendance" AS a INNER JOIN weekday AS w ON a.weekday_id = w.id
                                                    INNER JOIN session AS s ON a.session_id = s.id
                                                    INNER JOIN intern AS i ON a.intern_id = i.id
@@ -156,8 +164,8 @@ export class Attendance {
     }
 
     public static getAllPagedByWeekday(pageIndex: number, pageSize: number, sort: string, order: string, weekday: number): Promise<Attendance[]> {
-        const groupBy = Settings.isDbLocal ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name';
-        const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, r.number, s.name as session, t.name as training, ins.name as instructor, i.name as intern 
+        const groupBy = Settings.isDbLocal ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name, w.name';
+        const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, w.name as day, r.number, s.name as session, t.name as training, ins.name as instructor, i.name as intern 
                                                     FROM "attendance" AS a INNER JOIN weekday AS w ON a.weekday_id = w.id
                                                    INNER JOIN session AS s ON a.session_id = s.id
                                                    INNER JOIN intern AS i ON a.intern_id = i.id
@@ -180,7 +188,7 @@ export class Attendance {
     }
 
     public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Attendance[]> {
-        const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id , w.time, r.number, s.name as session, t.name as training, ins.name as instructor, i.name as intern 
+        const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id , w.time, w.name as day, r.number, s.name as session, t.name as training, ins.name as instructor, i.name as intern 
                                                     FROM "attendance" AS a INNER JOIN weekday AS w ON a.weekday_id = w.id
                                                    INNER JOIN session AS s ON a.session_id = s.id
                                                    INNER JOIN intern AS i ON a.intern_id = i.id
@@ -301,6 +309,7 @@ export class Attendance {
         this['training'] = row['training'];
         this['instructor'] = row['instructor'];
         this['intern'] = row['intern'];
+        this['day'] = row['day'];
         return this;
     }
 }

@@ -120,6 +120,10 @@ const appRoutes: Routes = [
                 component: InternFormComponent
             },
             {
+                path: 'intern-transfer/:name/:phone/:visitor',
+                component: InternFormComponent
+            },
+            {
                 path: 'visitor',
                 component: VisitorComponent
             },
@@ -153,6 +157,10 @@ const appRoutes: Routes = [
             },
             {
                 path: 'payment/form/:id',
+                component: PaymentFormComponent
+            },
+            {
+                path: 'payment/express/:in/:tr',
                 component: PaymentFormComponent
             },
             {
@@ -261,6 +269,10 @@ const appRoutes: Routes = [
             },
             {
                 path: 'enrollment/form',
+                component: EnrollmentFormComponent
+            },
+            {
+                path: 'enrollment/express/:in',
                 component: EnrollmentFormComponent
             },
             {

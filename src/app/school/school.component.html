@@ -26,6 +26,11 @@
                        placeholder="{{'intern.placeholder.name' | translate}}" required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
+            <mat-form-field>
+                <input id="dist" name="dist" formControlName="dist" [(ngModel)]="school.dist" matInput
+                       placeholder="{{'intern.placeholder.dist' | translate}}" autofocus>
+                <mat-error *ngIf="dist.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
         </div>
     </form>
 </mat-card>

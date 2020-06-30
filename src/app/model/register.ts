@@ -12,12 +12,19 @@ export class Register {
     public amount: number;
     public date: Date| number;
     public comment = '';
+    public training = '';
+    public intern = '';
+    public sold = 0;
+    public rest = 0;
+    public username = '';
 
 
     public static getCount(filter: string): Promise<Register[]> {
         const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "register" WHERE amount LIKE '%${filter}%' OR 
                                         date LIKE '%${filter}%'` :
-            `SELECT count(*) as count FROM "register"`;
+            `SELECT count(*) as count FROM "register" AS p 
+                            WHERE                         
+                            p.comment ILIKE '%${filter}%'`;
         return TheDb.selectAll(sql, {})
             .then((count: any) => count);
     }
@@ -53,15 +60,16 @@ export class Register {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, start: number, end: number): Promise<Register[]> {
-        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment 
+        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment, p.intern, p.training, p.sold, p.rest 
                             FROM "register" AS p 
                             WHERE 
                             p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}'
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern, p.training, p.sold, p.rest, p.username 
                             FROM "register" AS p 
                             WHERE                            
-                            p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}'
+                            (p.comment ILIKE '%${filter}%' or p.intern ILIKE '%${filter}%' or p.training ILIKE '%${filter}%') 
+                            and p.date between '${start}' and '${end}'
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -79,8 +87,9 @@ export class Register {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "register" (amount, date, comment)
-            VALUES(${this.amount}, '${this.date}', '${this.comment}')`;
+            INSERT INTO "register" (amount, date, comment, intern, training, sold, rest, username)
+            VALUES(${this.amount}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
+            '${this.intern}', '${this.training}', ${this.sold}, ${this.rest}, '${this.username}')`;
 
         const values = {
         };
@@ -98,7 +107,8 @@ export class Register {
     public update(): Promise<void> {
         const sql = `
             UPDATE "register"
-               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment}'
+               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
+               intern = '${this.intern}', training = '${this.training}', sold = ${this.sold}, rest = ${this.rest}, username = '${this.username}'
              WHERE id = ${this.id}`;
 
         const values = {
@@ -132,6 +142,11 @@ export class Register {
         this.amount = row['amount'];
         this.date = row['date'];
         this.comment = row['comment'];
+        this.intern = row['intern'];
+        this.training = row['training'];
+        this.sold = row['sold'];
+        this.rest = row['rest'];
+        this.username = row['username'];
         return this;
     }
 

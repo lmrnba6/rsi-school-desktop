@@ -8,6 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Register} from "../model/register";
 import {Intern} from "../model/intern";
 import {AuthenticationService} from "../_services/authentication.service";
+import MAX_SAFE_INTEGER = require("core-js/fn/number/max-safe-integer");
 
 @Component({
     selector: 'app-register',
@@ -26,11 +27,12 @@ export class RegisterComponent implements OnInit, OnChanges {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public pageIndex: number = 0;
-    public pageSize: number = 5;
+    public pageSize: number = MAX_SAFE_INTEGER;
     public sortName: string = 'date';
     public sortDirection: string = 'ASC';
     public isAdmin: boolean;
     public from = new Date();
+    public to = new Date();
     public soldAll:number;
 
     constructor(
@@ -71,7 +73,7 @@ export class RegisterComponent implements OnInit, OnChanges {
         const limit: number = pageSize;
         this.block = true;
         Promise.all([
-            Register.getAllPaged(offset, limit, sort, order, filter,this.from.setHours(0,0,0,0), this.from.setHours(23,59,59,999)),
+            Register.getAllPaged(offset, limit, sort, order, filter,this.from.setHours(0,0,0,0), this.to.setHours(23,59,59,999)),
             Register.getCount(this.filter)])
             .then(
                 values => {
@@ -117,11 +119,16 @@ export class RegisterComponent implements OnInit, OnChanges {
         this.setting.settingColumn = this.isAdmin;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern;
+        this.setting.paging = false;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'date', header: 'register.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {columnDef: 'amount', header: 'register.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(2)} DA`},
-            {columnDef: 'comment', header: 'register.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`}
+            {columnDef: 'date', header: 'register.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
+            {columnDef: 'comment', header: 'register.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
+            {columnDef: 'intern', header: 'register.placeholder.intern', type: 'text', cell: (row: any) => `${row.intern || ''}`},
+            {columnDef: 'training', header: 'register.placeholder.training', type: 'text', cell: (row: any) => `${row.training || ''}`},
+            {columnDef: 'sold', header: 'register.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold || ''}`},
+            {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => `${row.rest || ''}`}
         ];
         this.isAdmin &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});

@@ -29,8 +29,8 @@ export class Inbox {
                             INNER JOIN "user" AS u1 ON i.${fromCol} = u1.id
                             INNER JOIN "user" AS u2 ON i.${toCol} = u2.id  
                             WHERE ${where} AND
-                            (i.subject LIKE '%${filter}%' OR 
-                            u1.name LIKE '%${filter}%') `, {})
+                            (i.subject ILIKE '%${filter}%' OR 
+                            u1.name ILIKE '%${filter}%') `, {})
             .then((count: any) => count);
     }
 
@@ -94,8 +94,8 @@ export class Inbox {
                             INNER JOIN "user" AS u1 ON i.${fromCol} = u1.id
                             INNER JOIN "user" AS u2 ON i.${toCol} = u2.id  
                             WHERE ${where} AND
-                            (i.subject LIKE '%${filter}%' OR 
-                            u1.name LIKE '%${filter}%') 
+                            (i.subject ILIKE '%${filter}%' OR 
+                            u1.name ILIKE '%${filter}%') 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -117,7 +117,7 @@ export class Inbox {
         const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
         const sql = `
             INSERT INTO "inbox" (subject, date, content, ${fromCol}, ${toCol}, deleted, read)
-            VALUES('${this.subject}', ${this.date}, '${this.content}',${this.from}, ${this.to}, ${this.deleted}, ${this.read}) ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
+            VALUES('${this.subject ? this.subject.replace(/\'/g, "''") : ''}', ${this.date}, '${this.content.replace(/\'/g, "''")}',${this.from}, ${this.to}, ${this.deleted}, ${this.read}) ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
 
         const values = {
         };
@@ -137,7 +137,7 @@ export class Inbox {
         const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
         const sql = `
             UPDATE "inbox"
-               SET subject = '${this.subject}', date = ${this.date}, content = '${this.content}', ${fromCol} = ${this.from},
+               SET subject = '${this.subject ? this.subject.replace(/\'/g, "''") : ''}', date = ${this.date}, content = '${this.content.replace(/\'/g, "''")}', ${fromCol} = ${this.from},
                ${toCol} = ${this.to}, "deleted" = ${this.deleted}, "read" = ${this.read}
              WHERE id = ${this.id}`;
 

@@ -85,9 +85,9 @@ export class PvComponent implements OnInit {
             this.getReceipts();
             this.getTraining();
             this.getSessions();
-            this.pvName === 'card' && JsBarcode("#barcode", this.intern.phone.toString() + this.intern.id.toString(), {width:2,
+            this.pvName === 'card' && JsBarcode("#barcode", this.intern.id.toString().padStart(10, '0'), {width:2,
                 height:40});
-            this.pvName === 'form' && JsBarcode("#barcode2", this.intern.phone.toString() + this.intern.id.toString(), {width:2,
+            this.pvName === 'form' && JsBarcode("#barcode2", this.intern.id.toString().padStart(10, '0'), {width:2,
                 height:40});
         });
     }

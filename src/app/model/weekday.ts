@@ -16,8 +16,15 @@ export class Weekday {
     public room_id: number | Room;
 
     public static getCount(filter: string): Promise<Weekday[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "weekday" WHERE  
-                                        name LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "weekday" AS w 
+                            INNER JOIN "session" AS s ON w.session_id = s.id
+                            INNER JOIN "room" AS r ON w.room_id = r.id
+                            INNER JOIN "training" AS t ON s.training_id = t.id
+                            INNER JOIN "instructor" AS i ON s.instructor_id = i.id
+                            WHERE (w.name ILIKE '%${filter}%' OR 
+                            w.time ILIKE '%${filter}%' OR
+                            r.number ILIKE '%${filter}%' OR 
+                            s.name ILIKE '%${filter}%')   AND s.closed = false`, {})
             .then((count: any) => count);
     }
 
@@ -25,7 +32,7 @@ export class Weekday {
         return TheDb.selectAll(`SELECT count(*) as count FROM "weekday" AS w 
                             INNER JOIN "session" AS s ON w.session_id = s.id
                             INNER JOIN "room" AS r ON w.room_id = r.id                         
-                            WHERE r.id = ${room}`, {})
+                            WHERE r.id = ${room} AND s.closed = false`, {})
             .then((count: any) => count);
     }
 
@@ -41,7 +48,7 @@ export class Weekday {
         return TheDb.selectAll(`SELECT count(*) as count FROM "weekday" AS w 
                             INNER JOIN "session" AS s ON w.session_id = s.id
                             INNER JOIN "room" AS r ON w.room_id = r.id                         
-                            WHERE s.instructor_id = ${instructor}`, {})
+                            WHERE s.instructor_id = ${instructor} AND s.closed = false`, {})
             .then((count: any) => count);
     }
 
@@ -53,7 +60,7 @@ export class Weekday {
                             INNER JOIN "instructor" AS i ON s.instructor_id = i.id  
                             INNER JOIN "enrollment" AS e ON e.session_id = s.id    
                             INNER JOIN "intern" AS int ON e.intern_id = int.id                               
-                            WHERE int.id = ${intern}`, {})
+                            WHERE int.id = ${intern} AND s.closed = false`, {})
             .then((count: any) => count);
     }
 
@@ -88,8 +95,10 @@ export class Weekday {
     }
 
     public static getAllBySessionAndName(session_id: number, name: string): Promise<Weekday[]> {
-        const sql = `SELECT * FROM "weekday" WHERE session_id = ${session_id} 
-                                                AND name = '${name}'ORDER BY name DESC`;
+        const sql = `SELECT *, w.id as weekday_id FROM "weekday" as w
+                             INNER JOIN "session" AS s ON w.session_id = s.id
+                                WHERE session_id = ${session_id} 
+                                                AND w.name = '${name}' AND s.closed = false ORDER BY w.name DESC`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -104,9 +113,12 @@ export class Weekday {
     }
 
     public static getAllByRoomAndName(room: number, name: string): Promise<Weekday[]> {
-        const sql = `SELECT * FROM "weekday" WHERE room_id = ${room}
-                                             AND name = '${name}'
-                                                ORDER BY name DESC`;
+        const sql = `SELECT * FROM "weekday" as w 
+                                INNER JOIN "session" AS s ON w.session_id = s.id 
+                                WHERE w.room_id = ${room}
+                                             AND w.name = '${name}'
+                                             AND s.closed = false
+                                                ORDER BY w.name DESC`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -127,10 +139,10 @@ export class Weekday {
                             INNER JOIN "room" AS r ON w.room_id = r.id
                             INNER JOIN "training" AS t ON s.training_id = t.id
                             INNER JOIN "instructor" AS i ON s.instructor_id = i.id
-                            WHERE w.name LIKE '%${filter}%' OR 
-                            w.time LIKE '%${filter}%' OR
-                            r.number LIKE '%${filter}%' OR 
-                            s.name LIKE '%${filter}%'  
+                            WHERE (w.name ILIKE '%${filter}%' OR 
+                            w.time ILIKE '%${filter}%' OR
+                            r.number ILIKE '%${filter}%' OR 
+                            s.name ILIKE '%${filter}%')   AND s.closed = false
                             ORDER BY w.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -176,7 +188,7 @@ export class Weekday {
                             INNER JOIN "room" AS r ON w.room_id = r.id   
                             INNER JOIN "training" AS t ON s.training_id = t.id
                             INNER JOIN "instructor" AS i ON s.instructor_id = i.id                       
-                            WHERE r.id = ${room}  
+                            WHERE r.id = ${room}  AND s.closed = false
                             ORDER BY w.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -199,7 +211,7 @@ export class Weekday {
                             INNER JOIN "room" AS r ON w.room_id = r.id
                             INNER JOIN "training" AS t ON s.training_id = t.id
                             INNER JOIN "instructor" AS i ON s.instructor_id = i.id                           
-                            WHERE s.instructor_id = ${instructor}
+                            WHERE s.instructor_id = ${instructor} AND s.closed = false
                             ORDER BY w.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -224,7 +236,7 @@ export class Weekday {
                             INNER JOIN "instructor" AS i ON s.instructor_id = i.id  
                             INNER JOIN "enrollment" AS e ON e.session_id = s.id    
                             INNER JOIN "intern" AS int ON e.intern_id = int.id                      
-                            WHERE int.id = ${intern}
+                            WHERE int.id = ${intern} AND s.closed = false
                             ORDER BY w.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -294,6 +306,7 @@ export class Weekday {
         this.id = row['id'];
         this.name = row['name'];
         this.time = row['time'];
+        this['weekday_id'] = row['weekday_id'];
         this.session_id = row['session_id'];
         this.room_id = row['room_id'];
         this['session'] = row['session'];

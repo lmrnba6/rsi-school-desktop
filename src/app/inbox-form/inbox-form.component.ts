@@ -103,7 +103,7 @@ export class InboxFormComponent implements OnInit {
     }
 
     public userOnChange(event: any): void {
-        if(event.keyCode === 13) {
+        //if(event.keyCode === 13) {
             this.block = true;
             if(this.groupSelected === 'groups') {
                 Session.getAllPaged(0, 30, 'name', '', event.target.value).then(
@@ -124,7 +124,7 @@ export class InboxFormComponent implements OnInit {
                         this.block = false
                     });
             }
-        }
+        //}
         //this.usersFiltered = this.users.filter(users => users.name.toLowerCase().includes(event.toLowerCase()));
     }
 

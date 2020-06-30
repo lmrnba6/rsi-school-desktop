@@ -97,8 +97,9 @@ export class SessionComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'name', header: 'session.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
-            {columnDef: 'start', header: 'session.placeholder.start', type: 'date', cell: (row: any) => `${row.start}`},
+            {columnDef: 'enrollments', header: 'session.placeholder.enrollments', type: 'text', cell: (row: any) => `${row.enrollments || ''}`},
             {columnDef: 'limit', header: 'session.placeholder.limit', type: 'text', cell: (row: any) => `${row.limit}`},
+            {columnDef: 'interns', header: 'session.placeholder.interns', type: 'text', cell: (row: any) => `${row.interns}`},
             {columnDef: 'instructor_id', header: 'session.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
             {columnDef: 'training_id', header: 'session.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`}
         ];

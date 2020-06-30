@@ -34,7 +34,7 @@
                     <mat-select (selectionChange)="onPaymentChange()" [(ngModel)]="payment" placeholder="{{'payment.title' | translate}}">
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let payment of payments" [value]="payment">
-                            {{payment.amount}} -> {{payment.date}}
+                            {{payment.amount}} DA => {{payment.date}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -175,9 +175,10 @@
             </p>
         </div>
         <div id="receipt" *ngIf="pvName === 'receipt' && payment">
-            <p><img style="margin-left: 3%;" src="{{logo}}" alt="" width="50" height="50"></p>
-            <p style="margin-left: 3%;">{{center}}</p>
-            <p style="margin-left: 3%;">{{payment_code}}</p>
+            <p style="margin: 0">{{payment.username}}</p>
+            <img style="margin-left: 3%;" src="{{logo}}" alt="" width="250" height="250">
+            <p style="margin-left: 25%;">{{center}}</p>
+            <p style="margin-left: 25%;">{{payment_code}}</p>
             <table>
                 <tbody>
                 <tr>
@@ -198,7 +199,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <p ><strong>Langue:</strong></p>
+                        <p ><strong>Formation:</strong></p>
                     </td>
                     <td >
                         <p >{{payment.training}}</p>
@@ -234,6 +235,14 @@
                     </td>
                     <td >
                         <p >{{intern.sold}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <p ><strong>Reste:</strong></p>
+                    </td>
+                    <td >
+                        <p >{{payment.rest || '?'}} DA</p>
                     </td>
                 </tr>
                 <tr>

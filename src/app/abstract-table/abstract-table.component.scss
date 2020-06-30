@@ -13,7 +13,8 @@
       text-decoration-line: none;
     }
     .mat-row {
-      height: 20px;
+      min-height: 0;
+      padding: 5px 0px 5px 0px;
       //&:hover {
       //  background: rgba(75, 180, 255, 0.35);
       //  cursor: pointer;
@@ -35,8 +36,8 @@
     .mat-cell {
       padding-right: 4px;
       display: block;
-      margin-top: 25px;
-      white-space: nowrap;
+      //margin-top: 25px;
+      //white-space: nowrap;
       text-overflow: ellipsis;
       font-weight: bold;
       font-size: large
@@ -54,6 +55,13 @@
       //  background: rgba(75, 180, 255, 0.35);
       //  cursor: pointer;
       //}
+    }
+    .red {
+      background-color: rgba(244, 67, 54, 0.43);
+    }
+    .yellow {
+      background-color: rgba(214, 217, 0, 0.45);
+
     }
   }
 }

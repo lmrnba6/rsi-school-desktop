@@ -20,8 +20,9 @@ export class Settings {
     public static serialNumber: string = '';
     public static isDbLocal = false;
     public static isDbLocalServer = true;
-    public static isHerokuServer = true;
+    public static isHerokuServer = false;
     public static client: Client;
+    public static isDebug: boolean = false;
     public static dbClientLocal: {
         user: string,
         host: string,
@@ -164,11 +165,11 @@ export class Settings {
 
     public static queryServerChange(sql: string): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            Settings.client.query(sql, (err) => {
+            Settings.client.query(sql, (err,res: any) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve({changes: 1});
+                    resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
                 }
             });
         });
@@ -204,7 +205,9 @@ export class Settings {
                 dbClientLocal: Settings.dbClientLocal,
                 dbClientServer: Settings.dbClientServer,
                 dbSshTunnel: Settings.dbSshTunnel,
-                dbHeroku: Settings.dbHeroku
+                dbHeroku: Settings.dbHeroku,
+                isDebug: Settings.isDebug,
+
             }, undefined, 4));
     }
 
@@ -332,6 +335,7 @@ export class Settings {
         Settings.isDbLocal = settings['isDbLocal'];
         Settings.isDbLocalServer = settings['isDbLocalServer'];
         Settings.isHerokuServer = settings['isHerokuServer'];
+        Settings.isDebug = settings['isDebug'];
         Settings.dbClientLocal = settings['dbClientLocal'];
         Settings.dbClientServer = settings['dbClientServer'];
         Settings.dbSshTunnel = settings['dbSshTunnel'];

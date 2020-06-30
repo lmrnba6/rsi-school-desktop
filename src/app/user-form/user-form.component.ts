@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MessagesService} from "../_services/messages.service";
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from "../model/user";
@@ -20,7 +20,7 @@ export class UserFormComponent implements OnInit {
     public password: FormControl;
     public name: FormControl;
     public role: FormControl;
-    public roles = ['admin', 'user', 'student', 'teacher','parent']
+    public roles = ['admin', 'user', 'student', 'teacher', 'parent']
 
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -46,9 +46,11 @@ export class UserFormComponent implements OnInit {
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
+                this.roles = ['admin', 'user', 'student', 'teacher', 'parent'];
             } else {
                 this.isOnEdit = false;
                 this.user = new User();
+                this.roles = ['user', 'parent'];
             }
         });
     }
@@ -85,6 +87,15 @@ export class UserFormComponent implements OnInit {
         this.onSaveOrUpdate();
     }
 
+    public checkUserName(): void {
+        User.getByUserName(this.user.username).then((u: User) => {
+                if ((this.isOnEdit && u.id !== this.user.id) || (!this.isOnEdit && u.id)) {
+                    this.user.username = '';
+                    this.messagesService.notifyMessage(this.translate.instant('messages.username_exist'), '', 'error');
+                }
+            }
+        )
+    }
 
     /**
      * onSave

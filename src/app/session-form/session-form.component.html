@@ -12,7 +12,7 @@
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
             <mat-form-field>
-                <input name="name" formControlName="name" [(ngModel)]="session.name" matInput
+                <input name="name" formControlName="name" [(ngModel)]="session.name" (blur)="onNameChange()" matInput
                        placeholder="{{'session.placeholder.name' | translate}}" required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
@@ -66,4 +66,8 @@
             <br>
         </div>
     </form>
+    <br>
+    <div class="container">
+    <mat-checkbox [(ngModel)]="session.closed">{{'session.placeholder.closed' | translate}}</mat-checkbox>
+    </div>
 </mat-card>

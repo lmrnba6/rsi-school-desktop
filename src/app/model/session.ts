@@ -17,9 +17,17 @@ export class Session {
     public limit: number ;
     public instructor_id: number | Instructor;
     public training_id: number | Training;
+    public closed: boolean = false;
+
 
     public static getCount(filter: string): Promise<Session[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "session" WHERE name LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "session" AS s 
+                                                INNER JOIN "instructor" AS i ON s.instructor_id = i.id
+                                                INNER JOIN "training" as t ON s.training_id = t.id
+                                                WHERE s.name ILIKE '%${filter}%' OR
+                                                                            
+                            i.name ILIKE '%${filter}%' OR                         
+                            t.name ILIKE '%${filter}%'`, {})
             .then((count: any) => count);
     }
 
@@ -40,6 +48,20 @@ export class Session {
                     return new Session().fromRow(row);
                 } else {
                     throw new Error('Expected to find 1 Session. Found 0.');
+                }
+            });
+    }
+
+    public static nameExist(name: string) {
+        const sql = `SELECT * FROM "session" WHERE name = '${name}'`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    throw new Error('duplicated name');
+                } else {
+                    return null;
                 }
             });
     }
@@ -131,7 +153,7 @@ export class Session {
 
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Session[]> {
-        const sql = Settings.isDbLocal ? `SELECT s.id, s.name, s.start, s.end, s.\`limit\`, s.instructor_id, s.training_id, i.name as instructor, t.name as training 
+        const sql = Settings.isDbLocal ? `SELECT s.id, s.name, s.start, s.closed, s.end, s.\`limit\`, s.instructor_id, s.training_id, i.name as instructor, t.name as training 
                                                 FROM "session" AS s 
                                                 INNER JOIN "instructor" AS i ON s.instructor_id = i.id
                                                 INNER JOIN "training" as t ON s.training_id = t.id
@@ -142,15 +164,28 @@ export class Session {
                             \`limit\` LIKE '%${filter}%' OR
                             t.name LIKE '%${filter}%'
                             ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT s.id, s.name, s.start, s."end", s."limit", s.instructor_id, s.training_id, i.name as instructor, t.name as training 
+            `with x as (SELECT s.id, count(e.id) as interns
                                                 FROM "session" AS s 
+            left JOIN enrollment as e on e.session_id = s.id
                                                 INNER JOIN "instructor" AS i ON s.instructor_id = i.id
                                                 INNER JOIN "training" as t ON s.training_id = t.id
-                                                WHERE s.name LIKE '%${filter}%' OR
-                                                                            
-                            i.name LIKE '%${filter}%' OR                         
-                            t.name LIKE '%${filter}%'
-                            ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+                                                group by  s.id)
+
+                                                (SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, x.interns,
+                                                i.name as instructor, t.name as training,  
+                                                string_agg('(' || substring(w.name from 0 for 3) || ' ' || REPLACE (w.time, ' ', ''), '),') as enrollments
+                                                                                FROM "session" AS s 
+                                                join x on x.id = s.id
+                                                left JOIN weekday as w on w.session_id = s.id
+                                                INNER JOIN "instructor" AS i ON s.instructor_id = i.id
+                                                INNER JOIN "training" as t ON s.training_id = t.id
+                                                
+                                                WHERE s.name ILIKE '%${filter}%' OR                                                                        
+                                                i.name ILIKE '%${filter}%' OR                         
+                                                t.name ILIKE '%${filter}%'
+                                                
+                            group by s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, i.name, t.name, x.interns
+                            ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex})`;
         const values = {
         };
 
@@ -166,13 +201,13 @@ export class Session {
     }
 
     public static getAllPagedByInstructor(pageIndex: number, pageSize: number, sort: string, order: string, instructor: number): Promise<Session[]> {
-        const sql = Settings.isDbLocal ? `SELECT s.id, s.name, s.start, s.end, s.\`limit\`, s.instructor_id, s.training_id , i.name as instructor, t.name as training
+        const sql = Settings.isDbLocal ? `SELECT s.id, s.name, s.start, s.closed, s.end, s.\`limit\`, s.instructor_id, s.training_id , i.name as instructor, t.name as training
                                                 FROM "session" AS s 
                                                 INNER JOIN "instructor" AS i ON s.instructor_id = i.id
                                                 INNER JOIN "training" as t ON s.training_id = t.id
                                                 WHERE i.id = ${instructor}
                             ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT s.id, s.name, s.start, s."end", s."limit", s.instructor_id, s.training_id , i.name as instructor, t.name as training
+            `SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id , i.name as instructor, t.name as training
                                                 FROM "session" AS s 
                                                 INNER JOIN "instructor" AS i ON s.instructor_id = i.id
                                                 INNER JOIN "training" as t ON s.training_id = t.id
@@ -215,11 +250,11 @@ export class Session {
 
     public insert(): Promise<void> {
         const sql = Settings.isDbLocal ? `
-            INSERT INTO "session" (name, start, end,\`limit\`, instructor_id, training_id)
-            VALUES('${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id})` :
+            INSERT INTO "session" (name, start, end,\`limit\`, instructor_id, training_id, closed)
+            VALUES('${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id}, ${this.closed})` :
             `
-            INSERT INTO "session" (name, start, "end", "limit", instructor_id, training_id)
-            VALUES('${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id})`;
+            INSERT INTO "session" (name, start, "end", "limit", instructor_id, training_id, closed)
+            VALUES('${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id}, ${this.closed})`;
 
         const values = {
         };
@@ -238,12 +273,12 @@ export class Session {
         const sql = Settings.isDbLocal ? `
             UPDATE "session"
                SET name = '${this.name}', start = ${this.start}, end = ${this.end}, \`limit\` = ${this.limit}, instructor_id = '${this.instructor_id}',
-               training_id = '${this.training_id}'
+               training_id = '${this.training_id}', closed = ${this.closed}
              WHERE id = ${this.id}` :
             `
             UPDATE "session"
                SET name = '${this.name}', start = ${this.start}, "end" = ${this.end}, "limit" = ${this.limit}, instructor_id = '${this.instructor_id}',
-               training_id = '${this.training_id}'
+               training_id = '${this.training_id}', closed = ${this.closed}
              WHERE id = ${this.id}`;
 
         const values = {
@@ -281,10 +316,12 @@ export class Session {
         this.instructor_id = row['instructor_id'];
         this.training_id = row['training_id'];
         this['interns'] = row['interns'];
+        this['enrollments'] = row['enrollments'];
         this['instructors'] = row['instructors'];
         this['instructor'] = row['instructor'];
         this['training'] = row['training'];
         this['type'] = row['type'];
+        this.closed = row['closed'];
         return this;
     }
 }

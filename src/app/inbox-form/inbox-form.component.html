@@ -42,7 +42,7 @@
             </mat-form-field>
             <div *ngIf="isOnEdit">
                 <mat-label>{{(inbox.from === user.id ? 'inbox.to' : 'inbox.from') | translate}}</mat-label>
-                <h4>{{inbox.from === user.id ? inbox.to : inbox.from}}</h4>
+                <h4>{{inbox.from === user.id ? inbox['to_user'] : inbox['from_user']}}</h4>
             </div>
             <br>
             <mat-form-field>

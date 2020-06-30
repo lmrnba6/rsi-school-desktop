@@ -18,7 +18,8 @@ export class Payment_instructor {
     public static getCount(filter: string): Promise<Payment_instructor[]> {
         const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "payment_instructor" WHERE amount LIKE '%${filter}%' OR 
                                         date LIKE '%${filter}%'` :
-            `SELECT count(*) as count FROM "payment_instructor"`;
+            `SELECT count(*) as count FROM "payment_instructor" AS p INNER JOIN "instructor" AS i ON p.instructor_id = i.id WHERE 
+                            p.date ILIKE '%${filter}%' OR i.name ILIKE '%${filter}%'`;
         return TheDb.selectAll(sql, {})
             .then((count: any) => count);
     }
@@ -79,7 +80,7 @@ export class Payment_instructor {
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
             `SELECT p.id, p.amount, p.date, p.comment, p.instructor_id FROM "payment_instructor" AS p INNER JOIN "instructor" AS i ON p.instructor_id = i.id WHERE 
-                            p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
+                            p.date ILIKE '%${filter}%' OR i.name ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
 
         const values = {
@@ -117,7 +118,7 @@ export class Payment_instructor {
     public insert(): Promise<void> {
         const sql = `
             INSERT INTO "payment_instructor" (amount, date, comment, instructor_id)
-            VALUES(${this.amount}, '${this.date}', '${this.comment}', ${this.instructor_id})`;
+            VALUES(${this.amount}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', ${this.instructor_id})`;
 
         const values = {
         };
@@ -135,7 +136,7 @@ export class Payment_instructor {
     public update(): Promise<void> {
         const sql = `
             UPDATE "payment_instructor"
-               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment}', instructor_id = '${this.instructor_id}'
+               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', instructor_id = '${this.instructor_id}'
              WHERE id = ${this.id}`;
 
         const values = {

@@ -14,11 +14,13 @@ export class Instructor {
     public address = '';
     public email = '';
     public sold = 0;
+    public isFullTime: number | boolean = 0;
+
 
 
     public static getCount(filter: string): Promise<Instructor[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "instructor" WHERE name LIKE '%${filter}%' OR 
-                                        phone LIKE '%${filter}%' OR email LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "instructor" WHERE name ILIKE '%${filter}%' OR 
+                                        phone ILIKE '%${filter}%' OR email ILIKE '%${filter}%'`, {})
             .then((count: any) => count);
     }
 
@@ -81,9 +83,9 @@ export class Instructor {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Instructor[]> {
-        const sql = `SELECT * FROM "instructor" WHERE name LIKE '%${filter}%' OR 
-                            phone LIKE '%${filter}%' OR
-                            email LIKE '%${filter}%' 
+        const sql = `SELECT * FROM "instructor" WHERE name ILIKE '%${filter}%' OR 
+                            phone ILIKE '%${filter}%' OR
+                            email ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -101,18 +103,18 @@ export class Instructor {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "instructor" (name, name_arabic, address, phone, email, sold)
-            VALUES('${this.name}', '${this.name_arabic}', '${this.address}', '${this.phone}', '${this.email}', ${this.sold})`;
+            INSERT INTO "instructor" (name, name_arabic, address, phone, email, sold, "isFullTime")
+            VALUES('${this.name ? this.name.replace(/\'/g, "''") : ''}', '${this.name_arabic.replace(/\'/g, "''")}', '${this.address.replace(/\'/g, "''")}', '${this.phone}', '${this.email.replace(/\'/g, "''")}', ${this.sold}, ${this.isFullTime}) RETURNING *`;
 
         const values = {
         };
 
         return TheDb.insert(sql, values)
-            .then((result) => {
+            .then((result: any) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Instructor to be inserted. Was ${result.changes}`);
                 } else {
-                    this.id = result.lastID;
+                    this.id = result.id;
                 }
             });
     }
@@ -120,8 +122,8 @@ export class Instructor {
     public update(): Promise<void> {
         const sql = `
             UPDATE "instructor"
-               SET name = '${this.name}', name_arabic = '${this.name_arabic}', address = '${this.address}', phone = '${this.phone}', 
-               email = '${this.email}' , sold = '${this.sold}'   
+               SET name = '${this.name ? this.name.replace(/\'/g, "''") : ''}', name_arabic = '${this.name_arabic.replace(/\'/g, "''")}', address = '${this.address.replace(/\'/g, "''")}', phone = '${this.phone}', 
+               email = '${this.email ? this.email.replace(/\'/g, "''") : ''}' , sold = '${this.sold}', "isFullTime" = ${this.isFullTime}   
              WHERE id = ${this.id}`;
 
         const values = {
@@ -158,6 +160,7 @@ export class Instructor {
         this.phone = row['phone'];
         this.email = row['email'];
         this.sold = row['sold'];
+        this.isFullTime = row['isFullTime']
         return this;
     }
 }

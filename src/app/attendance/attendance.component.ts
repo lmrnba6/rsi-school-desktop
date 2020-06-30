@@ -208,6 +208,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'attendance.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
+            {columnDef: 'day', header: 'attendance.placeholder.day', type: 'text', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.day)}`},
             {
                 columnDef: 'present',
                 header: 'attendance.placeholder.present',

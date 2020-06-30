@@ -10,6 +10,7 @@ export class School {
     public id = -1;
     public name = '';
     public photo = '';
+    public dist = ''
 
     public static getCount(filter: string): Promise<School[]> {
         return TheDb.selectAll(`SELECT count(*) as count FROM "school" WHERE name LIKE '%${filter}%' OR 
@@ -66,8 +67,8 @@ export class School {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "school" (name, photo)
-            VALUES('${this.name}', '${this.photo}')`;
+            INSERT INTO "school" (name, photo, dist)
+            VALUES('${this.name}', '${this.photo}', '${this.dist}')`;
 
         const values = {
         };
@@ -85,7 +86,7 @@ export class School {
     public update(): Promise<void> {
         const sql = `
             UPDATE "school"
-               SET name = '${this.name}', photo = '${this.photo}'
+               SET name = '${this.name}', photo = '${this.photo}', dist = '${this.dist}'
              WHERE id = ${this.id}`;
 
         const values = {
@@ -118,6 +119,7 @@ export class School {
         this.id = row['id'];
         this.name = row['name'];
         this.photo = row['photo'];
+        this.dist = row['dist'];
         return this;
     }
 }

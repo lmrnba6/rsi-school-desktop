@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Register} from "../model/register";
 import './register-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
+import {AuthenticationService} from "../_services/authentication.service";
 @Component({
     selector: 'app-register-form',
     templateUrl: './register-form.component.html',
@@ -27,7 +28,8 @@ export class RegisterFormComponent implements OnInit {
                 public messagesService: MessagesService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private translate: TranslateService
+                private translate: TranslateService,
+                private auth: AuthenticationService
                 ) {
     }
 
@@ -96,6 +98,7 @@ export class RegisterFormComponent implements OnInit {
      */
     public onSaveOrUpdate(): void {
         this.register.date = (this.register.date as Date).getTime();
+        this.register.username = this.auth.getCurrentUser().username;
         let internPromise: Promise<any>;
         if (this.isOnEdit) {
             internPromise = this.register.update();

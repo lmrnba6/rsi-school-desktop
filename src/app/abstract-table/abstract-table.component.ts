@@ -48,7 +48,8 @@ import {Weekday} from "../model/weekday";
 export class AbstractTableComponent
   implements OnInit, OnChanges, AfterViewInit {
   @Input() public data: any;
-  @Input() public setting: AbstractTableSetting;
+    @Input() public page: string;
+    @Input() public setting: AbstractTableSetting;
   @Output() deleteRow: EventEmitter<any> = new EventEmitter<any>();
   @Output() pageChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() tableChange: EventEmitter<any> = new EventEmitter<any>();
@@ -211,12 +212,12 @@ export class AbstractTableComponent
 
 
   public applyFilter(filter: any): void {
-      if(filter.keyCode == 13) {
+      //if(filter.keyCode == 13) {
           let filterValue: string = filter.target.value.trim(); // Remove whitespace
           filterValue = Settings.isDbLocal ? filterValue.toLowerCase() : filterValue; // Datasource defaults to lowercase matches
           // this.dataSource.filter = filterValue;
           this.filter.emit(filterValue);
-      }
+     //}
   }
 
   public integerToString(date: string) {
@@ -268,5 +269,40 @@ export class AbstractTableComponent
   public onAddRow(): void {
     this.addRow.emit();
   }
+
+  public getStyleRow(row: any) {
+      if(this.page === 'register') {
+          if(Number(row.amount) < 0) {
+              return {background: '#ffc14e'}
+          }
+      } else if(this.page === 'intern') {
+          if(row.isPromo) {
+              return {background: '#c891ff'}
+          }
+          if(row.isVip){
+              return {background: '#84ff9f'}
+          }
+          if(row.closed || row.isAllowed) {
+              return {background: '#ffb0b0'}
+          }
+          if((row.sold !== undefined && Number(row.sold) !== 0) || row.read === 0 ) {
+              return {background: '#ffffa3'}
+          }
+      }else {
+          if(row.isPromo) {
+              return {background: '#c891ff'}
+          }
+          if(row.isVip){
+              return {background: '#84ff9f'}
+          }
+          if(row.closed || row.isAllowed) {
+              return {background: '#ffb0b0'}
+          }
+          if((row.sold !== undefined && Number(row.sold) !== 0) || row.read === 0 ) {
+              return {background: '#ffffa3'}
+          }
+      }
+        return
+    }
 
 }

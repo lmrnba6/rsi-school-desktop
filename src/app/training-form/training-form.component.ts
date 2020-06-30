@@ -25,7 +25,7 @@ export class TrainingFormComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
-    types = ['individual','mini_group', 'group']
+    types = ['individual','mini_group', 'group', 'leisure']
 
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,

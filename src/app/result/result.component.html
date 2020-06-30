@@ -48,5 +48,5 @@
 </mat-card>
 <app-chart *ngIf="chartData.length && type==='graph'" [chartData]="chartData" [chartLabels]="chartLabels" [chartType]="chartType" [title]="title"></app-chart>
 <mat-card *ngIf="chartData.length && type==='list'">
-  <app-abstract-table  [setting]="setting" [data]="data"></app-abstract-table>
+  <app-abstract-table [page]="'result'" [setting]="setting" [data]="data"></app-abstract-table>
 </mat-card>

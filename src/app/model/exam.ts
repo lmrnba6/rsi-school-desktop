@@ -24,8 +24,13 @@ export class Exam {
     public static getCount(filter: string): Promise<Exam[]> {
         const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "exam" WHERE date LIKE '%${filter}%' OR 
                                         mark LIKE '%${filter}%'` :
-            `SELECT count(*) as count FROM "exam" WHERE date LIKE '%${filter}%' OR 
-                                        CAST(mark AS TEXT) LIKE '%${filter}%'`;
+            `SELECT count(*) as count FROM "exam" AS e 
+                                             INNER JOIN "session" AS s ON e.session_id = s.id
+                                             INNER JOIN "training" AS t ON s.training_id = t.id
+                                             INNER JOIN "intern" AS i ON e.intern_id = i.id
+                                                    WHERE e.date ILIKE '%${filter}%' OR 
+                                                    CAST(e.mark AS TEXT) LIKE '%${filter}%'  OR 
+                             t.name ILIKE '%${filter}%' OR i.name ILIKE '%${filter}%' OR s.name ILIKE '%${filter}%'`;
         return TheDb.selectAll(sql, {})
             .then((count: any) => count);
     }
@@ -85,9 +90,9 @@ export class Exam {
                                              INNER JOIN "session" AS s ON e.session_id = s.id
                                              INNER JOIN "training" AS t ON s.training_id = t.id
                                              INNER JOIN "intern" AS i ON e.intern_id = i.id
-                                                    WHERE e.date LIKE '%${filter}%' OR 
+                                                    WHERE e.date ILIKE '%${filter}%' OR 
                                                     CAST(e.mark AS TEXT) LIKE '%${filter}%'  OR 
-                             t.name LIKE '%${filter}%' OR i.name LIKE '%${filter}%' OR s.name LIKE '%${filter}%'
+                             t.name ILIKE '%${filter}%' OR i.name ILIKE '%${filter}%' OR s.name ILIKE '%${filter}%'
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -130,7 +135,7 @@ export class Exam {
         const sql = `
             INSERT INTO "exam" (mark, result, date, retake, comment, time, intern_id, session_id)
             VALUES('${this.mark}', '${this.result}', '${this.date}', '${this.retake}', 
-            '${this.comment}', '${this.time}', ${this.intern_id}, ${this.session_id})`;
+            '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', '${this.time}', ${this.intern_id}, ${this.session_id})`;
 
         const values = {
         };
@@ -149,7 +154,7 @@ export class Exam {
         const sql = `
             UPDATE "exam"
                SET mark = '${this.mark}',
-                date = '${this.date}', retake= '${this.retake}', comment = '${this.comment}',
+                date = '${this.date}', retake= '${this.retake}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',
                 result = '${this.result}', time = '${this.time}', intern_id = '${this.intern_id}',
                 session_id = '${this.session_id}'
              WHERE id = ${this.id}`;

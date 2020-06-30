@@ -34,7 +34,7 @@ export class LayoutComponent implements OnInit {
             }
             if (pressed == false) {
                 setTimeout(function () {
-                    if (chars.length === 12) {
+                    if (chars.length === 10) {
                         const barcode = chars.join("");
                         console.log("Barcode Scanned: " + barcode);
                         This.goToIntern(barcode);
@@ -56,8 +56,7 @@ export class LayoutComponent implements OnInit {
     }
 
     goToIntern(code: any) {
-        code = code.slice(0,9);
-        Intern.getByPhone(Number(code)).then(i => {
+        Intern.get(Number(code)).then(i => {
             this.router.navigate(['intern-management/' + i.id]);
         }).catch(
             () => this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error')

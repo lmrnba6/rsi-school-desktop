@@ -20,6 +20,8 @@
     "deleted": "Supprimés",
     "from": "De",
     "to": "À",
+    "from_user": "De",
+    "to_user": "À",
     "content": "Message",
     "subject": "Objet",
     "date": "Date",
@@ -64,10 +66,14 @@
     "documents": "Documents requis",
     "years": "Années",
     "placeholder": {
+      "comment": "Commentaire",
+      "isVip": "VIP",
+      "isPromo": "Promotion",
       "birth": "Date de naissance",
       "name" : "Nom",
       "email": "Courriel",
       "address": "Adresse",
+      "enrollments": "Inscriptions",
       "name_arabic": "Nom en deuxième langue ",
       "permit_number": "Numéro du permis",
       "permit_delivery": "Date de délivrnce",
@@ -78,20 +84,24 @@
       "certificate": "Possède un brevet",
       "medical": "Certificat medical",
       "residence": "Copie de la cate séjour (pour les étrangers)",
-      "fees": "Frais de formation",
-      "fees_enrollment": "Frais d'inscription",
-      "fees_books": "Frais des livres",
+      "backpack": "Reçu un sac à dos?",
+      "fees": "Doit payer les frais de formation?",
+      "fees_enrollment": "Doit payer les frais d'inscription?",
+      "fees_books": "Doit payer les frais des livres?",
       "isAllowed": "Bloqué(e)",
       "photo": "Photo",
       "scholar": "Niveau scolaire",
       "sold": "solde",
+      "kindergarten": "Préscolaire",
       "elementary": "Prémaire",
-      "secondary": "Secondaire",
-      "high": "Lycée",
+      "secondary": "Moyen",
+      "high": "Secondaire",
       "bachelor": "Licence",
       "master": "Master",
       "phd": "Phd",
-      "parent": "Parent"
+      "parent": "Parent",
+      "dist": "Dossier des images",
+      "isPhoneOptional": "Facultatif"
     }
   },
   "visitor": {
@@ -99,12 +109,15 @@
     "placeholder": {
       "name" : "Nom",
       "phone": "Téléphone",
-      "comment": "Commentaire"
+      "comment": "Commentaire",
+      "date": "Date"
     }
   },
   "instructor": {
     "title": "Enseignant",
     "placeholder": {
+      "fullTime": "À plein temps",
+      "partTime": "À temps partiel",
       "name" : "Nom",
       "email": "Courriel",
       "address": "Adresse",
@@ -116,6 +129,7 @@
   "payment": {
     "title": "Paiement",
     "placeholder": {
+      "offer": "Offre / Promotion (Ne l'incluez pas a la caisse)",
       "amount" : "Montant",
       "date": "Date",
       "comment": "Commentaire",
@@ -127,8 +141,14 @@
   "register": {
     "title": "Caisse",
     "placeholder": {
+      "rest": "Reste",
+      "sold": "Solde",
+      "intern": "Étudiant",
+      "training": "Formation",
       "amount" : "Montant",
       "date": "Date",
+      "from": "De",
+      "to": "A",
       "comment": "Commentaire"
     },
     "soldAll":"Solde total",
@@ -156,8 +176,11 @@
       "end": "Fin",
       "limit": "Max",
       "intern": "Students",
+      "interns": "Étudaints",
+      "enrollments": "Programme",
       "instructor_id": "Enseignant",
-      "training_id": "Formation"
+      "training_id": "Formation",
+      "closed": "Fermé"
     }
   },
   "user": {
@@ -180,6 +203,7 @@
     "individual": "Individuel",
     "group": "Groupe",
     "mini_group": "Mini group",
+    "leisure": "Loisir",
     "title": "Formation",
     "placeholder": {
       "name": "Nom",
@@ -227,6 +251,7 @@
     "by_date": " Par groupe",
     "placeholder": {
       "time" : "Durée",
+      "day" : "Jour",
       "present" : "Présent",
       "day_id": "Jour",
       "weekday_id": "Heure",
@@ -402,10 +427,16 @@
     "change_local_database_warning_message": "Voulez-vous vraiment changer la source de votre base de donneés?",
     "network.offline": "Connexion perdue!",
     "go_to_receipt_message": "Voulez-vous imprimer le reçu?",
+    "go_to_enrollment_message": "Voulez-vous inscrire cet étudiant?",
+    "go_to_payment_message": "Voulez-vous faire un paiement pour cet étudiant?",
     "intern_already_enrolled": "Étudiant déja inscrit à ce groupe",
     "blocked": "Bloqué(e)",
     "phone_exist": "Ce numéro de téléphone est existant",
-    "session_full": "Ce groupe est complet"
+    "name_exist": "Ce nom de groupe est existant",
+    "username_exist": "Ce nom d'utilisateur est existant",
+    "session_full": "Ce groupe est complet",
+    "notEnrolled_message": "Cet étudiant n'est pas inscrit à cette formation",
+    "transfer_intern_message": "voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?"
   },
   "buttons": {
     "save": "Sauvegarder",

@@ -80,6 +80,7 @@ export class InstructorFormComponent implements OnInit, OnChanges {
             .get(id)
             .then((val: Instructor) => {
                 this.instructor = val;
+                this.instructor.isFullTime = this.instructor.isFullTime === 1 ? true : false;
             });
     }
 
@@ -118,6 +119,7 @@ export class InstructorFormComponent implements OnInit, OnChanges {
      * onSave
      */
     public onSaveOrUpdate(): void {
+        this.instructor.isFullTime = this.instructor.isFullTime ? 1 : 0;
         let internPromise: Promise<any>;
         if (this.isOnEdit) {
             internPromise = this.instructor.update();

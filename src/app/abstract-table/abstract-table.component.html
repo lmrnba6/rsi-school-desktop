@@ -62,6 +62,14 @@
                           style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#49cc90"> </span>
                 </mat-cell>
             </ng-container>
+            <ng-container *ngIf="column.type==='bool'">
+                <mat-cell *matCellDef="let row">
+                    <span class="glyphicon glyphicon-remove" *ngIf="!column.cell(row)"
+                          style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e"></span>
+                    <span class="glyphicon glyphicon-ok" *ngIf="column.cell(row)"
+                          style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#49cc90"> </span>
+                </mat-cell>
+            </ng-container>
             <ng-container *ngIf="column.type==='icon'">
                 <mat-cell *matCellDef="let row">
                     <span [class]="'glyphicon glyphicon-' + column.cell(row)" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#0000"></span>
@@ -77,7 +85,7 @@
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" row
-                [ngStyle]="{'background-color' : row?.isAllowed ? 'rgba(244, 67, 54, 0.43)' : (row?.sold > 0  || row?.read === 0) && 'rgba(214, 217, 0, 0.45)'}"
+                [ngStyle]="getStyleRow(row)"
                 >
         </mat-row>
 

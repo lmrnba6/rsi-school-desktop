@@ -14,8 +14,8 @@ export class User {
     public role = '';
 
     public static getCount(filter: string): Promise<User[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "user" WHERE name LIKE '%${filter}%' OR 
-                                        username LIKE '%${filter}%' OR role LIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "user" WHERE name ILIKE '%${filter}%' OR 
+                                        username ILIKE '%${filter}%' OR role ILIKE '%${filter}%'`, {})
             .then((count: any) => count);
     }
 
@@ -106,6 +106,20 @@ export class User {
             });
     }
 
+    public static getByUserName(userName: string): Promise<User> {
+        const sql = `SELECT * FROM "user" WHERE username = '${userName}'`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return new User().fromRow(row);
+                } else {
+                    throw new Error('Expected to find 1 User. Found 0.');
+                }
+            });
+    }
+
     public static getAll(): Promise<User[]> {
         const sql = `SELECT * FROM "user" ORDER BY name`;
         const values = {};
@@ -122,9 +136,9 @@ export class User {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<User[]> {
-        const sql = `SELECT * FROM "user" WHERE name LIKE '%${filter}%' OR 
-                            username LIKE '%${filter}%' OR
-                            role LIKE '%${filter}%' 
+        const sql = `SELECT * FROM "user" WHERE name ILIKE '%${filter}%' OR 
+                            username ILIKE '%${filter}%' OR
+                            role ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };

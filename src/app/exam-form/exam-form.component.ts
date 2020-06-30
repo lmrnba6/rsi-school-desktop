@@ -131,7 +131,7 @@ export class ExamFormComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        if(event.keyCode == 13) {
+        //if(event.keyCode == 13) {
             this.block = true;
             Intern.getAllPagedBySessions(0, 5, 'name', '', event.target.value, this.sessionsString).then(
                 users => {
@@ -141,7 +141,7 @@ export class ExamFormComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        }
+        //}
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
     }
 

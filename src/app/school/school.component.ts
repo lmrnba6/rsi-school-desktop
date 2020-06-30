@@ -17,6 +17,7 @@ export class SchoolComponent implements OnInit {
 
     public schoolForm: FormGroup;
     public name: FormControl;
+    public dist: FormControl;
     public photo: any;
     public block: boolean;
     public school: School;
@@ -35,9 +36,10 @@ export class SchoolComponent implements OnInit {
 
     public initForm(): void {
         this.name = new FormControl(null, [Validators.required]);
-
+        this.dist = new FormControl(null);
         this.schoolForm = this.fb.group({
             name: this.name,
+            dist: this.dist
         });
     }
 
@@ -52,6 +54,7 @@ export class SchoolComponent implements OnInit {
                     const school = new School();
                     school.name = '';
                     school.photo = '';
+                    school.dist = '';
                     school.insert().then();
                     this.getData();
                 }

@@ -3,9 +3,10 @@
 <mat-card>
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
     </app-loader>
+    <mat-checkbox style="color: red; font-size: 1.5rem" [(ngModel)]="offer">{{'payment.placeholder.offer' | translate}}</mat-checkbox>
     <form [formGroup]="paymentForm">
         <div class="container">
-            <button [disabled]="(paymentForm.invalid && internSelected)" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="paymentForm.invalid || !internSelected || !trainingSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
@@ -33,21 +34,23 @@
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width">
                 <input name="training" formControlName="training" matInput
-                       (keyup)="trainingOnChange($event)" matInput [matAutocomplete]="auto"
+                       (keyup)="trainingOnChange($event)" [matAutocomplete]="auto"
                        placeholder="{{'payment.placeholder.training' | translate}}">
                 <span matSuffix class="glyphicon glyphicon-search"></span>
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnTraining.bind(this)"
                                   (optionSelected)="trainingOnSelect($event.option.value)">
                     <mat-option *ngFor="let training of trainingsFiltered" [value]="training">
                         {{training?.name}}
                     </mat-option>
                 </mat-autocomplete>
+                <mat-error *ngIf="training.invalid || !trainingSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <div *ngIf="isOnEdit">
+            <div *ngIf="isOnEdit || express">
                 <mat-label>{{'payment.placeholder.training' | translate}}</mat-label>
-                <h4>{{payment.training}}</h4>
+                <h2 style="margin: 0" *ngIf="isOnEdit">{{payment?.training}}</h2>
+                <h2 style="margin: 0" *ngIf="express">{{trainingSelected?.name}}</h2>
             </div>
             <br>
             <mat-form-field>
@@ -56,12 +59,12 @@
                 <mat-error *ngIf="month.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width">
                 <input name="intern" formControlName="intern" matInput
                        (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
                        placeholder="{{'payment.placeholder.intern_id' | translate}}" required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnIntern.bind(this)"
                                   (optionSelected)="internOnSelect($event.option.value)">
                     <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
                         {{intern?.name}} <span style="color: red">{{intern.sold}} DA</span>
@@ -69,9 +72,9 @@
                 </mat-autocomplete>
                 <mat-error *ngIf="intern.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <div *ngIf="isOnEdit">
+            <div *ngIf="isOnEdit || express">
                 <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
-                <h4>{{internSelected.name}}</h4>
+                <h2 style="margin: 0">{{internSelected?.name}}</h2>
             </div>
         </div>
     </form>

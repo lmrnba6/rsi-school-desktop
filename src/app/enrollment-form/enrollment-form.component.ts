@@ -8,6 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Session} from "../model/session";
 import {Intern} from "../model/intern";
 import {Training} from "../model/training";
+import {DialogsService} from "../_services/dialogs.service";
 
 @Component({
     selector: 'app-enrollment-form',
@@ -19,6 +20,7 @@ export class EnrollmentFormComponent implements OnInit {
     public enrollment: Enrollment = new Enrollment();
     public block: boolean;
     public isOnEdit: boolean;
+    public express: boolean;
     public enrollmentForm: FormGroup;
     public date: FormControl;
     public comment: FormControl;
@@ -31,6 +33,7 @@ export class EnrollmentFormComponent implements OnInit {
     public training_fees: boolean;
     public enrollment_fees: boolean;
     public books_fees: boolean;
+    public backpack: boolean
 
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -40,6 +43,7 @@ export class EnrollmentFormComponent implements OnInit {
                 public messagesService: MessagesService,
                 private route: ActivatedRoute,
                 private router: Router,
+                private dialogsService: DialogsService,
                 private translate: TranslateService) {
     }
 
@@ -87,7 +91,7 @@ export class EnrollmentFormComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        if(event.keyCode == 13) {
+        //if(event.keyCode == 13) {
             this.block = true;
             Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
@@ -97,7 +101,7 @@ export class EnrollmentFormComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        }
+        //}
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
     }
 
@@ -115,12 +119,25 @@ export class EnrollmentFormComponent implements OnInit {
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
+            } else if(res.in) {
+                this.express = true;
+                this.getInternToEnroll(res.in)
             } else {
                 this.isOnEdit = false;
                 this.enrollment = new Enrollment();
                 this.enrollment.date = new Date();
             }
         });
+    }
+
+    public getInternToEnroll(id: number): void {
+        Intern
+            .get(id)
+            .then((val: Intern) => {
+                this.internSelected = val;
+                this.intern_id.patchValue(val.id);
+                this.enrollment.date = new Date();
+            });
     }
 
     /**
@@ -179,7 +196,11 @@ export class EnrollmentFormComponent implements OnInit {
             () => {
                 this.block = false;
                 !this.isOnEdit && this.manageInternSold();
-                this.goBack();
+                if(this.express){
+                    this.goToPayment(this.internSelected.id)
+                }else {
+                    this.goBack();
+                }
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
@@ -188,20 +209,36 @@ export class EnrollmentFormComponent implements OnInit {
             });
     }
 
+    goToPayment(id: number) {
+        this.dialogsService
+            .confirm('messages.warning_title', 'messages.go_to_payment_message', true, 'usd')
+            .subscribe(confirm => {
+                if (confirm) {
+                    const session = this.sessions.find(s => s.id === this.enrollment.session_id );
+                    this.router.navigate(['/payment/express/' + id + '/' + (session ? session.training_id : '')]);
+
+                }
+            });
+    }
+
     manageInternSold() {
         Session.get(this.enrollment.session_id as number).then(session => {
             Training.get(session.training_id as number).then(training => {
                 if (this.training_fees) {
-                    this.internSelected.sold += training.training_fees;
+                    this.internSelected.sold =  Number(this.internSelected.sold) + Number(training.training_fees);
+                }
+                if (this.backpack) {
+                    this.internSelected.comment = (this.internSelected.comment || '') +   '\n 1 sac à dos \n';
                 }
                 if (this.books_fees) {
-                    this.internSelected.sold += training.books_fees;
+                    this.internSelected.sold = Number(this.internSelected.sold) + Number(training.books_fees);
                 }
                 if (this.enrollment_fees) {
-                    this.internSelected.sold += training.enrollment_fees;
+                    this.internSelected.sold = Number(this.internSelected.sold) + Number(training.enrollment_fees);
                 }
                 this.block = true;
-                this.internSelected.update().then(() => this.block = false,
+                this.internSelected.sold = Number(Number(this.internSelected.sold).toFixed(2));
+                Intern.updateSoldAndComment(this.internSelected.id, this.internSelected.sold,this.internSelected.comment).then(() => this.block = false,
                     () => {
                     this.block = false;
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');

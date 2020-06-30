@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
                                     this.error = 'error';
                             });
                     } else if(user.role === 'student') {
-                        Intern.getByPhone(Number(user.username)).then(
+                        Intern.get(Number(user.username)).then(
                             intern => {
                                 intern ? this.router.navigate(['interns/' + intern.id]) :
                                     this.error = 'error';
