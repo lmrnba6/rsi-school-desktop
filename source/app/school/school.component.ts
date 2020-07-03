@@ -80,7 +80,7 @@ export class SchoolComponent implements OnInit {
     openFile() {
         const options: OpenDialogOptions = {};
         const files = remote.dialog.showOpenDialog(remote.getCurrentWindow(), options);
-        this.readFile(files[0]);
+        files && this.readFile(files[0]);
     }
 
     private readFile(file: string) {

@@ -368,7 +368,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     openFile() {
         const options: OpenDialogOptions = {};
         const files = remote.dialog.showOpenDialog(remote.getCurrentWindow(), options);
-        this.readFile(files[0]);
+        files && this.readFile(files[0]);
     }
 
 

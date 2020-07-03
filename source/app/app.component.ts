@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 
 // tslint:disable-next-line:no-implicit-dependencies
-import { Menu, MenuItemConstructorOptions, remote } from 'electron';
 import { User } from './model/user';
 import { Settings } from './model/settings';
 import '../assets/sass/style.scss';
@@ -50,22 +49,22 @@ export class AppComponent {
 	
 
 
-    public onMenu(user: User) {
-        const menu = this.initMenu(user);
-        // Since Electron v2.0 popup must have option parameter.
-        // See https://github.com/electron/electron/issues/12915
-        // {} compiles correct, but tslint throws error
-        menu.popup({});
-    }
-
-    private initMenu(user: User): Menu {
-        const template: MenuItemConstructorOptions[] = [
-            {
-                label: `Delete ${user.name}`,
-                click: () => console.log(user),
-            },
-        ];
-
-        return remote.Menu.buildFromTemplate(template);
-    }
+    // public onMenu(user: User) {
+    //     const menu = this.initMenu(user);
+    //     // Since Electron v2.0 popup must have option parameter.
+    //     // See https://github.com/electron/electron/issues/12915
+    //     // {} compiles correct, but tslint throws error
+    //     menu.popup({});
+    // }
+    //
+    // private initMenu(user: User): Menu {
+    //     const template: MenuItemConstructorOptions[] = [
+    //         {
+    //             label: `Delete ${user.name}`,
+    //             click: () => console.log(user),
+    //         },
+    //     ];
+    //
+    //     return remote.Menu.buildFromTemplate(template);
+    // }
 }

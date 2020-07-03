@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c19ef8cb-63e0-4fec-928f-58a0802bf0b3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/app.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/footer/footer.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/footer/footer.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/settings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/settings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/school/school.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/school/school.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +154,7 @@
       <workItem from="1593210171917" duration="18377000" />
       <workItem from="1593345452591" duration="25847000" />
       <workItem from="1593463367170" duration="45837000" />
-      <workItem from="1593748298762" duration="13189000" />
+      <workItem from="1593748298762" duration="25731000" />
     </task>
     <servers />
   </component>

@@ -218,7 +218,7 @@ export class Settings {
             if (!files) {
                 window.close();
             }
-            fs.readFile(files[0], function (err, data) {
+            files && fs.readFile(files[0], function (err, data) {
                 if (err) {
                     window.close();
                 }
@@ -248,7 +248,7 @@ export class Settings {
             });
     }
 
-    public static createDb(filename?: string) {
+    public static createDb(filename: any) {
         if (!filename) {
             const options: OpenDialogOptions = {
                 title: 'Create file',

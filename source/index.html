@@ -1,63 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <base href="">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="assets/sass/indigo-pink.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/sass/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/sass/nova-light/theme.css" />
-        <link rel="stylesheet" href="assets/primeicons/primeicons.css" />
-        <link rel="stylesheet" href="assets/sass/primeng.min.css" />
-    </head>
-    <body>
-        <app>
-            <div class="spinner" style="margin: 15% 0 0 38%;">
-                <img style="width: 20%;" src="assets/images/rsi.png"/>
-            </div>
-            <div id="notification" >
-                <p id="version"></p>
-                <p id="message"></p>
-                <button id="close-button" onClick="closeNotification()">
-                    Close
-                </button>
-                <button id="restart-button" onClick="restartApp()" class="hidden">
-                    Restart
-                </button>
-            </div>
-            <script>
-                const { ipcRenderer } = require('electron');
-                const version = document.getElementById('version');
-
-                ipcRenderer.send('app_version');
-                ipcRenderer.on('app_version', (event, arg) => {
-                    alert(arg.version)
-                    ipcRenderer.removeAllListeners('app_version');
-                    version.innerText = 'Version ' + arg.version;
-                });
-                const notification = document.getElementById('notification');
-                const message = document.getElementById('message');
-                const restartButton = document.getElementById('restart-button');
-                ipcRenderer.on('update_available', () => {
-                    alert('available');
-                    ipcRenderer.removeAllListeners('update_available');
-                    message.innerText = 'A new update is available. Downloading now...';
-                    notification.classList.remove('hidden');
-                });
-                ipcRenderer.on('update_downloaded', () => {
-                    alert('done')
-                    ipcRenderer.removeAllListeners('update_downloaded');
-                    message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
-                    restartButton.classList.remove('hidden');
-                    notification.classList.remove('hidden');
-                });
-                function closeNotification() {
-                    notification.classList.add('hidden');
-                }
-                function restartApp() {
-                    ipcRenderer.send('restart_app');
-                }
-            </script>
-        </app>
-    </body>
+<head>
+    <base href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="assets/sass/indigo-pink.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/sass/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/sass/nova-light/theme.css"/>
+    <link rel="stylesheet" href="assets/primeicons/primeicons.css"/>
+    <link rel="stylesheet" href="assets/sass/primeng.min.css"/>
+</head>
+<body>
+<app>
+    <div class="spinner" style="margin: 15% 0 0 38%;">
+        <img style="width: 20%;" src="assets/images/rsi.png"/>
+    </div>
+</app>
+<script>
+    // Listen for messages
+    const {ipcRenderer} = require('electron');
+    ipcRenderer.on('message', function (event, text) {
+        alert(text);
+    });
+</script>
+</body>
 </html>
