@@ -5,9 +5,9 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        'polyfills': './src/polyfills.ts',
-        'vendor': './src/vendor.ts',
-        'app': './src/main.ts'
+        'polyfills': './source/polyfills.ts',
+        'vendor': './source/vendor.ts',
+        'app': './source/main.ts'
     },
 
     resolve: {
@@ -58,7 +58,7 @@ module.exports = {
                         loader: "sass-loader",
                         options: {
                             includePaths: [
-                                path.resolve(__dirname, '../src/assets/sass'),
+                                path.resolve(__dirname, '../source/assets/sass'),
                                 path.resolve(__dirname, '../node_modules/bootstrap/scss'),
                             ]
                         }
@@ -75,13 +75,13 @@ module.exports = {
             'window.jQuery': 'jquery',
             Popper: ['popper.js', 'default'],
         }),
-        new HtmlWebpackPlugin({template: 'src/index.html'}),
+        new HtmlWebpackPlugin({template: 'source/index.html'}),
 		new CopyWebpackPlugin([
-            { from: 'src/assets', to: 'assets' },
+            { from: 'source/assets', to: 'assets' },
         ]),
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)(@angular|esm5)/,
-            path.resolve(__dirname, '../src')
+            path.resolve(__dirname, '../source')
         ),
         new webpack.IgnorePlugin(/^pg-native$/)
     ],

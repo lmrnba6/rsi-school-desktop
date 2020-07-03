@@ -98,7 +98,7 @@ export class Settings {
     /** Default name of database file. */
     private static dbName = 'database.db';
     /** Default name of folder containing data files for Karma. */
-    private static dataFolderKarma = 'src/assets/data';
+    private static dataFolderKarma = 'source/assets/data';
     /** Default name of database file for Karma tests. */
     private static dbNameKarma = 'karma-database.db';
     /** Location of settings.json file */

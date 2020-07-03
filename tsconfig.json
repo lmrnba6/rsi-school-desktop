@@ -22,12 +22,12 @@
         "skipLibCheck": true
     },
     "include": [
-        "src/app/**/*.ts"
+        "source/app/**/*.ts"
     ],
     "exclude": [
         "**/node_modules/*",
         "dist",
         "build",
-        "src/app/**/*.spec.ts"
+        "source/app/**/*.spec.ts"
     ]
 }
