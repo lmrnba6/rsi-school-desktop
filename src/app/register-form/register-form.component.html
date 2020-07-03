@@ -5,7 +5,7 @@
     </app-loader>
     <form [formGroup]="registerForm">
         <div class="container">
-            <button [disabled]="(registerForm.invalid && internSelected)" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="(registerForm.invalid)" class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
@@ -17,6 +17,13 @@
                        placeholder="{{'register.placeholder.amount' | translate}}" required autofocus>
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="responsible" type="text" formControlName="responsible"
+                       [ngModel]="register.responsible" matInput
+                       placeholder="{{'register.placeholder.responsible' | translate}}" required autofocus>
+                <mat-error *ngIf="responsible.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field>

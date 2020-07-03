@@ -28,7 +28,7 @@ export class PaymentComponent implements OnInit, OnChanges {
     public pageIndex: number = 0;
     public pageSize: number = 5;
     public sortName: string = 'date';
-    public sortDirection: string = 'ASC';
+    public sortDirection: string = 'DESC';
     public isAdmin: boolean;
 
     constructor(
@@ -77,7 +77,7 @@ export class PaymentComponent implements OnInit, OnChanges {
      */
     public sortOnChange(event: any): void {
         this.sortName = event.col;
-        this.sortDirection = event.sortDirection.length ? event.sortDirection : 'ASC';
+        this.sortDirection = event.sortDirection.length ? event.sortDirection : 'DESC';
         this.pageIndex = 0;
         this.getDataTable(this.pageIndex, this.pageSize, event.col, event.sortDirection, this.filter);
     }
@@ -99,9 +99,11 @@ export class PaymentComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'payment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'amount', header: 'payment.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(2)} DA`},
+            {columnDef: 'amount', header: 'payment.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
             {columnDef: 'comment', header: 'payment.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
-            {columnDef: 'intern_id', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
+            {columnDef: 'training', header: 'payment.placeholder.training', type: 'text', cell: (row: any) => `${row.training || ''}`},
+            this.intern ? {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''} :
+                {columnDef: 'intern_id', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
         ];
         this.isAdmin &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});

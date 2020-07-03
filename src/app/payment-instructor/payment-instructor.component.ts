@@ -103,7 +103,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'payment_instructor.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'amount', header: 'payment_instructor.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(2)} DA`},
+            {columnDef: 'amount', header: 'payment_instructor.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
             {columnDef: 'comment', header: 'payment_instructor.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
             {columnDef: 'instructor_id', header: 'payment_instructor.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor_id.name}`}
         ];

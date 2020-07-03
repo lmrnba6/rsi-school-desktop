@@ -9,6 +9,7 @@ import MAX_SAFE_INTEGER = require("core-js/fn/number/max-safe-integer");
 import {Intern} from "../model/intern";
 import {Training} from "../model/training";
 import {School} from "../model/school";
+import {AuthenticationService} from "../_services/authentication.service";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
@@ -30,11 +31,16 @@ export class HomeComponent implements OnInit,OnChanges {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
+    public isTeacher: boolean;
+    public isIntern: boolean;
 
-    constructor() {}
+
+    constructor(private auth: AuthenticationService) {}
 
     ngOnInit(): void {
         this.block = true;
+        this.isTeacher = this.auth.getCurrentUser().role === 'teacher';
+        this.isIntern = this.auth.getCurrentUser().role === 'student';
         Promise.all([Intern.getCount(''), Instructor.getCount(''),Session.getCount(''), Training.getCount('')]).then(
             values => {
                 this.interns = (values[0][0] as any).count;

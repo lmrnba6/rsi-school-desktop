@@ -1,0 +1,4 @@
+appId: rsi-desktop
+publish:
+  provider: github
+  token: 760bc7eaa08938e92f0ce2286c8a41add7b11a63

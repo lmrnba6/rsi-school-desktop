@@ -138,12 +138,12 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.dataByDateCopy = {items: [], paging: {totalCount: 0}};
         this.block = true;
         Promise.all([Enrollment.getAllBySession(this.session_id), Attendance.getAllBySession(this.session_id)])
-            .then(values => {
+            .then( async values => {
                     this.block = false;
                     this.dataByDate.paging.totalCount = values[0].length;
                     this.attendances = values[1];
                     this.isOnByDateDisplayed = true;
-                    this.asyncForEach(values[0], async (enrollment: any) => {
+                    await this.asyncForEach(values[0], async (enrollment: any) => {
                         await Promise.all([Attendance.getAlldByIntern(enrollment.intern_id as number), Intern.get(enrollment.intern_id as number)])
                             .then((values: any) => {
                                 const intern = values[1];

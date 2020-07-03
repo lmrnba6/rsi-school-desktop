@@ -17,8 +17,11 @@ import MAX_SAFE_INTEGER = require("core-js/fn/number/max-safe-integer");
 export class RegisterComponent implements OnInit, OnChanges {
 
     @Input() public intern: Intern;
+    public tabSelected: number = 0;
     public filter: string = '';
     public data: any;
+    public expenses: any;
+    public recipes: any;
     public tableName: string;
     public setting: AbstractTableSetting;
     public register: Register;
@@ -57,6 +60,11 @@ export class RegisterComponent implements OnInit, OnChanges {
         this.getTotalSold();
     }
 
+    public onTabChange(): void {
+        this.ngOnInit();
+    }
+
+
     public getTotalSold(): void {
         Register.getAll().then(res => {
             this.soldAll = res.reduce((a: number, b: Register) => { return Number(a) + Number(b.amount)},0);
@@ -67,19 +75,24 @@ export class RegisterComponent implements OnInit, OnChanges {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
     }
 
-
     public getDataTable(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): void {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        Promise.all([
-            Register.getAllPaged(offset, limit, sort, order, filter,this.from.setHours(0,0,0,0), this.to.setHours(23,59,59,999)),
+        Promise.all([ this.tabSelected === 0 ?
+            Register.getAllPaged(offset, limit, sort, order, filter,this.from.setHours(0,0,0,0), this.to.setHours(23,59,59,999))
+            : this.tabSelected === 1 ?
+            Register.getAllPagedRecipes(offset, limit, sort, order, filter,this.from.setHours(0,0,0,0), this.to.setHours(23,59,59,999))
+            :             Register.getAllPagedExpenses(offset, limit, sort, order, filter,this.from.setHours(0,0,0,0), this.to.setHours(23,59,59,999)),
+
             Register.getCount(this.filter)])
             .then(
                 values => {
                     this.block = false;
                     this.getTotalSold();
                     this.data = {items: values[0], paging: {totalCount: (values[1][0] as any).count}};
+                    this.expenses = {items: values[0], paging: {totalCount: (values[1][0] as any).count}};
+                    this.recipes = {items: values[0], paging: {totalCount: (values[1][0] as any).count}};
                 },
                 () => {
                     this.block = false;
@@ -122,13 +135,14 @@ export class RegisterComponent implements OnInit, OnChanges {
         this.setting.paging = false;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'amount', header: 'register.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(2)} DA`},
+            {columnDef: 'amount', header: 'register.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
             {columnDef: 'date', header: 'register.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'comment', header: 'register.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
             {columnDef: 'intern', header: 'register.placeholder.intern', type: 'text', cell: (row: any) => `${row.intern || ''}`},
+            {columnDef: 'comment', header: 'register.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
             {columnDef: 'training', header: 'register.placeholder.training', type: 'text', cell: (row: any) => `${row.training || ''}`},
-            {columnDef: 'sold', header: 'register.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold || ''}`},
-            {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => `${row.rest || ''}`}
+            {columnDef: 'sold', header: 'register.placeholder.sold', type: 'text', cell: (row: any) => row.sold ? `${Number(row.sold).toFixed(0)} DA` : ''},
+            {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''},
+            {columnDef: 'responsible', header: 'register.placeholder.responsible', type: 'text', cell: (row: any) => row.responsible || ''}
         ];
         this.isAdmin &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});

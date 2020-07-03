@@ -1,5 +1,5 @@
 'use strict';
-
+const { autoUpdater } = require('electron-updater');
 const {app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
@@ -87,6 +87,10 @@ let createWindow = () => {
 		// when you should delete the corresponding element.
 		mainWindow = null;
 	});
+
+	mainWindow.once('ready-to-show', () => {
+		autoUpdater.checkForUpdatesAndNotify();
+	});
 }
 
 // This method will be called when Electron has finished
@@ -106,4 +110,19 @@ app.on('activate', () => {
 	// On OS X it's common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
 	if (mainWindow === null) createWindow();
+});
+
+ipcMain.on('app_version', (event) => {
+	event.sender.send('app_version', { version: app.getVersion() });
+});
+
+autoUpdater.on('update-available', () => {
+	mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+	mainWindow.webContents.send('update_downloaded');
+});
+
+ipcMain.on('restart_app', () => {
+	autoUpdater.quitAndInstall();
 });

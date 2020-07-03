@@ -55,7 +55,7 @@ export class PaymentFormComponent implements OnInit {
     }
 
     parseAmount(amount: number) {
-        this.payment.amount = Number(Number(amount).toFixed(2));
+        this.payment.amount = Number(Number(amount).toFixed(0));
     }
 
     /**

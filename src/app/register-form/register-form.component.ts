@@ -17,6 +17,7 @@ export class RegisterFormComponent implements OnInit {
     public isOnEdit: boolean;
     public registerForm: FormGroup;
     public date: FormControl;
+    public responsible: FormControl;
     public amount: FormControl;
     public comment: FormControl;
     public color: string = 'warn';
@@ -38,7 +39,7 @@ export class RegisterFormComponent implements OnInit {
     }
 
     parseAmount(amount: number) {
-        this.register.amount = Number(Number(amount).toFixed(2));
+        this.register.amount = Number(Number(amount).toFixed(0));
     }
 
     /**
@@ -54,8 +55,9 @@ export class RegisterFormComponent implements OnInit {
                 this.register = new Register();
                 this.register.date = new Date();
             }
-            this.initForm();
         });
+        this.initForm();
+        this.register.responsible =this.auth.getCurrentUser().username;
     }
     
     /**
@@ -78,11 +80,13 @@ export class RegisterFormComponent implements OnInit {
     public initForm(): void {
         this.amount = new FormControl(null, [Validators.required]);
         this.date = new FormControl(null, [Validators.required]);
+        this.responsible = new FormControl(null, [Validators.required]);
         this.comment = new FormControl(null);
         this.registerForm = this.fb.group({
             amount: this.amount,
             date: this.date,
-            comment: this.comment
+            comment: this.comment,
+            responsible: this.responsible
         });
     }
 

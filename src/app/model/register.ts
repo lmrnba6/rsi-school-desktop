@@ -15,6 +15,7 @@ export class Register {
     public training = '';
     public intern = '';
     public sold = 0;
+    public responsible = ''
     public rest = 0;
     public username = '';
 
@@ -60,12 +61,12 @@ export class Register {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, start: number, end: number): Promise<Register[]> {
-        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment, p.intern, p.training, p.sold, p.rest 
+        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
                             FROM "register" AS p 
                             WHERE 
                             p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}'
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.intern, p.training, p.sold, p.rest, p.username 
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern, p.training, p.sold, p.rest, p.username, p.responsible 
                             FROM "register" AS p 
                             WHERE                            
                             (p.comment ILIKE '%${filter}%' or p.intern ILIKE '%${filter}%' or p.training ILIKE '%${filter}%') 
@@ -85,10 +86,62 @@ export class Register {
             });
     }
 
+    public static getAllPagedRecipes(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, start: number, end: number): Promise<Register[]> {
+        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
+                            FROM "register" AS p 
+                            WHERE 
+                            p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}' and p.amount > 0
+                            ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern, p.training, p.sold, p.rest, p.username, p.responsible 
+                            FROM "register" AS p 
+                            WHERE                            
+                            (p.comment ILIKE '%${filter}%' or p.intern ILIKE '%${filter}%' or p.training ILIKE '%${filter}%') 
+                            and p.date between '${start}' and '${end}' and p.amount > 0
+                            ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+        const values = {
+        };
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const registers: Register[] = [];
+                for (const row of rows) {
+                    const register = new Register().fromRow(row);
+                    registers.push(register);
+                }
+                return registers;
+            });
+    }
+
+    public static getAllPagedExpenses(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, start: number, end: number): Promise<Register[]> {
+        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
+                            FROM "register" AS p 
+                            WHERE 
+                            p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}' and p.amount < 0
+                            ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern, p.training, p.sold, p.rest, p.username, p.responsible 
+                            FROM "register" AS p 
+                            WHERE                            
+                            (p.comment ILIKE '%${filter}%' or p.intern ILIKE '%${filter}%' or p.training ILIKE '%${filter}%') 
+                            and p.date between '${start}' and '${end}'  and p.amount < 0
+                            ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+        const values = {
+        };
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const registers: Register[] = [];
+                for (const row of rows) {
+                    const register = new Register().fromRow(row);
+                    registers.push(register);
+                }
+                return registers;
+            });
+    }
+
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "register" (amount, date, comment, intern, training, sold, rest, username)
-            VALUES(${this.amount}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
+            INSERT INTO "register" (amount, date, responsible, comment, intern, training, sold, rest, username)
+            VALUES(${this.amount}, '${this.date}','${this.responsible}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
             '${this.intern}', '${this.training}', ${this.sold}, ${this.rest}, '${this.username}')`;
 
         const values = {
@@ -107,7 +160,7 @@ export class Register {
     public update(): Promise<void> {
         const sql = `
             UPDATE "register"
-               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
+               SET amount = ${this.amount}, date = '${this.date}',responsible = '${this.responsible}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
                intern = '${this.intern}', training = '${this.training}', sold = ${this.sold}, rest = ${this.rest}, username = '${this.username}'
              WHERE id = ${this.id}`;
 
@@ -143,6 +196,7 @@ export class Register {
         this.date = row['date'];
         this.comment = row['comment'];
         this.intern = row['intern'];
+        this.responsible = row['responsible'];
         this.training = row['training'];
         this.sold = row['sold'];
         this.rest = row['rest'];

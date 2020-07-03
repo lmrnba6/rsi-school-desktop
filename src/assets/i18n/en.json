@@ -140,6 +140,9 @@
   },
   "register": {
     "title": "Register",
+    "global": "Total",
+    "recipe": "Recipes",
+    "expense": "Expenses",
     "placeholder": {
       "rest": "Rest",
       "sold": "Sold",

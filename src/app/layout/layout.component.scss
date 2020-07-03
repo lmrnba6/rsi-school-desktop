@@ -79,6 +79,10 @@ a, .mat-list-item {
   }
 }
 
+a.nav_item.mat-list-item.ng-star-inserted.active-link, a.nav_item.mat-list-item.active-link {
+  background: $secondary !important;
+}
+
 ::ng-deep .mat-tooltip {
   font-size: x-large !important;
 }

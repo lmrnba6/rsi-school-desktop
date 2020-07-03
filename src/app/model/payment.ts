@@ -94,7 +94,7 @@ export class Payment {
                             WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username 
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.training 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
                             WHERE  
@@ -115,7 +115,7 @@ export class Payment {
     }
 
     public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Payment[]> {
-        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username 
+        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username, p.rest, p.training 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
                             WHERE i.id = ${intern}

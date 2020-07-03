@@ -140,7 +140,11 @@
   },
   "register": {
     "title": "Caisse",
+    "global": "Total",
+    "recipe": "Recettes",
+    "expense": "Dépenses",
     "placeholder": {
+      "responsible": "Utilisateur",
       "rest": "Reste",
       "sold": "Solde",
       "intern": "Étudiant",

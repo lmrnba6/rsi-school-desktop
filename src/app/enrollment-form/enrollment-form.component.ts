@@ -237,7 +237,7 @@ export class EnrollmentFormComponent implements OnInit {
                     this.internSelected.sold = Number(this.internSelected.sold) + Number(training.enrollment_fees);
                 }
                 this.block = true;
-                this.internSelected.sold = Number(Number(this.internSelected.sold).toFixed(2));
+                this.internSelected.sold = Number(Number(this.internSelected.sold).toFixed(0));
                 Intern.updateSoldAndComment(this.internSelected.id, this.internSelected.sold,this.internSelected.comment).then(() => this.block = false,
                     () => {
                     this.block = false;

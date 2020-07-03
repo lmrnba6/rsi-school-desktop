@@ -80,7 +80,7 @@ export class AccountingComponent implements OnInit {
       this.attendances.forEach((attendance: number , i: number) => {
         this.salary += attendance * this.instructorRate[i] * (this.classRate[i]/100);
       });
-      this.salary = this.salary.toFixed(2) as any;
+      this.salary = this.salary.toFixed(0) as any;
     }
 
     public instructorOnSelect(instructor: Instructor): void {
