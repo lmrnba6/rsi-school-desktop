@@ -39,8 +39,8 @@
     "build:once": "webpack --config config/webpack.dev.js",
     "build:prod": "webpack --config config/webpack.prod.js",
     "postinstall": "electron-builder install-app-deps",
-    "build": "electron-builder build --win --publish never",
-    "deploy": "set GH_TOKEN=760bc7eaa08938e92f0ce2286c8a41add7b11a63 && electron-builder build --win --publish always",
+    "build": "electron-builder . --win --publish never",
+    "deploy": "set GH_TOKEN=760bc7eaa08938e92f0ce2286c8a41add7b11a63 && electron-builder . --win --publish always",
     "package": "electron-builder ."
   },
   "license": "MIT",
