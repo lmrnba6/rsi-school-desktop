@@ -4,6 +4,7 @@ const {app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 let waitBeforeClose = true;
+require('update-electron-app')();
 
 const devMode = /electron/.test(path.basename(app.getPath('exe'), '.exe'));
 

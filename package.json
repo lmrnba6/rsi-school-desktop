@@ -1,7 +1,7 @@
 {
   "name": "Rsi-school",
   "productName": "Rsi-school",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "School management software",
   "author": "rsi-technologies",
   "main": "index.js",
@@ -91,6 +91,7 @@
     "sqlite3": "^4.0.0",
     "ssh2": "^0.6.1",
     "tunnel-ssh": "^4.1.4",
+    "update-electron-app": "^1.5.0",
     "webcamjs": "^1.0.25",
     "zone.js": "^0.8.26"
   },
