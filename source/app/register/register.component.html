@@ -24,7 +24,7 @@
   <mat-tab-group (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
     <mat-tab>
       <ng-template mat-tab-label>
-        <span class="glyphicon glyphicon-inbox"></span> {{'register.global' | translate}}
+        <span style="color: #2b7bff" class="glyphicon glyphicon-inbox"></span> {{'register.global' | translate}}
       </ng-template>
       <div class="tab-content">
         <app-abstract-table (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [page]="'register'" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
@@ -32,7 +32,7 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span class="glyphicon glyphicon-arrow-down"></span> {{'register.recipe' | translate}}
+        <span style="color: #28a745" class="glyphicon glyphicon-arrow-down"></span> {{'register.recipe' | translate}}
       </ng-template>
       <div class="tab-content">
         <app-abstract-table (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [page]="'register'" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
@@ -40,7 +40,7 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span class="glyphicon glyphicon-arrow-up"></span> {{'register.expense' | translate}}
+        <span style="color: red" class="glyphicon glyphicon-arrow-up"></span> {{'register.expense' | translate}}
       </ng-template>
       <div class="tab-content">
         <app-abstract-table (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [page]="'register'" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>

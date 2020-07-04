@@ -6,6 +6,9 @@ import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {Intern} from "../model/intern";
 import {MessagesService} from "../_services/messages.service";
+import {Visitor} from "../model/visitor";
+import {DialogsService} from "../_services/dialogs.service";
+
 declare var $: any;
 
 @Component({
@@ -24,7 +27,12 @@ export class LayoutComponent implements OnInit {
 
     public buttons: Array<FloatingActionButton> = [];
 
-    constructor(private auth: AuthenticationService, private router: Router, private translate: TranslateService, private messagesService: MessagesService) {
+    constructor(private auth: AuthenticationService,
+                private router: Router,
+                private translate: TranslateService,
+                private messagesService: MessagesService,
+                private dialogsService: DialogsService,
+    ) {
         let pressed = false;
         let chars: any = [];
         const This: any = this;
@@ -63,8 +71,24 @@ export class LayoutComponent implements OnInit {
         );
     }
 
+    notifyVisitorCount() {
+        Visitor.getCount('').then((c: any) => {
+            const exist = c && c[0] && Number(c[0].count);
+            if(exist){
+                this.dialogsService
+                    .confirm('messages.warning_title', 'messages.visitor_remaining_message', true, 'warning-sign')
+                    .subscribe(confirm => {
+                        if (confirm) {
+                            this.router.navigate(['visitor'])
+                        }
+                    });
+            }
+        })
+    }
+
 
     ngOnInit(): void {
+        this.notifyVisitorCount();
         this.user = this.auth.getCurrentUser();
         this.isInstructor = this.user.role === 'teacher';
         this.isIntern = this.user.role === 'student';

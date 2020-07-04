@@ -3,7 +3,6 @@
 <mat-card>
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
     </app-loader>
-    <mat-checkbox style="color: red; font-size: 1.5rem" [(ngModel)]="offer">{{'payment.placeholder.offer' | translate}}</mat-checkbox>
     <form [formGroup]="paymentForm">
         <div class="container">
             <button [disabled]="paymentForm.invalid || !internSelected || !trainingSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
@@ -78,4 +77,11 @@
             </div>
         </div>
     </form>
+    <div class="container">
+        <p></p>
+        <br>
+        <mat-checkbox *ngIf="!isOnEdit" style="font-size: 1.5rem" [(ngModel)]="offer">{{'payment.placeholder.offer' | translate}}</mat-checkbox>
+        <br>
+        <mat-checkbox *ngIf="isOnEdit" style="font-size: 1.5rem" [(ngModel)]="payment.error">{{'payment.placeholder.error' | translate}}</mat-checkbox>
+    </div>
 </mat-card>

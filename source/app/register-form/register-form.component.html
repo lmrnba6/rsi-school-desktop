@@ -1,11 +1,12 @@
-<h2>{{'register.title'| translate}} - {{register?.amount}} -</h2>
+<h2>{{ (sign === '+' ? 'register.recipe' : 'register.expense')| translate}} - {{register?.amount}} -</h2>
 <mat-divider></mat-divider>
 <mat-card>
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
     </app-loader>
     <form [formGroup]="registerForm">
         <div class="container">
-            <button [disabled]="(registerForm.invalid)" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="(registerForm.invalid || register.amount <=0)" class="pull-right save"
+                    (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
@@ -15,6 +16,8 @@
                 <input name="amount" type="number" (blur)="parseAmount($event.target.value)" formControlName="amount"
                        [ngModel]="register.amount" matInput
                        placeholder="{{'register.placeholder.amount' | translate}}" required autofocus>
+                <span style="color: red" *ngIf="sign === '-'" matPrefix class="glyphicon glyphicon-arrow-up"></span>
+                <span style="color: #28a745" *ngIf="sign === '+'" matPrefix class="glyphicon glyphicon-arrow-down"></span>
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
@@ -36,7 +39,7 @@
             <br>
             <mat-form-field>
                 <input name="comment" formControlName="comment" [(ngModel)]="register.comment" matInput
-                       placeholder="{{'register.placeholder.comment' | translate}}" >
+                       placeholder="{{'register.placeholder.comment' | translate}}">
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
         </div>

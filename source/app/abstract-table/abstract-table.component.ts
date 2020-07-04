@@ -70,7 +70,7 @@ export class AbstractTableComponent
   public value: number = 100;
   public block: boolean;
   public length: number = 100;
-  public pageSize: number = 5;
+  public pageSize: number = 10;
   public colsSelected: any = [];
   public search: boolean;
   public select: boolean;
@@ -273,7 +273,13 @@ export class AbstractTableComponent
   public getStyleRow(row: any) {
       if(this.page === 'register') {
           if(Number(row.amount) < 0) {
-              return {background: '#ffc14e'}
+              return {background: '#ffe6e6'}
+          } else {
+              return {background: '#d9ffe1'}
+          }
+      }else if(this.page === 'payment') {
+          if(Number(row.error)) {
+              return {background: '#ffb0b0'}
           }
       } else if(this.page === 'intern') {
           if(row.isPromo) {

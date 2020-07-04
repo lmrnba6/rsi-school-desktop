@@ -24,6 +24,7 @@ export class RegisterFormComponent implements OnInit {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public oldPayment: number;
+    public sign: string = '+'
 
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,
@@ -51,6 +52,9 @@ export class RegisterFormComponent implements OnInit {
                 this.getData(res.id);
                 this.isOnEdit = true;
             } else {
+                if(res.type) {
+                    this.sign = res.type
+                }
                 this.isOnEdit = false;
                 this.register = new Register();
                 this.register.date = new Date();
@@ -101,6 +105,7 @@ export class RegisterFormComponent implements OnInit {
      * onSave
      */
     public onSaveOrUpdate(): void {
+        this.register.amount = this.sign === '-' ? this.register.amount * -1 : this.register.amount;
         this.register.date = (this.register.date as Date).getTime();
         this.register.username = this.auth.getCurrentUser().username;
         let internPromise: Promise<any>;

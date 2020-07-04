@@ -324,6 +324,10 @@ const appRoutes: Routes = [
                 component: RegisterFormComponent
             },
             {
+                path: 'register/form/type/:type',
+                component: RegisterFormComponent
+            },
+            {
                 path: 'register/form/:id',
                 component: RegisterFormComponent
             },

@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   public mode: string = 'indeterminate';
   public value: number = 100;
   public pageIndex: number = 0;
-  public pageSize: number = 5;
+  public pageSize: number = 10;
   public sortName: string = 'username';
   public sortDirection: string = 'ASC';
 

@@ -153,9 +153,9 @@ export class PaymentInstructorFormComponent implements OnInit {
 
     manageInternSold(instructor: number) {
         if(this.isOnEdit) {
-            this.instructorSelected.sold += instructor;
+            this.instructorSelected.sold = Number(this.instructorSelected.sold) + Number(instructor);
         }
-        this.instructorSelected.sold -= this.payment_instructor.amount;
+        this.instructorSelected.sold = Number(this.instructorSelected.sold) - Number(this.payment_instructor.amount);
         this.block = true;
         this.instructorSelected.update().then(() => this.block = false,
             () => {

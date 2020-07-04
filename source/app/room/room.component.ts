@@ -22,7 +22,7 @@ export class RoomComponent implements OnInit {
   public mode: string = 'indeterminate';
   public value: number = 100;
   public pageIndex: number = 0;
-  public pageSize: number = 5;
+  public pageSize: number = 10;
   public sortName: string = 'number';
   public sortDirection: string = 'ASC';
 

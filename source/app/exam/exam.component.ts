@@ -8,6 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Exam} from "../model/exam";
 import {Intern} from "../model/intern";
 import {AuthenticationService} from "../_services/authentication.service";
+import {Session} from "../model/session";
 
 @Component({
     selector: 'app-exam',
@@ -16,6 +17,7 @@ import {AuthenticationService} from "../_services/authentication.service";
 export class ExamComponent implements OnInit, OnChanges {
 
     @Input() public intern: Intern;
+    @Input() public session: Session;
     public filter: string = '';
     public data: any;
     public tableName: string;
@@ -26,9 +28,9 @@ export class ExamComponent implements OnInit, OnChanges {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public pageIndex: number = 0;
-    public pageSize: number = 5;
+    public pageSize: number = 10;
     public sortName: string = 'date';
-    public sortDirection: string = 'ASC';
+    public sortDirection: string = 'DESC';
     public isAdmin: boolean;
     constructor(
         private dialogsService: DialogsService,
@@ -54,9 +56,11 @@ export class ExamComponent implements OnInit, OnChanges {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        Promise.all([this.intern ? Exam
-            .getAllPagedByIntern(offset, limit, sort, order, this.intern.id) : Exam
-            .getAllPaged(offset, limit, sort, order, filter), this.intern ? Exam.getCountByIntern(this.intern.id) :
+        Promise.all([this.intern ?
+            Exam.getAllPagedByIntern(offset, limit, sort, order, this.intern.id) : this.session ?
+                Exam.getAllPagedBySession(offset, limit, sort, order, this.session.id) :
+            Exam.getAllPaged(offset, limit, sort, order, filter), this.intern ? Exam.getCountByIntern(this.intern.id) :
+            this.session ? Exam.getCountBySession(this.session.id) :
             Exam.getCount(this.filter)])
             .then(
                 values => {
@@ -91,9 +95,9 @@ export class ExamComponent implements OnInit, OnChanges {
 
     public initSetting(): void {
         this.setting = new AbstractTableSetting();
-        this.setting.settingColumn = !this.intern;
+        this.setting.settingColumn = !this.intern && !this.session;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.intern;
+        this.setting.filter = !this.intern && !this.session;
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'exam.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
@@ -103,7 +107,7 @@ export class ExamComponent implements OnInit, OnChanges {
             {columnDef: 'training_id', header: 'exam.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`},
             {columnDef: 'session_id', header: 'exam.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`}
             ];
-        !this.intern &&
+        !this.intern && !this.session &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: this.isAdmin})
     }
 

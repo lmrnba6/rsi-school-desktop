@@ -191,7 +191,7 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
         let d = new Date();
         d.setHours(0,0,0,0);
         let date = d.getDate();
-        let timeArr = [];
+        let timeArr: any = [];
         while ( date == d.getDate() )
         {
             let hours: any = d.getHours();

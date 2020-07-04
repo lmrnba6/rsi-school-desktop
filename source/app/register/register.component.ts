@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit, OnChanges {
     public pageIndex: number = 0;
     public pageSize: number = MAX_SAFE_INTEGER;
     public sortName: string = 'date';
-    public sortDirection: string = 'ASC';
+    public sortDirection: string = 'DESC';
     public isAdmin: boolean;
     public from = new Date();
     public to = new Date();
@@ -187,7 +187,7 @@ export class RegisterComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        this.router.navigate(['register/form']);
+        this.router.navigate(['register/form/type/' + ((this.tabSelected === 0 || this.tabSelected === 1) ? '+' : '-')]);
     }
 
     /**

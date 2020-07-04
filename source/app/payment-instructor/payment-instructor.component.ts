@@ -26,9 +26,9 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public pageIndex: number = 0;
-    public pageSize: number = 5;
+    public pageSize: number = 10;
     public sortName: string = 'date';
-    public sortDirection: string = 'ASC';
+    public sortDirection: string = 'DESC';
     public isAdmin: boolean;
 
     constructor(
@@ -144,7 +144,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
     manageInstructorSold(payment_instructor: Payment_instructor) {
         this.block = true;
         Instructor.get(payment_instructor.instructor_id as number).then(instructor => {
-            instructor.sold += payment_instructor.amount;
+            instructor.sold = Number(instructor.sold) + Number(payment_instructor.amount);
             instructor.update().then(() => this.block = false,
                 () => {
                     this.block = false;

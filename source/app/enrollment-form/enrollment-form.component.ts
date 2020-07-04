@@ -93,7 +93,7 @@ export class EnrollmentFormComponent implements OnInit {
     public internOnChange(event: any): void {
         //if(event.keyCode == 13) {
             this.block = true;
-            Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
+            Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.internsFiltered = users

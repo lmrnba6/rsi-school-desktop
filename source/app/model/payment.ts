@@ -18,6 +18,7 @@ export class Payment {
     public month = '';
     public username = '';
     public intern_id: number | Intern;
+    public error = 0;
 
     public static getCount(filter: string): Promise<Payment[]> {
         const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "payment" WHERE amount LIKE '%${filter}%' OR 
@@ -94,7 +95,7 @@ export class Payment {
                             WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.training 
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.training, p.error 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
                             WHERE  
@@ -115,7 +116,7 @@ export class Payment {
     }
 
     public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Payment[]> {
-        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username, p.rest, p.training 
+        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.error, p.rest, p.training 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
                             WHERE i.id = ${intern}
@@ -174,7 +175,7 @@ export class Payment {
     public update(): Promise<void> {
         const sql = `
             UPDATE "payment"
-               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', training = '${this.training}'
+               SET amount = ${this.amount}, error = ${this.error}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', training = '${this.training}'
                , month = '${this.month ? this.month.replace(/\'/g, "''") : ''}', intern_id = '${this.intern_id}'
              WHERE id = ${this.id}`;
 
@@ -209,6 +210,7 @@ export class Payment {
         this.amount = row['amount'];
         this.rest = row['rest'];
         this.username = row['username'];
+        this.error = row['error'];
         this.date = row['date'];
         this.comment = row['comment'];
         this.month = row['month'];

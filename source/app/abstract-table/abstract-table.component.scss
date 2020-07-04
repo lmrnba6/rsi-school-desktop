@@ -7,7 +7,7 @@
   .mat-table {
     overflow: auto;
     max-height: 500px;
-    font-family: monospace;
+    font-family: inherit;
     a {
       outline: 0;
       text-decoration-line: none;
@@ -39,13 +39,14 @@
       //margin-top: 25px;
       //white-space: nowrap;
       text-overflow: ellipsis;
-      font-weight: bold;
-      font-size: large
+      //font-weight: bold;
+      //font-size: large
+      color: black;
     }
 
     .mat-header-cell {
       color: #ffff;
-      font-weight: bold;
+      //font-weight: bold;
       padding-right: 0px;
     }
 

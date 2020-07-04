@@ -26,7 +26,7 @@ export class PaymentComponent implements OnInit, OnChanges {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public pageIndex: number = 0;
-    public pageSize: number = 5;
+    public pageSize: number = 10;
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;

@@ -264,6 +264,7 @@
                 </tr>
                 </tbody>
             </table>
+            <h1 *ngIf="payment.error === 1" style="color: red">**** Erreur ****</h1>
         </div>
         <div id="card" *ngIf="pvName === 'card'">
             <!--<table style="border: solid; width: 405pt; border-collapse: collapse; height: 220px;" width="0">-->

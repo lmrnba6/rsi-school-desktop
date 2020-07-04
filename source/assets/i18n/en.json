@@ -129,6 +129,7 @@
   "payment": {
     "title": "Payment",
     "placeholder": {
+      "error": "Mark this payment as an error",
       "offer": "Offer / Promotion (Do not include it to the register)",
       "amount" : "amount",
       "date": "Date",
@@ -326,7 +327,8 @@
     "information" : "Information",
     "weekday": "Program",
     "intern": "student",
-    "attendance": "Attendance"
+    "attendance": "Attendance",
+    "exam": "Exam"
   },
   "weekday-management": {
     "information" : "Information",
@@ -439,13 +441,13 @@
     "username_exist": "This username exist already",
     "session_full": "This group is full",
     "notEnrolled_message": "This student is not registered for this training",
-    "transfer_intern_message": "do you really want to create a new student and delete this visitor?"
+    "transfer_intern_message": "do you really want to create a new student and delete this visitor?",
+    "visitor_remaining_message": "You still have visitors! \n Do you want to consult the list?"
   },
   "buttons": {
     "save": "save",
     "cancel": "cancel",
     "yes": "yes",
-    "cancel":"cancel",
     "no": "Non"
   }
 }

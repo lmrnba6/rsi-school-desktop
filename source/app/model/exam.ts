@@ -45,6 +45,16 @@ export class Exam {
             .then((count: any) => count);
     }
 
+    public static getCountBySession(session: number): Promise<Exam[]> {
+        return TheDb.selectAll(`SELECT count(*) as count FROM "exam" AS e 
+                                              INNER JOIN "session" AS s ON e.session_id = s.id
+                                             INNER JOIN "training" AS t ON s.training_id = t.id
+                                             INNER JOIN "intern" AS i ON e.intern_id = i.id
+                                            
+                                                    WHERE s.id = ${session}`, {})
+            .then((count: any) => count);
+    }
+
     public static get(id: number): Promise<Exam> {
         const sql = `SELECT * FROM "exam" WHERE id = ${id}`;
         const values = {};
@@ -116,6 +126,29 @@ export class Exam {
                                              INNER JOIN "intern" AS i ON e.intern_id = i.id
                                              
                                                     WHERE i.id = ${intern}  
+                           
+                            ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const exams: Exam[] = [];
+                for (const row of rows) {
+                    const exam = new Exam().fromRow(row);
+                    exams.push(exam);
+                }
+                return exams;
+            });
+    }
+
+    public static getAllPagedBySession(pageIndex: number, pageSize: number, sort: string, order: string, session: number): Promise<Exam[]> {
+        const sql = `SELECT e.id, e.mark, e.result, e.retake, e.date, e.time, e.comment, s.training_id, e.intern_id, e.session_id, i.name as intern, s.name as session, t.name as training
+                                                FROM "exam" AS e 
+                                                INNER JOIN "session" AS s ON e.session_id = s.id
+                                             INNER JOIN "training" AS t ON s.training_id = t.id
+                                             INNER JOIN "intern" AS i ON e.intern_id = i.id
+                                             
+                                                    WHERE s.id = ${session}  
                            
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {};

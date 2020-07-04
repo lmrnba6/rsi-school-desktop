@@ -129,6 +129,7 @@
   "payment": {
     "title": "Paiement",
     "placeholder": {
+      "error": "Marquer ce paiement comme une erreur",
       "offer": "Offre / Promotion (Ne l'incluez pas a la caisse)",
       "amount" : "Montant",
       "date": "Date",
@@ -325,7 +326,8 @@
   "session-management": {
     "information" : "Information",
     "weekday": "Programme",
-    "intern": "Étudiants"
+    "intern": "Étudiants",
+    "exam": "Examen"
   },
   "weekday-management": {
     "information" : "Information",
@@ -440,7 +442,8 @@
     "username_exist": "Ce nom d'utilisateur est existant",
     "session_full": "Ce groupe est complet",
     "notEnrolled_message": "Cet étudiant n'est pas inscrit à cette formation",
-    "transfer_intern_message": "voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?"
+    "transfer_intern_message": "voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?",
+    "visitor_remaining_message": "Vous avez encore des visiteurs! \n Voulez-vous consulter la liste?"
   },
   "buttons": {
     "save": "Sauvegarder",

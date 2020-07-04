@@ -153,6 +153,8 @@ export class PaymentFormComponent implements OnInit {
                 this.payment = val;
                 this.oldPayment = val.amount;
                 Intern.get(this.payment.intern_id as number).then(intern => this.internSelected = intern);
+                this.trainingSelected = new Training();
+                this.trainingSelected.name = this.payment.training;
                 this.payment.date = new Date(Number(this.payment.date));
             });
     }
@@ -162,7 +164,7 @@ export class PaymentFormComponent implements OnInit {
         this.amount = new FormControl(null, [Validators.required]);
         this.date = new FormControl(null, [Validators.required]);
         this.comment = new FormControl(null);
-        this.training = new FormControl(null, [Validators.required]);
+        this.training = this.isOnEdit ? new FormControl(null) : new FormControl(null, [Validators.required]);
         this.month = new FormControl(null);
         this.intern = this.isOnEdit ? new FormControl(null) :
             new FormControl(null, [Validators.required]);
@@ -201,12 +203,15 @@ export class PaymentFormComponent implements OnInit {
      * onSave
      */
     public async onSaveOrUpdate(): Promise<void> {
+        this.payment.error = this.payment.error ? 1 : 0;
         this.payment.intern_id = this.internSelected.id;
         this.payment.username = this.auth.getCurrentUser().username;
         this.payment.training = this.trainingSelected ? this.trainingSelected.name : this.payment.training;
         const copy: Payment = new Payment();
+        copy.id = this.payment.id;
         copy.username = this.auth.getCurrentUser().username;
         copy.intern_id = this.internSelected.id;
+        copy.error = this.payment.error;
         copy.training = this.trainingSelected ? this.trainingSelected.name : this.payment.training;
         copy.date = (this.payment.date as Date).getTime();
         copy.comment = this.payment.comment;
@@ -253,7 +258,7 @@ export class PaymentFormComponent implements OnInit {
             const register: Register = new Register();
             register.amount = payment.amount;
             register.comment = payment.comment;
-            register.date = payment.date;
+            register.date = (payment.date as Date).getTime();
             register.intern = this.internSelected.name;
             register.sold = this.internSelected.sold;
             register.training = this.trainingSelected.name;
@@ -278,9 +283,9 @@ export class PaymentFormComponent implements OnInit {
 
     manageInternSold(payment: number) {
         if (this.isOnEdit) {
-            this.internSelected.sold += payment;
+            this.internSelected.sold = Number(this.internSelected.sold) + Number(payment);
         }
-        this.internSelected.sold -= this.payment.amount;
+        this.internSelected.sold = Number(this.internSelected.sold) - Number(this.payment.amount);
         this.block = true;
         Intern.updateSoldAndComment(this.internSelected.id, this.internSelected.sold, this.internSelected.comment).then(() => this.block = false,
             e => {
