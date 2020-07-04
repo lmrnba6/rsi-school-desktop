@@ -1,7 +1,7 @@
 {
   "name": "Rsi-school",
   "productName": "Rsi-school",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "School management software",
   "author": "rsi-technologies",
   "main": "index.js",
@@ -40,7 +40,7 @@
     "build:prod": "webpack --config config/webpack.prod.js",
     "postinstall": "electron-builder install-app-deps",
     "build": "electron-builder --win --publish never",
-    "deploy": "set GH_TOKEN=5b1b357ef3ce0419658c9ab3970b397fe2271b73 && electron-builder --win --publish always",
+    "deploy": "set GH_TOKEN=3e952f552b01f0d0607762bcbcdb17f2f15d72f3 && electron-builder --win --publish always",
     "package": "electron-builder ."
   },
   "license": "MIT",

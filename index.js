@@ -122,24 +122,24 @@ const sendStatusToWindow = (text) => {
 };
 
 autoUpdater.on('checking-for-update', () => {
-	sendStatusToWindow('Checking for update...');
+	sendStatusToWindow('Vérification de la mise à jour...');
 });
 autoUpdater.on('update-available', info => {
-	sendStatusToWindow('Update available.');
+	sendStatusToWindow('Mise à jour disponible');
 });
 autoUpdater.on('update-not-available', info => {
-	sendStatusToWindow('Update not available.');
+	sendStatusToWindow('Mise à jour non disponible.');
 });
 autoUpdater.on('error', err => {
-	sendStatusToWindow(`Error in auto-updater: ${err.toString()}`);
+	sendStatusToWindow(`Erreur dans la mise à jour automatique: ${err.toString()}`);
 });
 autoUpdater.on('download-progress', progressObj => {
 	sendStatusToWindow(
-		`Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred} + '/' + ${progressObj.total} + )`
+		`Vitesse de téléchargement: ${progressObj.bytesPerSecond} - Téléchargé ${progressObj.percent}% (${progressObj.transferred} + '/' + ${progressObj.total} + )`
 	);
 });
 autoUpdater.on('update-downloaded', info => {
-	sendStatusToWindow('Update downloaded; will install now');
+	sendStatusToWindow('Mise à jour téléchargée. démarrage de l\'installation');
 });
 
 autoUpdater.on('update-downloaded', info => {
