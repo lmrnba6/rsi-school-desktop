@@ -135,7 +135,8 @@ autoUpdater.on('error', err => {
 });
 autoUpdater.on('download-progress', progressObj => {
 	sendStatusToWindow(
-		`Vitesse de téléchargement: ${progressObj.bytesPerSecond} - Téléchargé ${progressObj.percent}% (${progressObj.transferred} + '/' + ${progressObj.total} + )`
+		`Installation de la mise à jour ${Number(progressObj.percent).toFixed(0)}%`
+		// `Vitesse de téléchargement: ${progressObj.bytesPerSecond} - Téléchargé ${progressObj.percent}% (${progressObj.transferred} + '/' + ${progressObj.total} + )`
 	);
 });
 autoUpdater.on('update-downloaded', info => {
