@@ -14,8 +14,8 @@
         /* The Modal (background) */
         .modal {
             display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+            position: absolute; /* Stay in place */
+            z-index: 9999; /* Sit on top */
             padding-top: 100px; /* Location of the box */
             left: 0;
             top: 0;
@@ -35,26 +35,13 @@
             width: 80%;
         }
 
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
 <div id="myModal" class="modal">
-    <div class="modal-content">
-        <p id="updater"></p>
+    <div style="width: 50%" class="modal-content">
+        <img src="assets/images/loading2.gif"/>
+        <h1 style="color: black" id="updater"></h1>
     </div>
 
 </div>
@@ -68,12 +55,11 @@
     document.getElementById('updater').innerHTML = "Chargement...";
     const {ipcRenderer} = require('electron');
     ipcRenderer.on('message', function (event, text) {
-        if(text === 'Mise à jour non disponible.') {
-            modal.style.display = "block";
-        }
+
         document.getElementById('updater').innerHTML = text;
     });
     var modal = document.getElementById("myModal");
+    modal.style.display = "block";
 
     // Get the button that opens the modal
     var btn = document.getElementById("myBtn");
