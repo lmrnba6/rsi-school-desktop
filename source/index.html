@@ -19,6 +19,7 @@
 </app>
 <script>
     // Listen for messages
+    document.getElementById('updater').innerHTML = "Chargement...";
     const {ipcRenderer} = require('electron');
     ipcRenderer.on('message', function (event, text) {
         document.getElementById('updater').innerHTML = text;
