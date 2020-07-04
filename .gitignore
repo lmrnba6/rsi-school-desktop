@@ -4,4 +4,4 @@ build
 dist
 *.db-journal
 package-lock.json
-electron-builder.yaml
+electron-builder.env
