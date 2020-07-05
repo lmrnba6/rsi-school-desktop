@@ -11,32 +11,36 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment.placeholder.amount' | translate}}</mat-label>
                 <input name="amount" type="number" (blur)="parseAmount($event.target.value)" formControlName="amount"
                        [ngModel]="payment.amount" matInput
-                       placeholder="{{'payment.placeholder.amount' | translate}}" required autofocus>
+                       required autofocus>
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment.placeholder.date' | translate}}</mat-label>
                 <input name="date" formControlName="date" [(ngModel)]="payment.date" matInput
-                       placeholder="{{'payment.placeholder.date' | translate}}" required [matDatepicker]="picker">
+                       required [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment.placeholder.comment' | translate}}</mat-label>
                 <input name="comment" formControlName="comment" [(ngModel)]="payment.comment" matInput
                        placeholder="{{'payment.placeholder.comment' | translate}}" >
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width" appearance="outline">
+                <mat-label>{{'payment.placeholder.training' | translate}}</mat-label>
                 <input name="training" formControlName="training" matInput
                        (keyup)="trainingOnChange($event)" [matAutocomplete]="auto"
-                       placeholder="{{'payment.placeholder.training' | translate}}">
+                       >
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnTraining.bind(this)"
                                   (optionSelected)="trainingOnSelect($event.option.value)">
@@ -52,16 +56,18 @@
                 <h2 style="margin: 0" *ngIf="express">{{trainingSelected?.name}}</h2>
             </div>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment.placeholder.month' | translate}}</mat-label>
                 <input name="month" formControlName="month" [(ngModel)]="payment.month" matInput
-                       placeholder="{{'payment.placeholder.month' | translate}}" >
+                       >
                 <mat-error *ngIf="month.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width" appearance="outline">
+                <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
                 <input name="intern" formControlName="intern" matInput
                        (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
-                       placeholder="{{'payment.placeholder.intern_id' | translate}}" required>
+                       required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnIntern.bind(this)"
                                   (optionSelected)="internOnSelect($event.option.value)">

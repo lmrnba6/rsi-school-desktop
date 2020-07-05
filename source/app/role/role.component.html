@@ -11,8 +11,9 @@
   </button>
   <br><br><br><br>
   <form>
-    <mat-form-field class="example-full-width">
-      <input type="text" placeholder="Entrer le nom d'utilisateur" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Entrer le nom d'utilisateur</mat-label>
+      <input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
       <span matSuffix class="glyphicon glyphicon-search"></span>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="userOnChange($event.option.value)">
         <mat-option *ngFor="let user of usersFiltered" [value]="user">

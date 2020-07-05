@@ -11,14 +11,15 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'inbox.subject' | translate}}</mat-label>
                 <input name="subject" type="text" formControlName="subject"
                        [(ngModel)]="inbox.subject" matInput
-                       placeholder="{{'inbox.subject' | translate}}" required autofocus>
+                       required autofocus>
                 <mat-error *ngIf="subject.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit">
+            <mat-form-field *ngIf="!isOnEdit" appearance="outline">
                 <mat-label>{{'session.title' | translate}}</mat-label>
                 <mat-select formControlName="groups" (selectionChange)="onGroupChange($event)">
                     <mat-option *ngFor="let group of groupList" [value]="group.value">
@@ -27,10 +28,11 @@
                 </mat-select>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit && (groupSelected === 'individual' || groupSelected === 'groups')" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit && (groupSelected === 'individual' || groupSelected === 'groups')" class="example-full-width" appearance="outline">
+                <mat-label>{{'inbox.to' | translate}}</mat-label>
                 <input name="to" formControlName="to" matInput
                        (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
-                       placeholder="{{'inbox.to' | translate}}" required>
+                       required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="userOnSelect($event.option.value)">
@@ -45,10 +47,11 @@
                 <h4>{{inbox.from === user.id ? inbox['to_user'] : inbox['from_user']}}</h4>
             </div>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'inbox.content' | translate}}</mat-label>
                 <textarea style="height: 100px" name="content" type="text" formControlName="content"
                        [(ngModel)]="inbox.content" matInput
-                           placeholder="{{'inbox.content' | translate}}" required></textarea>
+                           required></textarea>
                 <mat-error *ngIf="content.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
         </div>

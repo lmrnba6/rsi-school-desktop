@@ -7,10 +7,11 @@
         <button [disabled]="!instructorSelected || !month" class="pull-right save" (click)="result()" mat-button>
             <span class="glyphicon glyphicon-equalizer"></span>
         </button>
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="example-full-width"  appearance="outline">
+            <mat-label>{{'enrollment.placeholder.instructor_id' | translate}}</mat-label>
             <input matInput
                    (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto"
-                   placeholder="{{'enrollment.placeholder.instructor_id' | translate}}">
+                   >
             <span matSuffix class="glyphicon glyphicon-search"></span>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                               (optionSelected)="instructorOnSelect($event.option.value)">
@@ -20,9 +21,10 @@
             </mat-autocomplete>
         </mat-form-field>
         <br>
-        <mat-form-field *ngIf="instructorSelected">
+        <mat-form-field *ngIf="instructorSelected" appearance="outline">
+            <mat-label>{{'accounting.month' | translate}}</mat-label>
             <mat-select (selectionChange)="onMonthChange()" [(ngModel)]="month"
-                        placeholder="{{'accounting.month' | translate}}">
+                        >
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let month of months" [value]="month">
                     {{'accounting.' + month | translate}}
@@ -33,15 +35,17 @@
         <span> <h3 style="float: left; margin-top: 20px">
             {{session.name + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}: <span style="color: green">{{attendances[i] || 0 }} {{'attendance.title' | translate}}</span></h3>
         <mat-form-field style="width: 25%;
-    margin: 0px 40px 0px 25px;">
+    margin: 0px 40px 0px 25px;" appearance="outline">
+            <mat-label>{{'accounting.classRate' | translate}}</mat-label>
           <input type="number" [(ngModel)]="classRate[i]" matInput
-                 placeholder="{{'accounting.classRate' | translate}}">
+                 >
           <span matSuffix>DA/Seance</span>
         </mat-form-field>
           <mat-form-field style="width: 25%;
-    margin: 0px 40px 0px 25px;">
+    margin: 0px 40px 0px 25px;" appearance="outline">
+            <mat-label>{{'accounting.instructorRate' | translate}}</mat-label>
             <input type="number" [(ngModel)]="instructorRate[i]" matInput
-                   placeholder="{{'accounting.instructorRate' | translate}}">
+                   >
             <span matSuffix>%</span>
           </mat-form-field>
           <span></span>

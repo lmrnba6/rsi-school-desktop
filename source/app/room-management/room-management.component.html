@@ -26,9 +26,10 @@
     <div class="tab-content">
 
       <div class="container">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
           <mat-select id="session" [(ngModel)]="session_id"
-                      placeholder="{{'attendance.placeholder.session_id' | translate}}">
+                      >
             <mat-option *ngFor="let session of sessions" [value]="session.id">
               {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}}
             </mat-option>

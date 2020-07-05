@@ -15,7 +15,7 @@
                 <!--<span class="glyphicon glyphicon-print"></span>-->
             <!--</button>-->
             <br>
-            <div  class="pull-right" style="clear: both">
+            <div  class="pull-right" style="clear: both; margin-top: 10px">
                 <mat-card *ngIf="saveCamera" style="width:200px;height:200px;" id="camera">
                 </mat-card>
                 <mat-card *ngIf="!saveCamera" style="width:200px;height:200px;">
@@ -39,46 +39,52 @@
                 </button>
             </div>
             <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.name' | translate}}</mat-label>
                 <input id="name" name="name" formControlName="name" [(ngModel)]="intern.name" matInput
-                       placeholder="{{'intern.placeholder.name' | translate}}" required autofocus>
+                       required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.address' | translate}}</mat-label>
                 <input name="address" formControlName="address" [(ngModel)]="intern.address" matInput
-                       placeholder="{{'intern.placeholder.address' | translate}}">
+                       >
                 <mat-error *ngIf="address.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.birth' | translate}}</mat-label>
                 <input name="birth" formControlName="birth" [(ngModel)]="intern.birth" matInput
-                       placeholder="{{'intern.placeholder.birth' | translate}}" [matDatepicker]="picker" required>
+                       [matDatepicker]="picker" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
                 <span matSuffix *ngIf="intern && intern.birth">{{getAge(intern.birth)}} {{'intern.years' | translate}}</span>
                 <mat-error *ngIf="birth.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.phone' | translate}}</mat-label>
                 <input name="phone" type="number" formControlName="phone" (keyup)="phoneParse()" [(ngModel)]="intern.phone" matInput
-                       placeholder="{{'intern.placeholder.phone' | translate}}" required>
-                <span matPrefix>+213</span>
+                       required>
+                <span style="top: 0; margin-right: 5px" matPrefix>+213</span>
                 <mat-error *ngIf="phone.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
 <!--            <span>-->
 <!--                <mat-checkbox name="phoneOptional" formControlName="phoneOptional" [(ngModel)]="isPhoneOptional">{{'intern.placeholder.isPhoneOptional' | translate}}</mat-checkbox>-->
 <!--            </span>-->
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.phone2' | translate}}</mat-label>
                 <input name="phone2" type="number" formControlName="phone2" (keyup)="phoneParse()" [(ngModel)]="intern.phone2" matInput
-                       placeholder="{{'intern.placeholder.phone2' | translate}}">
-                <span matPrefix>+213</span>
+                       >
+                <span style="top: 0; margin-right: 5px" matPrefix>+213</span>
                 <mat-error *ngIf="phone2.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
-                <mat-select formControlName="scholar" [(ngModel)]="intern.scholar" placeholder="{{'intern.placeholder.scholar' | translate}}" name="scholar" required>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.scholar' | translate}}</mat-label>
+                <mat-select formControlName="scholar" [(ngModel)]="intern.scholar" name="scholar" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let scholar of scholars" [value]="scholar">
                         {{'intern.placeholder.' + scholar | translate}}
@@ -87,29 +93,33 @@
                 <mat-error *ngIf="scholar.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.email' | translate}}</mat-label>
                 <input name="email" formControlName="email" [(ngModel)]="intern.email" matInput
-                       placeholder="{{'intern.placeholder.email' | translate}}" >
+                       >
                 <mat-error *ngIf="email.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.name_arabic' | translate}}</mat-label>
                 <input name="name_arabic" formControlName="name_arabic" [(ngModel)]="intern.name_arabic" matInput
-                       placeholder="{{'intern.placeholder.name_arabic' | translate}}">
+                       >
                 <mat-error *ngIf="name_arabic.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.sold' | translate}}</mat-label>
                 <input name="sold" type="number" formControlName="sold" [(ngModel)]="intern.sold" matInput
-                       placeholder="{{'intern.placeholder.sold' | translate}}" [disabled]="!isAdmin">
+                       [disabled]="!isAdmin">
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="sold.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field appearance = "outline" class="example-full-width" style="display: none">
+            <mat-form-field class="example-full-width" style="display: none" appearance="outline">
+                <mat-label>{{'intern.placeholder.parent' | translate}}</mat-label>
                 <input name="parent" formControlName="parent" matInput [ngModel]="userSelected"
                        (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
-                       placeholder="{{'intern.placeholder.parent' | translate}}">
+                       >
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="userOnSelect($event.option.value)">
@@ -119,9 +129,10 @@
                 </mat-autocomplete>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.comment' | translate}}</mat-label>
                 <textarea name="comment" formControlName="comment" [(ngModel)]="intern.comment" matInput
-                          placeholder="{{'intern.placeholder.comment' | translate}}"></textarea>
+                          ></textarea>
             </mat-form-field>
         </div>
     </form>

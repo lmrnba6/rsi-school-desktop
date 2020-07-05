@@ -17,19 +17,21 @@
         <!-- Login Form -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <mat-form-field>
-                    <input  name="username" [formControl]="username" matInput placeholder="{{'login.username' | translate}}" autofocus required>
-                    <mat-error *ngIf="username.invalid">{{'messages.error_field_required' | translate}}</mat-error>
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'login.username' | translate}}</mat-label>
+                    <input  name="username" [formControl]="username" matInput autofocus required>
+<!--                    <mat-error *ngIf="username.invalid">{{'messages.error_field_required' | translate}}</mat-error>-->
                 </mat-form-field>
             </div>
             <div class="form-group">
-                <mat-form-field>
-                    <input matInput placeholder="{{'login.password' | translate}}" [formControl]="password" type="password" required>
-                    <mat-error *ngIf="password.invalid">{{'messages.error_field_required' | translate}}</mat-error>
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'login.password' | translate}}</mat-label>
+                    <input matInput [formControl]="password" type="password" required>
+<!--                    <mat-error *ngIf="password.invalid">{{'messages.error_field_required' | translate}}</mat-error>-->
                 </mat-form-field>
             </div>
             <h5 *ngIf="error" style="color: red">{{'messages.error_login' | translate}}</h5>
-            <button class="pull-right saveLogin" type="submit" mat-button [disabled]="loginForm.invalid"> {{'login.login' | translate}}
+            <button style="font-size: 2rem" class="pull-right saveLogin" type="submit" mat-button [disabled]="loginForm.invalid"> {{'login.login' | translate}}
             </button>
             <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
             </app-loader>

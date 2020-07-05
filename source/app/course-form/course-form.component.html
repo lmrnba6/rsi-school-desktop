@@ -11,19 +11,22 @@
       <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
           <span class="glyphicon glyphicon-remove"></span>
       </button>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+          <mat-label>{{'course.placeholder.name' | translate}}</mat-label>
         <input name="name" formControlName="name" [(ngModel)]="course.name" matInput placeholder="{{'course.placeholder.name' | translate}}" required>
         <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
       </mat-form-field>
       <br>
-      <mat-form-field>
-          <input name="time" formControlName="time" type="number" [(ngModel)]="course.time" matInput placeholder="{{'course.placeholder.time' | translate}}" required>
+      <mat-form-field appearance="outline">
+          <mat-label>{{'course.placeholder.time' | translate}}</mat-label>
+          <input name="time" formControlName="time" type="number" [(ngModel)]="course.time" matInput required>
           <span matSuffix>h</span>
           <mat-error *ngIf="time.invalid">{{'messages.field_required_error' | translate}}</mat-error>
       </mat-form-field>
       <br>
-      <mat-form-field>
-          <mat-select formControlName="training_id" [(ngModel)]="course.training_id" placeholder="{{'course.placeholder.training_id' | translate}}" name="training_id" required>
+      <mat-form-field appearance="outline">
+          <mat-label>{{'course.placeholder.training_id' | translate}}</mat-label>
+          <mat-select formControlName="training_id" [(ngModel)]="course.training_id" name="training_id" required>
               <mat-option>--</mat-option>
               <mat-option *ngFor="let training of trainings" [value]="training.id">
                   {{training.name | translate}}

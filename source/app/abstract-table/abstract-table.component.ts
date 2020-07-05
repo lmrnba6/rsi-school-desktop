@@ -80,8 +80,10 @@ export class AbstractTableComponent
     public pageSizeOptions: Array<number> = [5, 10, 25, 100];
   public pageEvent: PageEvent;
   public isAdmin: boolean;
+    public searchImage = `../../dist/assets/images/searchImage.png`;
 
-  constructor(public messagesService: MessagesService, private translate: TranslateService, private dialogsService: DialogsService, private auth: AuthenticationService) { }
+
+    constructor(public messagesService: MessagesService, private translate: TranslateService, private dialogsService: DialogsService, private auth: AuthenticationService) { }
 
   ngOnInit(): void {
       this.isAdmin = this.auth.getCurrentUser().role === 'admin';

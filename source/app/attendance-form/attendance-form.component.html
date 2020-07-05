@@ -11,9 +11,10 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
                 <mat-select (selectionChange)="onInternsChange()" formControlName="session_id" [(ngModel)]="attendance.session_id"
-                            placeholder="{{'attendance.placeholder.session_id' | translate}}" name="session_id" required [disabled]="isOnEdit">
+                            name="session_id" required [disabled]="isOnEdit">
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
                         {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
@@ -22,9 +23,10 @@
                 <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
                 </mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'attendance.placeholder.day_id' | translate}}</mat-label>
                 <mat-select (selectionChange)="onDaysChange()" formControlName="day_id" [(ngModel)]="day"
-                            placeholder="{{'attendance.placeholder.day_id' | translate}}" name="day_id" required>
+                             name="day_id" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let day of days" [value]="day">
                         {{'attendance.placeholder.'+ day | translate}}
@@ -34,9 +36,10 @@
                 </mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'attendance.placeholder.weekday_id' | translate}}</mat-label>
             <mat-select formControlName="weekday_id" [(ngModel)]="attendance.weekday_id"
-                        placeholder="{{'attendance.placeholder.weekday_id' | translate}}" name="weekday_id" required>
+                        name="weekday_id" required>
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let weekday of weekdays" [value]="weekday['weekday_id']">
                     {{weekday.time | translate}}
@@ -46,9 +49,10 @@
             </mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'attendance.placeholder.date' | translate}}</mat-label>
                 <input name="date" formControlName="date" [(ngModel)]="attendance.date" matInput
-                       placeholder="{{'attendance.placeholder.date' | translate}}" required [matDatepicker]="picker2">
+                       required [matDatepicker]="picker2">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker2></mat-datepicker>
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>

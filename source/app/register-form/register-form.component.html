@@ -12,34 +12,37 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'register.placeholder.amount' | translate}}</mat-label>
                 <input name="amount" type="number" (blur)="parseAmount($event.target.value)" formControlName="amount"
                        [ngModel]="register.amount" matInput
-                       placeholder="{{'register.placeholder.amount' | translate}}" required autofocus>
+                       required autofocus>
                 <span style="color: red" *ngIf="sign === '-'" matPrefix class="glyphicon glyphicon-arrow-up"></span>
                 <span style="color: #28a745" *ngIf="sign === '+'" matPrefix class="glyphicon glyphicon-arrow-down"></span>
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'register.placeholder.responsible' | translate}}</mat-label>
                 <input name="responsible" type="text" formControlName="responsible"
                        [ngModel]="register.responsible" matInput
-                       placeholder="{{'register.placeholder.responsible' | translate}}" required autofocus>
+                       required autofocus>
                 <mat-error *ngIf="responsible.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'register.placeholder.date' | translate}}</mat-label>
                 <input name="date" formControlName="date" [(ngModel)]="register.date" matInput
-                       placeholder="{{'register.placeholder.date' | translate}}" required [matDatepicker]="picker">
+                       required [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
-                <input name="comment" formControlName="comment" [(ngModel)]="register.comment" matInput
-                       placeholder="{{'register.placeholder.comment' | translate}}">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'register.placeholder.comment' | translate}}</mat-label>
+                <input name="comment" formControlName="comment" [(ngModel)]="register.comment" matInput>
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
         </div>

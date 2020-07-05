@@ -13,25 +13,29 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div class="container">
-                <mat-form-field  *ngIf="pvName !=='form'">
+                <mat-form-field  *ngIf="pvName !=='form'" appearance="outline">
+                    <mat-label>{{'pv.date' | translate}}</mat-label>
                     <input id="test" [(ngModel)]="date" matInput
                            placeholder="{{'pv.date' | translate}}" required [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker></mat-datepicker>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName!=='receipt' && pvName!=='form'">
+                <mat-form-field *ngIf="pvName!=='receipt' && pvName!=='form'" appearance="outline">
+                    <mat-label>{{'pv.title' | translate}}</mat-label>
                     <input [(ngModel)]="title" matInput
-                           placeholder="{{'pv.title' | translate}}" required>
+                           required>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName !=='form' && pvName!=='card'" >
+                <mat-form-field *ngIf="pvName !=='form' && pvName!=='card'" appearance="outline">
+                    <mat-label>{{'pv.center' | translate}}</mat-label>
                 <input [(ngModel)]="center" matInput
-                       placeholder="{{'pv.center' | translate}}" required>
+                       required>
             </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName==='receipt'">
-                    <mat-select (selectionChange)="onPaymentChange()" [(ngModel)]="payment" placeholder="{{'payment.title' | translate}}">
+                <mat-form-field *ngIf="pvName==='receipt'" appearance="outline">
+                    <mat-label>{{'payment.title' | translate}}</mat-label>
+                    <mat-select (selectionChange)="onPaymentChange()" [(ngModel)]="payment" >
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let payment of payments" [value]="payment">
                             {{payment.amount}} DA => {{payment.date}}
@@ -39,9 +43,10 @@
                     </mat-select>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName==='form'">
+                <mat-form-field *ngIf="pvName==='form'" appearance="outline">
+                    <mat-label>{{'enrollment.placeholder.session_id' | translate}}</mat-label>
                     <mat-select [(ngModel)]="session"
-                                placeholder="{{'enrollment.placeholder.session_id' | translate}}">
+                               >
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let session of sessions" [value]="session">
                             {{session.training + ' ' + session.session}}

@@ -25,7 +25,8 @@ export class AccountingComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
-  constructor(private translate: TranslateService, private messagesService: MessagesService) { }
+    public searchImage = `../../dist/assets/images/searchImage.png`;
+    constructor(private translate: TranslateService, private messagesService: MessagesService) { }
 
   ngOnInit() {
   }
@@ -61,7 +62,7 @@ export class AccountingComponent implements OnInit {
     }
 
     public instructorOnChange(event: any): void {
-        //if(event.keyCode == 13) {
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
             Instructor.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
@@ -71,7 +72,7 @@ export class AccountingComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        //}
+        }
         //this.instructorsFiltered = this.instructors.filter(instructors => instructors.name.toLowerCase().includes(event.toLowerCase()));
     }
 

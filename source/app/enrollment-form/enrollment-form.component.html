@@ -5,16 +5,17 @@
     </app-loader>
     <form [formGroup]="enrollmentForm">
         <div class="container">
-            <button [disabled]="enrollmentForm.invalid && !internSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="enrollmentForm.invalid || !internSelected || !enrollment.session_id" class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit && !express" class="example-full-width" appearance="outline">
+                <mat-label>{{'enrollment.placeholder.intern_id' | translate}}</mat-label>
                 <input name="intern_id" formControlName="intern_id" matInput
                        (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
-                       placeholder="{{'enrollment.placeholder.intern_id' | translate}}" required>
+                        required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="internOnSelect($event.option.value)">
@@ -29,9 +30,10 @@
                 <h2 style="margin: 0">{{internSelected?.name}}</h2>
             </div>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'enrollment.placeholder.session_id' | translate}}</mat-label>
                 <mat-select (selectionChange)="onSessionChange()" formControlName="session_id" [(ngModel)]="enrollment.session_id"
-                            placeholder="{{'enrollment.placeholder.session_id' | translate}}" name="session_id" required>
+                            name="session_id" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
                         {{session.name + ' ' + session.training + ' ' + session.instructor}}
@@ -41,17 +43,19 @@
                 </mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field  appearance="outline">
+                <mat-label>{{'enrollment.placeholder.date' | translate}}</mat-label>
                 <input name="date" formControlName="date" [(ngModel)]="enrollment.date" matInput
-                       placeholder="{{'enrollment.placeholder.date' | translate}}" required [matDatepicker]="picker2">
+                        required [matDatepicker]="picker2">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker2></mat-datepicker>
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field  appearance="outline">
+                <mat-label>{{'enrollment.placeholder.comment' | translate}}</mat-label>
                 <input name="comment" formControlName="comment" [(ngModel)]="enrollment.comment" matInput
-                       placeholder="{{'enrollment.placeholder.comment' | translate}}">
+                       >
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
         </div>

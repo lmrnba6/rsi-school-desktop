@@ -13,16 +13,18 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div class="container">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{'result.from' | translate}}</mat-label>
           <input [(ngModel)]="from" matInput
-                 placeholder="{{'result.from' | translate}}" required [matDatepicker]="picker">
+                 required [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker></mat-datepicker>
         </mat-form-field>
         <br>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{'result.to' | translate}}</mat-label>
           <input [(ngModel)]="to" matInput
-                 placeholder="{{'result.to' | translate}}" required [matDatepicker]="picker2">
+                 required [matDatepicker]="picker2">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker2></mat-datepicker>
         </mat-form-field>

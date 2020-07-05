@@ -11,40 +11,46 @@
             <button *ngIf="!isInstructor"  class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'instructor.placeholder.name' | translate}}</mat-label>
                 <input name="name" formControlName="name" [(ngModel)]="instructor.name" matInput
-                       placeholder="{{'instructor.placeholder.name' | translate}}" required autofocus>
+                       required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'instructor.placeholder.address' | translate}}</mat-label>
                 <input name="address" formControlName="address" [(ngModel)]="instructor.address" matInput
-                       placeholder="{{'instructor.placeholder.address' | translate}}">
+                       >
                 <mat-error *ngIf="address.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'instructor.placeholder.phone' | translate}}</mat-label>
                 <input name="phone" formControlName="phone" type="number" [(ngModel)]="instructor.phone" (keyup)="phoneParse()" (blur)="onPhoneChanged()" matInput
-                       placeholder="{{'instructor.placeholder.phone' | translate}}" required>
-                <span matPrefix>+213</span>
+                       required>
+                <span style="top: 0; margin-right: 5px" matPrefix>+213</span>
                 <mat-error *ngIf="phone.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'instructor.placeholder.email' | translate}}</mat-label>
                 <input name="email" formControlName="email" [(ngModel)]="instructor.email" matInput
-                       placeholder="{{'instructor.placeholder.email' | translate}}" required>
+                       required>
                 <mat-error *ngIf="email.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'instructor.placeholder.name_arabic' | translate}}</mat-label>
                 <input name="name_arabic" formControlName="name_arabic" [(ngModel)]="instructor.name_arabic" matInput
-                       placeholder="{{'instructor.placeholder.name_arabic' | translate}}">
+                       >
                 <mat-error *ngIf="name_arabic.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'instructor.placeholder.sold' | translate}}</mat-label>
                 <input name="sold" type="number" formControlName="sold" [(ngModel)]="instructor.sold" matInput
-                       placeholder="{{'instructor.placeholder.sold' | translate}}" [disabled]="!isAdmin">
+                       [disabled]="!isAdmin">
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="sold.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>

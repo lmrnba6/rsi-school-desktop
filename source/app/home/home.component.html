@@ -21,7 +21,7 @@
 <!--                    <span class="glyphicon glyphicon-briefcase fa-2x"></span>-->
                     <img style="margin: 0; width: 50px" [src]="instructorImage" alt="">
                     <h2 class="timer count-title count-number" data-to="1700" data-speed="1500"></h2>
-                    <p class="count">{{instructor}}</p>
+                    <p class="count">{{instructors}}</p>
                     <p class="count-text">{{'menu.instructor' | translate}}</p>
                 </div>
             </div>
@@ -48,8 +48,17 @@
     </app-loader>
     <br>
     <div class="schedule">
-        <div class="col text-center">
-            <h2>{{'weekday.title' | translate}} {{'weekday.placeholder.' + toDay() | translate}}</h2>
+        <div class="col text-center" style="    display: flex;
+    justify-content: center;
+    align-items: baseline;">
+            <h2>{{'weekday.title' | translate}}</h2>
+            <mat-form-field style="font-size: 2rem; margin-left: 10px">
+                <mat-select [ngModel]="date" (valueChange)="onDayChange($event)">
+                    <mat-option *ngFor="let session of days" [value]="session">
+                        {{'weekday.placeholder.' + session | translate}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
     <mat-card>
         <app-abstract-table [page]="'home'"   [setting]="setting" [data]="data"></app-abstract-table>

@@ -41,7 +41,7 @@ export class DocumentComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        //if(event.keyCode == 13) {
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
             Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
@@ -51,7 +51,7 @@ export class DocumentComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        //}
+        }
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
     }
 

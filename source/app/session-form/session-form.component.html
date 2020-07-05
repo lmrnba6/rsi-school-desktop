@@ -11,22 +11,25 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'session.placeholder.name' | translate}}</mat-label>
                 <input name="name" formControlName="name" [(ngModel)]="session.name" (blur)="onNameChange()" matInput
-                       placeholder="{{'session.placeholder.name' | translate}}" required autofocus>
+                       required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'session.placeholder.limit' | translate}}</mat-label>
                 <input name="limit" formControlName="limit" type="number" [(ngModel)]="session.limit" matInput
-                       placeholder="{{'session.placeholder.limit' | translate}}" required >
+                       required >
                 <span matSuffix>{{'session.placeholder.intern' | translate}}</span>
                 <mat-error *ngIf="limit.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'session.placeholder.training_id' | translate}}</mat-label>
                 <mat-select formControlName="training_id" [(ngModel)]="session.training_id"
-                            placeholder="{{'session.placeholder.training_id' | translate}}" name="training_id" required>
+                            name="training_id" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let training of trainings" [value]="training.id">
                         {{training.name | translate}}
@@ -36,9 +39,10 @@
                 </mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'session.placeholder.instructor_id' | translate}}</mat-label>
                 <mat-select formControlName="instructor_id" [(ngModel)]="session.instructor_id"
-                            placeholder="{{'session.placeholder.instructor_id' | translate}}" name="instructor_id" required>
+                            name="instructor_id" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let instructor of instructors" [value]="instructor.id">
                         {{instructor.name | translate}}
@@ -48,15 +52,17 @@
                 </mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'session.placeholder.start' | translate}}</mat-label>
                 <input name="start" formControlName="start" [(ngModel)]="session.start" matInput
-                       placeholder="{{'session.placeholder.start' | translate}}" required [matDatepicker]="picker2">
+                       required [matDatepicker]="picker2">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker2></mat-datepicker>
                 <mat-error *ngIf="start.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'session.placeholder.end' | translate}}</mat-label>
                 <input name="end" formControlName="end" [min]="session.start" [(ngModel)]="session.end" matInput
                        placeholder="{{'session.placeholder.end' | translate}}" required [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

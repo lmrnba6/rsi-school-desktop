@@ -100,7 +100,7 @@ export class PaymentFormComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        //if(event.keyCode == 13) {
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
         this.block = true;
         Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
             users => {
@@ -111,7 +111,7 @@ export class PaymentFormComponent implements OnInit {
                 this.block = false
             });
         this.internSelected = null;
-        //}
+        }
     }
 
     public internOnSelect(intern: Intern): void {
@@ -121,8 +121,7 @@ export class PaymentFormComponent implements OnInit {
     }
 
     public trainingOnChange(event: any): void {
-        //if(event.keyCode == 13) {
-        this.block = true;
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {        this.block = true;
         Training.getAllPaged(0, 5, 'name', '', event.target.value).then(
             users => {
                 this.block = false;
@@ -132,7 +131,7 @@ export class PaymentFormComponent implements OnInit {
                 this.block = false
             });
         this.trainingSelected = null;
-        //}
+        }
     }
 
     public trainingOnSelect(training: Training): void {

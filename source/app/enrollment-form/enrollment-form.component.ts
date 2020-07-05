@@ -29,7 +29,7 @@ export class EnrollmentFormComponent implements OnInit {
     public interns: Array<Intern> = [];
     public sessions: Array<Session> = [];
     public internsFiltered: Array<Intern> = [];
-    public internSelected: Intern;
+    public internSelected: Intern | any;
     public training_fees: boolean;
     public enrollment_fees: boolean;
     public books_fees: boolean;
@@ -91,7 +91,8 @@ export class EnrollmentFormComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        //if(event.keyCode == 13) {
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.internSelected = null;
             this.block = true;
             Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
                 users => {
@@ -101,7 +102,7 @@ export class EnrollmentFormComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        //}
+        }
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
     }
 

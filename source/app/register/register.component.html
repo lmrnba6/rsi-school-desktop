@@ -7,15 +7,17 @@
     <br>
     <h3>{{'register.sold' | translate}} = <strong style="color: #28a745;"> {{getSold().toFixed(0)}} DA</strong></h3>
     <br>
-    <mat-form-field class="register_search">
+    <mat-form-field class="register_search" appearance="outline">
+      <mat-label>{{'register.placeholder.from' | translate}}</mat-label>
         <input [(ngModel)]="from" matInput (dateChange)="search()"
-               placeholder="{{'register.placeholder.from' | translate}}" required [matDatepicker]="picker">
+               required [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field class="register_search" style="margin-left: 20px">
+    <mat-form-field class="register_search" style="margin-left: 20px" appearance="outline">
+      <mat-label>{{'register.placeholder.to' | translate}}</mat-label>
       <input [(ngModel)]="to" matInput (dateChange)="search()"
-             placeholder="{{'register.placeholder.to' | translate}}" required [matDatepicker]="picker1">
+             required [matDatepicker]="picker1">
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker touchUi #picker1></mat-datepicker>
     </mat-form-field>

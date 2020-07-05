@@ -38,7 +38,7 @@
     "intern": "Students",
     "instructor": "Teachers",
     "document": "Documents",
-    "room": "Classes",
+    "room": "Classrooms",
     "session": "Group",
     "training": "Formations",
     "course": "Levels",
@@ -220,7 +220,7 @@
     }
   },
   "room": {
-    "title": "Classes",
+    "title": "Classrooms",
     "placeholder": {
       "number": "Number",
       "capacity" : "Capacity",

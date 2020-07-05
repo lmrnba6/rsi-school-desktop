@@ -66,8 +66,7 @@ export class PaymentInstructorFormComponent implements OnInit {
     }
 
     public instructorOnChange(event: any): void {
-        //if(event.keyCode == 13) {
-            this.block = true;
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {            this.block = true;
             Instructor.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
@@ -76,7 +75,7 @@ export class PaymentInstructorFormComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        //}
+        }
         //this.instructorsFiltered = this.instructors.filter(instructors => instructors.name.toLowerCase().includes(event.toLowerCase()));
     }
 

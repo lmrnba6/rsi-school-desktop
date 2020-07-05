@@ -141,8 +141,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public userOnChange(event: any): void {
-        //if(event.keyCode == 13) {
-            this.block = true;
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {            this.block = true;
             User.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
@@ -151,7 +150,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-        //}
+        }
         //this.usersFiltered = this.users.filter(users => users.name.toLowerCase().includes(event.toLowerCase()));
     }
 

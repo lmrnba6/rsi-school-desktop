@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.updateDatabase();
-        this.image = `../../dist/assets/images/${Math.floor(Math.random() * 5) + 1 }.jpg`;
+        this.image = `../../dist/assets/images/${Math.floor(Math.random() * 6) + 1 }.jpg`;
         (document.getElementById('clouds') as HTMLElement).style.backgroundImage = `url(${this.image})`;
         this.initForm();
         if (!this.authenticationService.isTokenExpired()) {

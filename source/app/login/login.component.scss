@@ -32,7 +32,7 @@ a {
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
-  background: rgba(255, 255, 255, 0.8);;
+  background: white;
   padding: 30px;
   width: 90%;
   max-width: 450px;
@@ -223,9 +223,9 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
 }
 
 .form-group .mat-form-field-infix {
-  background: #efefefa3;
+  //background: #efefefa3;
   height: 60px;
-  font-size: 20px;
+  font-size: 1.5rem;
   padding: 10px;
 }
 

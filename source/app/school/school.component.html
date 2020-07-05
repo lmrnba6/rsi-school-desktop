@@ -21,14 +21,16 @@
                 </button>
             </div>
             <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.name' | translate}}</mat-label>
                 <input id="name" name="name" formControlName="name" [(ngModel)]="school.name" matInput
-                       placeholder="{{'intern.placeholder.name' | translate}}" required autofocus>
+                       required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.dist' | translate}}</mat-label>
                 <input id="dist" name="dist" formControlName="dist" [(ngModel)]="school.dist" matInput
-                       placeholder="{{'intern.placeholder.dist' | translate}}" autofocus>
+                       autofocus>
                 <mat-error *ngIf="dist.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
         </div>

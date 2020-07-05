@@ -22,6 +22,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
     @Input() public session: Session;
     @Input() public room: Room;
     @Input() public instructor: Instructor;
+    public tabSelected: number = 0;
     public filter: string = '';
     public data: any;
     public tableName: string;

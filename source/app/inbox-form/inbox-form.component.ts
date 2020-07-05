@@ -103,8 +103,7 @@ export class InboxFormComponent implements OnInit {
     }
 
     public userOnChange(event: any): void {
-        //if(event.keyCode === 13) {
-            this.block = true;
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {            this.block = true;
             if(this.groupSelected === 'groups') {
                 Session.getAllPaged(0, 30, 'name', '', event.target.value).then(
                     users => {
@@ -124,7 +123,7 @@ export class InboxFormComponent implements OnInit {
                         this.block = false
                     });
             }
-        //}
+        }
         //this.usersFiltered = this.users.filter(users => users.name.toLowerCase().includes(event.toLowerCase()));
     }
 

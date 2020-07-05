@@ -18,9 +18,11 @@ export class HomeComponent implements OnInit,OnChanges {
 
     logo = '';
     data: any;
+    date: string;
     setting: AbstractTableSetting;
     session: Session;
     room: Room;
+    days: Array<string>;
     instructor: Instructor;
     filter: string;
     interns: number;
@@ -48,11 +50,12 @@ export class HomeComponent implements OnInit,OnChanges {
         Promise.all([Intern.getCount(''), Instructor.getCount(''),Session.getCount(''), Training.getCount('')]).then(
             values => {
                 this.interns = (values[0][0] as any).count;
-                this.instructor = (values[1][0] as any).count;
+                this.instructors = (values[1][0] as any).count;
                 this.sessions = (values[2][0] as any).count;
                 this.trainings = (values[3][0] as any).count;
                 this.block = false;
             })
+        this.toDay();
         this.getDataTable(0, MAX_SAFE_INTEGER, '', 'time', this.toDay());
         this.initSetting();
         this.getLogo();
@@ -73,6 +76,10 @@ export class HomeComponent implements OnInit,OnChanges {
         this.initSetting();
     }
 
+    onDayChange(e: any) {
+        this.getDataTable(0, MAX_SAFE_INTEGER, '', 'time', e);
+    }
+
     toDay() {
         let a = new Date();
         let weekdays = new Array(7);
@@ -83,6 +90,8 @@ export class HomeComponent implements OnInit,OnChanges {
         weekdays[4] = "thursday";
         weekdays[5] = "friday";
         weekdays[6] = "saturday";
+        this.days =weekdays;
+        this.date = weekdays[a.getDay()];
         return weekdays[a.getDay()];
     }
 

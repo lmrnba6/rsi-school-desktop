@@ -19,6 +19,12 @@ if (devMode) {
 	});
 }
 
+const nativeImage = require('electron').nativeImage;
+var image = nativeImage.createFromPath(__dirname + '/dist/assets/images/ico.ico');
+// where public folder on the root dir
+
+image.setTemplateImage(true);
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -36,7 +42,7 @@ let createWindow = () => {
         webPreferences: {
             nativeWindowOpen: true
         },
-        icon: path.join(__dirname, 'assets/images/ico.ico')
+        icon: image
 	});
 	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()

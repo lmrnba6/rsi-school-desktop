@@ -11,32 +11,36 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment_instructor.placeholder.amount' | translate}}</mat-label>
                 <input name="amount" type="number" (blur)="parseAmount($event.target.value)" formControlName="amount"
                        [ngModel]="payment_instructor.amount" matInput
-                       placeholder="{{'payment_instructor.placeholder.amount' | translate}}" required autofocus>
+                       required autofocus>
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment_instructor.placeholder.date' | translate}}</mat-label>
                 <input name="date" formControlName="date" [(ngModel)]="payment_instructor.date" matInput
-                       placeholder="{{'payment_instructor.placeholder.date' | translate}}" required [matDatepicker]="picker">
+                       required [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment_instructor.placeholder.comment' | translate}}</mat-label>
                 <input name="comment" formControlName="comment" [(ngModel)]="payment_instructor.comment" matInput
-                       placeholder="{{'payment_instructor.placeholder.comment' | translate}}" >
+                       >
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit" class="example-full-width">
+            <mat-form-field *ngIf="!isOnEdit" class="example-full-width" appearance="outline">
+                <mat-label>{{'payment_instructor.placeholder.instructor_id' | translate}}</mat-label>
                 <input name="instructor" formControlName="instructor" matInput
                        (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto"
-                       placeholder="{{'payment_instructor.placeholder.instructor_id' | translate}}" required>
+                       required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="instructorOnSelect($event.option.value)">
