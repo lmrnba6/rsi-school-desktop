@@ -2,7 +2,7 @@
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
 <h1 *ngIf="session.closed" class="block"> <span class="glyphicon glyphicon-ban-circle"></span>{{'session.placeholder.closed' | translate}}</h1>
-<h2>{{'session.title' | translate}} - {{session?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<h2 *ngIf="!session_id">{{'session.title' | translate}} - {{session?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
 <mat-tab-group [ngStyle]="{'opacity': session.closed ? '0.4' : '1'}" *ngIf="session" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab *ngIf="isAdmin">
     <ng-template mat-tab-label>

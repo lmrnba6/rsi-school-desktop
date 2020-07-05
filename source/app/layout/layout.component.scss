@@ -2,8 +2,8 @@
 
 .example-container {
   position: absolute;
-  top: 7%;
-  bottom: 60px;
+  top: 8%;
+  bottom: 0;
   left: 0;
   right: 0;
   flex: 1;
@@ -18,11 +18,11 @@
   align-items: flex-start;
   justify-content: center;
   //width: 20%;
-  background: #252525;
+  background: white;
   margin-top: 1px;
   margin-right: 5%;
   a {
-    color: #ffff;
+    color: #000000;
     padding-left: 3%;
     font-size: 20px;
     font-family: monospace;
@@ -71,8 +71,8 @@ a, .mat-list-item {
 }
 
 .example-container .nav_item .mat-list-item-content{
-  color: white;
-  margin-top: 5px;
+  color: black;
+  margin-top: 15px;
   padding: 0;
   &:hover {
     border: solid 2px $secondary;
@@ -80,7 +80,7 @@ a, .mat-list-item {
 }
 
 a.nav_item.mat-list-item.ng-star-inserted.active-link, a.nav_item.mat-list-item.active-link {
-  background: $secondary !important;
+  background: #b3d7ff !important;
 }
 
 ::ng-deep .mat-tooltip {

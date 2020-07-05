@@ -116,10 +116,12 @@ export class InternComponent implements OnInit, OnChanges {
             {columnDef: 'name', header: 'intern.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
             {columnDef: 'phone', header: 'intern.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},
             {columnDef: 'sold', header: 'intern.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold}`},
-            {columnDef: 'enrollments', header: 'intern.placeholder.enrollments', type: 'text', cell: (row: any) => `${row.enrollments || ''}`}
+            {columnDef: 'name_arabic', header: 'intern.placeholder.name_arabic', type: 'text', cell: (row: any) => `${row.name_arabic || ''}`},
         ];
-        !this.session &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+        if(!this.session) {
+            this.setting.cols.push({columnDef: 'enrollments', header: 'intern.placeholder.enrollments', type: 'text', cell: (row: any) => `${row.enrollments || ''}`});
+            this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+        }
     }
 
     /**

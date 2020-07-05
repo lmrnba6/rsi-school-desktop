@@ -42,8 +42,8 @@
   <h2 *ngIf="chartData.length">{{'result.result' | translate}}</h2>
   <h2 *ngIf="chartData.length === 0">{{'messages.no_result' | translate}}</h2>
   <mat-radio-group [(ngModel)]="type">
-    <mat-radio-button style="margin-right: 3px;" value="list">{{'result.list' | translate}}</mat-radio-button>
-    <mat-radio-button value="graph">{{'result.graph' | translate}}</mat-radio-button>
+    <mat-radio-button style="margin-right: 3px; font-size: 1.2rem" value="list">{{'result.list' | translate}}</mat-radio-button>
+    <mat-radio-button style="font-size: 1.2rem" value="graph">{{'result.graph' | translate}}</mat-radio-button>
   </mat-radio-group>
 </mat-card>
 <app-chart *ngIf="chartData.length && type==='graph'" [chartData]="chartData" [chartLabels]="chartLabels" [chartType]="chartType" [title]="title"></app-chart>

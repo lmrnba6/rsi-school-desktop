@@ -3,6 +3,7 @@ import {MessagesService} from "../_services/messages.service";
 import {ActivatedRoute, Router} from '@angular/router';
 import './room-management.component.scss';
 import {Room} from "../model/room";
+import {Session} from "../model/session";
 @Component({
   selector: 'app-room-management',
   templateUrl: './room-management.component.html',
@@ -16,6 +17,8 @@ export class RoomManagementComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
+    public session_id: number;
+    public sessions: Array<Session> = [];
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
@@ -25,6 +28,12 @@ export class RoomManagementComponent implements OnInit {
 
     public ngOnInit(): void {
         this.getParams();
+    }
+
+    getSessions() {
+        Session.getAllSessionByRoom(this.room.id).then(sessions => {
+            this.sessions = sessions;
+        });
     }
 
     /**
@@ -55,6 +64,7 @@ export class RoomManagementComponent implements OnInit {
             .get(id)
             .then((val: Room) => {
                 this.room = val;
+                this.getSessions();
             });
     }
 

@@ -33,6 +33,10 @@ export class HomeComponent implements OnInit,OnChanges {
     public value: number = 100;
     public isTeacher: boolean;
     public isIntern: boolean;
+    public internImage = `../../dist/assets/images/internImage.png`;
+    public instructorImage = `../../dist/assets/images/instructorImage.png`;
+    public sessionImage = `../../dist/assets/images/sessionImage.png`;
+    public trainingImage = `../../dist/assets/images/trainingImage.png`;
 
 
     constructor(private auth: AuthenticationService) {}

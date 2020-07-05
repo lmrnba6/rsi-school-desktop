@@ -1,46 +1,57 @@
 <header>
-  <section>
-    <h1 id="logo">{{center}}
-      <span (click)="toggleMenu()" class="glyphicon glyphicon-list list"></span>
-      <!--<span *ngIf="!isRoot()" (click)="goBack()" class="glyphicon glyphicon-arrow-left list"></span>-->
-      <!--<span *ngIf="pathForward?.length" (click)="goForward()" class="glyphicon glyphicon-arrow-right list"></span>-->
-    </h1>
-    <nav>
-      <ul>
-        <li (click)="goHome()" class="pull-left"><p><span class="glyphicon glyphicon-home"></span>
-          <!--{{'nav.home' | translate}}</p>-->
-        </li>
-        <!--<li class="pull-right"><p>{{date}}</p></li>-->
-        <li (click)="logout()" class="pull-right">
-          <p>
-            <span class="glyphicon glyphicon-off"></span>
-            <!--{{'nav.logout' | translate}}-->
-          </p></li>
-        <li *ngIf="connected" class="pull-right">
-          <p>
-          <app-indicator [color]="'led-green-blink'"></app-indicator>
-          </p>
-        </li>
-        <li *ngIf="!connected" class="pull-right">
-          <p>
-          <app-indicator [color]="'led-red-blink'"></app-indicator>
-          </p>
-        </li>
-        <li class="pull-right">
-          <p>
-            <span class="glyphicon glyphicon-user"></span>{{user.name}}
-          </p></li>
-        <li (click)="languageChange()" class="pull-right">
-          <p>
-          {{languageText | translate}}
-          </p>
-        </li>
-        <li (click)="inbox()" class="pull-right">
-          <p><span matBadge="{{messages}}" class="glyphicon glyphicon-envelope"></span>
-          </p></li>
-      </ul>
-    </nav>
-  </section>
+    <section>
+        <h1 id="logo">{{center}}
+            <span (click)="toggleMenu()" class="glyphicon glyphicon-list list"></span>
+            <!--<span *ngIf="!isRoot()" (click)="goBack()" class="glyphicon glyphicon-arrow-left list"></span>-->
+            <!--<span *ngIf="pathForward?.length" (click)="goForward()" class="glyphicon glyphicon-arrow-right list"></span>-->
+        </h1>
+        <nav>
+            <ul>
+                <li (click)="goHome()" class="pull-left"><p>
+                    <img style="width: 30px" [src]="homeImage" alt="">
+                    <!--          <span class="glyphicon glyphicon-home"> </span>-->
+                    <!--{{'nav.home' | translate}}</p>-->
+                </li>
+                <!--<li class="pull-right"><p>{{date}}</p></li>-->
+                <li (click)="logout()" class="pull-right">
+                    <p>
+                        <!--            <span class="glyphicon glyphicon-off"></span>-->
+                        <img style="width: 30px" [src]="powerImage" alt="">
+                        <!--{{'nav.logout' | translate}}-->
+                    </p></li>
+                <!--        <li *ngIf="connected" class="pull-right">-->
+                <!--          <p>-->
+                <!--          <app-indicator [color]="'led-green-blink'"></app-indicator>-->
+                <!--          </p>-->
+                <!--        </li>-->
+                <!--        <li *ngIf="!connected" class="pull-right">-->
+                <!--          <p>-->
+                <!--          <app-indicator [color]="'led-red-blink'"></app-indicator>-->
+                <!--          </p>-->
+                <!--        </li>-->
+                <li class="pull-right">
+                    <p>
+                        <img style="width: 30px; margin-right: 5px" [src]="userImage" alt="">{{user.name}}
+                        <!--            <span class="glyphicon glyphicon-user"></span>{{user.name}}-->
+                    </p></li>
+                <li (click)="languageChange()" class="pull-right">
+                    <p>
+                        {{languageText | translate}}
+                    </p>
+                </li>
+                <li (click)="inbox()" class="pull-right">
+                    <p>
+                        <!--            <span matBadge="{{messages}}" class="glyphicon glyphicon-envelope"></span>-->
+                        <img matBadge="{{messages}}" style="width: 30px" [src]="inboxImage" alt="">
+                    <p style="background: red;
+    border-radius: 5px;
+    margin: 0 5px;
+    padding: 0 5px;
+    font-size: 1.5rem;">{{messages}}</p>
+                </li>
+            </ul>
+        </nav>
+    </section>
 </header>
 
 

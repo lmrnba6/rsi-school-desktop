@@ -2,7 +2,7 @@
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
 <h2>{{'room.title' | translate}} - {{room.number}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
-<mat-tab-group *ngIf="room" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+<mat-tab-group *ngIf="room" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
       <span class="glyphicon glyphicon-modal-window"></span> {{'room-management.information' | translate}}
@@ -17,6 +17,26 @@
     </ng-template>
     <div class="tab-content">
       <app-weekday [room]="room"></app-weekday>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-th"></span> {{'instructor-management.session' | translate}}
+    </ng-template>
+    <div class="tab-content">
+
+      <div class="container">
+        <mat-form-field>
+          <mat-select id="session" [(ngModel)]="session_id"
+                      placeholder="{{'attendance.placeholder.session_id' | translate}}">
+            <mat-option *ngFor="let session of sessions" [value]="session.id">
+              {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <br>
+      <app-session-management *ngIf="session_id" [session_id]="session_id"></app-session-management>
     </div>
   </mat-tab>
 </mat-tab-group>

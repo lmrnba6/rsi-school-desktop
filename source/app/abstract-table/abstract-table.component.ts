@@ -58,7 +58,8 @@ export class AbstractTableComponent
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
   @Output() filter: EventEmitter<any> = new EventEmitter<any>();
     @Output() deleteAll: EventEmitter<any> = new EventEmitter<any>();
-
+    public printImage = `../../dist/assets/images/printImage.png`;
+    public addImage = `../../dist/assets/images/addImage.png`;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

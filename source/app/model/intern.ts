@@ -130,7 +130,7 @@ export class Intern{
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Intern[]> {
-        const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.comment,
+        const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.comment,i.name_arabic,
                             string_agg('(' || s.name || ' ' || substring(w.name from 0 for 3) || ' ' || REPLACE (w.time, ' ', ''), '),') as enrollments 
                             from intern as i 
                             left join enrollment as e  on e.intern_id = i.id

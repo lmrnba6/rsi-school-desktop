@@ -8,74 +8,92 @@
                      [fixedBottomGap]="options.bottom">
             <mat-nav-list (onmouseenter)="menuMouseEnter($event)" (onmouseleave)="menuMouseLeave($event)" class="navList">
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.enrollment' | translate}}"  matTooltipPosition="after" *ngIf="!isInstructor && !isIntern && !isParent" class="nav_item" routerLink="/enrollment">
-                    <span class="glyphicon glyphicon-asterisk"></span>
+<!--                    <span class="glyphicon glyphicon-asterisk"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="enrollmentImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.enrollment' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.intern' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor" routerLink="/intern">
-                    <span class="glyphicon glyphicon-user"></span>
+<!--                    <span class="glyphicon glyphicon-user"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="internImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.intern' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.visitors' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/visitor">
-                    <span class="glyphicon glyphicon-sort"></span>
+<!--                    <span class="glyphicon glyphicon-sort"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="visitorsImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.visitors' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.instructor' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/instructor">
-                    <span class="glyphicon glyphicon-briefcase"></span>
+<!--                    <span class="glyphicon glyphicon-briefcase"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="instructorImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.instructor' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.inbox' | translate}}"  matTooltipPosition="after" class="nav_item" routerLink="/messages">
-                    <span class="glyphicon glyphicon-envelope"></span>
+<!--                    <span class="glyphicon glyphicon-envelope"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="inboxImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.inbox' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.session' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/session">
-                    <span class="glyphicon glyphicon-th"></span>
+<!--                    <span class="glyphicon glyphicon-th"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="sessionImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.session' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.training' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/training">
-                    <span class="glyphicon glyphicon-education"></span>
+<!--                    <span class="glyphicon glyphicon-education"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="trainingImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.training' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.weekday' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/weekday">
-                    <span class="glyphicon glyphicon-calendar"></span>
+<!--                    <span class="glyphicon glyphicon-calendar"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="weekdayImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.weekday' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.exam' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/exam">
-                    <span class="glyphicon glyphicon-pencil"></span>
+<!--                    <span class="glyphicon glyphicon-pencil"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="examImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.exam' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.room' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/room">
-                    <span class="glyphicon glyphicon-modal-window"></span>
+<!--                    <span class="glyphicon glyphicon-modal-window"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="roomImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.room' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.attendance' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/attendance">
-                    <span class="glyphicon glyphicon-ok-circle"></span>
+<!--                    <span class="glyphicon glyphicon-ok-circle"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="attendanceImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.attendance' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.result' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/result">
-                    <span class="glyphicon glyphicon glyphicon-stats"></span>
+<!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="resultImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.result' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.payment' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/payments">
-                    <span class="glyphicon glyphicon-usd"></span>
+<!--                    <span class="glyphicon glyphicon-usd"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="paymentImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.payment' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.register' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/register">
-                    <span class="glyphicon glyphicon-shopping-cart"></span>
+<!--                    <span class="glyphicon glyphicon-shopping-cart"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="registerImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.register' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.document' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/document">
-                    <span class="glyphicon glyphicon-list-alt"></span>
+<!--                    <span class="glyphicon glyphicon-list-alt"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="documentImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.document' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/accounting">
-                    <span class="glyphicon glyphicon-equalizer"></span>
+<!--                    <span class="glyphicon glyphicon-equalizer"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="accountingImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.accounting' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.settings' | translate}}"  matTooltipPosition="after" *ngIf="user.role === 'admin'" class="nav_item" routerLink="/settings">
-                    <span class="glyphicon glyphicon-cog"></span>
+<!--                    <span class="glyphicon glyphicon-cog"></span>-->
+                    <img style="margin-right: 5px; width: 50px" [src]="settingsImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.settings' | translate}}</span>
                 </a>
             </mat-nav-list>
+            <p style="position: absolute; top: 0">v 1.0.15</p>
         </mat-sidenav>
         <mat-sidenav-content>
             <!-- <button mat-icon-button class="btnMenu" (click)="sidenav.toggle(); openCloseNavSide()">
@@ -92,5 +110,5 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
     <app-fab [buttons]="buttons" *ngIf="!isIntern && !isParent && !isInstructor"></app-fab>
-    <app-footer></app-footer>
+<!--    <app-footer></app-footer>-->
 </div>

@@ -1,11 +1,11 @@
-<h2>{{'register.title'| translate}} - {{'register.soldAll' | translate}} = <strong style="color: red;"> {{soldAll?.toFixed(0)}} DA</strong></h2>
+<h2>{{'register.title'| translate}} - {{'register.soldAll' | translate}} = <strong style="color: #007bff;"> {{soldAll?.toFixed(0)}} DA</strong></h2>
 <mat-divider></mat-divider>
 <mat-card>
   <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
   </app-loader>
   <div class="container">
     <br>
-    <h3>{{'register.sold' | translate}} = <strong style="color: red;"> {{getSold().toFixed(0)}} DA</strong></h3>
+    <h3>{{'register.sold' | translate}} = <strong style="color: #28a745;"> {{getSold().toFixed(0)}} DA</strong></h3>
     <br>
     <mat-form-field class="register_search">
         <input [(ngModel)]="from" matInput (dateChange)="search()"

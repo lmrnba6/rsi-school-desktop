@@ -58,12 +58,12 @@
     </form>
     <br>
     <div *ngIf="!isOnEdit" class="container">
-        <mat-checkbox [(ngModel)]="training_fees">{{'intern.placeholder.fees' | translate}}</mat-checkbox>
+        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="training_fees">{{'intern.placeholder.fees' | translate}}</mat-checkbox>
         <br>
-        <mat-checkbox [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>
+        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>
         <br>
-        <mat-checkbox [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>
+        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>
         <br>
-        <mat-checkbox [(ngModel)]="backpack">{{'intern.placeholder.backpack' | translate}}</mat-checkbox>
+        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="backpack">{{'intern.placeholder.backpack' | translate}}</mat-checkbox>
     </div>
 </mat-card>

@@ -28,8 +28,13 @@ export class NavComponent{
   isIntern = false;
     isParent = false;
     isUser = false;
+    public inboxImage = `../../dist/assets/images/inboxImage.png`;
+    public userImage = `../../dist/assets/images/userImage.png`;
+    public powerImage = `../../dist/assets/images/powerImage.png`;
+    public homeImage = `../../dist/assets/images/homeImage.png`;
 
-  constructor(private authService: AuthenticationService,
+
+    constructor(private authService: AuthenticationService,
               private router: Router,
               private translate: TranslateService,
               private messagesService: MessagesService,

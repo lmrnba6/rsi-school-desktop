@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MessagesService} from "../_services/messages.service";
 import {ActivatedRoute, Router} from '@angular/router';
 import './session-management.component.scss';
@@ -8,9 +8,10 @@ import {AuthenticationService} from "../_services/authentication.service";
   selector: 'app-session-management',
   templateUrl: './session-management.component.html',
 })
-export class SessionManagementComponent implements OnInit {
+export class SessionManagementComponent implements OnInit, OnChanges {
 
     public session: Session;
+    @Input() session_id: number;
     public tabSelected: number = 0;
     public block: boolean;
     public isOnEdit: boolean;
@@ -26,6 +27,12 @@ export class SessionManagementComponent implements OnInit {
                 ) {
     }
 
+    public ngOnChanges(changes: SimpleChanges): void {
+        if(changes.hasOwnProperty('session_id')) {
+            this.ngOnInit();
+        }
+    }
+
     public ngOnInit(): void {
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
         this.getParams();
@@ -36,7 +43,10 @@ export class SessionManagementComponent implements OnInit {
      */
     public getParams(): void {
         this.route.params.subscribe(res => {
-            if (res.id) {
+            if (this.session_id) {
+                this.getData(this.session_id);
+                this.isOnEdit = true;
+            }else if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
             } else {
