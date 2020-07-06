@@ -2,62 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c19ef8cb-63e0-4fec-928f-58a0802bf0b3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/source/assets/images/6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/assets/images/searchImage.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/accounting/accounting.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/accounting/accounting.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/accounting/accounting.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/accounting/accounting.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/attendance/attendance.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance/attendance.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/course-form/course-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/course-form/course-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/document/document.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/document/document.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/document/document.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/document/document.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/enrollment/enrollment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/enrollment/enrollment.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/home/home.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/home/home.component.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/login/login.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/login/login.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/messages/messages.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/messages/messages.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/messages/messages.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/messages/messages.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/nav/nav.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/nav/nav.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/pv/pv.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/pv/pv.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/register-form/register-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/register-form/register-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/register/register.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/result/result.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/result/result.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/role/role.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/role/role.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/room-form/room-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/room-form/room-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/room-management/room-management.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/room-management/room-management.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/school/school.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/school/school.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/session-form/session-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/session-form/session-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/training-form/training-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/training-form/training-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/user-form/user-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/user-form/user-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/visitor-form/visitor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/visitor-form/visitor-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/weekday-form/weekday-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/weekday-form/weekday-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/abstractTableSetting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/abstractTableSetting.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/weekday.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/weekday.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/weekday/weekday.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/weekday/weekday.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/weekday/weekday.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/weekday/weekday.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/assets/i18n/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/assets/images/1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/images/1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/assets/images/2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/images/2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/assets/images/3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/images/3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/assets/images/4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/images/4.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/assets/images/5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/images/5.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/assets/i18n/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/fr.json" afterDir="false" />
     </list>
     <list id="be57fea4-9993-49e0-83b2-0064aa4d57ee" name="don't commit" comment="">
       <change beforePath="$PROJECT_DIR$/electron-builder.env" beforeDir="false" afterPath="$PROJECT_DIR$/electron-builder.env" afterDir="false" />
@@ -213,7 +168,7 @@
       <workItem from="1593210171917" duration="18377000" />
       <workItem from="1593345452591" duration="25847000" />
       <workItem from="1593463367170" duration="45837000" />
-      <workItem from="1593748298762" duration="98740000" />
+      <workItem from="1593748298762" duration="118488000" />
     </task>
     <task id="LOCAL-00001" summary="v 1.0.6">
       <created>1593831790518</created>
@@ -285,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1593955860390</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix ui add many things">
+      <created>1593978661594</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1593978661594</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -320,10 +282,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1593911618147" />
-    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1593955851422">
+    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1593978659586">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1593955851422" />
+    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1593978659586" />
     <state x="100" y="100" width="1336" height="624" key="DiffContextDialog" timestamp="1593900926128">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -352,18 +314,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="599" y="282" key="VCS.EditChangelistDialog/0.0.1536.824@0.0.1536.824" timestamp="1593831292384" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1593955864206">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1593978663056">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1593955864206" />
-    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1593961450662">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1593978663056" />
+    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594004106548">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1593961450662" />
-    <state x="602" y="200" width="687" height="624" key="find.popup" timestamp="1593973178140">
+    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1594004106548" />
+    <state x="602" y="200" width="687" height="624" key="find.popup" timestamp="1594005391536">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="602" y="200" width="687" height="624" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1593973178140" />
+    <state x="602" y="200" width="687" height="624" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1594005391536" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1593780850444">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

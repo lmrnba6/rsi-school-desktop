@@ -39,8 +39,14 @@ export class HomeComponent implements OnInit,OnChanges {
     public instructorImage = `../../dist/assets/images/instructorImage.png`;
     public sessionImage = `../../dist/assets/images/sessionImage.png`;
     public trainingImage = `../../dist/assets/images/trainingImage.png`;
-
-
+    public byWeek: string = 'day';
+    public sunday: any;
+    public saturday: any;
+    public monday: any;
+    public tuesday: any;
+    public wednesday: any;
+    public thursday: any;
+    public friday: any;
     constructor(private auth: AuthenticationService) {}
 
     ngOnInit(): void {
@@ -59,6 +65,11 @@ export class HomeComponent implements OnInit,OnChanges {
         this.getDataTable(0, MAX_SAFE_INTEGER, '', 'time', this.toDay());
         this.initSetting();
         this.getLogo();
+        this.getSchedule();
+    }
+
+    handleByWeek(e: string) {
+        this.byWeek = e;
     }
 
     getLogo() {
@@ -101,20 +112,66 @@ export class HomeComponent implements OnInit,OnChanges {
         this.setting.filter = false;
         this.setting.paging = false;
         this.setting.addRow = false;
+        this.setting.hideHeader = true;
         this.setting.tools = false;
         this.setting.cols = [
-            {columnDef: 'time', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
-            {columnDef: 'session_id', header: 'weekday.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`},
-            {columnDef: 'instructor', header: 'weekday.placeholder.instructor', type: 'text', cell: (row: any) => `${row.instructor}`},
-            {columnDef: 'training', header: 'weekday.placeholder.training', type: 'text', cell: (row: any) => `${row.training}`},
-            {columnDef: 'room_id', header: 'weekday.placeholder.room_id', type: 'text', cell: (row: any) => `${row.room}`}
+            {columnDef: 'time', class:'a25', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
+            {columnDef: 'name', class:'a75', header: 'weekday.title', type: 'html', cell: (row: any) => `${this.handleLines(row.name)}`},
+            // {columnDef: 'instructor', header: 'weekday.placeholder.instructor', type: 'text', cell: (row: any) => `${row.instructor}`},
+            // {columnDef: 'training', header: 'weekday.placeholder.training', type: 'text', cell: (row: any) => `${row.training}`},
+            // {columnDef: 'room_id', header: 'weekday.placeholder.room_id', type: 'text', cell: (row: any) => `${row.room}`}
         ];
+    }
+
+    handleLines(text: string) {
+        text = text || '';
+        const list = text.split('---');
+        const s = list.reduce((a,b) => {
+            a = a + `<li class="timeTable">${b}</li>`; return a
+        },'')
+        return `<ul>${s}</ul>`
+    }
+
+    getCellInfo(weekdays: Array<Weekday>, weekDay: Weekday) {
+        return  weekdays.reduce((a,b) => {
+            if(b.time === weekDay.time){
+                a = a + `${b['instructor']} ${b['room']} ${b['training']} ${b['session']}`
+            }
+            return a;
+        },'')
+    }
+
+    handleTable(weekdays: Array<Weekday>) {
+        let cols: any = [];
+        weekdays.forEach(w => {
+            const col = {columnDef: w.time, header: w.time, type: 'text', cell: (row: any) => `${this.getCellInfo(weekdays, row)}`}
+            cols.push(col);
+        })
+        return cols;
+    }
+
+    getSchedule(){
+        this.asyncForEach(this.days, v => {
+            Weekday.getScheduleByDay(v).then(value => {
+                this[v] = {items: value, paging: {totalCount: value.length}}
+            });
+        });
+    }
+
+    async asyncForEach(array: any, callback: any) {
+        for (let index = 0; index < array.length; index++) {
+            await callback(array[index], index, array);
+        }
     }
 
     public getDataTable(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): void {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
+        Weekday.getScheduleByDay(filter).then(values => {
+            this.block = false;
+            this.data = {items: values, paging: {totalCount: values.length}};
+        }, () => this.block = false);
         Promise.all([this.instructor ? Weekday.getAllPagedByInstructor(offset, limit, sort, order,this.instructor.id) :
             this.room ? Weekday.getAllPagedByRoom(offset, limit, sort, order, this.room.id) :
                 this.session ? Weekday.getAllPagedBySession(offset, limit, sort, order, this.session.id) :
@@ -125,7 +182,8 @@ export class HomeComponent implements OnInit,OnChanges {
             .then(
                 values => {
                     this.block = false;
-                    this.data = {items: values[0], paging: {totalCount: (values[1][0] as any).count}};
+                    console.log(values);
+                    //this.data = {items: values[0], paging: {totalCount: (values[1][0] as any).count}};
                 }, () => this.block = false);
     }
 

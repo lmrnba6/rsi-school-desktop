@@ -1,6 +1,15 @@
 @import "../../assets/sass/style";
 
 .abstract-table-container {
+  .a25 {
+    max-width: 25%;
+  }
+  .a75 {
+    max-width: 75%;
+  }
+  .a50 {
+    max-width: 50%;
+  }
   display: flex;
   flex-direction: column;
   min-width: 300px;

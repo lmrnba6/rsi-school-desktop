@@ -158,6 +158,26 @@ export class Weekday {
             });
     }
 
+    public static getScheduleByDay(day: string) {
+        const sql = `SELECT w.time, STRING_AGG (i.name || ' - ' || s.name  || ' - ' || r.number, ' --- ') as name
+                            FROM "weekday" AS w 
+                            INNER JOIN "session" AS s ON w.session_id = s.id
+                            INNER JOIN "room" AS r ON w.room_id = r.id
+                            INNER JOIN "training" AS t ON s.training_id = t.id
+                            INNER JOIN "instructor" AS i ON s.instructor_id = i.id
+                            WHERE (w.name = '${day}')
+group by w.time`;
+        return TheDb.selectAll(sql, {})
+            .then((rows) => {
+                const weekdays: Weekday[] = [];
+                for (const row of rows) {
+                    const weekday = new Weekday().fromRow(row);
+                    weekdays.push(weekday);
+                }
+                return weekdays;
+            });
+    }
+
     public static getAllPagedBySession(pageIndex: number, pageSize: number, sort: string, order: string, session: number): Promise<Weekday[]> {
         const sql = `SELECT w.id, w.name, w.time, w.session_id, w.room_id, s.name as session, r.number as room, t.name as training, i.name as instructor
                             FROM "weekday" AS w 

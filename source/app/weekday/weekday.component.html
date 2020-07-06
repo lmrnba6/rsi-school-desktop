@@ -3,14 +3,5 @@
 <mat-card>
   <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
   </app-loader>
-  <mat-tab-group>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <span class="glyphicon glyphicon-info-sign"></span> {{'weekday.title' | translate}}
-      </ng-template>
-      <div class="tab-content">
-        <app-abstract-table [page]="'weekday'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+  <app-abstract-table [page]="'weekday'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
 </mat-card>

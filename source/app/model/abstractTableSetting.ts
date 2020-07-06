@@ -8,6 +8,7 @@ export class AbstractTableSetting {
   editRow: boolean;
   deleteRow: boolean;
   tableName: string;
+  hideHeader: boolean;
   filter: boolean;
   cols: Array<any>;
   columns: Array<any>;

@@ -28,7 +28,7 @@
     <mat-table id="contentToConvert" [dataSource]="dataSource" matSort>
         <ng-container *ngFor="let column of setting.cols" [matColumnDef]="column.columnDef">
             <ng-container *ngIf="column.columnDef==='settings'">
-                <mat-header-cell *matHeaderCellDef mat-sort-header disabled>
+                <mat-header-cell [ngClass]="column.class" *matHeaderCellDef mat-sort-header disabled>
                         <span class="glyphicon glyphicon-flash"
                               style="font-weight: bold;font-size:20px; -webkit-text-fill-color: yellow"></span>
                     <span (click)="deleteMultiple()" *ngIf="isAdmin" class="glyphicon glyphicon-trash"
@@ -37,12 +37,12 @@
                 </mat-header-cell>
             </ng-container>
             <ng-container *ngIf="column.columnDef!=='settings'">
-                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortOnChange(column.columnDef)">
+                <mat-header-cell [ngClass]="column.class" *matHeaderCellDef mat-sort-header (click)="sortOnChange(column.columnDef)">
                     {{column.header | translate}}
                 </mat-header-cell>
             </ng-container>
             <ng-container *ngIf="setting.settingColumn && column.type==='settings' ">
-                <mat-cell *matCellDef="let row">
+                <mat-cell [ngClass]="column.class" *matCellDef="let row">
                     <a *ngIf="column.delete" [routerLink]="" (click)="onDeleteRow(row.id)">
                         <span style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e"
                               class="glyphicon glyphicon-trash"></span>
@@ -55,7 +55,7 @@
                 </mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='boolean'">
-                <mat-cell *matCellDef="let row">
+                <mat-cell [ngClass]="column.class" *matCellDef="let row">
                     <span class="glyphicon glyphicon-remove" *ngIf="column.cell(row)==='0'"
                           style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e"></span>
                     <span class="glyphicon glyphicon-minus" *ngIf="column.cell(row)!=='0' && column.cell(row)!=='1'"
@@ -65,7 +65,7 @@
                 </mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='bool'">
-                <mat-cell *matCellDef="let row">
+                <mat-cell [ngClass]="column.class" *matCellDef="let row">
                     <span class="glyphicon glyphicon-remove" *ngIf="!column.cell(row)"
                           style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#f93e3e"></span>
                     <span class="glyphicon glyphicon-ok" *ngIf="column.cell(row)"
@@ -73,19 +73,22 @@
                 </mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='icon'">
-                <mat-cell *matCellDef="let row">
+                <mat-cell [ngClass]="column.class" *matCellDef="let row">
                     <span [class]="'glyphicon glyphicon-' + column.cell(row)" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#0000"></span>
                 </mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='text'">
-                <mat-cell *matCellDef="let row"> {{ column.cell(row) }}</mat-cell>
+                <mat-cell [ngClass]="column.class" *matCellDef="let row"> {{ column.cell(row) }}</mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='date'">
-                <mat-cell *matCellDef="let row"> {{ integerToString(column.cell(row)) }}</mat-cell>
+                <mat-cell [ngClass]="column.class" *matCellDef="let row"> {{ integerToString(column.cell(row)) }}</mat-cell>
+            </ng-container>
+            <ng-container *ngIf="column.type==='html'">
+                <mat-cell [ngClass]="column.class" *matCellDef="let row" [innerHTML]="column.cell(row)"></mat-cell>
             </ng-container>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row [ngStyle]="{display: setting.hideHeader ? 'none': ''}" *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" row
                 [ngStyle]="getStyleRow(row)"
                 >

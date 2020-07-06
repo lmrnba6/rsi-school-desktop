@@ -281,6 +281,8 @@
   "weekday": {
     "title": "Program",
     "placeholder": {
+      "day": "Day",
+      "week": "Week",
       "time" : "hour",
       "name" : "day",
       "room_id": "Classroom",
