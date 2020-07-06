@@ -100,8 +100,8 @@ export class SessionComponent implements OnInit, OnChanges {
             {columnDef: 'enrollments', header: 'session.placeholder.enrollments', type: 'text', cell: (row: any) => `${row.enrollments || ''}`},
             {columnDef: 'limit', header: 'session.placeholder.limit', type: 'text', cell: (row: any) => `${row.limit}`},
             {columnDef: 'interns', header: 'session.placeholder.interns', type: 'text', cell: (row: any) => `${row.interns}`},
-            {columnDef: 'instructor_id', header: 'session.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
-            {columnDef: 'training_id', header: 'session.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`}
+            {columnDef: 'instructor', header: 'session.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
+            {columnDef: 'training', header: 'session.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`}
         ];
         !this.instructor &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: true});

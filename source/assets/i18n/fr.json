@@ -91,7 +91,7 @@
       "isAllowed": "Bloqué(e)",
       "photo": "Photo",
       "scholar": "Niveau scolaire",
-      "sold": "solde",
+      "sold": "Solde",
       "kindergarten": "Préscolaire",
       "elementary": "Prémaire",
       "secondary": "Moyen",
@@ -444,7 +444,7 @@
     "username_exist": "Ce nom d'utilisateur est existant",
     "session_full": "Ce groupe est complet",
     "notEnrolled_message": "Cet étudiant n'est pas inscrit à cette formation",
-    "transfer_intern_message": "voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?",
+    "transfer_intern_message": "Voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?",
     "visitor_remaining_message": "Vous avez encore des visiteurs! \n Voulez-vous consulter la liste?"
   },
   "buttons": {

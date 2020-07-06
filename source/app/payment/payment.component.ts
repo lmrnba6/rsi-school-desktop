@@ -103,7 +103,7 @@ export class PaymentComponent implements OnInit, OnChanges {
             {columnDef: 'comment', header: 'payment.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
             {columnDef: 'training', header: 'payment.placeholder.training', type: 'text', cell: (row: any) => `${row.training || ''}`},
             this.intern ? {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''} :
-                {columnDef: 'intern_id', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
+                {columnDef: 'intern', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
         ];
         this.isAdmin &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});

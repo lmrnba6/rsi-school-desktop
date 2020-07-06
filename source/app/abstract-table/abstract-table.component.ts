@@ -15,6 +15,7 @@ import {
   MatTableDataSource,
 } from '@angular/material';
 const jspdf = require('jspdf');
+import 'jspdf-autotable'
 const html2canvas = require('html2canvas');
 import './abstract-table.component.scss';
 import {AbstractTableSetting} from "../model/abstractTableSetting";
@@ -66,6 +67,7 @@ export class AbstractTableComponent
 
   public dataSource: MatTableDataSource<any>;
   public displayedColumns: any;
+  public displayedHeaders: any;
   public color: string = 'warn';
   public mode: string = 'indeterminate';
   public value: number = 100;
@@ -109,23 +111,31 @@ export class AbstractTableComponent
 
     public captureScreen()
     {
-        const data = document.getElementById('contentToConvert');
-        html2canvas(data).then((canvas:any) => {
-            // Few necessary setting options  
-            const imgWidth = 208;
-            //const pageHeight = 295;
-            const imgHeight = canvas.height * imgWidth / canvas.width;
-           // const heightLeft = imgHeight;
-
-            const contentDataURL = canvas.toDataURL('image/png')
-            let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-           // Orientation, // Landscape or Portrait
-                //unit, // mm, cm, in
-                //format // A2, A4 etc
-            const position = 0;
-            pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-            pdf.save('MYPdf.pdf'); // Generated PDF   
+        window['html2canvas'] = html2canvas;
+        let doc = new jspdf();
+        let data: any = [];
+        this.displayedHeaders = this.setting.cols.filter(s => s.columnDef !== 'settings').map((x: any) => this.translate.instant(x.header));
+        this.dataSource.filteredData.forEach(obj => {
+            let arr: any = [];
+            this.cols.forEach(col => {
+                if(col.type === 'date') {
+                    arr.push(this.integerToString(obj[col.columnDef]));
+                } else if(col.type === 'boolean') {
+                    arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no'));
+                }else if(col.type === 'day') {
+                    arr.push(this.translate.instant('weekday.placeholder.' + obj[col.columnDef]));
+                } else {
+                    arr.push(obj[col.columnDef]);
+                }
+            });
+            data.push(arr);
         });
+        doc.autoTable({
+            head: [this.displayedHeaders],
+            body: data
+        });
+        //doc.autoTable({ html: 'contentToConvert' })
+        doc.save('table.pdf')
     }
 
     ngAfterViewInit(): void {

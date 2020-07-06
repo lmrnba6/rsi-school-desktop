@@ -107,12 +107,12 @@ export class WeekdayComponent implements OnInit, OnChanges {
         this.setting.filter = !this.session && !this.room  && !this.instructor && !this.intern;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'name', header: 'weekday.placeholder.name', type: 'text', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.name)}`},
+            {columnDef: 'name', header: 'weekday.placeholder.name', type: 'day', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.name)}`},
             {columnDef: 'time', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
-            {columnDef: 'session_id', header: 'weekday.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`},
+            {columnDef: 'session', header: 'weekday.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`},
             {columnDef: 'instructor', header: 'weekday.placeholder.instructor', type: 'text', cell: (row: any) => `${row.instructor}`},
             {columnDef: 'training', header: 'weekday.placeholder.training', type: 'text', cell: (row: any) => `${row.training}`},
-            {columnDef: 'room_id', header: 'weekday.placeholder.room_id', type: 'text', cell: (row: any) => `${row.room}`}
+            {columnDef: 'room', header: 'weekday.placeholder.room_id', type: 'text', cell: (row: any) => `${row.room}`}
         ];
         !this.session && !this.room && !this.instructor && !this.intern &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});

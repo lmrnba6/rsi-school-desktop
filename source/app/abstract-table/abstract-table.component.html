@@ -77,7 +77,7 @@
                     <span [class]="'glyphicon glyphicon-' + column.cell(row)" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#0000"></span>
                 </mat-cell>
             </ng-container>
-            <ng-container *ngIf="column.type==='text'">
+            <ng-container *ngIf="column.type==='text' || column.type==='day'">
                 <mat-cell [ngClass]="column.class" *matCellDef="let row"> {{ column.cell(row) }}</mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='date'">

@@ -1,14 +1,14 @@
 {
   "nav": {
-    "home": "home",
-    "logout": "exit",
+    "home": "Home",
+    "logout": "Exit",
     "title": "Title",
-    "help": "help"
+    "help": "Help"
   },
   "login": {
-    "login": "login",
-    "username": "user name",
-    "password": "password"
+    "login": "Login",
+    "username": "Username",
+    "password": "Password"
   },
   "abstractTable": {
     "filter": "Research"
@@ -19,9 +19,9 @@
     "sent": "Sent",
     "deleted": "Deleted",
     "from": "From",
-    "to": "to",
+    "to": "To",
     "from_user": "From",
-    "to_user": "to",
+    "to_user": "To",
     "content": "Message",
     "subject": "Subject",
     "date": "Date",
@@ -59,31 +59,31 @@
     "reception": "Home",
     "school": "School",
     "database": "Database",
-    "user_management": "user management"
+    "user_management": "User management"
   },
   "intern": {
-    "title": "student",
-    "documents": "required document",
+    "title": "Student",
+    "documents": "Required document",
     "years": "Years old",
     "placeholder": {
       "comment": "Comment",
       "isVip": "VIP",
       "isPromo": "Promotion",
-      "birth": "birth date ",
-      "name" : "name",
-      "email": "email",
+      "birth": "Date of birth",
+      "name" : "Name",
+      "email": "Email",
       "address": "Address",
       "enrollments": "Enrollments",
-      "name_arabic": "name with anothre language ",
-      "permit_number": "permi number",
-      "permit_delivery": "date of issue",
+      "name_arabic": "Name with anothre language ",
+      "permit_number": "Permiy number",
+      "permit_delivery": "Date of issue",
       "status": "Type",
       "phone": "Phone",
       "phone2": "Second phone",
-      "form": "handwritten request",
-      "certificate": "has a patent",
-      "medical": "medical certificate",
-      "residence": "copy of the cart stay (for foreigners)",
+      "form": "Handwritten request",
+      "certificate": "Has a patent",
+      "medical": "Medical certificate",
+      "residence": "Copy of the cart stay (for foreigners)",
       "backpack": "Received a backpack?",
       "fees": "Need to pay training fees?",
       "fees_enrollment": "Need to pay enrollment fees?",
@@ -91,7 +91,7 @@
       "isAllowed": "Blocked",
       "photo": "Photo",
       "scholar": "Scholar level",
-      "sold": "sold",
+      "sold": "Sold",
       "kindergarten": "Preschool",
       "elementary": "Elementary school",
       "secondary": "Middle school",
@@ -109,20 +109,20 @@
     "placeholder": {
       "name" : "Name",
       "phone": "Phone",
-      "comment": "comment",
+      "comment": "Comment",
       "date": "Date"
     }
   },
   "instructor": {
-    "title": "teacher",
+    "title": "Teacher",
     "placeholder": {
       "fullTime": "Full time",
       "partTime": "Part time",
-      "name" : "name",
-      "email": "email",
+      "name" : "Name",
+      "email": "Email",
       "address": "Adresse",
-      "name_arabic": "name in arabic",
-      "phone": "phone",
+      "name_arabic": "Name in arabic",
+      "phone": "Phone",
       "sold": "Sold"
     }
   },
@@ -131,12 +131,12 @@
     "placeholder": {
       "error": "Mark this payment as an error",
       "offer": "Offer / Promotion (Do not include it to the register)",
-      "amount" : "amount",
+      "amount" : "Amount",
       "date": "Date",
       "comment": "Comment",
       "training": "Training",
       "month": "Month",
-      "intern_id": "student"
+      "intern_id": "Student"
     }
   },
   "register": {
@@ -152,11 +152,11 @@
       "amount" : "Amount",
       "date": "Date",
       "from": "From",
-      "to": "to",
+      "to": "To",
       "comment": "Comment"
     },
     "soldAll":"Total sold",
-    "sold":"period sold"
+    "sold":"Period sold"
 
   },
   "payments": {
@@ -167,7 +167,7 @@
   "payment_instructor": {
     "title": "Payment",
     "placeholder": {
-      "amount" : "amount",
+      "amount" : "Amount",
       "date": "Date",
       "comment": "Comment",
       "instructor_id": "Teacher"
@@ -176,14 +176,14 @@
   "session": {
     "title": "Groups",
     "placeholder": {
-      "name" : "name",
-      "start": "start",
-      "end": "end",
+      "name" : "Name",
+      "start": "Start",
+      "end": "End",
       "limit": "Max",
       "intern": "Students",
       "interns": "Students",
       "enrollments": "Enrollments",
-      "instructor_id": "teacher",
+      "instructor_id": "Teacher",
       "training_id": "Formation",
       "closed": "Closed"
     }
@@ -194,11 +194,11 @@
     "student": "Student",
     "teacher": "Teacher",
     "parent": "Parent",
-    "username": "user name",
-    "name": "name",
+    "username": "Username",
+    "name": "Name",
     "role": "Role",
     "placeholder": {
-      "username": "user name",
+      "username": "Username",
       "name" : "Name",
       "password": "password",
       "role": "Role"
@@ -211,7 +211,7 @@
     "leisure": "Leisure",
     "title": "Formation",
     "placeholder": {
-      "name": "name",
+      "name": "Name",
       "time" : "Volume of the session",
       "type": "Type",
       "training_fees": "Training fees",
@@ -233,17 +233,17 @@
       "type" : "Type",
       "mark": "Note",
       "result": "Accepted",
-      "retake": "picking up",
+      "retake": "Picking up",
       "training_id": "Formation",
-      "comment": "comment",
+      "comment": "Comment",
       "date": "Date",
       "time": "Duration",
-      "intern_id": "student",
+      "intern_id": "Student",
       "session_id": "Groupe"
     }
   },
   "course": {
-    "title": "levels",
+    "title": "Levels",
     "placeholder": {
       "name" : "Title",
       "time": "Duration",
@@ -251,30 +251,30 @@
     }
   },
   "attendance": {
-    "title": "attendance",
+    "title": "Attendance",
     "by_seance": "Global",
     "by_date": " By Group",
     "placeholder": {
       "time" : "Duration",
       "day" : "Day",
       "present" : "Present",
-      "day_id": "day",
-      "weekday_id": "hour",
+      "day_id": "Day",
+      "weekday_id": "Hour",
       "absent" : "Absent",
       "off": "Not enrolled",
       "date": "Date",
-      "intern_id": "student",
-      "instructor_id": "teacher",
+      "intern_id": "Student",
+      "instructor_id": "Teacher",
       "training_id": "Formation",
       "room_id": "Classroom",
       "session_id": "Group",
-      "saturday": "saturday",
-      "sunday": "sunday",
-      "monday": "monday",
-      "tuesday": "tuesday",
-      "wednesday": "wednesday",
-      "thursday": "thursday",
-      "friday": "friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Friday",
+      "friday": "Thursday",
       "name": "Name"
     }
   },
@@ -283,17 +283,17 @@
     "placeholder": {
       "day": "Day",
       "week": "Week",
-      "time" : "hour",
-      "name" : "day",
+      "time" : "Hour",
+      "name" : "Day",
       "room_id": "Classroom",
       "session_id": "Group",
-      "saturday": "saturday",
-      "sunday": "sunday",
-      "monday": "monday",
-      "tuesday": "tuesday",
-      "wednesday": "wednesday",
-      "thursday": "friday",
-      "friday": "thursday",
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Friday",
+      "friday": "Thursday",
       "training": "Training",
       "instructor": "Teacher"
     }
@@ -305,7 +305,7 @@
     "placeholder": {
       "comment" : "Comments",
       "date": "Date",
-      "intern_id": "student",
+      "intern_id": "Student",
       "training_id": "Formation",
       "session_id": "Group",
       "instructor_id": "Teacher"
@@ -313,7 +313,7 @@
   },
   "intern-management": {
     "information" : "Information",
-    "enrollment": "registration",
+    "enrollment": "Registration",
     "attendance": "Présence",
     "exam": "Examination",
     "payment": "Payment",
@@ -321,20 +321,20 @@
   },
   "instructor-management": {
     "information" : "Information",
-    "attendance": "Présence",
+    "attendance": "Attendance",
     "session": "Groups",
     "weekday": "Schedule"
   },
   "session-management": {
     "information" : "Information",
     "weekday": "Program",
-    "intern": "student",
+    "intern": "Student",
     "attendance": "Attendance",
     "exam": "Exam"
   },
   "weekday-management": {
     "information" : "Information",
-    "attendance": "Présences"
+    "attendance": "Attendance"
   },
   "room-management": {
     "information" : "Information",
@@ -342,9 +342,9 @@
   },
   "document": {
     "title" : "Document",
-    "intern": "list of students",
-    "session_open_pv": "loging PV",
-    "session_open": "sign in document",
+    "intern": "List of students",
+    "session_open_pv": "Login PV",
+    "session_open": "Sign-in document",
     "session_close_pv": "PV de cloture  de session",
     "session_close": "Document de cloture  de session",
     "session_result_pv": "PV de délibération  de session",
@@ -356,16 +356,16 @@
   "pv": {
     "information" : "Information",
     "session" : "Group",
-    "document": "preview",
+    "document": "Preview",
     "edit": "Document",
     "date": "Date",
     "title": "Title",
-    "edit_description": "edit document",
+    "edit_description": "Edit document",
     "center": "",
     "group": "Group",
     "student_list": "Student list",
-    "present": "Présent?",
-    "number": "number",
+    "present": "Present?",
+    "number": "Number",
     "instructor": "Teacher",
     "training": "Formation",
     "card": "Student card",
@@ -375,21 +375,21 @@
     "name" : "Full name",
     "email": "Email",
     "address": "Address",
-    "name_arabic": "name with anothre language",
+    "name_arabic": "Name in second language",
     "phone": "Phone",
     "scholar": "Scholar level"
   },
   "result": {
     "title": "Statistics",
-    "edit_description": "modify setting",
-    "edit": "setting",
-    "from": "from",
-    "to": "to",
+    "edit_description": "Modify setting",
+    "edit": "Setting",
+    "from": "From",
+    "to": "To",
     "result": "Results",
     "student": "Student number by training",
     "instructor": "Teacher number by training",
     "student_title": "Statististics per student",
-    "instructor_title": "statistics per teacher",
+    "instructor_title": "Statistics per teacher",
     "list": "List",
     "graph": "Graph",
     "name": "Name",
@@ -397,7 +397,7 @@
   },
   "chart": {
     "pie": "Circular",
-    "bar": "bars",
+    "bar": "Bars",
     "doughnut": "Donut",
     "polarArea": "Polar"
   },
@@ -421,15 +421,15 @@
     "salary": "Salary"
   },
   "messages": {
-    "error_field_required": "this field is required",
-    "error_login": "wrong username or password",
-    "field_required_error": "you must enter a value",
-    "remove_row_warning_message": "do you really want to delete this ligne?",
-    "warning_title": "warning",
-    "operation_success_message": "successful : Operation success",
-    "something_went_wrong_message": "an error has occurred",
+    "error_field_required": "This field is required",
+    "error_login": "Wrong username or password",
+    "field_required_error": "You must enter a value",
+    "remove_row_warning_message": "Do you really want to delete this ligne?",
+    "warning_title": "Warning",
+    "operation_success_message": "Successful : Operation success",
+    "something_went_wrong_message": "An error has occurred",
     "no_intern_registered": "No student enrolled at this level",
-    "no_result": "no résults",
+    "no_result": "No results",
     "sync_database_warning_message": "Do you want to sync the server database with the local one?",
     "change_local_database_warning_message": "Do you want to change the source of your database?",
     "network.offline": "Connection lost!",
@@ -443,13 +443,13 @@
     "username_exist": "This username exist already",
     "session_full": "This group is full",
     "notEnrolled_message": "This student is not registered for this training",
-    "transfer_intern_message": "do you really want to create a new student and delete this visitor?",
+    "transfer_intern_message": "Do you really want to create a new student and delete this visitor?",
     "visitor_remaining_message": "You still have visitors! \n Do you want to consult the list?"
   },
   "buttons": {
-    "save": "save",
-    "cancel": "cancel",
-    "yes": "yes",
-    "no": "Non"
+    "save": "Save",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No"
   }
 }

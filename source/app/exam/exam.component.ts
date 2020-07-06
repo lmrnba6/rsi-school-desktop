@@ -103,9 +103,9 @@ export class ExamComponent implements OnInit, OnChanges {
             {columnDef: 'date', header: 'exam.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {columnDef: 'mark', header: 'exam.placeholder.mark', type: 'text', cell: (row: any) => `${row.mark}`},
             {columnDef: 'result', header: 'exam.placeholder.result', type: 'boolean', cell: (row: any) => `${row.result}`},
-            {columnDef: 'intern_id', header: 'exam.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`},
-            {columnDef: 'training_id', header: 'exam.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`},
-            {columnDef: 'session_id', header: 'exam.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`}
+            {columnDef: 'intern', header: 'exam.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`},
+            {columnDef: 'training', header: 'exam.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`},
+            {columnDef: 'session', header: 'exam.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`}
             ];
         !this.intern && !this.session &&
         this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: this.isAdmin})

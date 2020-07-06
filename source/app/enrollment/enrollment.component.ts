@@ -97,9 +97,9 @@ export class EnrollmentComponent implements OnInit, OnChanges {
         this.setting.filter = !this.intern;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'intern_id', header: 'enrollment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`},
+            {columnDef: 'intern', header: 'enrollment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`},
             {columnDef: 'training_id', header: 'enrollment.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training_id}`},
-            {columnDef: 'session_id', header: 'enrollment.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`},
+            {columnDef: 'session', header: 'enrollment.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`},
             {columnDef: 'instructor', header: 'enrollment.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
             {columnDef: 'date', header: 'enrollment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`}
         ];
