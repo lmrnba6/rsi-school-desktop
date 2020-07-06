@@ -5,3 +5,4 @@ dist
 *.db-journal
 package-lock.json
 electron-builder.env
+.idea
