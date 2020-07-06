@@ -39,16 +39,16 @@
     "instructor": "Enseignants",
     "document": "Documents",
     "room": "Classes",
-    "session": "Groupe",
+    "session": "Groupes",
     "training": "Formations",
     "course": "Niveaux",
     "enrollment": "Inscriptions",
-    "payment": "Paiement",
+    "payment": "Paiements",
     "exam": "Examens",
     "test": "Épreuves",
     "attendance": "Présences",
     "result": "Statistiques",
-    "weekday": "Programme",
+    "weekday": "Programmes",
     "visitors": "Visiteurs",
     "accounting": "Comptabilité",
     "inbox": "Messages",
@@ -451,7 +451,6 @@
     "save": "Sauvegarder",
     "cancel": "Annuler",
     "yes": "Oui",
-    "cancel":"Annuler",
     "no": "Non"
   }
 }

@@ -1,8 +1,8 @@
 
 <span class="pull-left glyphicon glyphicon-{{ icon }}" style="font-weight: bold;font-size:20px; margin-right:5%; margin-bottom: 10px; -webkit-text-fill-color:#f93e3e"></span>
-<h4>{{ title | translate}}</h4>
+<h3>{{ title | translate}}</h3>
 <mat-divider style="margin-bottom:5%;"></mat-divider>
-<h4 style="margin-bottom:10%;">{{ message | translate}}</h4>
+<h3 style="margin-bottom:10%;">{{ message | translate}}</h3>
 
 <button *ngIf="isConfirm" style="float: right" type="button" mat-raised-button (click)="dialogRef.close(true)">{{'buttons.yes' | translate}}</button>
 <button *ngIf="isConfirm" style="float: right" type="button" mat-button (click)="dialogRef.close(false)">{{'buttons.cancel' | translate}}</button>

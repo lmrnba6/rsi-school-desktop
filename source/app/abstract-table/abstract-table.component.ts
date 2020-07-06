@@ -59,8 +59,8 @@ export class AbstractTableComponent
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
   @Output() filter: EventEmitter<any> = new EventEmitter<any>();
     @Output() deleteAll: EventEmitter<any> = new EventEmitter<any>();
-    public printImage = `../../dist/assets/images/printImage.png`;
-    public addImage = `../../dist/assets/images/addImage.png`;
+    public printImage = this.page === 'user' ? '../../assets/images/printImage.png' : '../../dist/assets/images/printImage.png';
+    public addImage = this.page === 'user' ? '../../assets/images/addImage.png' : '../../dist/assets/images/addImage.png';
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -93,6 +93,8 @@ export class AbstractTableComponent
 
   ngOnChanges(): void {
     //prime table
+   this.printImage = this.page === 'user' ? '../../assets/images/printImage.png' : '../../dist/assets/images/printImage.png';
+   this.addImage = this.page === 'user' ? '../../assets/images/addImage.png' : '../../dist/assets/images/addImage.png';
       this.cols = [];
       this.colsSelected = [];
       this.setting.cols.forEach((x:any)=> {
@@ -135,7 +137,7 @@ export class AbstractTableComponent
             body: data
         });
         //doc.autoTable({ html: 'contentToConvert' })
-        doc.save('table.pdf')
+        doc.save((this.page || '') + '-list.pdf');
     }
 
     ngAfterViewInit(): void {

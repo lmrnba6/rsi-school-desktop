@@ -16,7 +16,7 @@
         <input name="username" formControlName="username" (blur)="checkUserName()" [(ngModel)]="user.username" matInput autofocus required>
         <mat-error *ngIf="username.invalid">{{'messages.field_required_error' | translate}}</mat-error>
       </mat-form-field>
-          <label>{{'user.placeholder.username' | translate}}</label>
+          <label *ngIf="isOnEdit">{{'user.placeholder.username' | translate}}</label>
           <h2 *ngIf="isOnEdit">{{user?.username}}</h2>
       <br>
       <mat-form-field appearance="outline">
