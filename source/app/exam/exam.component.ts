@@ -108,7 +108,7 @@ export class ExamComponent implements OnInit, OnChanges {
             {columnDef: 'session', header: 'exam.placeholder.session_id', type: 'text', cell: (row: any) => `${row.session}`}
             ];
         !this.intern && !this.session &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: this.isAdmin})
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: this.isAdmin})
     }
 
     /**

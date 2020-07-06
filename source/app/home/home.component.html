@@ -53,85 +53,17 @@
     justify-content: center;
     align-items: baseline;">
             <h2>{{'weekday.title' | translate}}</h2>
-            <mat-form-field *ngIf="byWeek === 'day'" style="font-size: 2rem; margin-left: 10px">
+            <mat-form-field style="font-size: 2rem; margin-left: 10px">
                 <mat-select [ngModel]="date" (valueChange)="onDayChange($event)">
                     <mat-option *ngFor="let session of days" [value]="session">
                         {{'weekday.placeholder.' + session | translate}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field style="font-size: 2rem; margin-left: 10px">
-                <mat-select [ngModel]="byWeek" (valueChange)="handleByWeek($event)">
-                    <mat-option value="day">
-                        {{'weekday.placeholder.day' | translate}}
-                    </mat-option>
-                    <mat-option value="week">
-                        {{'weekday.placeholder.week' | translate}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
         </div>
         <mat-card>
-            <app-abstract-table *ngIf="byWeek === 'day'" [page]="'home'" [setting]="setting"
+            <app-abstract-table  [page]="'home'" [setting]="setting"
                                 [data]="data"></app-abstract-table>
-            <div *ngIf="byWeek === 'week'">
-                <p style="color: white;
-    font-size: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    background: #007bff;
-    border-radius: 10px;
-    text-align: center;">{{'weekday.placeholder.sunday' | translate}}</p>
-                <app-abstract-table [page]="'home'" [setting]="setting" [data]="sunday"></app-abstract-table>
-                <p style="color: white;
-    font-size: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    background: #007bff;
-    border-radius: 10px;
-    text-align: center;">{{'weekday.placeholder.monday' | translate}}</p>
-                <app-abstract-table [page]="'home'" [setting]="setting" [data]="monday"></app-abstract-table>
-                <p style="color: white;
-    font-size: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    background: #007bff;
-    border-radius: 10px;
-    text-align: center;">{{'weekday.placeholder.tuesday' | translate}}</p>
-                <app-abstract-table [page]="'home'" [setting]="setting" [data]="tuesday"></app-abstract-table>
-                <p style="color: white;
-    font-size: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    background: #007bff;
-    border-radius: 10px;
-    text-align: center;">{{'weekday.placeholder.wednesday' | translate}}</p>
-                <app-abstract-table [page]="'home'" [setting]="setting" [data]="wednesday"></app-abstract-table>
-                <p style="color: white;
-    font-size: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    background: #007bff;
-    border-radius: 10px;
-    text-align: center;">{{'weekday.placeholder.thursday' | translate}}</p>
-                <app-abstract-table [page]="'home'" [setting]="setting" [data]="thursday"></app-abstract-table>
-                <p style="color: white;
-    font-size: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    background: #007bff;
-    border-radius: 10px;
-    text-align: center;">{{'weekday.placeholder.friday' | translate}}</p>
-                <app-abstract-table [page]="'home'" [setting]="setting" [data]="friday"></app-abstract-table>
-                <p style="color: white;
-    font-size: 2rem;
-    margin-top: 10px;
-    padding: 10px;
-    background: #007bff;
-    border-radius: 10px;
-    text-align: center;">{{'weekday.placeholder.saturday' | translate}}</p>
-                <app-abstract-table [page]="'home'" [setting]="setting" [data]="saturday"></app-abstract-table>
-            </div>
 
         </mat-card>
     </div>

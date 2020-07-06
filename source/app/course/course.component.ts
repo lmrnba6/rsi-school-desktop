@@ -89,7 +89,7 @@ export class CourseComponent implements OnInit {
             {columnDef: 'name', header: 'course.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
             {columnDef: 'time', header: 'course.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
             {columnDef: 'training_id', header: 'course.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training_id.name}`},
-            {columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true},
+            {columnDef: 'settings', header: '',class: 'a10', type: 'settings', delete: true, editRow: true},
         ];
     }
 

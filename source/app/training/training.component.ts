@@ -90,7 +90,7 @@ export class TrainingComponent implements OnInit {
       { columnDef: 'type', header: 'training.placeholder.type', type: 'text', cell: (row: any) => `${row.type}` }
     ];
       this.isAdmin &&
-      this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});
+      this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
   }
   /**
    * init data

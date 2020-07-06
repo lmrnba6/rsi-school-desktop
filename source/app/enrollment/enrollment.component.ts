@@ -104,7 +104,7 @@ export class EnrollmentComponent implements OnInit, OnChanges {
             {columnDef: 'date', header: 'enrollment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`}
         ];
         this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: this.isAdmin});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: this.isAdmin});
     }
 
     /**

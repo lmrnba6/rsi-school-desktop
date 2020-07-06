@@ -96,15 +96,40 @@ export class SessionComponent implements OnInit, OnChanges {
         this.setting.filter = !this.instructor;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'name', header: 'session.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
-            {columnDef: 'enrollments', header: 'session.placeholder.enrollments', type: 'text', cell: (row: any) => `${row.enrollments || ''}`},
-            {columnDef: 'limit', header: 'session.placeholder.limit', type: 'text', cell: (row: any) => `${row.limit}`},
-            {columnDef: 'interns', header: 'session.placeholder.interns', type: 'text', cell: (row: any) => `${row.interns}`},
-            {columnDef: 'instructor', header: 'session.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
-            {columnDef: 'training', header: 'session.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`}
+            {columnDef: 'name', class: 'a15', header: 'session.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
+            {columnDef: 'weekdays',class: 'a25', header: 'session.placeholder.enrollments', type: 'html', cell: (row: any) => `${this.handleLines(row.weekdays || '')}`},
+            {columnDef: 'limit',class: 'a10', header: 'session.placeholder.limit', type: 'text', cell: (row: any) => `${row.limit}`},
+            {columnDef: 'interns',class: 'a10', header: 'session.placeholder.interns', type: 'text', cell: (row: any) => `${row.interns}`},
+            {columnDef: 'instructor',class: 'a20', header: 'session.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
+            {columnDef: 'training',class: 'a10', header: 'session.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`}
         ];
         !this.instructor &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+    }
+
+    translateDates(d: string) {
+        let weekdays = new Array(7);
+        weekdays[0] = "sunday";
+        weekdays[1] = "monday";
+        weekdays[2] = "tuesday";
+        weekdays[3] = "wednesday";
+        weekdays[4] = "thursday";
+        weekdays[5] = "friday";
+        weekdays[6] = "saturday";
+        weekdays.forEach(s => {
+            const reg = new RegExp(s,'g')
+            d = d.replace(reg, this.translate.instant('weekday.placeholder.' + s))
+        });
+        return d;
+    }
+
+    handleLines(text: string) {
+        text = text || '';
+        const list = text.split('---');
+        const s = list.reduce((a,b) => {
+            a = a + `<li class="timeTable">${b}</li>`; return a
+        },'')
+        return text ?`<ul>${this.translateDates(s)}</ul>` : '';
     }
 
     public onRowDeleted(id: number): void {

@@ -108,7 +108,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
             {columnDef: 'instructor_id', header: 'payment_instructor.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor_id.name}`}
         ];
         this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
     }
 
     /**

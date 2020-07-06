@@ -106,7 +106,7 @@ export class PaymentComponent implements OnInit, OnChanges {
                 {columnDef: 'intern', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
         ];
         this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
     }
 
     /**

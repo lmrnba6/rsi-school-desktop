@@ -125,7 +125,7 @@ export class InboxComponent implements OnInit, OnChanges {
             {columnDef: 'subject', header: 'inbox.subject', type: 'text', cell: (row: any) => `${row.subject}`},
             {columnDef: this.sent ? 'to_user': 'from_user', header: this.sent ? 'inbox.to' : 'inbox.from', type: 'text', cell: (row: any) => `${this.sent ?  row.to_user : row.from_user}`},
             {columnDef: 'attachments', header: 'inbox.attachments', type: 'icon', cell: (row: any) => `${row.attachments > 0 ? 'paperclip' : 'minus'}`},
-            {columnDef: 'settings', header: '', type: 'settings', delete: !this.sent, editRow: true}
+            {columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: !this.sent, editRow: true}
         ];
     }
 

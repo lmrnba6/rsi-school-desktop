@@ -113,15 +113,40 @@ export class InternComponent implements OnInit, OnChanges {
         this.setting.filter = !this.session && !this.isParent;
         this.setting.addRow = !this.isParent;
         this.setting.cols = [
-            {columnDef: 'name', header: 'intern.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
-            {columnDef: 'phone', header: 'intern.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},
-            {columnDef: 'sold', header: 'intern.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold}`},
-            {columnDef: 'name_arabic', header: 'intern.placeholder.name_arabic', type: 'text', cell: (row: any) => `${row.name_arabic || ''}`},
+            {columnDef: 'name',class: 'a20', header: 'intern.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
+            {columnDef: 'phone',class: 'a10', header: 'intern.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},
+            {columnDef: 'sold',class: 'a10', header: 'intern.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold}`},
+            {columnDef: 'name_arabic',class: 'a15', header: 'intern.placeholder.name_arabic', type: 'text', cell: (row: any) => `${row.name_arabic || ''}`},
         ];
         if(!this.session) {
-            this.setting.cols.push({columnDef: 'enrollments', header: 'intern.placeholder.enrollments', type: 'text', cell: (row: any) => `${row.enrollments || ''}`});
-            this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+            this.setting.cols.push({columnDef: 'weekdays',class: this.isAdmin ? 'a40' : 'a35', header: 'weekday.title', type: 'html', cell: (row: any) => `${this.handleLines(row.weekdays || '')}`});
+            this.setting.cols.push({columnDef: 'settings',class: this.isAdmin ? 'a10' : 'a5', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
         }
+    }
+
+    translateDates(d: string) {
+        let weekdays = new Array(7);
+        weekdays[0] = "sunday";
+        weekdays[1] = "monday";
+        weekdays[2] = "tuesday";
+        weekdays[3] = "wednesday";
+        weekdays[4] = "thursday";
+        weekdays[5] = "friday";
+        weekdays[6] = "saturday";
+        weekdays.forEach(s => {
+            const reg = new RegExp(s,'g')
+            d = d.replace(reg, this.translate.instant('weekday.placeholder.' + s))
+        });
+        return d;
+    }
+
+    handleLines(text: string) {
+        text = text || '';
+        const list = text.split('---');
+        const s = list.reduce((a,b) => {
+            a = a + `<li class="timeTable">${b}</li>`; return a
+        },'')
+        return text ?`<ul>${this.translateDates(s)}</ul>` : '';
     }
 
     /**

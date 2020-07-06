@@ -27,6 +27,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
     public data: any;
     public tableName: string;
     public setting: AbstractTableSetting;
+    public weekSetting: AbstractTableSetting;
     public weekday: Weekday;
     public block: boolean;
     public color: string = 'warn';
@@ -36,6 +37,16 @@ export class WeekdayComponent implements OnInit, OnChanges {
     public pageSize: number = 10;
     public sortName: string = 'name';
     public sortDirection: string = 'ASC';
+    days: Array<string>;
+    date: string;
+    public sunday: any;
+    public saturday: any;
+    public monday: any;
+    public tuesday: any;
+    public wednesday: any;
+    public thursday: any;
+    public friday: any;
+
 
     constructor(
         private dialogsService: DialogsService,
@@ -47,11 +58,15 @@ export class WeekdayComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
+        this.initWeekSetting();
+        this.toDay();
+        this.getSchedule();
     }
 
     ngOnChanges(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
+        this.initWeekSetting();
     }
 
 
@@ -80,6 +95,34 @@ export class WeekdayComponent implements OnInit, OnChanges {
                 });
     }
 
+    toDay() {
+        let a = new Date();
+        let weekdays = new Array(7);
+        weekdays[0] = "sunday";
+        weekdays[1] = "monday";
+        weekdays[2] = "tuesday";
+        weekdays[3] = "wednesday";
+        weekdays[4] = "thursday";
+        weekdays[5] = "friday";
+        weekdays[6] = "saturday";
+        this.days =weekdays;
+        this.date = weekdays[a.getDay()];
+        return weekdays[a.getDay()];
+    }
+
+    getSchedule(){
+        this.asyncForEach(this.days, v => {
+            Weekday.getScheduleByDay(v).then(value => {
+                this[v] = {items: value, paging: {totalCount: value.length}}
+            });
+        });
+    }
+
+    async asyncForEach(array: any, callback: any) {
+        for (let index = 0; index < array.length; index++) {
+            await callback(array[index], index, array);
+        }
+    }
 
     /**
      * sortOnChange
@@ -115,7 +158,34 @@ export class WeekdayComponent implements OnInit, OnChanges {
             {columnDef: 'room', header: 'weekday.placeholder.room_id', type: 'text', cell: (row: any) => `${row.room}`}
         ];
         !this.session && !this.room && !this.instructor && !this.intern &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
+    }
+
+
+    public initWeekSetting(): void {
+        this.weekSetting = new AbstractTableSetting();
+        this.weekSetting.settingColumn = false;
+        this.weekSetting.filter = false;
+        this.weekSetting.paging = false;
+        this.weekSetting.addRow = false;
+        this.weekSetting.hideHeader = true;
+        this.weekSetting.tools = false;
+        this.weekSetting.cols = [
+            {columnDef: 'time', class:'a25', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
+            {columnDef: 'name', class:'a75', header: 'weekday.title', type: 'html', cell: (row: any) => `${this.handleLines(row.name)}`},
+            // {columnDef: 'instructor', header: 'weekday.placeholder.instructor', type: 'text', cell: (row: any) => `${row.instructor}`},
+            // {columnDef: 'training', header: 'weekday.placeholder.training', type: 'text', cell: (row: any) => `${row.training}`},
+            // {columnDef: 'room_id', header: 'weekday.placeholder.room_id', type: 'text', cell: (row: any) => `${row.room}`}
+        ];
+    }
+
+    handleLines(text: string) {
+        text = text || '';
+        const list = text.split('---');
+        const s = list.reduce((a,b) => {
+            a = a + `<li class="timeTable">${b}</li>`; return a
+        },'')
+        return `<ul>${s}</ul>`
     }
 
     /**

@@ -4,5 +4,5 @@
 <mat-divider style="margin-bottom:5%;"></mat-divider>
 <h4 style="margin-bottom:10%;">{{ message | translate}}</h4>
 
-<button *ngIf="isConfirm" type="button" mat-raised-button (click)="dialogRef.close(true)">{{'buttons.yes' | translate}}</button>
-<button *ngIf="isConfirm" type="button" mat-button (click)="dialogRef.close(false)">{{'buttons.cancel' | translate}}</button>
+<button *ngIf="isConfirm" style="float: right" type="button" mat-raised-button (click)="dialogRef.close(true)">{{'buttons.yes' | translate}}</button>
+<button *ngIf="isConfirm" style="float: right" type="button" mat-button (click)="dialogRef.close(false)">{{'buttons.cancel' | translate}}</button>

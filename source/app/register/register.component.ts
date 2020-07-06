@@ -145,7 +145,7 @@ export class RegisterComponent implements OnInit, OnChanges {
             {columnDef: 'responsible', header: 'register.placeholder.responsible', type: 'text', cell: (row: any) => row.responsible || ''}
         ];
         this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
     }
 
     /**

@@ -131,7 +131,7 @@ export class Intern{
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Intern[]> {
         const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.comment,i.name_arabic,
-                            string_agg('(' || s.name || ' ' || substring(w.name from 0 for 3) || ' ' || REPLACE (w.time, ' ', ''), '),') as enrollments 
+                            STRING_AGG(w.name || ' ' || w.time || ' ' || s.name, '---') as weekdays 
                             from intern as i 
                             left join enrollment as e  on e.intern_id = i.id
                             left join session as s on e.session_id = s.id
@@ -284,6 +284,7 @@ export class Intern{
         this.isVip = row['isVip'];
         this.parent = row['parent'];
         this['enrollments'] = row['enrollments'];
+        this['weekdays'] = row['weekdays'];
         return this;
     }
 }

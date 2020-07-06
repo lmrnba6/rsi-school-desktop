@@ -88,7 +88,7 @@ export class RoomComponent implements OnInit {
     this.setting.cols = [
       { columnDef: 'number', header: 'room.placeholder.number', type: 'text', cell: (row: any) => `${row.number}` },
       { columnDef: 'capacity', header: 'room.placeholder.capacity', type: 'text', cell: (row: any) => `${row.capacity}`}, 
-      { columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true },
+      { columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true },
     ];
   }
   /**

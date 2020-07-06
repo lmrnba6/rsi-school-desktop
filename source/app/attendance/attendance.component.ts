@@ -253,7 +253,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
             }
         ];
         !this.intern && !this.instructor && !this.weekday &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
     }
 
     public initSettingByDate(): void {

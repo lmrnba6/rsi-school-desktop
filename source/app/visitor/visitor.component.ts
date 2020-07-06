@@ -100,7 +100,7 @@ export class VisitorComponent implements OnInit, OnChanges {
             {columnDef: 'comment', header: 'visitor.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
         ];
         !this.session &&
-        this.setting.cols.push({columnDef: 'settings', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
     }
 
     /**

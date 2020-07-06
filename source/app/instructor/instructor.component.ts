@@ -97,7 +97,7 @@ export class InstructorComponent implements OnInit {
       },
       { columnDef: 'email', header: 'instructor.placeholder.email', type: 'text', cell: (row: any) => `${row.email}` },
         { columnDef: 'isFullTime', header: 'instructor.placeholder.fullTime', type: 'boolean', cell: (row: any) => `${row.isFullTime}` },
-        { columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true },
+        { columnDef: 'settings', class: 'a10', header: '', type: 'settings', delete: true, editRow: true },
     ];
   }
   /**

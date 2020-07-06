@@ -94,7 +94,7 @@ export class UserComponent implements OnInit {
         cell: (row: any) => `${row.name}`
       },
       { columnDef: 'role', header: 'user.placeholder.role', type: 'text', cell: (row: any) => `${this.translate.instant('user.' + row.role)}` },
-        { columnDef: 'settings', header: '', type: 'settings', delete: true, editRow: true },
+        { columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true },
     ];
   }
   /**

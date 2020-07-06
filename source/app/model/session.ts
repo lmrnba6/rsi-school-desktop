@@ -173,7 +173,7 @@ export class Session {
 
                                                 (SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, x.interns,
                                                 i.name as instructor, t.name as training,  
-                                                string_agg('(' || substring(w.name from 0 for 3) || ' ' || REPLACE (w.time, ' ', ''), '),') as enrollments
+                                                STRING_AGG(w.name || ' ' || w.time || ' ' || s.name, '---') as weekdays
                                                                                 FROM "session" AS s 
                                                 join x on x.id = s.id
                                                 left JOIN weekday as w on w.session_id = s.id
@@ -344,6 +344,7 @@ export class Session {
         this['training'] = row['training'];
         this['type'] = row['type'];
         this.closed = row['closed'];
+        this['weekdays'] = row['weekdays'];
         return this;
     }
 }
