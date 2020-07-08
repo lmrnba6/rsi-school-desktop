@@ -87,6 +87,7 @@
     "postgresql": "0.0.1",
     "primeicons": "^1.0.0",
     "primeng": "^7.0.0",
+    "print-js": "^1.0.63",
     "quagga": "^0.12.1",
     "quagga-scanner": "^0.13.0",
     "rxjs": "^6.2.1",

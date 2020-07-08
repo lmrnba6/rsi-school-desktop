@@ -40,6 +40,7 @@ import {Visitor} from "../model/visitor";
 import {AuthenticationService} from "../_services/authentication.service";
 import {Register} from "../model/register";
 import {Weekday} from "../model/weekday";
+import printJS = require("print-js");
 
 @Component({
   selector: 'app-abstract-table',
@@ -61,6 +62,7 @@ export class AbstractTableComponent
     @Output() deleteAll: EventEmitter<any> = new EventEmitter<any>();
     public printImage = this.page === 'user' ? '../../assets/images/printImage.png' : '../../dist/assets/images/printImage.png';
     public addImage = this.page === 'user' ? '../../assets/images/addImage.png' : '../../dist/assets/images/addImage.png';
+    public saveImage = this.page === 'user' ? '../../assets/images/saveImage.png' : '../../dist/assets/images/saveImage.png';
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -111,33 +113,52 @@ export class AbstractTableComponent
     }
   }
 
-    public captureScreen()
+    public captureScreen(type: string)
     {
         window['html2canvas'] = html2canvas;
         let doc = new jspdf();
         let data: any = [];
+        let dataJson: any = [];
         this.displayedHeaders = this.setting.cols.filter(s => s.columnDef !== 'settings').map((x: any) => this.translate.instant(x.header));
         this.dataSource.filteredData.forEach(obj => {
             let arr: any = [];
+            let o: any = {};
             this.cols.forEach(col => {
-                if(col.type === 'date') {
+                if(col.columnDef === 'settings') {}
+                else if(col.type === 'date') {
+                    o[this.translate.instant(col.header)] = this.integerToString(obj[col.columnDef]);
                     arr.push(this.integerToString(obj[col.columnDef]));
                 } else if(col.type === 'boolean') {
-                    arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no'));
+                    o[this.translate.instant(col.header)] = obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no');
+                        arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no'));
                 }else if(col.type === 'day') {
+                    o[this.translate.instant(col.header)] = this.translate.instant('weekday.placeholder.' + obj[col.columnDef]);
                     arr.push(this.translate.instant('weekday.placeholder.' + obj[col.columnDef]));
                 } else {
-                    arr.push(obj[col.columnDef]);
+                    o[this.translate.instant(col.header)] = obj[col.columnDef] || '';
+                    arr.push(obj[col.columnDef] || '');
                 }
             });
             data.push(arr);
+            dataJson.push(o);
         });
         doc.autoTable({
             head: [this.displayedHeaders],
             body: data
         });
-        //doc.autoTable({ html: 'contentToConvert' })
-        doc.save((this.page || '') + '-list.pdf');
+        if(type === 'print') {
+            printJS({
+                printable: dataJson,
+                properties: this.displayedHeaders,
+                type: 'json',
+                header: '<h1></h1>',
+                style: 'h1 { text-align: center; }',
+                gridHeaderStyle: 'background: #007bff; text-align: left; font-family: arial; border: 1px solid black; margin: 10px;',
+                gridStyle: 'text-align: left; font-family: arial; border: 1px solid black; margin: 10px;'
+            })
+        } else if(type === 'save') {
+            doc.save((this.page || '') + '-list.pdf');
+        }
     }
 
     ngAfterViewInit(): void {

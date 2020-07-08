@@ -10,7 +10,13 @@
 <!--      -webkit-text-fill-color: black;-->
 <!--    margin-top: 10px;"></span>-->
     </a>
-    <a class="pull-right" [routerLink]="" (click)="captureScreen()">
+    <a *ngIf="setting?.filter" class="pull-right" [routerLink]="" (click)="captureScreen('save')">
+        <img style="width: 50px" [src]="saveImage" alt="">
+        <!--    <span class="glyphicon glyphicon-plus" style="    font-size: 30px;-->
+        <!--      -webkit-text-fill-color: black;-->
+        <!--    margin-top: 10px;"></span>-->
+    </a>
+    <a class="pull-right" [routerLink]="" (click)="captureScreen('print')">
         <img style="width: 50px" [src]="printImage" alt="">
 <!--    <span class="glyphicon glyphicon-print" style="    font-size: 30px;-->
 <!--      -webkit-text-fill-color: black;-->
