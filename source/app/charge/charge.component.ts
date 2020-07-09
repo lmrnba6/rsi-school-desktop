@@ -3,24 +3,24 @@ import {DialogsService} from '../_services/dialogs.service';
 import {MessagesService} from "../_services/messages.service";
 import {Router} from '@angular/router';
 import {AbstractTableSetting} from "../model/abstractTableSetting";
-import './payment.component.scss';
+import './charge.component.scss';
 import {TranslateService} from "@ngx-translate/core";
-import {Payment} from "../model/payment";
+import {Charge} from "../model/charge";
 import {Intern} from "../model/intern";
 import {AuthenticationService} from "../_services/authentication.service";
 
 @Component({
-    selector: 'app-payment',
-    templateUrl: './payment.component.html',
+    selector: 'app-charge',
+    templateUrl: './charge.component.html',
 })
-export class PaymentComponent implements OnInit, OnChanges {
+export class ChargeComponent implements OnInit, OnChanges {
 
     @Input() public intern: Intern;
     public filter: string = '';
     public data: any;
     public tableName: string;
     public setting: AbstractTableSetting;
-    public payment: Payment;
+    public charge: Charge;
     public block: boolean;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -57,9 +57,9 @@ export class PaymentComponent implements OnInit, OnChanges {
         const limit: number = pageSize;
         this.block = true;
         Promise.all([this.intern ?
-            Payment.getAllPagedByIntern(offset, limit, sort, order, this.intern.id) :
-            Payment.getAllPaged(offset, limit, sort, order, filter), this.intern ? Payment.getCountByIntern(this.intern.id) :
-            Payment.getCount(this.filter)])
+            Charge.getAllPagedByIntern(offset, limit, sort, order, this.intern.id) :
+            Charge.getAllPaged(offset, limit, sort, order, filter), this.intern ? Charge.getCountByIntern(this.intern.id) :
+            Charge.getCount(this.filter)])
             .then(
                 values => {
                     this.block = false;
@@ -98,15 +98,13 @@ export class PaymentComponent implements OnInit, OnChanges {
         this.setting.filter = !this.intern;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'date', header: 'payment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'amount', header: 'payment.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
-            {columnDef: 'comment', header: 'payment.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
-            {columnDef: 'session_name', header: 'payment.placeholder.session', type: 'text', cell: (row: any) => `${row.session_name || ''}`},
-            this.intern ? {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''} :
-                {columnDef: 'intern', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
+            {columnDef: 'date', header: 'charge.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
+            {columnDef: 'amount', header: 'charge.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
+            {columnDef: 'comment', header: 'charge.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
+            {columnDef: 'session', header: 'charge.placeholder.session', type: 'text', cell: (row: any) => `${row.session || ''}`},
+            {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''}
         ];
-        this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: false, editRow: true});
+        !this.intern && this.setting.cols.push({columnDef: 'intern', header: 'charge.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`});
     }
 
     /**
@@ -117,14 +115,14 @@ export class PaymentComponent implements OnInit, OnChanges {
             .confirm('messages.warning_title', 'messages.remove_row_warning_message', true, 'warning-sign')
             .subscribe(confirm => {
                 if (confirm) {
-                    Payment.get(id).then(payment => {
+                    Charge.get(id).then(charge => {
                         this.block = true;
-                        Payment
+                        Charge
                             .delete(id)
                             .then(
                                 () => {
                                     this.block = false;
-                                    this.manageInternSold(payment);
+                                    this.manageInternSold(charge);
                                     this.data = [];
                                     this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
                                     this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
@@ -141,13 +139,13 @@ export class PaymentComponent implements OnInit, OnChanges {
 
 
     goBack() {
-        this.router.navigate(['payments']);
+        this.router.navigate(['charges']);
     }
 
-    manageInternSold(payment: Payment) {
+    manageInternSold(charge: Charge) {
         this.block = true;
-        Intern.get(payment.intern_id as number).then(intern => {
-            intern.sold = Number(intern.sold) + Number(payment.amount);
+        Intern.get(charge.intern as number).then(intern => {
+            intern.sold = Number(intern.sold) + Number(charge.amount);
             intern.update().then(() => this.block = false,
                 () => {
                     this.block = false;
@@ -164,15 +162,15 @@ export class PaymentComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        this.router.navigate(['payment/form']);
+        this.router.navigate(['charge/form']);
     }
 
     /**
      * onEditRow
      */
-    public onEditRow(event: Payment): void {
-        this.payment = event;
-        this.router.navigate(['payment/form/' + event.id]);
+    public onEditRow(event: Charge): void {
+        this.charge = event;
+        this.router.navigate(['charge/form/' + event.id]);
 
     }
 

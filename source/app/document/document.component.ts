@@ -21,6 +21,7 @@ export class DocumentComponent implements OnInit {
     card: boolean;
     receipt: boolean;
     form: boolean;
+    open: string;
     public block: boolean;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -30,6 +31,10 @@ export class DocumentComponent implements OnInit {
 
     ngOnInit() {
     this.getSessions();
+    }
+
+    handleOpen(type: string) {
+        this.open = type === this.open ? '' : type;
     }
 
     onAttendanceForm() {
@@ -57,13 +62,13 @@ export class DocumentComponent implements OnInit {
 
     public internOnSelect(intern: Intern): void {
         this.internSelected = intern;
-        if(this.card) {
+        if(this.open === 'card') {
             this.router.navigate(['/document/pv/card/' + this.internSelected.id]);
         }
-        else if(this.receipt) {
+        else if(this.open === 'receipt') {
             this.router.navigate(['/document/pv/receipt/' + this.internSelected.id]);
         }
-        else if(this.form) {
+        else if(this.open === 'form') {
             this.router.navigate(['/document/pv/form/' + this.internSelected.id]);
         }
     }

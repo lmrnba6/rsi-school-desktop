@@ -141,10 +141,11 @@ CREATE TABLE IF NOT EXISTS "payment" (
 	"username" TEXT,
 	"date"  TEXT NOT NULL,
 	"comment"  TEXT NOT NULL,
-	"training"  TEXT NOT NULL,
+	"charge"  INTEGER,
 	"month"  TEXT NOT NULL,
 	"intern_id"	INTEGER NOT NULL,
 	FOREIGN KEY(intern_id) REFERENCES "intern"(id),
+	FOREIGN KEY(charge) REFERENCES "charge"(id),
 	PRIMARY KEY("id")
 );
 
@@ -199,6 +200,20 @@ CREATE TABLE IF NOT EXISTS "enrollment" (
     FOREIGN KEY(session_id) REFERENCES "session"(id),
     FOREIGN KEY(intern_id) REFERENCES "intern"(id),
 	PRIMARY KEY("id")
+);
+
+DROP TABLE IF EXISTS "charge";
+CREATE TABLE IF NOT EXISTS "charge" (
+  	"id"	SERIAL NOT NULL,
+  	"amount"	NUMERIC NOT NULL,
+  	"rest"	NUMERIC,
+  	"date"  TEXT NOT NULL,
+  	"comment"  TEXT NOT NULL,
+  	"session"  INTEGER NOT NULL,
+  	"intern"	INTEGER NOT NULL,
+  	FOREIGN KEY(intern) REFERENCES "intern"(id),
+  	FOREIGN KEY(session) REFERENCES "session"(id),
+  	PRIMARY KEY("id")
 );
 
 DROP TABLE IF EXISTS "register";

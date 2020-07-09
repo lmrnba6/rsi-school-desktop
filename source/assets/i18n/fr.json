@@ -85,9 +85,9 @@
       "medical": "Certificat medical",
       "residence": "Copie de la cate séjour (pour les étrangers)",
       "backpack": "Reçu un sac à dos?",
-      "fees": "Doit payer les frais de formation?",
-      "fees_enrollment": "Doit payer les frais d'inscription?",
-      "fees_books": "Doit payer les frais des livres?",
+      "fees": "Ajouter les frais de formation au sold?",
+      "fees_enrollment": "Ajouter les frais d'inscription au sold?",
+      "fees_books": "Ajouter les frais des livres au sold?",
       "isAllowed": "Bloqué(e)",
       "photo": "Photo",
       "scholar": "Niveau scolaire",
@@ -134,9 +134,26 @@
       "amount" : "Montant",
       "date": "Date",
       "comment": "Commentaire",
-      "training": "Formation",
+      "session": "Group",
       "month": "Mois",
-      "intern_id": "Étudiant"
+      "intern_id": "Étudiant",
+      "charge": "Charge"
+    }
+  },
+  "charge": {
+    "title": "Charges",
+    "noCharge": "Paiement pour autres raisons",
+    "placeholder": {
+      "responsible": "Utilisateur",
+      "rest": "Reste",
+      "sold": "Solde",
+      "intern": "Étudiant",
+      "session": "Groupe",
+      "amount" : "Montant",
+      "date": "Date",
+      "from": "De",
+      "to": "A",
+      "comment": "Commentaire"
     }
   },
   "register": {
@@ -317,7 +334,8 @@
     "attendance": "Présence",
     "exam": "Examen",
     "payment": "Paiement",
-    "weekday": "Programme"
+    "weekday": "Programme",
+    "charge": "Charges"
   },
   "instructor-management": {
     "information" : "Information",

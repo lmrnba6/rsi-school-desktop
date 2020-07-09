@@ -6,11 +6,10 @@ import {Payment} from "../model/payment";
 import './payment-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
 import {Intern} from "../model/intern";
-import {Training} from "../model/training";
 import {DialogsService} from "../_services/dialogs.service";
 import {Register} from "../model/register";
-import {Enrollment} from "../model/enrollment";
 import {AuthenticationService} from "../_services/authentication.service";
+import {Charge} from "../model/charge";
 
 @Component({
     selector: 'app-payment-form',
@@ -27,14 +26,14 @@ export class PaymentFormComponent implements OnInit {
     public date: FormControl;
     public amount: FormControl;
     public comment: FormControl;
-    public training: FormControl;
+    public charge: FormControl;
     public month: FormControl;
     public intern: FormControl;
     public interns: Array<Intern> = [];
+    public charges: Array<Charge> = [];
     public internsFiltered: Array<Intern> = [];
     public internSelected: Intern | any;
-    public trainingsFiltered: Array<Training> = [];
-    public trainingSelected: Training | any;
+    public chargeSelected: Charge | any;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
@@ -81,18 +80,15 @@ export class PaymentFormComponent implements OnInit {
 
     public getInternToPay(id: number, tr: number): void {
         Promise.all([Intern
-            .get(id), Training.get(tr)])
+            .get(id), Charge.get(tr)])
             .then((val: any) => {
                 this.internSelected = val[0];
-                this.trainingSelected = val[1];
+                this.chargeSelected = val[1];
                 this.intern.patchValue(val[0].id);
-                this.training.patchValue(val[1].id);
+                this.charge.patchValue(val[1].id);
                 this.payment.date = new Date();
+                this.getCharges();
             });
-    }
-
-    public displayFnTraining(training: Training) {
-        return training ? training.name : '';
     }
 
     public displayFnIntern(intern: Intern) {
@@ -100,43 +96,24 @@ export class PaymentFormComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
-        this.block = true;
-        Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
-            users => {
-                this.block = false;
-                this.internsFiltered = users
-            }, () => {
-                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                this.block = false
-            });
-        this.internSelected = null;
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.block = true;
+            Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
+                users => {
+                    this.block = false;
+                    this.internsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+            this.internSelected = null;
         }
     }
 
     public internOnSelect(intern: Intern): void {
         this.internSelected = intern;
-        this.verifyTraining();
+        this.getCharges();
 
-    }
-
-    public trainingOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {        this.block = true;
-        Training.getAllPaged(0, 5, 'name', '', event.target.value).then(
-            users => {
-                this.block = false;
-                this.trainingsFiltered = users
-            }, () => {
-                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                this.block = false
-            });
-        this.trainingSelected = null;
-        }
-    }
-
-    public trainingOnSelect(training: Training): void {
-        this.trainingSelected = training;
-        this.verifyTraining();
     }
 
     /**
@@ -151,10 +128,17 @@ export class PaymentFormComponent implements OnInit {
             .then((val: Payment) => {
                 this.payment = val;
                 this.oldPayment = val.amount;
-                Intern.get(this.payment.intern_id as number).then(intern => this.internSelected = intern);
-                this.trainingSelected = new Training();
-                this.trainingSelected.name = this.payment.training;
+                Intern.get(this.payment.intern_id as number).then(intern => {
+                    this.internSelected = intern;
+                    this.getCharges();
+                });
                 this.payment.date = new Date(Number(this.payment.date));
+                if (this.isOnEdit || this.express) {
+                    this.paymentForm.controls['amount'].disable();
+                    this.paymentForm.controls['date'].disable();
+                    this.paymentForm.controls['charge'].disable();
+                    this.paymentForm.controls['intern'].disable();
+                }
             });
     }
 
@@ -163,16 +147,15 @@ export class PaymentFormComponent implements OnInit {
         this.amount = new FormControl(null, [Validators.required]);
         this.date = new FormControl(null, [Validators.required]);
         this.comment = new FormControl(null);
-        this.training = this.isOnEdit ? new FormControl(null) : new FormControl(null, [Validators.required]);
+        this.charge = new FormControl(null);
         this.month = new FormControl(null);
-        this.intern = this.isOnEdit ? new FormControl(null) :
-            new FormControl(null, [Validators.required]);
+        this.intern = new FormControl(null, [Validators.required]);
 
         this.paymentForm = this.fb.group({
             amount: this.amount,
             date: this.date,
             comment: this.comment,
-            training: this.training,
+            charge: this.charge,
             month: this.month,
             intern: this.intern,
         });
@@ -185,16 +168,19 @@ export class PaymentFormComponent implements OnInit {
         await this.onSaveOrUpdate();
     }
 
-    verifyTraining() {
-        if (this.trainingSelected && this.internSelected) {
-            Enrollment.getAllByIntern(this.internSelected.id).then(enrolls => {
-                const exist = enrolls.some(e => e['training'] === this.trainingSelected.name);
-                if (!exist) {
-                    this.training.patchValue('');
-                    this.messagesService.notifyMessage(this.translate.instant('messages.notEnrolled_message'), '', 'error');
-                    this.block = false;
-                }
+    getCharges() {
+        if (this.internSelected) {
+            Charge.getAllByIntern(this.internSelected.id).then(charges => {
+                this.charges = charges;
+                this.block = false;
             });
+        }
+    }
+
+    public onChargeChange(id: number) {
+        this.chargeSelected = this.charges.find(s => s.id === id);
+        if(!this.chargeSelected){
+            (this.payment.charge as any) = null;
         }
     }
 
@@ -205,19 +191,18 @@ export class PaymentFormComponent implements OnInit {
         this.payment.error = this.payment.error ? 1 : 0;
         this.payment.intern_id = this.internSelected.id;
         this.payment.username = this.auth.getCurrentUser().username;
-        this.payment.training = this.trainingSelected ? this.trainingSelected.name : this.payment.training;
         const copy: Payment = new Payment();
         copy.id = this.payment.id;
         copy.username = this.auth.getCurrentUser().username;
         copy.intern_id = this.internSelected.id;
         copy.error = this.payment.error;
-        copy.training = this.trainingSelected ? this.trainingSelected.name : this.payment.training;
+        copy.charge = this.payment.charge;
         copy.date = (this.payment.date as Date).getTime();
         copy.comment = this.payment.comment;
         copy.month = this.payment.month;
         copy.amount = this.payment.amount;
-        const trainingAcc: number = await this.getTrainingPaidAmount(this.payment);
-        this.payment.rest = this.trainingSelected.training_fees - this.payment.amount - trainingAcc;
+        //const trainingAcc: number = await this.getTrainingPaidAmount(this.payment);
+        this.payment.rest = this.chargeSelected ? Number(this.chargeSelected.rest) - Number(this.payment.amount) : 0;
         copy.rest = this.payment.rest;
         let internPromise: Promise<any>;
         if (this.isOnEdit) {
@@ -228,7 +213,9 @@ export class PaymentFormComponent implements OnInit {
         this.block = true;
         internPromise.then(
             () => {
-                this.manageInternSold(this.oldPayment);
+                if (this.chargeSelected) {
+                    this.manageInternSold(this.oldPayment);
+                }
                 this.goToReceipt();
                 !this.offer && this.manageRegister(this.payment, this.payment.rest);
                 this.block = false;
@@ -242,15 +229,16 @@ export class PaymentFormComponent implements OnInit {
 
     }
 
-    async getTrainingPaidAmount(payment: Payment): Promise<number> {
-        const payments: Array<Payment> = await Payment.getAllByIntern(this.internSelected.id);
-        return payments.reduce((a, b) => {
-            if (this.trainingSelected.name === payment.training) {
-                return Number(a) + Number(b.amount)
-            }
-            return a
-        }, 0)
-    }
+    //
+    // async getTrainingPaidAmount(payment: Payment): Promise<number> {
+    //     const payments: Array<Payment> = await Payment.getAllByIntern(this.internSelected.id);
+    //     return payments.reduce((a, b) => {
+    //         if (this.trainingSelected.name === payment.training) {
+    //             return Number(a) + Number(b.amount)
+    //         }
+    //         return a
+    //     }, 0)
+    // }
 
     async manageRegister(payment: Payment, rest: number) {
         if (!this.isOnEdit) {
@@ -260,7 +248,7 @@ export class PaymentFormComponent implements OnInit {
             register.date = (payment.date as Date).getTime();
             register.intern = this.internSelected.name;
             register.sold = this.internSelected.sold;
-            register.training = this.trainingSelected.name;
+            register.training = this.chargeSelected.session_name;
             register.username = payment.username;
             register.rest = rest;
             register.insert().catch(() => {
@@ -292,6 +280,13 @@ export class PaymentFormComponent implements OnInit {
                 this.block = false;
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
             });
+            Charge.updateRest(this.payment.rest, this.chargeSelected.id).then(() => {
+                this.block = false
+            }, () => {
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                this.block = false;
+            });
+
     }
 
     goBack() {

@@ -122,7 +122,12 @@ export class ExamFormComponent implements OnInit {
                 this.transformIntegerToBoolean();
                 this.exam.date = new Date(Number(this.exam.date));
                 Intern.get(this.exam.intern_id as number).then(
-                    intern => this.internSelected = intern);
+                    intern => {
+                        this.internSelected = intern;
+                        if(this.isOnEdit) {
+                            this.examForm.controls['intern_id'].disable();
+                        }
+                    });
             });
     }
 

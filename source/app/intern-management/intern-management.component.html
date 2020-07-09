@@ -1,9 +1,9 @@
 
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
-<h1 *ngIf="intern.isAllowed" class="block"> <span class="glyphicon glyphicon-ban-circle"></span>{{'messages.blocked' | translate}}</h1>
+<h1 *ngIf="intern?.isAllowed" class="block"> <span class="glyphicon glyphicon-ban-circle"></span>{{'messages.blocked' | translate}}</h1>
 <h2>{{'intern.title' | translate}} - {{intern?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
-<mat-tab-group [ngStyle]="{'opacity': intern.isAllowed ? '0.4' : '1'}" *ngIf="intern" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+<mat-tab-group [ngStyle]="{'opacity': intern?.isAllowed ? '0.4' : '1'}" *ngIf="intern" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
       <span class="glyphicon glyphicon-info-sign"></span> {{'intern-management.information' | translate}}
@@ -50,6 +50,14 @@
     </ng-template>
     <div class="tab-content">
       <app-payment [intern]="intern"></app-payment>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="glyphicon glyphicon-list-alt"></span> {{'intern-management.charge' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-charge [intern]="intern"></app-charge>
     </div>
   </mat-tab>
 </mat-tab-group>

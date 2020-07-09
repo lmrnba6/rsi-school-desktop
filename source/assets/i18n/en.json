@@ -85,9 +85,9 @@
       "medical": "Medical certificate",
       "residence": "Copy of the cart stay (for foreigners)",
       "backpack": "Received a backpack?",
-      "fees": "Need to pay training fees?",
-      "fees_enrollment": "Need to pay enrollment fees?",
-      "fees_books": "Need to pay books fees?",
+      "fees": "Add training fees to sold?",
+      "fees_enrollment": "Add enrollment fees to sold?",
+      "fees_books": "Add books fees to sold?",
       "isAllowed": "Blocked",
       "photo": "Photo",
       "scholar": "Scholar level",
@@ -134,9 +134,25 @@
       "amount" : "Amount",
       "date": "Date",
       "comment": "Comment",
-      "training": "Training",
+      "session": "Group",
       "month": "Month",
-      "intern_id": "Student"
+      "intern_id": "Student",
+      "charge": "Charge"
+    }
+  },
+  "charge": {
+    "title": "Charges",
+    "noCharge": "Payment for other reasons",
+    "placeholder": {
+      "rest": "Rest",
+      "sold": "Sold",
+      "intern": "Student",
+      "session": "Group",
+      "amount" : "Amount",
+      "date": "Date",
+      "from": "From",
+      "to": "To",
+      "comment": "Comment"
     }
   },
   "register": {
@@ -317,7 +333,8 @@
     "attendance": "Présence",
     "exam": "Examination",
     "payment": "Payment",
-    "weekday": "Schedule"
+    "weekday": "Schedule",
+    "charge": "Charges"
   },
   "instructor-management": {
     "information" : "Information",

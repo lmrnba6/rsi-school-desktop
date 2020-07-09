@@ -28,7 +28,7 @@
     <br>
     <mat-form-field *ngIf="!intern && !session" appearance="outline">
         <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
-      <mat-select id="session" (selectionChange)="onByDate()" [(ngModel)]="session_id">
+      <mat-select id="session" (selectionChange)="onByDate()" [(ngModel)]="session_id" [disabled]="weekday">
         <mat-option *ngFor="let session of sessions" [value]="session.id">
             {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
         </mat-option>

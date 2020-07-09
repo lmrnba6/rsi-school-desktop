@@ -36,7 +36,7 @@
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field *ngIf="!isOnEdit" class="example-full-width" appearance="outline">
+            <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{'payment_instructor.placeholder.instructor_id' | translate}}</mat-label>
                 <input name="instructor" formControlName="instructor" matInput
                        (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto"
@@ -50,10 +50,6 @@
                 </mat-autocomplete>
                 <mat-error *ngIf="instructor.invalid || !instructorSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <div *ngIf="isOnEdit">
-                <mat-label>{{'payment_instructor.placeholder.instructor_id' | translate}}</mat-label>
-                <h4>{{instructorSelected.name}}</h4>
-            </div>
         </div>
     </form>
 </mat-card>

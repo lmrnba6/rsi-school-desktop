@@ -78,6 +78,9 @@ export class UserFormComponent implements OnInit {
             role: this.role,
             password: this.password
         });
+        if(this.isOnEdit) {
+            this.userForm.controls['username'].disable();
+        }
     }
 
     /**

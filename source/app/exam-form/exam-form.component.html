@@ -11,9 +11,9 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field *ngIf="!isOnEdit" class="example-full-width"  appearance="outline">
+            <mat-form-field class="example-full-width"  appearance="outline">
                 <mat-label>{{'exam.placeholder.intern_id' | translate}}</mat-label>
-                <input name="intern_id" formControlName="intern_id" matInput
+                <input name="intern_id" formControlName="intern_id" matInput [ngModel]="internSelected"
                        (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
                        required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
@@ -25,10 +25,6 @@
                 </mat-autocomplete>
                 <mat-error *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <div *ngIf="isOnEdit">
-                <mat-label>{{'exam.placeholder.intern' | translate}}</mat-label>
-                <h4>{{internSelected.name}}</h4>
-            </div>
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'exam.placeholder.session_id' | translate}}</mat-label>

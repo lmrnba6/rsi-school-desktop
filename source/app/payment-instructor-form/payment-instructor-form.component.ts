@@ -97,6 +97,11 @@ export class PaymentInstructorFormComponent implements OnInit {
                 this.oldPaymentInstructor = val.amount;
                 Instructor.get(this.payment_instructor.instructor_id as number).then(instructor => this.instructorSelected = instructor)
                 this.payment_instructor.date = new Date(Number(this.payment_instructor.date));
+                if(this.isOnEdit) {
+                    this.paymentForm.controls['amount'].disable();
+                    this.paymentForm.controls['date'].disable();
+                    this.paymentForm.controls['instructor'].disable();
+                }
             });
     }
 

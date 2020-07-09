@@ -249,6 +249,28 @@ export class Session {
             });
     }
 
+    public static getAllSessionByWeekday(weekday: number): Promise<Session[]> {
+        const sql = `SELECT distinct s.*, t.name as training, t.type, ins.name as instructor  FROM "session" AS s 
+                                                    INNER JOIN "enrollment" AS e ON e.session_id = s.id
+                                                    INNER JOIN "intern" AS i ON e.intern_id = i.id
+                                                    INNER JOIN "training" AS t ON training_id = t.id
+                                                    INNER JOIN "instructor" AS ins ON instructor_id = ins.id
+                                                    INNER JOIN "weekday" AS w ON s.id = w.session_id
+                                                  
+                                                   WHERE w.id = ${weekday}`;
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: Session[] = [];
+                for (const row of rows) {
+                    const enrollment = new Session().fromRow(row);
+                    users.push(enrollment);
+                }
+                return users;
+            });
+    }
+
     public static getAllSessionByIntern(intern: number): Promise<Session[]> {
         const sql = `SELECT s.*, t.name as training, ins.name as instructor  FROM "session" AS s 
                                                     INNER JOIN "enrollment" AS e ON e.session_id = s.id

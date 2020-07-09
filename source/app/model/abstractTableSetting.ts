@@ -14,6 +14,8 @@ export class AbstractTableSetting {
   columns: Array<any>;
   paging: boolean;
   tools: boolean;
+  selectAll: boolean;
+  deleteAll: boolean;
 }
 
 export class AbstractTableEvent {

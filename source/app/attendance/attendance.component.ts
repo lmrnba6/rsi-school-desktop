@@ -72,7 +72,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(): void {
-        if(this.session) {
+        if (this.session) {
             this.session_id = this.session.id;
             this.onByDate();
         }
@@ -86,7 +86,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
      */
     public getParams(): void {
         this.route.params.subscribe(res => {
-           if(res.instructorId) {
+            if (res.instructorId) {
                 this.instructorId = Number(res.instructorId)
             }
         });
@@ -95,8 +95,12 @@ export class AttendanceComponent implements OnInit, OnChanges {
     getSessions() {
         Session.getAll().then(sessions => {
             this.sessions = sessions;
+            if(this.weekday) {
+                this.session_id = this.weekday.session_id as number;
+                this.onByDate();
+            }
             const instructorId: number = this.instructor ? this.instructor.id : this.instructorId;
-            if(instructorId) {
+            if (instructorId) {
                 this.sessions = this.sessions.filter(session => session.instructor_id === instructorId);
             }
         });
@@ -117,7 +121,10 @@ export class AttendanceComponent implements OnInit, OnChanges {
             .then(
                 values => {
                     this.block = false;
-                    this.data = {items: values[0], paging: {totalCount: (values[1][0] as any) ? (values[1][0] as any).count : 0 }};
+                    this.data = {
+                        items: values[0],
+                        paging: {totalCount: (values[1][0] as any) ? (values[1][0] as any).count : 0}
+                    };
                 },
                 err => {
                     this.block = false;
@@ -138,7 +145,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.dataByDateCopy = {items: [], paging: {totalCount: 0}};
         this.block = true;
         Promise.all([Enrollment.getAllBySession(this.session_id), Attendance.getAllBySession(this.session_id)])
-            .then( async values => {
+            .then(async values => {
                     this.block = false;
                     this.dataByDate.paging.totalCount = values[0].length;
                     this.attendances = values[1];
@@ -208,7 +215,12 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'attendance.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'day', header: 'attendance.placeholder.day', type: 'text', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.day)}`},
+            {
+                columnDef: 'day',
+                header: 'attendance.placeholder.day',
+                type: 'text',
+                cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.day)}`
+            },
             {
                 columnDef: 'present',
                 header: 'attendance.placeholder.present',
@@ -253,7 +265,14 @@ export class AttendanceComponent implements OnInit, OnChanges {
             }
         ];
         !this.intern && !this.instructor && !this.weekday &&
-        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
+        this.setting.cols.push({
+            columnDef: 'settings',
+            class: 'a10',
+            header: '',
+            type: 'settings',
+            delete: true,
+            editRow: true
+        });
     }
 
     public initSettingByDate(): void {

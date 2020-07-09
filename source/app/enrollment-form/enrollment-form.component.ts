@@ -9,6 +9,7 @@ import {Session} from "../model/session";
 import {Intern} from "../model/intern";
 import {Training} from "../model/training";
 import {DialogsService} from "../_services/dialogs.service";
+import {Charge} from "../model/charge";
 
 @Component({
     selector: 'app-enrollment-form',
@@ -58,7 +59,7 @@ export class EnrollmentFormComponent implements OnInit {
         Session.getAll().then(values => {
             this.block = false;
             this.sessions = values;
-        }, ()=> {
+        }, () => {
             this.block = false;
             this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
         });
@@ -69,11 +70,11 @@ export class EnrollmentFormComponent implements OnInit {
     }
 
     onSessionChange() {
-        if(this.enrollment.session_id && this.internSelected){
+        if (this.enrollment.session_id && this.internSelected) {
             this.block = true;
             Enrollment.getAllByIntern(this.internSelected.id).then(enrollments => {
                 this.block = false;
-                if(enrollments.some(enrollment => enrollment.session_id === this.enrollment.session_id)) {
+                if (enrollments.some(enrollment => enrollment.session_id === this.enrollment.session_id)) {
                     (this.enrollment.session_id as any) = undefined;
                     this.messagesService.notifyMessage(this.translate.instant('messages.intern_already_enrolled'), '', 'error');
                 }
@@ -82,7 +83,7 @@ export class EnrollmentFormComponent implements OnInit {
                 this.block = false;
             })
             Promise.all([Enrollment.getAllBySession(Number(this.enrollment.session_id)), Session.get(Number(this.enrollment.session_id))]).then(values => {
-                if(values[0].length >= values[1].limit){
+                if (values[0].length >= values[1].limit) {
                     (this.enrollment.session_id as any) = undefined;
                     this.messagesService.notifyMessage(this.translate.instant('messages.session_full'), '', 'error');
                 }
@@ -91,7 +92,7 @@ export class EnrollmentFormComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.internSelected = null;
             this.block = true;
             Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
@@ -120,7 +121,7 @@ export class EnrollmentFormComponent implements OnInit {
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
-            } else if(res.in) {
+            } else if (res.in) {
                 this.express = true;
                 this.getInternToEnroll(res.in)
             } else {
@@ -153,8 +154,13 @@ export class EnrollmentFormComponent implements OnInit {
             .then((val: Enrollment) => {
                 this.enrollment = val;
                 this.enrollment.date = new Date(Number(this.enrollment.date));
-                Intern.get(this.enrollment.intern_id as number).then(intern =>
-                    this.internSelected = intern);
+                Intern.get(this.enrollment.intern_id as number).then(intern => {
+                        this.internSelected = intern
+                        if (this.isOnEdit || this.express) {
+                            this.enrollmentForm.controls['intern_id'].disable();
+                        }
+                    }
+                );
             });
     }
 
@@ -197,9 +203,9 @@ export class EnrollmentFormComponent implements OnInit {
             () => {
                 this.block = false;
                 !this.isOnEdit && this.manageInternSold();
-                if(this.express){
+                if (this.express) {
                     this.goToPayment(this.internSelected.id)
-                }else {
+                } else {
                     this.goBack();
                 }
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
@@ -215,7 +221,7 @@ export class EnrollmentFormComponent implements OnInit {
             .confirm('messages.warning_title', 'messages.go_to_payment_message', true, 'usd')
             .subscribe(confirm => {
                 if (confirm) {
-                    const session = this.sessions.find(s => s.id === this.enrollment.session_id );
+                    const session = this.sessions.find(s => s.id === this.enrollment.session_id);
                     this.router.navigate(['/payment/express/' + id + '/' + (session ? session.training_id : '')]);
 
                 }
@@ -225,25 +231,40 @@ export class EnrollmentFormComponent implements OnInit {
     manageInternSold() {
         Session.get(this.enrollment.session_id as number).then(session => {
             Training.get(session.training_id as number).then(training => {
+                let charge = 0;
                 if (this.training_fees) {
-                    this.internSelected.sold =  Number(this.internSelected.sold) + Number(training.training_fees);
+                    charge = charge + Number(training.training_fees);
+                    this.internSelected.sold = Number(this.internSelected.sold) + Number(training.training_fees);
                 }
                 if (this.backpack) {
-                    this.internSelected.comment = (this.internSelected.comment || '') +   '\n 1 sac à dos \n';
+                    this.internSelected.comment = (this.internSelected.comment || '') + '\n 1 sac à dos \n';
                 }
                 if (this.books_fees) {
+                    charge = charge + Number(training.books_fees);
                     this.internSelected.sold = Number(this.internSelected.sold) + Number(training.books_fees);
                 }
                 if (this.enrollment_fees) {
+                    charge = charge + Number(training.enrollment_fees);
                     this.internSelected.sold = Number(this.internSelected.sold) + Number(training.enrollment_fees);
                 }
-                this.block = true;
-                this.internSelected.sold = Number(Number(this.internSelected.sold).toFixed(0));
-                Intern.updateSoldAndComment(this.internSelected.id, this.internSelected.sold,this.internSelected.comment).then(() => this.block = false,
-                    () => {
+                const newCharge = new Charge();
+                newCharge.amount = charge;
+                newCharge.date = new Date().getTime();
+                newCharge.intern = this.internSelected.id;
+                newCharge.rest = charge;
+                newCharge.session = this.enrollment.session_id;
+                newCharge.comment = "Frais à payer"
+                newCharge.insert().then(() => this.block = false, () => () => {
                     this.block = false;
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                })
+                });
+                this.block = true;
+                this.internSelected.sold = Number(Number(this.internSelected.sold).toFixed(0));
+                Intern.updateSoldAndComment(this.internSelected.id, this.internSelected.sold, this.internSelected.comment).then(() => this.block = false,
+                    () => {
+                        this.block = false;
+                        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    })
             })
         })
     }

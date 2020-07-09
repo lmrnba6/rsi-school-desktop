@@ -11,13 +11,11 @@
       <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
           <span class="glyphicon glyphicon-remove"></span>
       </button>
-      <mat-form-field *ngIf="!isOnEdit" appearance="outline">
+      <mat-form-field appearance="outline">
           <mat-label>{{'user.placeholder.username' | translate}}</mat-label>
         <input name="username" formControlName="username" (blur)="checkUserName()" [(ngModel)]="user.username" matInput autofocus required>
         <mat-error *ngIf="username.invalid">{{'messages.field_required_error' | translate}}</mat-error>
       </mat-form-field>
-          <label *ngIf="isOnEdit">{{'user.placeholder.username' | translate}}</label>
-          <h2 *ngIf="isOnEdit">{{user?.username}}</h2>
       <br>
       <mat-form-field appearance="outline">
           <mat-label>{{'user.placeholder.name' | translate}}</mat-label>

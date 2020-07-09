@@ -14,7 +14,7 @@ export class Payment {
     public rest: number;
     public date: Date| number;
     public comment = '';
-    public training = '';
+    public charge = '';
     public month = '';
     public username = '';
     public intern_id: number | Intern;
@@ -59,7 +59,10 @@ export class Payment {
 
 
     public static getAll(): Promise<Payment[]> {
-        const sql = `SELECT * FROM "payment" ORDER BY date DESC`;
+        const sql = `SELECT p.*, s.name as session_name FROM "payment" p
+                            LEFT JOIN "charge" AS c ON p.charge = c.id 
+                            LEFT JOIN "session" AS s ON c.session = s.id 
+                            ORDER BY date DESC`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -74,7 +77,10 @@ export class Payment {
     }
 
     public static getAllByIntern(intern: number): Promise<Payment[]> {
-        const sql = `SELECT * FROM "payment" WHERE intern_id = ${intern} ORDER BY date ASC`;
+        const sql = `SELECT p.*, s.name as session_name FROM "payment" p
+                            LEFT JOIN "charge" AS c ON p.charge = c.id 
+                            LEFT JOIN "session" AS s ON c.session = s.id 
+        WHERE intern_id = ${intern} ORDER BY p.date ASC`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -95,9 +101,11 @@ export class Payment {
                             WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.training, p.error 
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,s.name as session_name, p.error 
                             FROM "payment" AS p 
-                            INNER JOIN "intern" AS i ON p.intern_id = i.id 
+                            INNER JOIN "intern" AS i ON p.intern_id = i.id
+                            LEFT JOIN "charge" AS c ON p.charge = c.id 
+                            LEFT JOIN "session" AS s ON c.session = s.id 
                             WHERE  
                             i.name ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
@@ -116,9 +124,11 @@ export class Payment {
     }
 
     public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Payment[]> {
-        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.error, p.rest, p.training 
+        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.error, p.rest, s.name as session_name 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
+                            LEFT JOIN "charge" AS c ON p.charge = c.id 
+                            LEFT JOIN "session" AS s ON c.session = s.id 
                             WHERE i.id = ${intern}
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
@@ -156,8 +166,8 @@ export class Payment {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "payment" (amount,rest, username, date, comment, training, month, intern_id)
-            VALUES(${this.amount}, ${this.rest}, '${this.username}', '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}','${this.training}','${this.month.replace(/\'/g, "''")}', ${this.intern_id})`;
+            INSERT INTO "payment" (amount,rest, username, date, comment, charge, month, intern_id)
+            VALUES(${this.amount}, ${this.rest}, '${this.username}', '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',${this.charge},'${this.month.replace(/\'/g, "''")}', ${this.intern_id})`;
 
         const values = {
         };
@@ -175,7 +185,7 @@ export class Payment {
     public update(): Promise<void> {
         const sql = `
             UPDATE "payment"
-               SET amount = ${this.amount}, error = ${this.error}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', training = '${this.training}'
+               SET amount = ${this.amount}, error = ${this.error}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', charge = ${this.charge}
                , month = '${this.month ? this.month.replace(/\'/g, "''") : ''}', intern_id = '${this.intern_id}'
              WHERE id = ${this.id}`;
 
@@ -214,9 +224,10 @@ export class Payment {
         this.date = row['date'];
         this.comment = row['comment'];
         this.month = row['month'];
-        this.training = row['training'];
+        this.charge = row['charge'];
         this.intern_id = row['intern_id'];
         this['intern'] = row['intern'];
+        this['session_name'] = row['session_name'];
         return this;
     }
 

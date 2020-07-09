@@ -7,11 +7,11 @@
         <mat-divider></mat-divider>
         <mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="attendanceForm = !attendanceForm"><span
+                <a mat-list-item [routerLink]="" (click)="handleOpen('attendance')"><span
                         class="glyphicon glyphicon-education"></span>{{'document.intern' | translate}}</a>
-                <mat-form-field *ngIf="attendanceForm" appearance="outline">
+                <mat-form-field *ngIf="open === 'attendance'" appearance="outline">
                     <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onAttendanceForm()" *ngIf="attendanceForm" [(ngModel)]="session_id"
+                    <mat-select (selectionChange)="onAttendanceForm()" *ngIf="open === 'attendance'" [(ngModel)]="session_id"
                                 >
                         <mat-option *ngFor="let session of sessions" [value]="session.id">
                             {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
@@ -20,9 +20,9 @@
                 </mat-form-field>
             </mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="card = !card"><span
+                <a mat-list-item [routerLink]="" (click)="handleOpen('card')"><span
                         class="glyphicon glyphicon-credit-card"></span>{{'document.card' | translate}}</a>
-                <mat-form-field *ngIf="card" class="example-full-width" appearance="outline">
+                <mat-form-field *ngIf="open === 'card'" class="example-full-width" appearance="outline">
                     <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
                     <input matInput
                            (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
@@ -37,9 +37,9 @@
                 </mat-form-field>
             </mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="receipt = !receipt"><span
+                <a mat-list-item [routerLink]="" (click)="handleOpen('receipt')"><span
                         class="glyphicon glyphicon-usd"></span>{{'document.receipt' | translate}}</a>
-                <mat-form-field *ngIf="receipt" class="example-full-width" appearance="outline">
+                <mat-form-field *ngIf="open === 'receipt'" class="example-full-width" appearance="outline">
                     <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
                     <input matInput
                            (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
@@ -54,9 +54,9 @@
                 </mat-form-field>
             </mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="form = !form"><span
+                <a mat-list-item [routerLink]="" (click)="handleOpen('form')"><span
                         class="glyphicon glyphicon-list-alt"></span>{{'document.form' | translate}}</a>
-                <mat-form-field *ngIf="form" class="example-full-width" appearance="outline">
+                <mat-form-field *ngIf="open === 'form'" class="example-full-width" appearance="outline">
                     <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
                     <input matInput
                            (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"

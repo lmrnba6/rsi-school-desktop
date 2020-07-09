@@ -60,9 +60,9 @@ export class AbstractTableComponent
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
   @Output() filter: EventEmitter<any> = new EventEmitter<any>();
     @Output() deleteAll: EventEmitter<any> = new EventEmitter<any>();
-    public printImage = this.page === 'user' ? '../../assets/images/printImage.png' : '../../dist/assets/images/printImage.png';
-    public addImage = this.page === 'user' ? '../../assets/images/addImage.png' : '../../dist/assets/images/addImage.png';
-    public saveImage = this.page === 'user' ? '../../assets/images/saveImage.png' : '../../dist/assets/images/saveImage.png';
+    public printImage;
+    public addImage;
+    public saveImage;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -95,8 +95,9 @@ export class AbstractTableComponent
 
   ngOnChanges(): void {
     //prime table
-   this.printImage = this.page === 'user' ? '../../assets/images/printImage.png' : '../../dist/assets/images/printImage.png';
-   this.addImage = this.page === 'user' ? '../../assets/images/addImage.png' : '../../dist/assets/images/addImage.png';
+  this.printImage = 'user inbox charge payment'.includes(this.page) ? '../../assets/images/printImage.png' : '../../dist/assets/images/printImage.png';
+  this.addImage = 'user inbox charge payment'.includes(this.page) ? '../../assets/images/addImage.png' : '../../dist/assets/images/addImage.png';
+  this.saveImage = 'user inbox charge payment'.includes(this.page) ? '../../assets/images/saveImage.png' : '../../dist/assets/images/saveImage.png';
       this.cols = [];
       this.colsSelected = [];
       this.setting.cols.forEach((x:any)=> {
@@ -309,6 +310,12 @@ export class AbstractTableComponent
   public getStyleRow(row: any) {
       if(this.page === 'register') {
           if(Number(row.amount) < 0) {
+              return {background: '#ffe6e6'}
+          } else {
+              return {background: '#d9ffe1'}
+          }
+      }else if(this.page === 'charge') {
+          if(Number(row.rest) > 0) {
               return {background: '#ffe6e6'}
           } else {
               return {background: '#d9ffe1'}
