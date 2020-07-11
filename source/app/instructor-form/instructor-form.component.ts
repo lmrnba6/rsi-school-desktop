@@ -154,7 +154,7 @@ export class InstructorFormComponent implements OnInit, OnChanges {
         const user: User = new User();
         user.role = 'teacher';
         user.name = this.instructor.name;
-        user.username = this.instructor.phone;
+        user.username = this.instructor.id.toString();
         user.password = this.instructor.phone;
         this.block = true;
         user.insert().then(

@@ -34,6 +34,7 @@
     "individual": "Individual"
   },
   "menu": {
+    "account": "Account",
     "settings": "Settings",
     "intern": "Students",
     "instructor": "Teachers",

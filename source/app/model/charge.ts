@@ -28,6 +28,13 @@ export class Charge {
             .then((count: any) => count);
     }
 
+    public static getSold(intern: number): Promise<number> {
+        const sql = `select sum(rest) sold from charge 
+                            WHERE  intern = ${intern} `;
+        return TheDb.selectAll(sql, {})
+            .then((sold: any) => sold);
+    }
+
     public static getCountByIntern(intern: number): Promise<Charge[]> {
         return TheDb.selectAll(`SELECT count(*) as count FROM "charge" AS p INNER JOIN "intern" AS i ON p.intern = i.id 
                             WHERE i.id = ${intern}`, {})
@@ -195,7 +202,7 @@ export class Charge {
         const sql = `
             UPDATE "charge"
                SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', session = '${this.session}'
-               , intern = '${this.intern}'
+               , intern = '${this.intern}', rest = ${this.rest}
              WHERE id = ${this.id}`;
 
         const values = {
@@ -233,6 +240,7 @@ export class Charge {
         this.session = row['session'];
         this['session_name'] = row['session_name'];
         this.intern = row['intern'];
+        this['sold'] = row['sold'];
         return this;
     }
 }

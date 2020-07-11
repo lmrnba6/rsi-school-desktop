@@ -1,4 +1,4 @@
-<h2 *ngIf="!isOnEdit">{{'administration.school'| translate}}</h2>
+<h2>{{'administration.school'| translate}}  <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
 <mat-divider></mat-divider>
 <mat-card id="contentToConvert">
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">

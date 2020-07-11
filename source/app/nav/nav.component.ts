@@ -33,7 +33,6 @@ export class NavComponent{
     public powerImage = `../../dist/assets/images/powerImage.png`;
     public homeImage = `../../dist/assets/images/homeImage.png`;
 
-
     constructor(private authService: AuthenticationService,
               private router: Router,
               private translate: TranslateService,
@@ -56,6 +55,10 @@ export class NavComponent{
     });
 
   }
+
+    fixImage(event: any) {
+        return event.target.src = event.target.src.replace('/dist', '');
+    }
 
   getMessages() {
       Inbox.getCountUnread( this.user.id).then(inbox => this.messages = (inbox[0] as any).count);

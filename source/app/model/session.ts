@@ -153,17 +153,7 @@ export class Session {
 
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Session[]> {
-        const sql = Settings.isDbLocal ? `SELECT s.id, s.name, s.start, s.closed, s.end, s.\`limit\`, s.instructor_id, s.training_id, i.name as instructor, t.name as training 
-                                                FROM "session" AS s 
-                                                INNER JOIN "instructor" AS i ON s.instructor_id = i.id
-                                                INNER JOIN "training" as t ON s.training_id = t.id
-                                                WHERE s.name LIKE '%${filter}%' OR 
-                            start LIKE '%${filter}%' OR
-                            end LIKE '%${filter}%' OR 
-                            i.name LIKE '%${filter}%' OR
-                            \`limit\` LIKE '%${filter}%' OR
-                            t.name LIKE '%${filter}%'
-                            ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
+        const sql =
             `with x as (SELECT s.id, count(e.id) as interns
                                                 FROM "session" AS s 
             left JOIN enrollment as e on e.session_id = s.id
@@ -173,13 +163,14 @@ export class Session {
 
                                                 (SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, x.interns,
                                                 i.name as instructor, t.name as training,  
-                                                STRING_AGG(w.name || ' ' || w.time || ' ' || s.name, '---') as weekdays
+                                                STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays
                                                                                 FROM "session" AS s 
                                                 join x on x.id = s.id
-                                                left JOIN weekday as w on w.session_id = s.id
-                                                INNER JOIN "instructor" AS i ON s.instructor_id = i.id
-                                                INNER JOIN "training" as t ON s.training_id = t.id
-                                                
+                                                LEFT JOIN weekday as w on w.session_id = s.id
+                                                LEFT JOIN "instructor" AS i ON s.instructor_id = i.id
+                                                LEFT JOIN "training" as t ON s.training_id = t.id
+                                                LEFT JOIN "room" as r ON w.room_id = r.id
+
                                                 WHERE s.name ILIKE '%${filter}%' OR                                                                        
                                                 i.name ILIKE '%${filter}%' OR                         
                                                 t.name ILIKE '%${filter}%'
@@ -201,18 +192,27 @@ export class Session {
     }
 
     public static getAllPagedByInstructor(pageIndex: number, pageSize: number, sort: string, order: string, instructor: number): Promise<Session[]> {
-        const sql = Settings.isDbLocal ? `SELECT s.id, s.name, s.start, s.closed, s.end, s.\`limit\`, s.instructor_id, s.training_id , i.name as instructor, t.name as training
+        const sql =
+            `with x as (SELECT s.id, count(e.id) as interns
                                                 FROM "session" AS s 
+            left JOIN enrollment as e on e.session_id = s.id
                                                 INNER JOIN "instructor" AS i ON s.instructor_id = i.id
                                                 INNER JOIN "training" as t ON s.training_id = t.id
+                                                group by  s.id)
+
+                                                (SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, x.interns,
+                                                i.name as instructor, t.name as training,  
+                                                STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays
+                                                                                FROM "session" AS s 
+                                                join x on x.id = s.id
+                                                LEFT JOIN weekday as w on w.session_id = s.id
+                                                LEFT JOIN "instructor" AS i ON s.instructor_id = i.id
+                                                LEFT JOIN "training" as t ON s.training_id = t.id
+                                                LEFT JOIN "room" as r ON w.room_id = r.id
                                                 WHERE i.id = ${instructor}
-                            ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id , i.name as instructor, t.name as training
-                                                FROM "session" AS s 
-                                                INNER JOIN "instructor" AS i ON s.instructor_id = i.id
-                                                INNER JOIN "training" as t ON s.training_id = t.id
-                                                WHERE i.id = ${instructor}
-                            ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+                                                
+                            group by s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, i.name, t.name, x.interns
+                            ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex})`;
         const values = {
         };
 
@@ -272,7 +272,7 @@ export class Session {
     }
 
     public static getAllSessionByIntern(intern: number): Promise<Session[]> {
-        const sql = `SELECT s.*, t.name as training, ins.name as instructor  FROM "session" AS s 
+        const sql = `SELECT s.*, t.name as training, t.training_fees, t.books_fees,t.enrollment_fees, ins.name as instructor  FROM "session" AS s 
                                                     INNER JOIN "enrollment" AS e ON e.session_id = s.id
                                                     INNER JOIN "intern" AS i ON e.intern_id = i.id
                                                     INNER JOIN "training" AS t ON training_id = t.id
@@ -367,6 +367,9 @@ export class Session {
         this['type'] = row['type'];
         this.closed = row['closed'];
         this['weekdays'] = row['weekdays'];
+        this['training_fees'] = row['training_fees'];
+        this['books_fees'] = row['books_fees'];
+        this['enrollment_fees'] = row['enrollment_fees'];
         return this;
     }
 }

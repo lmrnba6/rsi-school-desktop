@@ -83,9 +83,16 @@ export class Instructor {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Instructor[]> {
-        const sql = `SELECT * FROM "instructor" WHERE name ILIKE '%${filter}%' OR 
-                            phone ILIKE '%${filter}%' OR
-                            email ILIKE '%${filter}%' 
+        const sql = `SELECT i.*, 
+                            STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays  
+                            FROM "instructor" i             
+                            left join session as s on i.id = s.instructor_id
+                            left join weekday as w on w.session_id = s.id
+                            left JOIN "room" as r ON w.room_id = r.id               
+                            WHERE i.name ILIKE '%${filter}%' OR 
+                            i.phone ILIKE '%${filter}%' OR
+                            i.email ILIKE '%${filter}%' 
+                            group by i.id
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };
@@ -161,6 +168,7 @@ export class Instructor {
         this.email = row['email'];
         this.sold = row['sold'];
         this.isFullTime = row['isFullTime']
+        this['weekdays'] = row['weekdays'];
         return this;
     }
 }

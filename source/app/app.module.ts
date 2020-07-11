@@ -102,6 +102,7 @@ import {SafePipe} from "./_pipes/safe.pipe";
 import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
 import {ChargeComponent} from "./charge/charge.component";
+import {ChargeFormComponent} from "./charge-form/charge-form.component";
 
 
 @NgModule({
@@ -233,6 +234,7 @@ import {ChargeComponent} from "./charge/charge.component";
         RegisterComponent,
         RegisterFormComponent,
         ChargeComponent,
+        ChargeFormComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent],
     providers: [

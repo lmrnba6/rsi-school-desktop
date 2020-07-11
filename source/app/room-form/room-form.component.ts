@@ -31,7 +31,6 @@ export class RoomFormComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.initForm();
         this.getParams();
     }
 
@@ -47,6 +46,7 @@ export class RoomFormComponent implements OnInit {
                 this.isOnEdit = false;
                 this.room = new Room();
             }
+            this.initForm();
         });
     }
 

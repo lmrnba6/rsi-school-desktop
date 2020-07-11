@@ -8,7 +8,7 @@
         <nav>
             <ul>
                 <li (click)="goHome()" class="pull-left"><p>
-                    <img style="width: 30px" [src]="homeImage" alt="">
+                    <img (error)="fixImage($event)" style="width: 30px" [src]="homeImage" alt="">
                     <!--          <span class="glyphicon glyphicon-home"> </span>-->
                     <!--{{'nav.home' | translate}}</p>-->
                 </li>
@@ -16,7 +16,7 @@
                 <li (click)="logout()" class="pull-right">
                     <p>
                         <!--            <span class="glyphicon glyphicon-off"></span>-->
-                        <img style="width: 30px" [src]="powerImage" alt="">
+                        <img (error)="fixImage($event)" style="width: 30px" [src]="powerImage" alt="">
                         <!--{{'nav.logout' | translate}}-->
                     </p></li>
                 <!--        <li *ngIf="connected" class="pull-right">-->
@@ -31,7 +31,7 @@
                 <!--        </li>-->
                 <li class="pull-right">
                     <p>
-                        <img style="width: 30px; margin-right: 5px" [src]="userImage" alt="">{{user.name}}
+                        <img (error)="fixImage($event)" style="width: 30px; margin-right: 5px" [src]="userImage" alt="">{{user.name}}
                         <!--            <span class="glyphicon glyphicon-user"></span>{{user.name}}-->
                     </p></li>
                 <li (click)="languageChange()" class="pull-right">
@@ -42,7 +42,7 @@
                 <li (click)="inbox()" class="pull-right">
                     <p style="padding-right: 5px">
                         <!--            <span matBadge="{{messages}}" class="glyphicon glyphicon-envelope"></span>-->
-                        <img style="width: 30px" [src]="inboxImage" alt="">
+                        <img (error)="fixImage($event)" style="width: 30px" [src]="inboxImage" alt="">
                     <p style="background: red;
     border-radius: 5px;
     padding: 0 5px;

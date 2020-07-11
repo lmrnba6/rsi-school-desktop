@@ -1,0 +1,71 @@
+<h2>{{'charge.title'| translate}} - {{charge?.amount}} -</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="chargeForm">
+        <div class="container">
+            <button [disabled]="chargeForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'charge.placeholder.amount' | translate}}</mat-label>
+                <input name="amount" type="number" (blur)="parseAmount($event.target.value)" formControlName="amount"
+                       [ngModel]="charge.amount" matInput
+                       required autofocus>
+                <span matSuffix>DA</span>
+                <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'charge.placeholder.rest' | translate}}</mat-label>
+                <input name="rest" type="number" (blur)="parseRest($event.target.value)" formControlName="rest"
+                       [ngModel]="charge.rest" matInput
+                       required autofocus>
+                <span matSuffix>DA</span>
+                <mat-error *ngIf="rest.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'charge.placeholder.date' | translate}}</mat-label>
+                <input name="date" formControlName="date" [(ngModel)]="charge.date" matInput
+                       required [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+                <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'charge.placeholder.intern' | translate}}</mat-label>
+                <input name="intern" type="text"  formControlName="intern"
+                       [ngModel]="internSelected.name" matInput
+                       required autofocus>
+                <mat-error *ngIf="intern.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'charge.placeholder.session' | translate}}</mat-label>
+                <mat-select formControlName="session" [(ngModel)]="charge.session"
+                            name="session" required>
+                    <mat-option value="">----</mat-option>
+                    <mat-option *ngFor="let session of sessions" [value]="session.id">
+                        {{session.name}} {{session.training_fees}} DA {{session.books_fees}} DA {{session.enrollment_fees}} DA
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="session.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'charge.placeholder.comment' | translate}}</mat-label>
+                <input name="comment" formControlName="comment" [(ngModel)]="charge.comment" matInput
+                       placeholder="{{'charge.placeholder.comment' | translate}}" >
+                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+        </div>
+    </form>
+</mat-card>

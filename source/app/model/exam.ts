@@ -164,6 +164,29 @@ export class Exam {
             });
     }
 
+    public static getAllPagedByInstructor(pageIndex: number, pageSize: number, sort: string, order: string, instructor: number): Promise<Exam[]> {
+        const sql = `SELECT e.id, e.mark, e.result, e.retake, e.date, e.time, e.comment, s.training_id, e.intern_id, e.session_id, i.name as intern, s.name as session, t.name as training
+                                                FROM "exam" AS e 
+                                                INNER JOIN "session" AS s ON e.session_id = s.id
+                                             INNER JOIN "training" AS t ON s.training_id = t.id
+                                             INNER JOIN "intern" AS i ON e.intern_id = i.id
+                                             
+                                                    WHERE s.instructor_id = ${instructor}  
+                           
+                            ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const exams: Exam[] = [];
+                for (const row of rows) {
+                    const exam = new Exam().fromRow(row);
+                    exams.push(exam);
+                }
+                return exams;
+            });
+    }
+
     public insert(): Promise<void> {
         const sql = `
             INSERT INTO "exam" (mark, result, date, retake, comment, time, intern_id, session_id)

@@ -214,7 +214,7 @@ export class PaymentFormComponent implements OnInit {
         internPromise.then(
             () => {
                 if (this.chargeSelected) {
-                    this.manageInternSold(this.oldPayment);
+                    this.manageInternSold();
                 }
                 this.goToReceipt();
                 !this.offer && this.manageRegister(this.payment, this.payment.rest);
@@ -268,20 +268,17 @@ export class PaymentFormComponent implements OnInit {
             });
     }
 
-    manageInternSold(payment: number) {
-        if (this.isOnEdit) {
-            this.internSelected.sold = Number(this.internSelected.sold) + Number(payment);
-        }
-        this.internSelected.sold = Number(this.internSelected.sold) - Number(this.payment.amount);
+    manageInternSold() {
         this.block = true;
-        Intern.updateSoldAndComment(this.internSelected.id, this.internSelected.sold, this.internSelected.comment).then(() => this.block = false,
-            e => {
-                console.log(e);
-                this.block = false;
-                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-            });
             Charge.updateRest(this.payment.rest, this.chargeSelected.id).then(() => {
                 this.block = false
+                Charge.getSold(this.chargeSelected.intern as number).then(sold => {
+                        Intern.updateSold(this.chargeSelected.intern as number, sold[0].sold).then();
+                    }, () => {
+                        this.block = false;
+                        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    }
+                )
             }, () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;

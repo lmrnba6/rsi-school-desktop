@@ -42,13 +42,15 @@ export class EnrollmentComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
-        this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
+        if(!this.intern) {
+            this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+        }
+
     }
 
     ngOnChanges(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
-        this.initSetting();
     }
 
     public getDataTable(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): void {
@@ -103,7 +105,7 @@ export class EnrollmentComponent implements OnInit, OnChanges {
             {columnDef: 'instructor', header: 'enrollment.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
             {columnDef: 'date', header: 'enrollment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`}
         ];
-        this.isAdmin &&
+        !this.intern && this.isAdmin &&
         this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: this.isAdmin});
     }
 

@@ -5,7 +5,7 @@
   </app-loader>
   <form [formGroup]="roomForm">
       <div class="container">
-      <button [disabled]="roomForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+      <button [disabled]="roomForm?.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
         <span class="glyphicon glyphicon-floppy-disk"></span>
       </button>
       <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>

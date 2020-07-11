@@ -9,6 +9,7 @@ import {Exam} from "../model/exam";
 import {Intern} from "../model/intern";
 import {AuthenticationService} from "../_services/authentication.service";
 import {Session} from "../model/session";
+import {User} from "../model/user";
 
 @Component({
     selector: 'app-exam',
@@ -32,6 +33,8 @@ export class ExamComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
+    public isInstructor: boolean;
+    public user: User;
     constructor(
         private dialogsService: DialogsService,
         public messagesService: MessagesService,
@@ -41,7 +44,9 @@ export class ExamComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.user = this.authService.getCurrentUser();
+        this.isAdmin = this.user.role === 'admin';
+        this.isInstructor = this.user.role === 'teacher';
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
     }
@@ -59,6 +64,7 @@ export class ExamComponent implements OnInit, OnChanges {
         Promise.all([this.intern ?
             Exam.getAllPagedByIntern(offset, limit, sort, order, this.intern.id) : this.session ?
                 Exam.getAllPagedBySession(offset, limit, sort, order, this.session.id) :
+                this.isInstructor ? Exam.getAllPagedByInstructor(offset, limit, sort, order, Number(this.user.username)) :
             Exam.getAllPaged(offset, limit, sort, order, filter), this.intern ? Exam.getCountByIntern(this.intern.id) :
             this.session ? Exam.getCountBySession(this.session.id) :
             Exam.getCount(this.filter)])

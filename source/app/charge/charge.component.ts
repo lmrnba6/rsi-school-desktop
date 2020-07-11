@@ -30,6 +30,7 @@ export class ChargeComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
+    public isIntern: boolean;
 
     constructor(
         private dialogsService: DialogsService,
@@ -37,12 +38,13 @@ export class ChargeComponent implements OnInit, OnChanges {
         private router: Router,
         private translate: TranslateService,
         private authService: AuthenticationService,
-        ) {
+    ) {
     }
 
     ngOnInit(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.isIntern = this.authService.getCurrentUser().role === 'student';
         this.initSetting();
     }
 
@@ -95,16 +97,43 @@ export class ChargeComponent implements OnInit, OnChanges {
         this.setting = new AbstractTableSetting();
         this.setting.settingColumn = this.isAdmin;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.intern;
-        this.setting.addRow = true;
+        this.setting.filter = !this.isIntern;
+        this.setting.addRow = !this.isIntern;
         this.setting.cols = [
             {columnDef: 'date', header: 'charge.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'amount', header: 'charge.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
-            {columnDef: 'comment', header: 'charge.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
-            {columnDef: 'session', header: 'charge.placeholder.session', type: 'text', cell: (row: any) => `${row.session || ''}`},
-            {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''}
+            {
+                columnDef: 'amount',
+                header: 'charge.placeholder.amount',
+                type: 'text',
+                cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`
+            },
+            {
+                columnDef: 'comment',
+                header: 'charge.placeholder.comment',
+                type: 'text',
+                cell: (row: any) => `${row.comment}`
+            },
+            {
+                columnDef: 'session',
+                header: 'charge.placeholder.session',
+                type: 'text',
+                cell: (row: any) => `${row.session || ''}`
+            },
+            {
+                columnDef: 'rest',
+                header: 'register.placeholder.rest',
+                type: 'text',
+                cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''
+            }
         ];
-        !this.intern && this.setting.cols.push({columnDef: 'intern', header: 'charge.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`});
+        this.isAdmin && this.setting.cols.push({
+            columnDef: 'settings',
+            class: 'a10',
+            header: '',
+            type: 'settings',
+            delete: true,
+            editRow: true
+        });
     }
 
     /**
@@ -144,25 +173,20 @@ export class ChargeComponent implements OnInit, OnChanges {
 
     manageInternSold(charge: Charge) {
         this.block = true;
-        Intern.get(charge.intern as number).then(intern => {
-            intern.sold = Number(intern.sold) + Number(charge.amount);
-            intern.update().then(() => this.block = false,
-                () => {
-                    this.block = false;
-                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                });
-        },() => {
+        Charge.getSold(charge.intern as number).then(sold => {
+                Intern.updateSold(charge.intern as number, sold[0].sold).then();
+            }, () => {
                 this.block = false;
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
             }
-            )
+        )
     }
 
     /**
      * add row
      */
     public onAddRow(): void {
-        this.router.navigate(['charge/form']);
+        this.router.navigate(['charge/form/' + this.intern.id]);
     }
 
     /**
@@ -170,7 +194,7 @@ export class ChargeComponent implements OnInit, OnChanges {
      */
     public onEditRow(event: Charge): void {
         this.charge = event;
-        this.router.navigate(['charge/form/' + event.id]);
+        this.router.navigate(['charge/form/' + this.intern.id + '/' + event.id]);
 
     }
 

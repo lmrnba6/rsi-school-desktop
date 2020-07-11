@@ -49,12 +49,12 @@ export class ExamFormComponent implements OnInit {
     public ngOnInit(): void {
         this.getParams();
         const user: User = this.auth.getCurrentUser();
-        if(user.role === 'teacher') {
-            Instructor.getByPhone(Number(user.password)).then((ins: Instructor) => {
+        if (user.role === 'teacher') {
+            Instructor.get(Number(user.username)).then((ins: Instructor) => {
                 this.instructor = ins;
-                Session.getAllSessionsByInstructor(ins.id).then(sessions =>  sessions.forEach((s, i) => {
-                    this.sessionsString = this.sessionsString +  String(s.id)
-                    if(i < sessions.length-1) {
+                Session.getAllSessionsByInstructor(ins.id).then(sessions => sessions.forEach((s, i) => {
+                    this.sessionsString = this.sessionsString + String(s.id)
+                    if (i < sessions.length - 1) {
                         this.sessionsString += ','
                     }
                 }));
@@ -90,9 +90,9 @@ export class ExamFormComponent implements OnInit {
 
     transformBooleanToInteger() {
         Object.keys(this.exam).forEach(key => {
-            if(this.exam[key] === true) {
+            if (this.exam[key] === true) {
                 this.exam[key] = 1;
-            } else if(this.exam[key] === false) {
+            } else if (this.exam[key] === false) {
                 this.exam[key] = 0;
             }
         })
@@ -100,9 +100,9 @@ export class ExamFormComponent implements OnInit {
 
     transformIntegerToBoolean() {
         Object.keys(this.exam).forEach(key => {
-            if((this.exam[key] === 'retake' || this.exam[key] === 'result') && this.exam[key] === 0 ) {
+            if ((this.exam[key] === 'retake' || this.exam[key] === 'result') && this.exam[key] === 0) {
                 this.exam[key] = false;
-            } else if((this.exam[key] === 'retake' || this.exam[key] === 'result') && this.exam[key] === 1) {
+            } else if ((this.exam[key] === 'retake' || this.exam[key] === 'result') && this.exam[key] === 1) {
                 this.exam[key] = true;
             }
         })
@@ -121,12 +121,16 @@ export class ExamFormComponent implements OnInit {
                 this.exam = val;
                 this.transformIntegerToBoolean();
                 this.exam.date = new Date(Number(this.exam.date));
-                Intern.get(this.exam.intern_id as number).then(
-                    intern => {
-                        this.internSelected = intern;
-                        if(this.isOnEdit) {
-                            this.examForm.controls['intern_id'].disable();
-                        }
+                Promise.all([
+                    Intern.get(this.exam.intern_id as number),
+                    Session.getAllSessionByIntern(this.exam.intern_id as number)
+                ]).then(
+                    val => {
+                        this.internSelected = val[0];
+                        this.sessions = val[1];
+                        this.examForm.controls['intern_id'].disable();
+                        this.examForm.controls['session_id'].disable();
+
                     });
             });
     }
@@ -136,7 +140,7 @@ export class ExamFormComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
             Intern.getAllPagedBySessions(0, 5, 'name', '', event.target.value, this.sessionsString).then(
                 users => {
@@ -164,7 +168,7 @@ export class ExamFormComponent implements OnInit {
         this.comment = new FormControl(null);
         this.session_id = new FormControl(null, [Validators.required]);
         this.intern_id = this.isOnEdit ? new FormControl(null) :
-            new FormControl(null,  [Validators.required]);
+            new FormControl(null, [Validators.required]);
 
         this.examForm = this.fb.group({
             mark: this.mark,

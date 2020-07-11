@@ -41,8 +41,6 @@ export class LayoutComponent implements OnInit {
     public settingsImage = `../../dist/assets/images/settingsImage.png`;
     public resultImage = `../../dist/assets/images/resultImage.png`;
 
-
-
     public buttons: Array<FloatingActionButton> = [];
 
     constructor(private auth: AuthenticationService,
@@ -104,9 +102,14 @@ export class LayoutComponent implements OnInit {
         })
     }
 
+    fixImage(event: any) {
+        return event.target.src = event.target.src.replace('/dist', '');
+    }
 
     ngOnInit(): void {
-        this.notifyVisitorCount();
+        if(this.auth.getCurrentUser().role === 'user') {
+            this.notifyVisitorCount();
+        }
         this.user = this.auth.getCurrentUser();
         this.isInstructor = this.user.role === 'teacher';
         this.isIntern = this.user.role === 'student';

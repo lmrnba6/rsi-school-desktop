@@ -14,13 +14,13 @@ export class User {
     public role = '';
 
     public static getCount(filter: string): Promise<User[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "user" WHERE name ILIKE '%${filter}%' OR 
-                                        username ILIKE '%${filter}%' OR role ILIKE '%${filter}%'`, {})
+        return TheDb.selectAll(`SELECT count(*) as count FROM "user" u WHERE u.name ILIKE '%${filter}%' OR 
+                                        u.username ILIKE '%${filter}%' OR u.role ILIKE '%${filter}%'`, {})
             .then((count: any) => count);
     }
 
     public static get(id: number): Promise<User> {
-        const sql = `SELECT * FROM "user" WHERE id = ${id}`;
+        const sql = `SELECT * FROM "user" u  WHERE u.id = ${id}`;
         const values = {};
 
         return TheDb.selectOne(sql, values)
@@ -34,7 +34,7 @@ export class User {
     }
 
     public static getByUsername(id: number): Promise<User> {
-        const sql = `SELECT * FROM "user" WHERE username = '${id}'`;
+        const sql = `SELECT * FROM "user" u WHERE u.username = '${id}'`;
         const values = {};
 
         return TheDb.selectOne(sql, values)
@@ -48,7 +48,7 @@ export class User {
     }
 
     public static getAllTeachers(): Promise<Array<User>> {
-        const sql = `SELECT * FROM "user" WHERE role = 'teacher'`;
+        const sql = `SELECT * FROM "user" u WHERE u.role = 'teacher'`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -63,7 +63,7 @@ export class User {
     }
 
     public static getAllStudents(): Promise<Array<User>> {
-        const sql = `SELECT * FROM "user" WHERE role = 'student'`;
+        const sql = `SELECT * FROM "user" u WHERE u.role = 'student'`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -78,7 +78,7 @@ export class User {
     }
 
     public static getAllParents(): Promise<Array<User>> {
-        const sql = `SELECT * FROM "user" WHERE role = 'parent'`;
+        const sql = `SELECT * FROM "user" WHERE u.role = 'parent'`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -93,7 +93,7 @@ export class User {
     }
 
     public static verify(username: string, password: string): Promise<User> {
-        const sql = `SELECT * FROM "user" WHERE username = '${username}' AND password = '${password}'`;
+        const sql = `SELECT * FROM "user" u WHERE u.username = '${username}' AND u.password = '${password}'`;
         const values = {};
 
         return TheDb.selectOne(sql, values)
@@ -107,7 +107,7 @@ export class User {
     }
 
     public static getByUserName(userName: string): Promise<User> {
-        const sql = `SELECT * FROM "user" WHERE username = '${userName}'`;
+        const sql = `SELECT * FROM "user" u WHERE u.username = '${userName}'`;
         const values = {};
 
         return TheDb.selectOne(sql, values)
@@ -136,9 +136,9 @@ export class User {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<User[]> {
-        const sql = `SELECT * FROM "user" WHERE name ILIKE '%${filter}%' OR 
-                            username ILIKE '%${filter}%' OR
-                            role ILIKE '%${filter}%' 
+        const sql = `SELECT * FROM "user" u WHERE u.name ILIKE '%${filter}%' OR 
+                            u.username ILIKE '%${filter}%' OR
+                            u.role ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };

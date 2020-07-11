@@ -1,7 +1,7 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MessagesService} from "../_services/messages.service";
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Session} from "../model/session";
 import './session-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
@@ -33,7 +33,6 @@ export class SessionFormComponent implements OnInit, OnChanges {
 
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,
-                private route: ActivatedRoute,
                 private router: Router,
                 private translate: TranslateService) {
     }
@@ -41,44 +40,41 @@ export class SessionFormComponent implements OnInit, OnChanges {
     public ngOnInit(): void {
         this.initForm();
         this.getParams();
-        this.getInstructors();
-        this.getTrainings();
+        this.getTrainingsAndInstructors();
     }
 
-    public ngOnChanges(): void {
-        this.initForm();
-        this.getParams();
-        this.getInstructors();
-        this.getTrainings();
+    public ngOnChanges(changes: SimpleChanges) {
+        if(changes.session){
+            this.getData(this.session.id);
+        }
     }
 
     /**
      * getParams
      */
     public getParams(): void {
-        this.route.params.subscribe(res => {
-            if (res.id) {
-                this.isOnEdit = true;
-                this.getData(res.id);
-            } else {
-                this.isOnEdit = false;
-                this.session = new Session();
-                this.session.closed = false;
-            }
-        });
+        if (this.session) {
+            this.isOnEdit = true;
+        } else {
+            this.isOnEdit = false;
+            this.session = new Session();
+            this.session.closed = false;
+        }
     }
 
-    getInstructors() {
-        Instructor.getAll().then((instructors: any) => {
-            this.instructors = instructors;
-        });
+    public getTrainingsAndInstructors(): void {
+        this.block = true;
+        Promise.all([Training.getAll(), Instructor.getAll()])
+            .then((val) => {
+                this.trainings = val[0];
+                this.instructors = val[1];
+                this.block = false;
+            }, () => {
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                this.block = false;
+            });
     }
 
-    getTrainings() {
-        Training.getAll().then((trainings: any) => {
-            this.trainings = trainings;
-        });
-    }
 
     /**
      * get data
@@ -87,12 +83,16 @@ export class SessionFormComponent implements OnInit, OnChanges {
      * @returns void
      */
     public getData(id: number): void {
-        Session
-            .get(id)
-            .then((val: Session) => {
-                this.session = val;
+        this.block = true;
+        Promise.all([Session.get(id)])
+            .then((val) => {
+                this.session = val[0];
                 this.session.end = new Date(Number(this.session.end));
                 this.session.start = new Date(Number(this.session.start));
+                this.block = false;
+            }, () => {
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                this.block = false;
             });
     }
 
@@ -113,7 +113,7 @@ export class SessionFormComponent implements OnInit, OnChanges {
         });
     }
 
-    onNameChange(){
+    onNameChange() {
         Session.nameExist(this.session.name).catch(() => {
             this.session.name = '';
             this.messagesService.notifyMessage(this.translate.instant('messages.name_exist'), '', 'error');

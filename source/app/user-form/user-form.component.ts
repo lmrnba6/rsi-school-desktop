@@ -64,7 +64,10 @@ export class UserFormComponent implements OnInit {
     public getData(id: number): void {
         User
             .get(id)
-            .then((val: User) => (this.user = val));
+            .then((val: User) => {
+                this.user = val;
+                this.userForm.controls['username'].disable();
+            });
     }
 
     public initForm(): void {
@@ -78,9 +81,6 @@ export class UserFormComponent implements OnInit {
             role: this.role,
             password: this.password
         });
-        if(this.isOnEdit) {
-            this.userForm.controls['username'].disable();
-        }
     }
 
     /**

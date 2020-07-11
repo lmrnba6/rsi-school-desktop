@@ -52,6 +52,7 @@ import {InboxFormComponent} from "./inbox-form/inbox-form.component";
 import {MessagesComponent} from "./messages/messages.component";
 import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
+import {ChargeFormComponent} from "./charge-form/charge-form.component";
 
 const appRoutes: Routes = [
     {
@@ -158,6 +159,14 @@ const appRoutes: Routes = [
             {
                 path: 'payment/form/:id',
                 component: PaymentFormComponent
+            },
+            {
+                path: 'charge/form/:id',
+                component: ChargeFormComponent
+            },
+            {
+                path: 'charge/form/:id/:charge',
+                component: ChargeFormComponent
             },
             {
                 path: 'payment/express/:in/:tr',

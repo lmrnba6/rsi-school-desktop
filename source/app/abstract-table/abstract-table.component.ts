@@ -63,6 +63,9 @@ export class AbstractTableComponent
     public printImage;
     public addImage;
     public saveImage;
+    public printImage1;
+    public addImage1;
+    public saveImage1;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -93,11 +96,18 @@ export class AbstractTableComponent
       this.isAdmin = this.auth.getCurrentUser().role === 'admin';
   }
 
+    fixImage(event: any) {
+        return event.target.src = event.target.src.replace('/dist', '');
+    }
+
   ngOnChanges(): void {
     //prime table
-  this.printImage = 'user inbox charge payment'.includes(this.page) ? '../../assets/images/printImage.png' : '../../dist/assets/images/printImage.png';
-  this.addImage = 'user inbox charge payment'.includes(this.page) ? '../../assets/images/addImage.png' : '../../dist/assets/images/addImage.png';
-  this.saveImage = 'user inbox charge payment'.includes(this.page) ? '../../assets/images/saveImage.png' : '../../dist/assets/images/saveImage.png';
+  this.printImage = '../../dist/assets/images/printImage.png';
+  this.addImage = '../../dist/assets/images/addImage.png';
+  this.saveImage = '../../dist/assets/images/saveImage.png';
+      this.printImage1 = '../../assets/images/printImage.png';
+      this.addImage1 = '../../assets/images/addImage.png';
+      this.saveImage1 = '../../assets/images/saveImage.png';
       this.cols = [];
       this.colsSelected = [];
       this.setting.cols.forEach((x:any)=> {

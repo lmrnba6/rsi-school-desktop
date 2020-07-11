@@ -137,7 +137,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public displayFn(user: User) {
-        return user ? user.name : this.userSelected.name;
+        return user ? user.name : this.userSelected ? this.userSelected.name : null;
     }
 
     public userOnChange(event: any): void {

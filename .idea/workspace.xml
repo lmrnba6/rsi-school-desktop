@@ -20,8 +20,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c19ef8cb-63e0-4fec-928f-58a0802bf0b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/app.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/app.routing.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance/attendance.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance/attendance.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance/attendance.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance/attendance.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/charge/charge.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/charge/charge.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/enrollment/enrollment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/enrollment/enrollment.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/exam/exam.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam/exam.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/instructor/instructor.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/instructor/instructor.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/layout/layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/layout/layout.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/layout/layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/layout/layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/charge.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/charge.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/exam.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/exam.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/inbox.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/inbox.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/instructor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/instructor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/intern.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/intern.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/session.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/user.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/nav/nav.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/nav/nav.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/nav/nav.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/nav/nav.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/room-form/room-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/room-form/room-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/room-form/room-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/room-form/room-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/room-management/room-management.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/room-management/room-management.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/school/school.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/school/school.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/session-form/session-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/session-form/session-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/session-management/session-management.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/session-management/session-management.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/user-form/user-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/user-form/user-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/user/user.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/user/user.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/assets/i18n/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/assets/i18n/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/fr.json" afterDir="false" />
     </list>
     <list id="be57fea4-9993-49e0-83b2-0064aa4d57ee" name="don't commit" comment="">
       <change beforePath="$PROJECT_DIR$/electron-builder.env" beforeDir="false" afterPath="$PROJECT_DIR$/electron-builder.env" afterDir="false" />
@@ -292,7 +334,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594329853617</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="v1.0.19">
+      <created>1594330043832</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1594330043832</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +371,8 @@
     <MESSAGE value="fix pdf" />
     <MESSAGE value="add print" />
     <MESSAGE value="add charge" />
-    <option name="LAST_COMMIT_MESSAGE" value="add charge" />
+    <MESSAGE value="v1.0.19" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.0.19" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="191" key="#TSLint" timestamp="1593210201251">
@@ -333,10 +383,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1593911618147" />
-    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1594329850545">
+    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1594330042693">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594329850545" />
+    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1594330042693" />
     <state x="100" y="100" width="1336" height="624" key="DiffContextDialog" timestamp="1594329996301">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -365,18 +415,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="599" y="282" key="VCS.EditChangelistDialog/0.0.1536.824@0.0.1536.824" timestamp="1593831292384" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1594329862661">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1594330049567">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1594329862661" />
-    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594063745211">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1594330049567" />
+    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594438595317">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1594063745211" />
-    <state x="472" y="75" width="687" height="624" key="find.popup" timestamp="1594329988274">
+    <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1594438595317" />
+    <state x="473" y="73" width="687" height="624" key="find.popup" timestamp="1594495422022">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="472" y="75" width="687" height="624" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1594329988274" />
+    <state x="473" y="73" width="687" height="624" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1594495422022" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1594062964109">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -66,9 +66,14 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.isAdmin = this.user.role === 'admin';
         this.isInstructor = this.user.role === 'teacher';
         this.getParams();
-        this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
-        this.initSetting();
+        //this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+        //this.initSetting();
         this.getSessions();
+        if(this.isAdmin || this.intern){
+            this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+        }
+        this.initSetting();
+        this.initSettingByDate();
     }
 
     ngOnChanges(): void {
@@ -76,9 +81,6 @@ export class AttendanceComponent implements OnInit, OnChanges {
             this.session_id = this.session.id;
             this.onByDate();
         }
-        this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
-        this.initSetting();
-        this.initSettingByDate();
     }
 
     /**

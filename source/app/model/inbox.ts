@@ -95,6 +95,7 @@ export class Inbox {
                             INNER JOIN "user" AS u2 ON i.${toCol} = u2.id  
                             WHERE ${where} AND
                             (i.subject ILIKE '%${filter}%' OR 
+                            u2.name ILIKE '%${filter}%' OR
                             u1.name ILIKE '%${filter}%') 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {

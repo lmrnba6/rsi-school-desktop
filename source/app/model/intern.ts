@@ -131,11 +131,12 @@ export class Intern{
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Intern[]> {
         const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.comment,i.name_arabic,
-                            STRING_AGG(w.name || ' ' || w.time || ' ' || s.name, '---') as weekdays 
+                            STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays 
                             from intern as i 
                             left join enrollment as e  on e.intern_id = i.id
                             left join session as s on e.session_id = s.id
                             left join weekday as w on w.session_id = s.id
+                            left JOIN "room" as r ON w.room_id = r.id
                             WHERE i.name ILIKE '%${filter}%' OR 
                             i.phone ILIKE '%${filter}%'
                             group by i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip"
@@ -177,7 +178,7 @@ export class Intern{
 
     public static getAllPagedBySessions(pageIndex: number, pageSize: number, sort: string, order: string,filter: string, sessions: string): Promise<Intern[]> {
         const where: string = sessions ? `s.id in (${sessions}) and` : '';
-        const sql = `SELECT i.id, i.name, i.birth, i.email, i.phone, i.phone2, i.name_arabic, i.sold, i."isAllowed", i."isPromo", i."isVip" FROM "enrollment" as e 
+        const sql = `SELECT DISTINCT i.id, i.name, i.birth, i.email, i.phone, i.phone2, i.name_arabic, i.sold, i."isAllowed", i."isPromo", i."isVip" FROM "enrollment" as e 
                             INNER JOIN "intern" as i ON e.intern_id = i.id
                             INNER JOIN "session" as s ON e.session_id = s.id
                             WHERE ${where} i.name ILIKE '%${filter}%'
@@ -235,10 +236,9 @@ export class Intern{
             });
     }
 
-    public static updateSoldAndComment(id: number, sold: number, comment: string): Promise<void> {
+    public static updateSold(id: number, sold: number): Promise<void> {
         const sql = `
-            UPDATE "intern"
-               SET sold = ${sold}, comment = '${comment}' WHERE id = ${id}`;
+            UPDATE "intern" SET sold = ${sold} WHERE id = ${id}`;
 
         const values = {
         };

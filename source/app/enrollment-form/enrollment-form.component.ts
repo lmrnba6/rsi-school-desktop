@@ -234,18 +234,15 @@ export class EnrollmentFormComponent implements OnInit {
                 let charge = 0;
                 if (this.training_fees) {
                     charge = charge + Number(training.training_fees);
-                    this.internSelected.sold = Number(this.internSelected.sold) + Number(training.training_fees);
                 }
                 if (this.backpack) {
                     this.internSelected.comment = (this.internSelected.comment || '') + '\n 1 sac à dos \n';
                 }
                 if (this.books_fees) {
                     charge = charge + Number(training.books_fees);
-                    this.internSelected.sold = Number(this.internSelected.sold) + Number(training.books_fees);
                 }
                 if (this.enrollment_fees) {
                     charge = charge + Number(training.enrollment_fees);
-                    this.internSelected.sold = Number(this.internSelected.sold) + Number(training.enrollment_fees);
                 }
                 const newCharge = new Charge();
                 newCharge.amount = charge;
@@ -257,14 +254,15 @@ export class EnrollmentFormComponent implements OnInit {
                 newCharge.insert().then(() => this.block = false, () => () => {
                     this.block = false;
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    Charge.getSold(newCharge.intern as number).then(sold => {
+                            Intern.updateSold(newCharge.intern as number, sold[0].sold).then();
+                        }, () => {
+                            this.block = false;
+                            this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                        }
+                    )
                 });
                 this.block = true;
-                this.internSelected.sold = Number(Number(this.internSelected.sold).toFixed(0));
-                Intern.updateSoldAndComment(this.internSelected.id, this.internSelected.sold, this.internSelected.comment).then(() => this.block = false,
-                    () => {
-                        this.block = false;
-                        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                    })
             })
         })
     }

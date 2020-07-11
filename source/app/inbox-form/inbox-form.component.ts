@@ -35,6 +35,8 @@ export class InboxFormComponent implements OnInit {
     public groupSelected: string = 'individual';
     public groupList: Array<{value: string, viewValue: string}> = [];
     public sessions: Array<Session> = [];
+    public isInstructor: boolean;
+    public isIntern: boolean;
 
     constructor(private fb: FormBuilder,
                 private route: ActivatedRoute,
@@ -47,6 +49,8 @@ export class InboxFormComponent implements OnInit {
 
     public ngOnInit(): void {
         this.user = this.authService.getCurrentUser();
+        this.isIntern = this.user.role === 'student';
+        this.isInstructor = this.user.role === 'teacher';
         this.getParams();
         this.initGroups();
         this.getSessions();
@@ -58,11 +62,11 @@ export class InboxFormComponent implements OnInit {
 
     public initGroups() {
         this.groupList.push({value: 'individual', viewValue: 'inbox.individual'});
-        this.groupList.push({value: 'groups', viewValue: 'inbox.groups'});
-        this.groupList.push({value: 'students', viewValue: 'inbox.students'});
-        this.groupList.push({value: 'teachers', viewValue: 'inbox.teachers'});
-        this.groupList.push({value: 'all', viewValue: 'inbox.all'});
-        this.groupList.push({value: 'parents', viewValue: 'inbox.parents'});
+        !this.isIntern && this.groupList.push({value: 'groups', viewValue: 'inbox.groups'});
+        !this.isIntern && !this.isInstructor && this.groupList.push({value: 'students', viewValue: 'inbox.students'});
+        !this.isIntern && !this.isInstructor && this.groupList.push({value: 'teachers', viewValue: 'inbox.teachers'});
+        !this.isIntern && !this.isInstructor && this.groupList.push({value: 'all', viewValue: 'inbox.all'});
+        !this.isIntern && !this.isInstructor && this.groupList.push({value: 'parents', viewValue: 'inbox.parents'});
 
     }
 
