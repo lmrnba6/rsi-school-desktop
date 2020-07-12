@@ -17,6 +17,15 @@ export class InternManagementComponent implements OnInit {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public isIntern: boolean;
+    public enrollmentImage = `../../dist/assets/images/enrollmentImage.png`;
+    public chargeImage = `../../dist/assets/images/chargeImage.png`;
+    public infoImage = `../../dist/assets/images/infoImage.png`;
+    public commentImage = `../../dist/assets/images/commentImage.png`;
+    public examImage = `../../dist/assets/images/examImage.png`;
+    public weekdayImage = `../../dist/assets/images/weekdayImage.png`;
+    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
+    public paymentImage = `../../dist/assets/images/paymentImage.png`;
+    public backImage = `../../dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
@@ -26,6 +35,11 @@ export class InternManagementComponent implements OnInit {
     public ngOnInit(): void {
         this.getParams();
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
     /**
      * getParams

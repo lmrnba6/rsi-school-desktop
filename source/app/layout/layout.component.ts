@@ -8,6 +8,7 @@ import {Intern} from "../model/intern";
 import {MessagesService} from "../_services/messages.service";
 import {Visitor} from "../model/visitor";
 import {DialogsService} from "../_services/dialogs.service";
+
 declare var $: any;
 
 @Component({
@@ -90,7 +91,7 @@ export class LayoutComponent implements OnInit {
     notifyVisitorCount() {
         Visitor.getCount('').then((c: any) => {
             const exist = c && c[0] && Number(c[0].count);
-            if(exist){
+            if (exist) {
                 this.dialogsService
                     .confirm('messages.warning_title', 'messages.visitor_remaining_message', true, 'warning-sign')
                     .subscribe(confirm => {
@@ -103,11 +104,13 @@ export class LayoutComponent implements OnInit {
     }
 
     fixImage(event: any) {
-        return event.target.src = event.target.src.replace('/dist', '');
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }
     }
 
     ngOnInit(): void {
-        if(this.auth.getCurrentUser().role === 'user') {
+        if (this.auth.getCurrentUser().role === 'user') {
             this.notifyVisitorCount();
         }
         this.user = this.auth.getCurrentUser();

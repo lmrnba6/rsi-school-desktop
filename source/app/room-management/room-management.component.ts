@@ -19,12 +19,22 @@ export class RoomManagementComponent implements OnInit {
     public value: number = 100;
     public session_id: number;
     public sessions: Array<Session> = [];
+    public sessionImage = `../../dist/assets/images/sessionImage.png`;
+    public weekdayImage = `../../dist/assets/images/weekdayImage.png`;
+    public infoImage = `../../dist/assets/images/infoImage.png`;
+    public backImage = `../../dist/assets/images/backImage.png`;
+
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
                 private router: Router
     ) {
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
     public ngOnInit(): void {
         this.getParams();

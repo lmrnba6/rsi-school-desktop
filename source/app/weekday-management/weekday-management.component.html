@@ -1,11 +1,12 @@
 
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
-<h2>{{'weekday.title' | translate}} - {{weekday.time}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
-<mat-tab-group *ngIf="weekday" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+<h2>{{'weekday.title' | translate}} - {{weekday.time}} - <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
+<mat-tab-group *ngIf="weekday" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-info-sign"></span> {{'weekday-management.information' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="infoImage" alt="">
+      {{'weekday-management.information' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-weekday-form [weekday]="weekday"></app-weekday-form>
@@ -13,7 +14,8 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-ok-circle"></span> {{'weekday-management.attendance' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="attendanceImage" alt="">
+      {{'weekday-management.attendance' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-attendance [weekday]="weekday"></app-attendance>

@@ -63,9 +63,6 @@ export class AbstractTableComponent
     public printImage;
     public addImage;
     public saveImage;
-    public printImage1;
-    public addImage1;
-    public saveImage1;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -87,7 +84,6 @@ export class AbstractTableComponent
     public pageSizeOptions: Array<number> = [5, 10, 25, 100];
   public pageEvent: PageEvent;
   public isAdmin: boolean;
-    public searchImage = `../../dist/assets/images/searchImage.png`;
 
 
     constructor(public messagesService: MessagesService, private translate: TranslateService, private dialogsService: DialogsService, private auth: AuthenticationService) { }
@@ -97,17 +93,20 @@ export class AbstractTableComponent
   }
 
     fixImage(event: any) {
-        return event.target.src = event.target.src.replace('/dist', '');
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }
     }
+
+
+
 
   ngOnChanges(): void {
     //prime table
   this.printImage = '../../dist/assets/images/printImage.png';
   this.addImage = '../../dist/assets/images/addImage.png';
   this.saveImage = '../../dist/assets/images/saveImage.png';
-      this.printImage1 = '../../assets/images/printImage.png';
-      this.addImage1 = '../../assets/images/addImage.png';
-      this.saveImage1 = '../../assets/images/saveImage.png';
+
       this.cols = [];
       this.colsSelected = [];
       this.setting.cols.forEach((x:any)=> {

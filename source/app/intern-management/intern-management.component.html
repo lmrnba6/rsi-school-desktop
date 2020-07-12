@@ -2,11 +2,12 @@
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
 <h1 *ngIf="intern?.isAllowed" class="block"> <span class="glyphicon glyphicon-ban-circle"></span>{{'messages.blocked' | translate}}</h1>
-<h2>{{'intern.title' | translate}} - {{intern?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<h2>{{'intern.title' | translate}} - {{intern?.name}} - <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
 <mat-tab-group [ngStyle]="{'opacity': intern?.isAllowed ? '0.4' : '1'}" *ngIf="intern" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-info-sign"></span> {{'intern-management.information' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="infoImage" alt="">
+       {{'intern-management.information' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-intern-form [intern]="intern"></app-intern-form>
@@ -14,7 +15,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-asterisk"></span> {{'intern-management.enrollment' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="enrollmentImage" alt=""> {{'intern-management.enrollment' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-enrollment [intern]="intern"></app-enrollment>
@@ -22,7 +23,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-ok-circle"></span> {{'intern-management.attendance' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="attendanceImage" alt=""> {{'intern-management.attendance' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-attendance [intern]="intern"></app-attendance>
@@ -30,7 +31,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-calendar"></span> {{'intern-management.weekday' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="weekdayImage" alt=""> {{'intern-management.weekday' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-weekday [intern]="intern"></app-weekday>
@@ -38,7 +39,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-pencil"></span> {{'intern-management.exam' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="examImage" alt=""> {{'intern-management.exam' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-exam [intern]="intern"></app-exam>
@@ -46,7 +47,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-usd"></span> {{'intern-management.payment' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="paymentImage" alt=""> {{'intern-management.payment' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-payment [intern]="intern"></app-payment>
@@ -54,10 +55,18 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-list-alt"></span> {{'intern-management.charge' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="chargeImage" alt=""> {{'intern-management.charge' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-charge [intern]="intern"></app-charge>
+    </div>
+  </mat-tab>
+  <mat-tab *ngIf="!isIntern">
+    <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="commentImage" alt=""> {{'intern-management.comment' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-comment [intern]="intern"></app-comment>
     </div>
   </mat-tab>
 </mat-tab-group>

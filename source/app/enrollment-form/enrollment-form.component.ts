@@ -10,6 +10,8 @@ import {Intern} from "../model/intern";
 import {Training} from "../model/training";
 import {DialogsService} from "../_services/dialogs.service";
 import {Charge} from "../model/charge";
+import {Comment} from "../model/comment";
+import {User} from "../model/user";
 
 @Component({
     selector: 'app-enrollment-form',
@@ -236,7 +238,13 @@ export class EnrollmentFormComponent implements OnInit {
                     charge = charge + Number(training.training_fees);
                 }
                 if (this.backpack) {
-                    this.internSelected.comment = (this.internSelected.comment || '') + '\n 1 sac à dos \n';
+                    const comment: Comment = new Comment();
+                    comment.date = new Date().getTime();
+                    comment.comment = "L'étudiant à reçu un sac à dos pour " + session.name;
+                    User.getByUserName(this.internSelected.id).then(user => {
+                        comment.employee = user.id;
+                        comment.insert().then();
+                    })
                 }
                 if (this.books_fees) {
                     charge = charge + Number(training.books_fees);
@@ -250,10 +258,9 @@ export class EnrollmentFormComponent implements OnInit {
                 newCharge.intern = this.internSelected.id;
                 newCharge.rest = charge;
                 newCharge.session = this.enrollment.session_id;
-                newCharge.comment = "Frais à payer"
-                newCharge.insert().then(() => this.block = false, () => () => {
+                newCharge.comment = "Frais à payer pour " + session.name
+                newCharge.insert().then(() =>{
                     this.block = false;
-                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     Charge.getSold(newCharge.intern as number).then(sold => {
                             Intern.updateSold(newCharge.intern as number, sold[0].sold).then();
                         }, () => {
@@ -261,6 +268,9 @@ export class EnrollmentFormComponent implements OnInit {
                             this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                         }
                     )
+                }, () => {
+                    this.block = false;
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 });
                 this.block = true;
             })

@@ -19,6 +19,12 @@ export class SessionManagementComponent implements OnInit, OnChanges {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public isAdmin: boolean;
+    public weekdayImage = `../../dist/assets/images/weekdayImage.png`;
+    public infoImage = `../../dist/assets/images/infoImage.png`;
+    public internImage = `../../dist/assets/images/internImage.png`;
+    public examImage = `../../dist/assets/images/examImage.png`;
+    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
+    public backImage = `../../dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
@@ -37,6 +43,11 @@ export class SessionManagementComponent implements OnInit, OnChanges {
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
         this.getParams();
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
     /**
      * getParams

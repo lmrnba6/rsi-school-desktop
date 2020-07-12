@@ -10,8 +10,8 @@ import {School} from "../model/school";
 import {MessagesService} from "../_services/messages.service";
 
 @Component({
-  selector: 'app-school',
-  templateUrl: './school.component.html'
+    selector: 'app-school',
+    templateUrl: './school.component.html'
 })
 export class SchoolComponent implements OnInit {
 
@@ -21,18 +21,25 @@ export class SchoolComponent implements OnInit {
     public photo: any;
     public block: boolean;
     public school: School;
+    public backImage = `../../dist/assets/images/backImage.png`;
 
 
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,
                 private router: Router,
                 private translate: TranslateService
-                ) {}
+    ) {
+    }
 
-  ngOnInit() {
+    ngOnInit() {
         this.getData();
-      this.initForm();
-  }
+        this.initForm();
+    }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
     public initForm(): void {
         this.name = new FormControl(null, [Validators.required]);
@@ -47,10 +54,10 @@ export class SchoolComponent implements OnInit {
         School
             .getAll()
             .then(val => {
-                if(val.length) {
+                if (val.length) {
                     this.school = val[0];
                     this.photo = 'data:image/png;base64,' + this.school.photo;
-                }else {
+                } else {
                     const school = new School();
                     school.name = '';
                     school.photo = '';
@@ -74,7 +81,7 @@ export class SchoolComponent implements OnInit {
             () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
-            });    
+            });
     }
 
     openFile() {
@@ -107,7 +114,7 @@ export class SchoolComponent implements OnInit {
     }
 
     goBack() {
-      this.router.navigate(['settings']);
+        this.router.navigate(['settings']);
     }
 
     /**

@@ -25,6 +25,7 @@ export class UserComponent implements OnInit {
   public pageSize: number = 10;
   public sortName: string = 'username';
   public sortDirection: string = 'ASC';
+  public backImage = `../../dist/assets/images/backImage.png`;
 
   constructor(
     private dialogsService: DialogsService,
@@ -36,6 +37,12 @@ export class UserComponent implements OnInit {
     this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
     this.initSetting();
   }
+
+  fixImage(event: any) {
+    if (event.target.src.includes('dist')) {
+      return event.target.src = event.target.src.replace('/dist', '');
+    }  }
+
 
   /**
    * get data

@@ -1,10 +1,10 @@
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
-<h2>{{'instructor.title' | translate}} - {{instructor?.name}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
-<mat-tab-group *ngIf="instructor" (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabSelected">
+<h2>{{'instructor.title' | translate}} - {{instructor?.name}} - <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
+<mat-tab-group *ngIf="instructor" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-info-sign"></span> {{'instructor-management.information' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="infoImage" alt=""> {{'instructor-management.information' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-instructor-form [instructor]="instructor"></app-instructor-form>
@@ -12,7 +12,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-th"></span> {{'instructor-management.session' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="sessionImage" alt=""> {{'instructor-management.session' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-session [instructor]="instructor"></app-session>
@@ -20,7 +20,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-ok-circle"></span> {{'instructor-management.attendance' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="attendanceImage" alt=""> {{'instructor-management.attendance' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-attendance [instructor]="instructor"></app-attendance>
@@ -28,7 +28,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-calendar"></span> {{'instructor-management.weekday' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="weekdayImage" alt=""> {{'instructor-management.weekday' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-weekday [instructor]="instructor"></app-weekday>
@@ -36,10 +36,18 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-usd"></span> {{'intern-management.payment' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="paymentImage" alt=""> {{'intern-management.payment' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-payment-instructor [instructor]="instructor"></app-payment-instructor>
+    </div>
+  </mat-tab>
+  <mat-tab *ngIf="!isInstructor">
+    <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="commentImage" alt=""> {{'intern-management.comment' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-comment [instructor]="instructor"></app-comment>
     </div>
   </mat-tab>
 </mat-tab-group>

@@ -30,6 +30,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
+    public backImage = `../../dist/assets/images/backImage.png`;
 
     constructor(
         private dialogsService: DialogsService,
@@ -38,6 +39,11 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
         private translate: TranslateService,
         private authService: AuthenticationService) {
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
     ngOnInit(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);

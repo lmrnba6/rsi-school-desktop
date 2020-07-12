@@ -7,13 +7,13 @@ import {TranslateService} from "@ngx-translate/core";
 import {MessagesService} from "../_services/messages.service";
 
 @Component({
-  selector: 'app-document',
-  templateUrl: './document.component.html'
+    selector: 'app-document',
+    templateUrl: './document.component.html'
 })
 export class DocumentComponent implements OnInit {
 
     session_id: number;
-    sessions =  [];
+    sessions = [];
     public interns: Array<Intern> = [];
     public internsFiltered: Array<Intern> = [];
     public internSelected: Intern;
@@ -26,12 +26,22 @@ export class DocumentComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
+    public internImage = `../../dist/assets/images/internImage.png`;
+    public idImage = `../../dist/assets/images/idImage.png`;
+    public paymentImage = `../../dist/assets/images/paymentImage.png`;
+    public pvImage = `../../dist/assets/images/pvImage.png`;
 
-    constructor(private router: Router, private translate: TranslateService, private messagesService: MessagesService) {}
+    constructor(private router: Router, private translate: TranslateService, private messagesService: MessagesService) {
+    }
 
     ngOnInit() {
-    this.getSessions();
+        this.getSessions();
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
     handleOpen(type: string) {
         this.open = type === this.open ? '' : type;
@@ -46,7 +56,7 @@ export class DocumentComponent implements OnInit {
     }
 
     public internOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
             Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
@@ -62,13 +72,11 @@ export class DocumentComponent implements OnInit {
 
     public internOnSelect(intern: Intern): void {
         this.internSelected = intern;
-        if(this.open === 'card') {
+        if (this.open === 'card') {
             this.router.navigate(['/document/pv/card/' + this.internSelected.id]);
-        }
-        else if(this.open === 'receipt') {
+        } else if (this.open === 'receipt') {
             this.router.navigate(['/document/pv/receipt/' + this.internSelected.id]);
-        }
-        else if(this.open === 'form') {
+        } else if (this.open === 'form') {
             this.router.navigate(['/document/pv/form/' + this.internSelected.id]);
         }
     }

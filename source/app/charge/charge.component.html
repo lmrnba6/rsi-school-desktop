@@ -1,4 +1,4 @@
-<h2>{{'charge.title'| translate}} <span *ngIf="!intern" style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<h2>{{'charge.title'| translate}} <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" *ngIf="!intern" [src]="backImage" alt=""></h2>
 <mat-divider></mat-divider>
 <mat-card>
   <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">

@@ -1,11 +1,12 @@
 
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
-<h2>{{'room.title' | translate}} - {{room?.number}} - <span style="cursor: pointer" (click)="goBack()" class="glyphicon glyphicon-arrow-left"></span></h2>
+<h2>{{'room.title' | translate}} - {{room?.number}} - <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
 <mat-tab-group *ngIf="room" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-modal-window"></span> {{'room-management.information' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="infoImage" alt="">
+      {{'room-management.information' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-room-form [room]="room"></app-room-form>
@@ -13,7 +14,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-calendar"></span> {{'room-management.weekday' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="weekdayImage" alt=""> {{'room-management.weekday' | translate}}
     </ng-template>
     <div class="tab-content">
       <app-weekday [room]="room"></app-weekday>
@@ -21,7 +22,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-th"></span> {{'instructor-management.session' | translate}}
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="sessionImage" alt=""> {{'instructor-management.session' | translate}}
     </ng-template>
     <div class="tab-content">
 

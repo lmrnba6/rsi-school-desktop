@@ -57,8 +57,9 @@ export class NavComponent{
   }
 
     fixImage(event: any) {
-        return event.target.src = event.target.src.replace('/dist', '');
-    }
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
   getMessages() {
       Inbox.getCountUnread( this.user.id).then(inbox => this.messages = (inbox[0] as any).count);

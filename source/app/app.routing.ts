@@ -53,6 +53,7 @@ import {MessagesComponent} from "./messages/messages.component";
 import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
 import {ChargeFormComponent} from "./charge-form/charge-form.component";
+import {CommentFormComponent} from "./comment-form/comment-form.component";
 
 const appRoutes: Routes = [
     {
@@ -135,6 +136,14 @@ const appRoutes: Routes = [
             {
                 path: 'visitor/form/:id',
                 component: VisitorFormComponent
+            },
+            {
+                path: 'comment/form/:user/:page',
+                component: CommentFormComponent
+            },
+            {
+                path: 'comment/form/:user/:page/:id',
+                component: CommentFormComponent
             },
             {
                 path: 'instructor',

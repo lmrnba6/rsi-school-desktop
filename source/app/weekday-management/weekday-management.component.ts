@@ -16,6 +16,9 @@ export class WeekdayManagementComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
+    public infoImage = `../../dist/assets/images/infoImage.png`;
+    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
+    public backImage = `../../dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
@@ -26,6 +29,12 @@ export class WeekdayManagementComponent implements OnInit {
     public ngOnInit(): void {
         this.getParams();
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
+
 
     /**
      * getParams

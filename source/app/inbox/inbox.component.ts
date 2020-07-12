@@ -34,6 +34,7 @@ export class InboxComponent implements OnInit, OnChanges {
     public user: User;
     public deleted: boolean;
     public sent: boolean;
+    public backImage = `../../dist/assets/images/backImage.png`;
 
     constructor(
         private dialogsService: DialogsService,
@@ -51,6 +52,11 @@ export class InboxComponent implements OnInit, OnChanges {
         this.getParams();
         this.initSetting();
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
     /**
      * getParams

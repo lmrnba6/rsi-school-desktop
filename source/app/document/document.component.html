@@ -7,8 +7,8 @@
         <mat-divider></mat-divider>
         <mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="handleOpen('attendance')"><span
-                        class="glyphicon glyphicon-education"></span>{{'document.intern' | translate}}</a>
+                <a mat-list-item [routerLink]="" (click)="handleOpen('attendance')">
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="internImage" alt="">{{'document.intern' | translate}}</a>
                 <mat-form-field *ngIf="open === 'attendance'" appearance="outline">
                     <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
                     <mat-select (selectionChange)="onAttendanceForm()" *ngIf="open === 'attendance'" [(ngModel)]="session_id"
@@ -20,8 +20,8 @@
                 </mat-form-field>
             </mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="handleOpen('card')"><span
-                        class="glyphicon glyphicon-credit-card"></span>{{'document.card' | translate}}</a>
+                <a mat-list-item [routerLink]="" (click)="handleOpen('card')">
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="idImage" alt="">{{'document.card' | translate}}</a>
                 <mat-form-field *ngIf="open === 'card'" class="example-full-width" appearance="outline">
                     <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
                     <input matInput
@@ -37,8 +37,8 @@
                 </mat-form-field>
             </mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="handleOpen('receipt')"><span
-                        class="glyphicon glyphicon-usd"></span>{{'document.receipt' | translate}}</a>
+                <a mat-list-item [routerLink]="" (click)="handleOpen('receipt')">
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="paymentImage" alt="">{{'document.receipt' | translate}}</a>
                 <mat-form-field *ngIf="open === 'receipt'" class="example-full-width" appearance="outline">
                     <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
                     <input matInput
@@ -54,8 +54,8 @@
                 </mat-form-field>
             </mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item [routerLink]="" (click)="handleOpen('form')"><span
-                        class="glyphicon glyphicon-list-alt"></span>{{'document.form' | translate}}</a>
+                <a mat-list-item [routerLink]="" (click)="handleOpen('form')">
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="pvImage" alt="">{{'document.form' | translate}}</a>
                 <mat-form-field *ngIf="open === 'form'" class="example-full-width" appearance="outline">
                     <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
                     <input matInput

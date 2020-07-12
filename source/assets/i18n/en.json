@@ -114,6 +114,17 @@
       "date": "Date"
     }
   },
+  "comment": {
+    "title": "Comments",
+    "placeholder": {
+      "name" : "Name",
+      "phone": "Phone",
+      "comment": "Comment",
+      "date": "Date",
+      "intern": "Student",
+      "instructor": "Teacher"
+    }
+  },
   "instructor": {
     "title": "Teacher",
     "placeholder": {
@@ -331,6 +342,7 @@
   "intern-management": {
     "information" : "Information",
     "enrollment": "Registration",
+    "comment": "Comments",
     "attendance": "Présence",
     "exam": "Examination",
     "payment": "Payment",
@@ -339,6 +351,7 @@
   },
   "instructor-management": {
     "information" : "Information",
+    "comment": "Comments",
     "attendance": "Attendance",
     "session": "Groups",
     "weekday": "Schedule"

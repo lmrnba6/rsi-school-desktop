@@ -1,10 +1,10 @@
 <h2>{{'administration.title'| translate}} - {{'administration.reception'| translate}}</h2>
 <mat-divider></mat-divider>
 <mat-nav-list>
-  <mat-nav-list><a mat-list-item routerLink="/settings/users"><span class="glyphicon glyphicon-user"></span>{{'administration.user_management' | translate}}</a></mat-nav-list>
+  <mat-nav-list><a mat-list-item routerLink="/settings/users"><img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="userImage" alt="">{{'administration.user_management' | translate}}</a></mat-nav-list>
 </mat-nav-list>
 <mat-nav-list>
-  <mat-nav-list><a mat-list-item routerLink="/settings/school"><span class="glyphicon glyphicon-tasks"></span>{{'administration.school' | translate}}</a></mat-nav-list>
+  <mat-nav-list><a mat-list-item routerLink="/settings/school"><img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="schoolImage" alt="">{{'administration.school' | translate}}</a></mat-nav-list>
 </mat-nav-list>
 <!--<mat-nav-list>-->
   <!--<mat-nav-list><a mat-list-item routerLink="/settings/database"><span class="glyphicon glyphicon-hdd"></span>{{'administration.database' | translate}}</a></mat-nav-list>-->

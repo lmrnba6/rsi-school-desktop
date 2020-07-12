@@ -103,6 +103,8 @@ import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
 import {ChargeComponent} from "./charge/charge.component";
 import {ChargeFormComponent} from "./charge-form/charge-form.component";
+import {CommentComponent} from "./comment/comment.component";
+import {CommentFormComponent} from "./comment-form/comment-form.component";
 
 
 @NgModule({
@@ -234,7 +236,9 @@ import {ChargeFormComponent} from "./charge-form/charge-form.component";
         RegisterComponent,
         RegisterFormComponent,
         ChargeComponent,
-        ChargeFormComponent
+        ChargeFormComponent,
+        CommentComponent,
+        CommentFormComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent],
     providers: [

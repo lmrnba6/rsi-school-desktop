@@ -13,5 +13,14 @@ export const sql = [
 );
 `,
     `ALTER TABLE payment ADD COLUMN charge INTEGER REFERENCES charge (id);`,
-    `ALTER TABLE payment DROP COLUMN training;`
+
+    `ALTER TABLE payment DROP COLUMN training;`,
+
+    `CREATE TABLE IF NOT EXISTS "comment" (
+	"id"	SERIAL NOT NULL,
+	"comment"	TEXT NOT NULL,
+	"date"  TEXT NOT NULL,
+	"employee"	INTEGER NOT NULL,
+	FOREIGN KEY(employee) REFERENCES "user"(id),
+	PRIMARY KEY("id"));`
 ]
