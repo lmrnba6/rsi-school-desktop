@@ -103,7 +103,7 @@ export class InboxFormComponent implements OnInit {
         if(this.groupSelected === 'groups') {
             return user ? user.name + ' ' + user.training + ' ' + user.instructor : '';
         }
-        return user ? user.name : this.userSelected.name;
+        return user ? user.name : this.userSelected ? this.userSelected.name : '';
     }
 
     public userOnChange(event: any): void {

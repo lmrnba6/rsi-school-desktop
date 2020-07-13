@@ -30,7 +30,7 @@ export class CommentComponent implements OnInit, OnChanges {
     public pageIndex: number = 0;
     public pageSize: number = 10;
     public sortName: string = 'date';
-    public sortDirection: string = 'ASC';
+    public sortDirection: string = 'DESC';
     public isAdmin: boolean;
 
     constructor(
