@@ -293,12 +293,14 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
             const user: User = new User();
             user.role = 'student';
             user.name = this.intern.name;
-            user.username = this.intern.id.toString();
-            user.password = this.intern.id.toString();
+            user.username = new Date().getTime().toString();
+            user.password = new Date().getTime().toString();
             this.block = true;
             user.insert().then(
                 () => {
-                    this.block = false
+                    this.block = false;
+                    this.intern.user_id = user.id;
+                    this.intern.updateUser().then();
                 },
                 () => {
                     this.block = false;

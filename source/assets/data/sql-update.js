@@ -12,7 +12,9 @@ export const sql = [
   	PRIMARY KEY("id")
 );
 `,
-    `ALTER TABLE payment ADD COLUMN charge INTEGER REFERENCES charge (id);`,
+    `ALTER TABLE payment ADD COLUMN charge INTEGER REFERENCES "charge"(id);`,
+    `ALTER TABLE intern ADD COLUMN user_id INTEGER REFERENCES "user"(id);`,
+    `ALTER TABLE instructor ADD COLUMN user_id INTEGER REFERENCES "user"(id);`,
 
     `ALTER TABLE payment DROP COLUMN training;`,
 

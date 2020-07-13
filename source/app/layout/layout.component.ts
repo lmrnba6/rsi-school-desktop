@@ -24,23 +24,23 @@ export class LayoutComponent implements OnInit {
     public isIntern: boolean;
     public isParent: boolean;
     public iconsShown: boolean = true;
-    public enrollmentImage = `../../dist/assets/images/enrollmentImage.png`;
-    public internImage = `../../dist/assets/images/internImage.png`;
-    public instructorImage = `../../dist/assets/images/instructorImage.png`;
-    public examImage = `../../dist/assets/images/examImage.png`;
-    public roomImage = `../../dist/assets/images/roomImage.png`;
-    public sessionImage = `../../dist/assets/images/sessionImage.png`;
-    public visitorsImage = `../../dist/assets/images/visitorsImage.png`;
-    public inboxImage = `../../dist/assets/images/inboxImage.png`;
-    public trainingImage = `../../dist/assets/images/trainingImage.png`;
-    public weekdayImage = `../../dist/assets/images/weekdayImage.png`;
-    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
-    public paymentImage = `../../dist/assets/images/paymentImage.png`;
-    public registerImage = `../../dist/assets/images/registerImage.png`;
-    public documentImage = `../../dist/assets/images/documentImage.png`;
-    public accountingImage = `../../dist/assets/images/accountingImage.png`;
-    public settingsImage = `../../dist/assets/images/settingsImage.png`;
-    public resultImage = `../../dist/assets/images/resultImage.png`;
+    public enrollmentImage = `${this.getPath()}dist/assets/images/enrollmentImage.png`;
+    public internImage = `${this.getPath()}dist/assets/images/internImage.png`;
+    public instructorImage = `${this.getPath()}dist/assets/images/instructorImage.png`;
+    public examImage = `${this.getPath()}dist/assets/images/examImage.png`;
+    public roomImage = `${this.getPath()}dist/assets/images/roomImage.png`;
+    public sessionImage = `${this.getPath()}dist/assets/images/sessionImage.png`;
+    public visitorsImage = `${this.getPath()}dist/assets/images/visitorsImage.png`;
+    public inboxImage = `${this.getPath()}dist/assets/images/inboxImage.png`;
+    public trainingImage = `${this.getPath()}dist/assets/images/trainingImage.png`;
+    public weekdayImage = `${this.getPath()}dist/assets/images/weekdayImage.png`;
+    public attendanceImage = `${this.getPath()}dist/assets/images/attendanceImage.png`;
+    public paymentImage = `${this.getPath()}dist/assets/images/paymentImage.png`;
+    public registerImage = `${this.getPath()}dist/assets/images/registerImage.png`;
+    public documentImage = `${this.getPath()}dist/assets/images/documentImage.png`;
+    public accountingImage = `${this.getPath()}dist/assets/images/accountingImage.png`;
+    public settingsImage = `${this.getPath()}dist/assets/images/settingsImage.png`;
+    public resultImage = `${this.getPath()}dist/assets/images/resultImage.png`;
 
     public buttons: Array<FloatingActionButton> = [];
 
@@ -78,6 +78,12 @@ export class LayoutComponent implements OnInit {
                 e.preventDefault();
             }
         });
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     goToIntern(code: any) {

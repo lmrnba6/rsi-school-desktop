@@ -66,11 +66,9 @@
     <h2>{{'pv.document' | translate}}</h2>
     <mat-card style="border: solid">
         <div id="intern" *ngIf="pvName === 'intern'">
-
                         <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
                                 style="font-size: 20.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif; color: black;">{{center?.toUpperCase()}} </span></strong>
                         </p>
-
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{'pv.student_list' | translate}} </span></u></strong>
             </p>
@@ -151,9 +149,9 @@
                     <td *ngFor="let i of attendances; let x = index" style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
                         width="95">
                         <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
-                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern.attendances[x] ?
-                            intern.attendances[x].present === 1 ? 'P' :
-                            intern.attendances[x].present === 0 ? 'A' : 'N/O' : 'N/O'}}</span></strong>
+                                style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern['attendances'][x] ?
+                            intern['attendances'][x].present === 1 ? 'P' :
+                            intern['attendances'][x].present === 0 ? 'A' : 'N/O' : 'N/O'}}</span></strong>
                         </p>
                     </td>
                     <td style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"  width="95">
@@ -204,7 +202,7 @@
                         <p ><strong>Formation:</strong></p>
                     </td>
                     <td >
-                        <p >{{payment.session_name}}</p>
+                        <p >{{payment['session_name']}}</p>
                     </td>
                 </tr>
                 <tr>
@@ -338,9 +336,8 @@
             <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.phone' | translate}}&nbsp;:   0{{intern?.phone}}</span></p>
             <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name_arabic' | translate}}&nbsp;:   {{intern?.name_arabic}}</span></p>
             <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.scholar' | translate}}&nbsp;:   {{'intern.placeholder.'+intern?.scholar | translate}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.training' | translate}}&nbsp;:   {{session?.training}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.session' | translate}}&nbsp;:   {{session?.session}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.training' | translate}}&nbsp;:   {{session['training']}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.session' | translate}}&nbsp;:   {{session['session']}}</span></p>
         </div>
     </mat-card>
-
-
+</mat-card>

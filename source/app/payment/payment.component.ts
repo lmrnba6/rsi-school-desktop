@@ -30,7 +30,7 @@ export class PaymentComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(
         private dialogsService: DialogsService,
@@ -38,13 +38,20 @@ export class PaymentComponent implements OnInit, OnChanges {
         private router: Router,
         private translate: TranslateService,
         private authService: AuthenticationService,
-        ) {
+    ) {
+    }
+
+    getPath() {
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     fixImage(event: any) {
         if (event.target.src.includes('dist')) {
             return event.target.src = event.target.src.replace('/dist', '');
-        }    }
+        }
+    }
 
     ngOnInit(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
@@ -105,14 +112,46 @@ export class PaymentComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'payment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'amount', header: 'payment.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
-            {columnDef: 'comment', header: 'payment.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
-            {columnDef: 'session_name', header: 'payment.placeholder.session', type: 'text', cell: (row: any) => `${row.session_name || ''}`},
-            this.intern ? {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''} :
-                {columnDef: 'intern', header: 'payment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`}
+            {
+                columnDef: 'amount',
+                header: 'payment.placeholder.amount',
+                type: 'text',
+                cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`
+            },
+            {
+                columnDef: 'comment',
+                header: 'payment.placeholder.comment',
+                type: 'text',
+                cell: (row: any) => `${row.comment}`
+            },
+            {
+                columnDef: 'session_name',
+                header: 'payment.placeholder.session',
+                type: 'text',
+                cell: (row: any) => `${row.session_name || ''}`
+            },
+            this.intern ? {
+                    columnDef: 'rest',
+                    header: 'register.placeholder.rest',
+                    type: 'text',
+                    cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''
+                } :
+                {
+                    columnDef: 'intern',
+                    header: 'payment.placeholder.intern_id',
+                    type: 'text',
+                    cell: (row: any) => `${row.intern}`
+                }
         ];
         this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: false, editRow: true});
+        this.setting.cols.push({
+            columnDef: 'settings',
+            class: 'a10',
+            header: '',
+            type: 'settings',
+            delete: false,
+            editRow: true
+        });
     }
 
     /**
@@ -153,17 +192,17 @@ export class PaymentComponent implements OnInit, OnChanges {
     manageInternSold(payment: Payment) {
         this.block = true;
         Intern.get(payment.intern_id as number).then(intern => {
-            intern.sold = Number(intern.sold) + Number(payment.amount);
-            intern.update().then(() => this.block = false,
-                () => {
-                    this.block = false;
-                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                });
-        },() => {
+                intern.sold = Number(intern.sold) + Number(payment.amount);
+                intern.update().then(() => this.block = false,
+                    () => {
+                        this.block = false;
+                        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    });
+            }, () => {
                 this.block = false;
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
             }
-            )
+        )
     }
 
     /**

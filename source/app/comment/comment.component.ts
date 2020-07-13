@@ -57,9 +57,9 @@ export class CommentComponent implements OnInit, OnChanges {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        const user = this.intern ? this.intern.id : this.instructor ? this.instructor.id : 0;
+        const user = this.intern ? this.intern.user_id : this.instructor ? this.instructor.user_id : 0;
         Promise.all([ Comment
-            .getAllPaged(offset, limit, sort, order, filter, user), Comment.getCount(this.filter)])
+            .getAllPaged(offset, limit, sort, order, filter, Number(user)), Comment.getCount(this.filter)])
             .then(
                 values => {
                     this.block = false;
@@ -134,10 +134,10 @@ export class CommentComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        const user = this.intern ? this.intern.id : this.instructor ? this.instructor.id : 0;
+        const user = this.intern || this.instructor;
         const page = this.intern ? 'intern' : this.instructor ? 'instructor' : 'none';
         if(user){
-            this.router.navigate(['comment/form/'+user+'/' + page]);
+            this.router.navigate(['comment/form/'+ user.user_id + '/'+user.id+'/' + page]);
         }
     }
 
@@ -146,10 +146,10 @@ export class CommentComponent implements OnInit, OnChanges {
      */
     public onEditRow(event: Comment): void {
         this.comment = event;
-        const user = this.intern ? this.intern.id : this.instructor ? this.instructor.id : 0;
+        const user = this.intern || this.instructor;
         const page = this.intern ? 'intern' : this.instructor ? 'instructor' : 'none';
         if(user) {
-            this.router.navigate(['comment/form/'+ user + '/' + page+ '/' + event.id]);
+            this.router.navigate(['comment/form/'+ user.user_id + '/'+ user.id + '/' + page+ '/' + event.id]);
         }
 
     }

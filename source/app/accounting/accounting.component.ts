@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import './accounting.component.scss';
 import {Instructor} from "../model/instructor";
 import {Session} from "../model/session";
 import {Attendance} from "../model/attendance";
 import {TranslateService} from "@ngx-translate/core";
 import {MessagesService} from "../_services/messages.service";
+
 @Component({
-  selector: 'app-accounting',
-  templateUrl: './accounting.component.html'
+    selector: 'app-accounting',
+    templateUrl: './accounting.component.html'
 })
 export class AccountingComponent implements OnInit {
 
@@ -25,30 +26,32 @@ export class AccountingComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
-    public searchImage = `../../dist/assets/images/searchImage.png`;
-    constructor(private translate: TranslateService, private messagesService: MessagesService) { }
 
-  ngOnInit() {
-  }
+    constructor(private translate: TranslateService, private messagesService: MessagesService) {
+    }
 
-  onMonthChange() {
-    const currentYear = new Date().getFullYear();
-    const currentMonth = this.months.indexOf(this.month);
-    const start = new Date(currentYear,this.months.indexOf(this.month), 1);
-    const end = new Date(new Date().getFullYear(),currentMonth, this.lastDay(currentYear, currentMonth));
-    let index = 0;
-      this.asyncForEach(this.sessions, async (session: any) => {
-          await Attendance.getCountByMonth(session.id, start.getTime(), end.getTime()).then(
-              attendance => {
-                  this.attendances[index] = attendance['count'];
-                  index++;
-              });
-      });
-  }
+    ngOnInit() {
+    }
 
-  lastDay(y: number, m: number){
-          return  new Date(y, m +1, 0).getDate();
-  }
+
+    onMonthChange() {
+        const currentYear = new Date().getFullYear();
+        const currentMonth = this.months.indexOf(this.month);
+        const start = new Date(currentYear, this.months.indexOf(this.month), 1);
+        const end = new Date(new Date().getFullYear(), currentMonth, this.lastDay(currentYear, currentMonth));
+        let index = 0;
+        this.asyncForEach(this.sessions, async (session: any) => {
+            await Attendance.getCountByMonth(session.id, start.getTime(), end.getTime()).then(
+                attendance => {
+                    this.attendances[index] = attendance['count'];
+                    index++;
+                });
+        });
+    }
+
+    lastDay(y: number, m: number) {
+        return new Date(y, m + 1, 0).getDate();
+    }
 
     async asyncForEach(array: any, callback: any) {
         for (let index = 0; index < array.length; index++) {
@@ -62,7 +65,7 @@ export class AccountingComponent implements OnInit {
     }
 
     public instructorOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
             Instructor.getAllPaged(0, 5, 'name', '', event.target.value).then(
                 users => {
@@ -77,11 +80,11 @@ export class AccountingComponent implements OnInit {
     }
 
     result() {
-    this.salary = 0;
-      this.attendances.forEach((attendance: number , i: number) => {
-        this.salary += attendance * this.instructorRate[i] * (this.classRate[i]/100);
-      });
-      this.salary = this.salary.toFixed(0) as any;
+        this.salary = 0;
+        this.attendances.forEach((attendance: number, i: number) => {
+            this.salary += attendance * this.instructorRate[i] * (this.classRate[i] / 100);
+        });
+        this.salary = this.salary.toFixed(0) as any;
     }
 
     public instructorOnSelect(instructor: Instructor): void {
@@ -89,11 +92,11 @@ export class AccountingComponent implements OnInit {
         this.month = '';
         this.getSessions();
     }
-    
+
     public getSessions() {
-    Session.getAll().then(sessions =>
-        this.sessions = sessions.filter(session =>
-            session.instructor_id === this.instructorSelected.id));
+        Session.getAll().then(sessions =>
+            this.sessions = sessions.filter(session =>
+                session.instructor_id === this.instructorSelected.id));
     }
 
 }

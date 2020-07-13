@@ -474,6 +474,7 @@
     "phone_exist": "Ce numéro de téléphone est existant",
     "name_exist": "Ce nom de groupe est existant",
     "username_exist": "Ce nom d'utilisateur est existant",
+    "account_exist": "Cet utilisateur est existant",
     "session_full": "Ce groupe est complet",
     "notEnrolled_message": "Cet étudiant n'est pas inscrit à cette formation",
     "transfer_intern_message": "Voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?",

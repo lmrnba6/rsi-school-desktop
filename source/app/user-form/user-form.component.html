@@ -1,11 +1,11 @@
-<h2>{{'administration.user_management'| translate}} - {{user?.username}} -</h2>
+<h2>{{'administration.user_management'| translate}} - {{user?.name}} -</h2>
 <mat-divider></mat-divider>
 <mat-card>
   <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
   </app-loader>
   <form [formGroup]="userForm">
       <div class="container">
-      <button [disabled]="userForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+      <button [disabled]="userForm.invalid || (user?.role === 'student' && !internSelected) || (user?.role === 'teacher' && !instructorSelected)" class="pull-right save" (click)="onSave()" type="button" mat-button>
         <span class="glyphicon glyphicon-floppy-disk"></span>
       </button>
       <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
@@ -31,13 +31,42 @@
           <br>
           <mat-form-field appearance="outline">
               <mat-label>{{'user.placeholder.role' | translate}}</mat-label>
-              <mat-select [disabled]="isOnEdit" formControlName="role" [(ngModel)]="user.role" name="role" required>
+              <mat-select [disabled]="isOnEdit" formControlName="role" (selectionChange)="onRoleChange()" [(ngModel)]="user.role" name="role" required>
                   <mat-option>--</mat-option>
                   <mat-option *ngFor="let role of roles" [value]="role">
                       {{'user.' + role | translate}}
                   </mat-option>
               </mat-select>
               <mat-error *ngIf="role.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field *ngIf="user?.role === 'teacher'" class="example-full-width" appearance="outline">
+              <mat-label>{{'payment_instructor.placeholder.instructor_id' | translate}}</mat-label>
+              <input name="instructor" [disabled]="isOnEdit" formControlName="instructor" matInput [ngModel]="instructorSelected"
+                     (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto"
+                     required>
+              <span matSuffix class="glyphicon glyphicon-search"></span>
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                (optionSelected)="instructorOnSelect($event.option.value)">
+                  <mat-option *ngFor="let instructor of instructorsFiltered" [value]="instructor">
+                      {{instructor?.name}} <span [ngStyle]="{color: instructor.sold > 0 ? 'red' : 'green'}">{{instructor.sold}} DA</span>
+                  </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="instructor?.invalid || !instructorSelected">{{'messages.field_required_error' | translate}}</mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="user?.role === 'student'" class="example-full-width" appearance="outline">
+              <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
+              <input name="intern" [disabled]="isOnEdit" formControlName="intern" matInput [ngModel]="internSelected"
+                     (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
+                     required>
+              <span matSuffix class="glyphicon glyphicon-search"></span>
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnIntern.bind(this)"
+                                (optionSelected)="internOnSelect($event.option.value)">
+                  <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
+                      {{intern?.name}} <span [ngStyle]="{color: intern.sold > 0 ? 'red' : 'green'}">{{intern.sold}} DA</span>
+                  </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="intern?.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
           </mat-form-field>
     </div>
   </form>

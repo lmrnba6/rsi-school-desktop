@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `intern` (
 	`sold`	NUMERIC NOT NULL,
     `isAllowed`	INTEGER NOT NULL,
     `parent`	INTEGER,
+
     FOREIGN KEY(parent) REFERENCES user(id),
 	PRIMARY KEY(`id`)
 );

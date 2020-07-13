@@ -1,4 +1,5 @@
 import { TheDb } from './thedb';
+import {Settings} from "./settings";
 
 /**
  * class for selecting, inserting, updating and deleting Useres in user table.
@@ -156,18 +157,18 @@ export class User {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "user" (name, username, password, role)
-            VALUES('${this.name}', '${this.username}', '${this.password}', '${this.role}')`;
+            INSERT INTO "user" (name, username, password, role) 
+            VALUES('${this.name}', '${this.username}', '${this.password}', '${this.role}') ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
 
         const values = {
         };
 
         return TheDb.insert(sql, values)
-            .then((result) => {
+            .then((result: any) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 User to be inserted. Was ${result.changes}`);
                 } else {
-                    this.id = result.lastID;
+                    this.id = result.id;
                 }
             });
     }

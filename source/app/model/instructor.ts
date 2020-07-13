@@ -1,4 +1,5 @@
 import { TheDb } from './thedb';
+import {User} from "./user";
 
 /**
  * class for selecting, inserting, updating and deleting Interns in instructor table.
@@ -15,6 +16,7 @@ export class Instructor {
     public email = '';
     public sold = 0;
     public isFullTime: number | boolean = 0;
+    public user_id: number | User;
 
 
 
@@ -26,6 +28,20 @@ export class Instructor {
 
     public static get(id: number): Promise<Instructor> {
         const sql = `SELECT * FROM "instructor" WHERE id = ${id}`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return new Instructor().fromRow(row);
+                } else {
+                    throw new Error('Expected to find 1 Instructor. Found 0.');
+                }
+            });
+    }
+
+    public static getByUser(id: number): Promise<Instructor> {
+        const sql = `SELECT * FROM "instructor" WHERE user_id = ${id}`;
         const values = {};
 
         return TheDb.selectOne(sql, values)
@@ -126,10 +142,44 @@ export class Instructor {
             });
     }
 
+    public static updateUserId(id: number, userId: number): Promise<void> {
+        const sql = `
+            UPDATE "instructor"
+               SET user_id = ${userId}   
+             WHERE id = ${id}`;
+
+        const values = {
+        };
+
+        return TheDb.update(sql, values)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Instructor to be updated. Was ${result.changes}`);
+                }
+            });
+    }
+
+    public updateUser(): Promise<void> {
+        const sql = `
+            UPDATE "instructor"
+               SET user_id = ${this.user_id}   
+             WHERE id = ${this.id}`;
+
+        const values = {
+        };
+
+        return TheDb.update(sql, values)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Instructor to be updated. Was ${result.changes}`);
+                }
+            });
+    }
+
     public update(): Promise<void> {
         const sql = `
             UPDATE "instructor"
-               SET name = '${this.name ? this.name.replace(/\'/g, "''") : ''}', name_arabic = '${this.name_arabic.replace(/\'/g, "''")}', address = '${this.address.replace(/\'/g, "''")}', phone = '${this.phone}', 
+               SET user_id = ${this.user_id}, name = '${this.name ? this.name.replace(/\'/g, "''") : ''}', name_arabic = '${this.name_arabic.replace(/\'/g, "''")}', address = '${this.address.replace(/\'/g, "''")}', phone = '${this.phone}', 
                email = '${this.email ? this.email.replace(/\'/g, "''") : ''}' , sold = '${this.sold}', "isFullTime" = ${this.isFullTime}   
              WHERE id = ${this.id}`;
 
@@ -168,6 +218,7 @@ export class Instructor {
         this.email = row['email'];
         this.sold = row['sold'];
         this.isFullTime = row['isFullTime']
+        this.user_id = row['user_id']
         this['weekdays'] = row['weekdays'];
         return this;
     }

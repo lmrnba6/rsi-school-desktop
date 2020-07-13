@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessagesService} from "../_services/messages.service";
 import {ActivatedRoute, Router} from '@angular/router';
 import './intern-management.component.scss';
 import {Intern} from "../model/intern";
+
 @Component({
-  selector: 'app-intern-management',
-  templateUrl: './intern-management.component.html',
+    selector: 'app-intern-management',
+    templateUrl: './intern-management.component.html',
 })
 export class InternManagementComponent implements OnInit {
 
@@ -17,15 +18,15 @@ export class InternManagementComponent implements OnInit {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public isIntern: boolean;
-    public enrollmentImage = `../../dist/assets/images/enrollmentImage.png`;
-    public chargeImage = `../../dist/assets/images/chargeImage.png`;
-    public infoImage = `../../dist/assets/images/infoImage.png`;
-    public commentImage = `../../dist/assets/images/commentImage.png`;
-    public examImage = `../../dist/assets/images/examImage.png`;
-    public weekdayImage = `../../dist/assets/images/weekdayImage.png`;
-    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
-    public paymentImage = `../../dist/assets/images/paymentImage.png`;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public enrollmentImage = `${this.getPath()}dist/assets/images/enrollmentImage.png`;
+    public chargeImage = `${this.getPath()}dist/assets/images/chargeImage.png`;
+    public infoImage = `${this.getPath()}dist/assets/images/infoImage.png`;
+    public commentImage = `${this.getPath()}dist/assets/images/commentImage.png`;
+    public examImage = `${this.getPath()}dist/assets/images/examImage.png`;
+    public weekdayImage = `${this.getPath()}dist/assets/images/weekdayImage.png`;
+    public attendanceImage = `${this.getPath()}dist/assets/images/attendanceImage.png`;
+    public paymentImage = `${this.getPath()}dist/assets/images/paymentImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
@@ -36,10 +37,12 @@ export class InternManagementComponent implements OnInit {
         this.getParams();
     }
 
-    fixImage(event: any) {
-        if (event.target.src.includes('dist')) {
-            return event.target.src = event.target.src.replace('/dist', '');
-        }    }
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
+    }
+
 
     /**
      * getParams
@@ -49,7 +52,7 @@ export class InternManagementComponent implements OnInit {
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
-            } else if(res.intern) {
+            } else if (res.intern) {
                 this.getData(res.intern);
                 this.isOnEdit = true;
                 this.isIntern = true;
@@ -60,7 +63,8 @@ export class InternManagementComponent implements OnInit {
         });
     }
 
-    public onTabChange(): void {}
+    public onTabChange(): void {
+    }
 
     /**
      * get data

@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {User} from "../model/user";
 import './user-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
+import {Instructor} from "../model/instructor";
+import {Intern} from "../model/intern";
 
 @Component({
     selector: 'app-user-form',
@@ -18,8 +20,16 @@ export class UserFormComponent implements OnInit {
     public userForm: FormGroup;
     public username: FormControl;
     public password: FormControl;
+    public intern: FormControl;
+    public instructor: FormControl;
     public name: FormControl;
     public role: FormControl;
+    public instructors: Array<Instructor> = [];
+    public instructorsFiltered: Array<Instructor> = [];
+    public instructorSelected: Instructor | any;
+    public interns: Array<Intern> = [];
+    public internsFiltered: Array<Intern> = [];
+    public internSelected: Intern | any;
     public roles = ['admin', 'user', 'student', 'teacher', 'parent']
 
     public color: string = 'warn';
@@ -34,7 +44,6 @@ export class UserFormComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.initForm();
         this.getParams();
     }
 
@@ -50,7 +59,8 @@ export class UserFormComponent implements OnInit {
             } else {
                 this.isOnEdit = false;
                 this.user = new User();
-                this.roles = ['user', 'parent'];
+                this.roles = ['user', 'student', 'teacher', 'parent'];
+                this.initForm();
             }
         });
     }
@@ -66,7 +76,17 @@ export class UserFormComponent implements OnInit {
             .get(id)
             .then((val: User) => {
                 this.user = val;
-                this.userForm.controls['username'].disable();
+                if(this.user.role === 'student') {
+                    Intern.getByUser(this.user.id).then(intern => {
+                        this.internSelected = intern;
+                    })
+                }
+                if(this.user.role === 'teacher') {
+                    Instructor.getByUser(this.user.id).then(instructor => {
+                        this.instructorSelected = instructor;
+                    })
+                }
+                this.initForm();
             });
     }
 
@@ -75,12 +95,80 @@ export class UserFormComponent implements OnInit {
         this.username = new FormControl(null, [Validators.required]);
         this.role = new FormControl(null, [Validators.required]);
         this.password = new FormControl(null, [Validators.required]);
+        this.intern = new FormControl(null);
+        this.instructor = new FormControl(null);
         this.userForm = this.fb.group({
             name: this.name,
             username: this.username,
             role: this.role,
-            password: this.password
+            password: this.password,
+            intern: this.intern,
+            instructor: this.instructor
         });
+        if(this.isOnEdit) {
+            this.userForm.controls['intern'].disable();
+            this.userForm.controls['instructor'].disable();
+        }
+    }
+
+    public displayFn(instructor: Instructor) {
+        return instructor ? instructor.name : this.instructorSelected.name;
+    }
+
+    public instructorOnChange(event: any): void {
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {            this.block = true;
+            Instructor.getAllPaged(0, 10, 'name', '', event.target.value).then(
+                users => {
+                    this.block = false;
+                    this.instructorsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+            this.instructorSelected = null;
+        }
+    }
+
+    public instructorOnSelect(instructor: Instructor): void {
+        this.instructorSelected = instructor;
+        if(this.instructorSelected.user_id) {
+            this.instructorSelected = null;
+            this.userForm.controls['instructor'].patchValue('');
+            this.messagesService.notifyMessage(this.translate.instant('messages.account_exist'), '', 'error');
+        }
+    }
+
+    public displayFnIntern(intern: Intern) {
+        return intern ? intern.name : '';
+    }
+
+    public internOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.block = true;
+            Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
+                users => {
+                    this.block = false;
+                    this.internsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+            this.internSelected = null;
+        }
+    }
+
+    public onRoleChange() {
+        this.internSelected = null;
+        this.instructorSelected = null;
+    }
+
+    public internOnSelect(intern: Intern): void {
+        this.internSelected = intern;
+        if(this.internSelected.user_id) {
+            this.internSelected = null;
+            this.userForm.controls['intern'].patchValue('');
+            this.messagesService.notifyMessage(this.translate.instant('messages.account_exist'), '', 'error');
+        }
     }
 
     /**
@@ -114,6 +202,21 @@ export class UserFormComponent implements OnInit {
         userPromise.then(
             () => {
                 this.block = false;
+                if(!this.isOnEdit) {
+                    let updateEmployee;
+                    if(this.internSelected) {
+                        updateEmployee = Intern.updateUserId(this.internSelected.id, this.user.id);
+                    }
+                    else if (this.instructorSelected) {
+                        updateEmployee = Instructor.updateUserId(this.instructorSelected.id, this.user.id);
+                    }
+                    if(updateEmployee) {
+                        updateEmployee.then(() => this.block = false, () => {
+                            this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                            this.block = false;
+                        });
+                    }
+                }
                 this.goBack();
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },

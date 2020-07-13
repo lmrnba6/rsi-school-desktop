@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS "instructor" (
     "email"	TEXT NOT NULL,
     "sold"	INTEGER NOT NULL,
     "isFullTime" INTEGER,
+    "user_id" INTEGER,
+    FOREIGN KEY(user_id) REFERENCES "user"(id),
 	PRIMARY KEY("id")
 );
 
@@ -111,6 +113,8 @@ CREATE TABLE IF NOT EXISTS "intern" (
     "isPromo"	INTEGER NOT NULL,
     "isVip"	INTEGER NOT NULL,
     "parent"	INTEGER,
+    "user_id" INTEGER,
+    FOREIGN KEY(user_id) REFERENCES "user"(id),
     FOREIGN KEY(parent) REFERENCES "user"(id),
 	PRIMARY KEY("id")
 );

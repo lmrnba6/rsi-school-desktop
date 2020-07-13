@@ -22,7 +22,7 @@ export class PaymentInstructorFormComponent implements OnInit {
     public instructor: FormControl;
     public instructors: Array<Instructor> = [];
     public instructorsFiltered: Array<Instructor> = [];
-    public instructorSelected: Instructor;
+    public instructorSelected: Instructor | any;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
@@ -75,6 +75,7 @@ export class PaymentInstructorFormComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
+            this.instructorSelected = null;
         }
         //this.instructorsFiltered = this.instructors.filter(instructors => instructors.name.toLowerCase().includes(event.toLowerCase()));
     }

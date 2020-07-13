@@ -21,7 +21,7 @@ export class SchoolComponent implements OnInit {
     public photo: any;
     public block: boolean;
     public school: School;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
 
     constructor(private fb: FormBuilder,
@@ -29,6 +29,12 @@ export class SchoolComponent implements OnInit {
                 private router: Router,
                 private translate: TranslateService
     ) {
+    }
+
+    getPath() {
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     ngOnInit() {
@@ -39,7 +45,8 @@ export class SchoolComponent implements OnInit {
     fixImage(event: any) {
         if (event.target.src.includes('dist')) {
             return event.target.src = event.target.src.replace('/dist', '');
-        }    }
+        }
+    }
 
     public initForm(): void {
         this.name = new FormControl(null, [Validators.required]);

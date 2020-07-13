@@ -1,4 +1,5 @@
 import { TheDb } from './thedb';
+import {User} from "./user";
 
 /**
  * class for selecting, inserting, updating and deleting Interns in intern table.
@@ -23,6 +24,7 @@ export class Intern{
     public isVip: number | boolean = 0;
     public parent: any;
     public comment = '';
+    public user_id: number | User;
 
 
     public static getCount(filter: string): Promise<Intern[]> {
@@ -110,7 +112,7 @@ export class Intern{
     }
 
     public static getInternBySession(session_id: number ): Promise<Intern[]> {
-        const sql = `SELECT i.id, i.name, i.phone, i.phone2, i.email, i.birth, i.address, i.comment, i."isAllowed",i."isPromo", i."isVip", i.scholar, i.sold 
+        const sql = `SELECT i.id, i.name, i.phone, i.phone2, i.email, i.birth, i.address, i.comment,i.user_id, i."isAllowed",i."isPromo", i."isVip", i.scholar, i.sold 
                                                    FROM "enrollment" AS e 
                                                    INNER JOIN "session" AS s ON e.session_id = s.id
                                                    INNER JOIN "intern" AS i ON e.intern_id = i.id
@@ -130,7 +132,7 @@ export class Intern{
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Intern[]> {
-        const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.comment,i.name_arabic,
+        const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.comment,i.user_id,i.name_arabic,
                             STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays 
                             from intern as i 
                             left join enrollment as e  on e.intern_id = i.id
@@ -217,10 +219,59 @@ export class Intern{
             });
     }
 
+
+    public static getByUser(id: number): Promise<Intern> {
+        const sql = `SELECT * FROM "intern" WHERE user_id = ${id}`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return new Intern().fromRow(row);
+                } else {
+                    throw new Error('Expected to find 1 Instructor. Found 0.');
+                }
+            });
+    }
+
+    public updateUser(): Promise<void> {
+        const sql = `
+            UPDATE "intern"
+               SET user_id = ${this.user_id}   
+             WHERE id = ${this.id}`;
+
+        const values = {
+        };
+
+        return TheDb.update(sql, values)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Instructor to be updated. Was ${result.changes}`);
+                }
+            });
+    }
+
+    public static updateUserId(id: number, userId: number): Promise<void> {
+        const sql = `
+            UPDATE "intern"
+               SET user_id = ${userId}   
+             WHERE id = ${id}`;
+
+        const values = {
+        };
+
+        return TheDb.update(sql, values)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Instructor to be updated. Was ${result.changes}`);
+                }
+            });
+    }
+
     public update(): Promise<void> {
         const sql = `
             UPDATE "intern"
-               SET name = '${this.name ? this.name.replace(/\'/g, "''"): ''}', birth = '${this.birth}', name_arabic = '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}', 
+               SET user_id = ${this.user_id}, name = '${this.name ? this.name.replace(/\'/g, "''"): ''}', birth = '${this.birth}', name_arabic = '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}', 
                address = '${this.address ? this.address.replace(/\'/g, "''"): ''}', comment = '${this.comment ? this.comment.replace(/\'/g, "''"): ''}', phone = '${this.phone}',  phone2 = '${this.phone2}', "isAllowed" = ${this.isAllowed},"isPromo" = ${this.isPromo}, "isVip" = ${this.isVip}, 
                email = '${this.email ? this.email.replace(/\'/g, "''"): ''}', sold = ${this.sold},  scholar = '${this.scholar}',  photo = '${this.photo}', parent = ${this.parent}   
              WHERE id = ${this.id}`;
@@ -283,6 +334,7 @@ export class Intern{
         this.isPromo = row['isPromo'];
         this.isVip = row['isVip'];
         this.parent = row['parent'];
+        this.user_id = row['user_id'];
         this['enrollments'] = row['enrollments'];
         this['weekdays'] = row['weekdays'];
         return this;

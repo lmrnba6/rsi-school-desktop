@@ -19,18 +19,24 @@ export class SessionManagementComponent implements OnInit, OnChanges {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public isAdmin: boolean;
-    public weekdayImage = `../../dist/assets/images/weekdayImage.png`;
-    public infoImage = `../../dist/assets/images/infoImage.png`;
-    public internImage = `../../dist/assets/images/internImage.png`;
-    public examImage = `../../dist/assets/images/examImage.png`;
-    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public weekdayImage = `${this.getPath()}dist/assets/images/weekdayImage.png`;
+    public infoImage = `${this.getPath()}dist/assets/images/infoImage.png`;
+    public internImage = `${this.getPath()}dist/assets/images/internImage.png`;
+    public examImage = `${this.getPath()}dist/assets/images/examImage.png`;
+    public attendanceImage = `${this.getPath()}dist/assets/images/attendanceImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private authService: AuthenticationService
                 ) {
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

@@ -34,7 +34,7 @@ export class InboxComponent implements OnInit, OnChanges {
     public user: User;
     public deleted: boolean;
     public sent: boolean;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(
         private dialogsService: DialogsService,
@@ -44,6 +44,12 @@ export class InboxComponent implements OnInit, OnChanges {
         private translate: TranslateService,
         private authService: AuthenticationService,
     ) {
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     ngOnInit(): void {

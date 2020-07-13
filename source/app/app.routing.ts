@@ -138,11 +138,11 @@ const appRoutes: Routes = [
                 component: VisitorFormComponent
             },
             {
-                path: 'comment/form/:user/:page',
+                path: 'comment/form/:user/:employee/:page',
                 component: CommentFormComponent
             },
             {
-                path: 'comment/form/:user/:page/:id',
+                path: 'comment/form/:user/:employee/:page/:id',
                 component: CommentFormComponent
             },
             {
@@ -267,6 +267,14 @@ const appRoutes: Routes = [
             },
             {
                 path: 'instructor-management/:id',
+                component: InstructorManagementComponent
+            },
+            {
+                path: 'intern-management/intern/:intern',
+                component: InternManagementComponent
+            },
+            {
+                path: 'instructor-management/instructor/:instructor',
                 component: InstructorManagementComponent
             },
             {

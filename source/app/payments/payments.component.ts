@@ -7,10 +7,16 @@ import './payments.component.scss';
 })
 export class PaymentsComponent implements OnInit {
 
-    public internImage = `../../dist/assets/images/internImage.png`;
-    public instructorImage = `../../dist/assets/images/instructorImage.png`;
+    public internImage = `${this.getPath()}dist/assets/images/internImage.png`;
+    public instructorImage = `${this.getPath()}dist/assets/images/instructorImage.png`;
 
     constructor() {
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     ngOnInit() {

@@ -34,12 +34,18 @@ export class HomeComponent implements OnInit,OnChanges {
     public value: number = 100;
     public isTeacher: boolean;
     public isIntern: boolean;
-    public internImage = `../../dist/assets/images/internImage.png`;
-    public instructorImage = `../../dist/assets/images/instructorImage.png`;
-    public sessionImage = `../../dist/assets/images/sessionImage.png`;
-    public trainingImage = `../../dist/assets/images/trainingImage.png`;
+    public internImage = `${this.getPath()}dist/assets/images/internImage.png`;
+    public instructorImage = `${this.getPath()}dist/assets/images/instructorImage.png`;
+    public sessionImage = `${this.getPath()}dist/assets/images/sessionImage.png`;
+    public trainingImage = `${this.getPath()}dist/assets/images/trainingImage.png`;
 
     constructor(private auth: AuthenticationService) {}
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
+    }
 
     ngOnInit(): void {
         this.block = true;

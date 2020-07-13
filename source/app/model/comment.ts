@@ -54,8 +54,8 @@ export class Comment {
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, employee: number): Promise<Comment[]> {
         const sql = `SELECT c.*, u.username FROM "comment" c
                             INNER JOIN "user" u ON u.id = c.employee
-                            WHERE   c.comment ILIKE '%${filter}%' 
-                            AND u.username = ${employee}::TEXT
+                            WHERE c.comment ILIKE '%${filter}%' 
+                            AND u.id = ${employee}
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
         };

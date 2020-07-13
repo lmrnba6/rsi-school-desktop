@@ -472,6 +472,7 @@
     "phone_exist": "This phone number exist already",
     "name_exist": "This group name exist already",
     "username_exist": "This username exist already",
+    "account_exist": "This user has an account already",
     "session_full": "This group is full",
     "notEnrolled_message": "This student is not registered for this training",
     "transfer_intern_message": "Do you really want to create a new student and delete this visitor?",

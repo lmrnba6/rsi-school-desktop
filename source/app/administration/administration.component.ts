@@ -7,10 +7,16 @@ import './administration.component.scss';
 })
 export class AdministrationComponent implements OnInit {
 
-    public schoolImage = `../../dist/assets/images/schoolImage.png`;
-    public userImage = `../../dist/assets/images/userImage.png`;
+    public schoolImage = `${this.getPath()}dist/assets/images/schoolImage.png`;
+    public userImage = `${this.getPath()}dist/assets/images/userImage.png`;
 
     constructor() {
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     ngOnInit() {

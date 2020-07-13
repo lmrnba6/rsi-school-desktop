@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessagesService} from "../_services/messages.service";
 import {ActivatedRoute, Router} from '@angular/router';
 import './weekday-management.component.scss';
 import {Weekday} from "../model/weekday";
+
 @Component({
-  selector: 'app-weekday-management',
-  templateUrl: './weekday-management.component.html',
+    selector: 'app-weekday-management',
+    templateUrl: './weekday-management.component.html',
 })
 export class WeekdayManagementComponent implements OnInit {
 
@@ -16,14 +17,20 @@ export class WeekdayManagementComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
-    public infoImage = `../../dist/assets/images/infoImage.png`;
-    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public infoImage = `${this.getPath()}dist/assets/images/infoImage.png`;
+    public attendanceImage = `${this.getPath()}dist/assets/images/attendanceImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
                 private router: Router
     ) {
+    }
+
+    getPath() {
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     public ngOnInit(): void {
@@ -33,7 +40,8 @@ export class WeekdayManagementComponent implements OnInit {
     fixImage(event: any) {
         if (event.target.src.includes('dist')) {
             return event.target.src = event.target.src.replace('/dist', '');
-        }    }
+        }
+    }
 
 
     /**
@@ -51,7 +59,8 @@ export class WeekdayManagementComponent implements OnInit {
         });
     }
 
-    public onTabChange(): void {}
+    public onTabChange(): void {
+    }
 
     /**
      * get data

@@ -5,7 +5,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Comment} from "../model/comment";
 import './comment-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
-import {User} from "../model/user";
 
 @Component({
     selector: 'app-comment-form',
@@ -21,8 +20,8 @@ export class CommentFormComponent implements OnInit, OnChanges {
     public comments: FormControl;
     public date: FormControl;
     public userId: number;
+    public employeeId: number;
     public page: string;
-    public user: User;
 
 
     public color: string = 'warn';
@@ -54,17 +53,18 @@ export class CommentFormComponent implements OnInit, OnChanges {
     public getParams(): void {
         this.route.params.subscribe(res => {
             this.page = res.page;
-            if (res.id && res.user) {
+            if (res.id) {
                 this.getData(res.id);
                 this.userId = res.user;
+                this.employeeId = res.employee;
                 this.isOnEdit = true;
             } else {
                 this.userId = res.user;
+                this.employeeId = res.employee;
                 this.isOnEdit = false;
                 this.comment = new Comment();
                 this.comment.date = new Date();
             }
-            User.getByUserName(res.user).then(user => this.user = user);
         });
     }
 
@@ -107,7 +107,7 @@ export class CommentFormComponent implements OnInit, OnChanges {
      */
     public onSaveOrUpdate(): void {
         this.comment.date = (this.comment.date as Date).getTime();
-        this.comment.employee = this.user.id;
+        this.comment.employee = this.userId;
         let internPromise: Promise<any>;
         if (this.isOnEdit) {
             internPromise = this.comment.update();
@@ -129,7 +129,7 @@ export class CommentFormComponent implements OnInit, OnChanges {
     }
 
     goBack() {
-        this.router.navigate([this.page + '-management/'+ this.userId]);
+        this.router.navigate([this.page + '-management/'+ this.employeeId]);
     }
 
     /**

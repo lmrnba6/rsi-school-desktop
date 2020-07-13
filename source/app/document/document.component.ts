@@ -26,12 +26,18 @@ export class DocumentComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
-    public internImage = `../../dist/assets/images/internImage.png`;
-    public idImage = `../../dist/assets/images/idImage.png`;
-    public paymentImage = `../../dist/assets/images/paymentImage.png`;
-    public pvImage = `../../dist/assets/images/pvImage.png`;
+    public internImage = `${this.getPath()}dist/assets/images/internImage.png`;
+    public idImage = `${this.getPath()}dist/assets/images/idImage.png`;
+    public paymentImage = `${this.getPath()}dist/assets/images/paymentImage.png`;
+    public pvImage = `${this.getPath()}dist/assets/images/pvImage.png`;
 
     constructor(private router: Router, private translate: TranslateService, private messagesService: MessagesService) {
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     ngOnInit() {

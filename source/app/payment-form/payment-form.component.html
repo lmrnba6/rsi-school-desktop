@@ -13,7 +13,7 @@
             </button>
             <mat-form-field appearance="outline">
                 <mat-label>{{'payment.placeholder.amount' | translate}}</mat-label>
-                <input name="amount" type="number" (blur)="parseAmount($event.target.value)" formControlName="amount"
+                <input name="amount" type="number" (blur)="parseAmount($event.target['value'])" formControlName="amount"
                        [ngModel]="payment.amount" matInput
                        required autofocus>
                 <span matSuffix>DA</span>
@@ -38,7 +38,7 @@
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnIntern.bind(this)"
                                   (optionSelected)="internOnSelect($event.option.value)">
                     <mat-option *ngFor="let intern of internsFiltered" [value]="intern">
-                        {{intern?.name}} <span style="color: red">{{intern.sold}} DA</span>
+                        {{intern?.name}} <span [ngStyle]="{color: intern.sold > 0 ? 'red' : 'green'}">{{intern.sold}} DA</span>
                     </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="intern.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
@@ -58,7 +58,7 @@
                     <mat-option value="">----</mat-option>
                     <mat-option value="0">{{'charge.noCharge' | translate}}</mat-option>
                     <mat-option *ngFor="let charge of charges" [value]="charge.id">
-                        {{charge.session_name}} <span [ngStyle]="{color: charge.rest > 0 ? 'red' : 'green'}">{{charge.rest}} DA</span>
+                        {{charge['session_name']}} <span [ngStyle]="{color: charge.rest > 0 ? 'red' : 'green'}">{{charge.rest}} DA</span>
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="charge.hasError('required')">{{'messages.field_required_error' | translate}}

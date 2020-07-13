@@ -100,13 +100,13 @@ export class LoginComponent implements OnInit {
                     this.block = false;
                     this.authenticationService.setToken(user);
                     if (user.role === 'teacher') {
-                        Instructor.get(Number(user.username)).then(
+                        Instructor.getByUser(Number(user.id)).then(
                             instructor => {
                                 instructor ? this.router.navigate(['instructor/' + instructor.id]) :
                                     this.error = 'error';
                             });
                     } else if(user.role === 'student') {
-                        Intern.get(Number(user.username)).then(
+                        Intern.getByUser(Number(user.id)).then(
                             intern => {
                                 intern ? this.router.navigate(['interns/' + intern.id]) :
                                     this.error = 'error';

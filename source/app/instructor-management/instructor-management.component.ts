@@ -17,17 +17,23 @@ export class InstructorManagementComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
-    public infoImage = `../../dist/assets/images/infoImage.png`;
-    public commentImage = `../../dist/assets/images/commentImage.png`;
-    public sessionImage = `../../dist/assets/images/sessionImage.png`;
-    public weekdayImage = `../../dist/assets/images/weekdayImage.png`;
-    public attendanceImage = `../../dist/assets/images/attendanceImage.png`;
-    public paymentImage = `../../dist/assets/images/paymentImage.png`;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public infoImage = `${this.getPath()}dist/assets/images/infoImage.png`;
+    public commentImage = `${this.getPath()}dist/assets/images/commentImage.png`;
+    public sessionImage = `${this.getPath()}dist/assets/images/sessionImage.png`;
+    public weekdayImage = `${this.getPath()}dist/assets/images/weekdayImage.png`;
+    public attendanceImage = `${this.getPath()}dist/assets/images/attendanceImage.png`;
+    public paymentImage = `${this.getPath()}dist/assets/images/paymentImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
                 private route: ActivatedRoute,
                 private router: Router) {
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     fixImage(event: any) {

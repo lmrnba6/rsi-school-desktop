@@ -30,7 +30,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
-    public backImage = `../../dist/assets/images/backImage.png`;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(
         private dialogsService: DialogsService,
@@ -38,6 +38,12 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
         private router: Router,
         private translate: TranslateService,
         private authService: AuthenticationService) {
+    }
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
     }
 
     fixImage(event: any) {

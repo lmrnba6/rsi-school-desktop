@@ -6,10 +6,16 @@ import {Router} from "@angular/router";
   templateUrl: './messages.component.html'
 })
 export class MessagesComponent implements OnInit {
-  public messageInImage = `../../dist/assets/images/messageInImage.png`;
-  public messageOutImage = `../../dist/assets/images/messageOutImage.png`;
+  public messageInImage = `${this.getPath()}dist/assets/images/messageInImage.png`;
+  public messageOutImage = `${this.getPath()}dist/assets/images/messageOutImage.png`;
 
   constructor(private router: Router) { }
+
+  getPath(){
+    const l = window.location.href.split('/');
+    const c = l.length - l.indexOf('index.html');
+    return '../'.repeat(c);
+  }
 
   ngOnInit() {
   }

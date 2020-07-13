@@ -38,8 +38,8 @@ export class InstructorComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.authService.getCurrentUser().role === 'teacher') {
-            Instructor.get(this.authService.getCurrentUser().username).then(instructor => {
-                instructor && this.router.navigate(['instructor-management/' + instructor.id]);
+            Instructor.getByUser(this.authService.getCurrentUser().id).then(instructor => {
+                instructor && this.router.navigate(['instructor-management/instructor/' + instructor.id]);
             })
         }
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
