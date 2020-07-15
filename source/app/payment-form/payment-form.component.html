@@ -46,8 +46,8 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'payment.placeholder.comment' | translate}}</mat-label>
-                <input name="comment" formControlName="comment" [(ngModel)]="payment.comment" matInput
-                       placeholder="{{'payment.placeholder.comment' | translate}}" >
+                <textarea name="comment" formControlName="comment" [(ngModel)]="payment.comment" matInput
+                          placeholder="{{'payment.placeholder.comment' | translate}}" ></textarea>
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>

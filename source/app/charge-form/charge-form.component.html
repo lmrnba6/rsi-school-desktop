@@ -13,7 +13,7 @@
             </button>
             <mat-form-field appearance="outline">
                 <mat-label>{{'charge.placeholder.amount' | translate}}</mat-label>
-                <input name="amount" type="number" (blur)="parseAmount($event.target.value)" formControlName="amount"
+                <input name="amount" type="number" (blur)="parseAmount($event.target['value'])" formControlName="amount"
                        [ngModel]="charge.amount" matInput
                        required autofocus>
                 <span matSuffix>DA</span>
@@ -22,7 +22,7 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'charge.placeholder.rest' | translate}}</mat-label>
-                <input name="rest" type="number" (blur)="parseRest($event.target.value)" formControlName="rest"
+                <input name="rest" type="number" (blur)="parseRest($event.target['value'])" formControlName="rest"
                        [ngModel]="charge.rest" matInput
                        required autofocus>
                 <span matSuffix>DA</span>
@@ -52,7 +52,7 @@
                             name="session" required>
                     <mat-option value="">----</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
-                        {{session.name}} {{session.training_fees}} DA {{session.books_fees}} DA {{session.enrollment_fees}} DA
+                        {{session.name}} {{session['training_fees']}} DA {{session['books_fees']}} DA {{session['enrollment_fees']}} DA
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="session.hasError('required')">{{'messages.field_required_error' | translate}}
@@ -61,8 +61,8 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'charge.placeholder.comment' | translate}}</mat-label>
-                <input name="comment" formControlName="comment" [(ngModel)]="charge.comment" matInput
-                       placeholder="{{'charge.placeholder.comment' | translate}}" >
+                <textarea name="comment" formControlName="comment" [(ngModel)]="charge.comment" matInput
+                          ></textarea>
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>

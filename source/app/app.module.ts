@@ -105,6 +105,11 @@ import {ChargeComponent} from "./charge/charge.component";
 import {ChargeFormComponent} from "./charge-form/charge-form.component";
 import {CommentComponent} from "./comment/comment.component";
 import {CommentFormComponent} from "./comment-form/comment-form.component";
+import {CarComponent} from "./car/car.component";
+import {CarFormComponent} from "./car-form/car-form.component";
+import {TransportationComponent} from "./transportation/transportation.component";
+import {TransportComponent} from "./transport/transport.component";
+import {TransportFormComponent} from "./transport-form/transport-form.component";
 
 
 @NgModule({
@@ -238,7 +243,12 @@ import {CommentFormComponent} from "./comment-form/comment-form.component";
         ChargeComponent,
         ChargeFormComponent,
         CommentComponent,
-        CommentFormComponent
+        CommentFormComponent,
+        CarComponent,
+        CarFormComponent,
+        TransportationComponent,
+        TransportComponent,
+        TransportFormComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent],
     providers: [

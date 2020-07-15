@@ -1,0 +1,47 @@
+<h2>{{'car.title'| translate}} - {{car?.name}} -</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="carForm">
+        <div class="container">
+            <button [disabled]="carForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'car.placeholder.name' | translate}}</mat-label>
+                <input name="name" formControlName="name" [(ngModel)]="car.name" matInput
+                       required autofocus>
+                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'car.placeholder.make' | translate}}</mat-label>
+                <input name="make" formControlName="make" [(ngModel)]="car.make" matInput
+                >
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'car.placeholder.plate' | translate}}</mat-label>
+                <input name="plate" formControlName="plate" [(ngModel)]="car.plate" matInput
+                >
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'car.placeholder.seat' | translate}}</mat-label>
+                <input name="seat" formControlName="seat" type="number" [(ngModel)]="car.seat" matInput
+                       required autofocus>
+                <mat-error *ngIf="seat.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'car.placeholder.comment' | translate}}</mat-label>
+                <textarea name="comment" formControlName="comment" [(ngModel)]="car.comment" matInput></textarea>
+            </mat-form-field>
+            <br>
+        </div>
+    </form>
+</mat-card>

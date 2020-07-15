@@ -59,6 +59,8 @@
     "title": "Administration",
     "reception": "Acceuil",
     "school": "École",
+    "transportation": "Transport",
+    "transport": "Programme",
     "database": "Base de données",
     "user_management": "Gestion des utilisateurs"
   },
@@ -112,6 +114,34 @@
       "phone": "Téléphone",
       "comment": "Commentaire",
       "date": "Date"
+    }
+  },
+  "transportation": {
+    "title": "Transport",
+    "car": "Bus",
+    "program": "Programme"
+  },
+  "car": {
+    "title": "Bus",
+    "placeholder": {
+      "name" : "Nom",
+      "make": "Marque",
+      "comment": "Commentaire",
+      "seat": "Sièges",
+      "plate": "Matricule"
+    }
+  },
+  "transport": {
+    "title": "Programme",
+    "placeholder": {
+      "from": "École => Étudiant",
+      "to": "Étudiant => École",
+      "availability": "Available",
+      "time" : "Time",
+      "day": "Day",
+      "comment": "Comment",
+      "car": "Bus",
+      "direction": "Direction"
     }
   },
   "comment": {
@@ -331,6 +361,7 @@
     "title": "Inscription",
     "done": "Terminé",
     "start": "Commencer",
+    "available": "Disponible",
     "placeholder": {
       "comment" : "Commentaire",
       "date": "Date",

@@ -18,7 +18,8 @@
                        [ngModel]="register.amount" matInput
                        required autofocus>
                 <span style="color: red" *ngIf="sign === '-'" matPrefix class="glyphicon glyphicon-arrow-up"></span>
-                <span style="color: #28a745" *ngIf="sign === '+'" matPrefix class="glyphicon glyphicon-arrow-down"></span>
+                <span style="color: #28a745" *ngIf="sign === '+'" matPrefix
+                      class="glyphicon glyphicon-arrow-down"></span>
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
@@ -42,7 +43,7 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'register.placeholder.comment' | translate}}</mat-label>
-                <input name="comment" formControlName="comment" [(ngModel)]="register.comment" matInput>
+                <textarea name="comment" formControlName="comment" [(ngModel)]="register.comment" matInput></textarea>
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
         </div>

@@ -9,6 +9,7 @@ export class AdministrationComponent implements OnInit {
 
     public schoolImage = `${this.getPath()}dist/assets/images/schoolImage.png`;
     public userImage = `${this.getPath()}dist/assets/images/userImage.png`;
+    public carImage = `${this.getPath()}dist/assets/images/carImage.png`;
 
     constructor() {
     }

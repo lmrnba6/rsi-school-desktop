@@ -68,8 +68,8 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'exam.placeholder.comment' | translate}}</mat-label>
-                <input name="comment" formControlName="comment" [(ngModel)]="exam.comment" matInput
-                       >
+                <textarea name="comment" formControlName="comment" [(ngModel)]="exam.comment" matInput
+                ></textarea>
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
         </div>

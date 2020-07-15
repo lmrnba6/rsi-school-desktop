@@ -57,6 +57,8 @@
   },
   "administration": {
     "title": "Administration",
+    "transportation": "Transport",
+    "transport": "Programe",
     "reception": "Home",
     "school": "School",
     "database": "Database",
@@ -112,6 +114,34 @@
       "phone": "Phone",
       "comment": "Comment",
       "date": "Date"
+    }
+  },
+  "transportation": {
+    "title": "Transport",
+    "car": "Buses",
+    "program": "Program"
+  },
+  "car": {
+    "title": "Buses",
+    "placeholder": {
+      "name" : "Name",
+      "make": "Make",
+      "comment": "Comment",
+      "seat": "Seats",
+      "plate": "Plate"
+    }
+  },
+  "transport": {
+    "title": "Program",
+    "placeholder": {
+      "from": "School => Student",
+      "to": "Student => School",
+      "availability": "Available",
+      "time" : "Time",
+      "day": "Day",
+      "comment": "Comment",
+      "car": "Bus",
+      "direction": "Direction"
     }
   },
   "comment": {
@@ -330,6 +360,7 @@
     "title": "registration",
     "done": "Done",
     "start": "Begin",
+    "available": "Available",
     "placeholder": {
       "comment" : "Comments",
       "date": "Date",

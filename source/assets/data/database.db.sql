@@ -216,4 +216,26 @@ CREATE TABLE IF NOT EXISTS `notes` (
 	PRIMARY KEY(`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `car` (
+	`id`	INTEGER NOT NULL,
+	`name`	TEXT NOT NULL,
+	`make`	TEXT,
+	`plate`	TEXT,
+	`seat`	INTEGER NOT NULL,
+	`comment`	TEXT,
+	PRIMARY KEY(`id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `transport` (
+	`id`	INTEGER NOT NULL,
+	`time`	TEXT NOT NULL,
+	`day`	TEXT NOT NULL,
+	`direction`	TEXT,
+	`intern`	INTEGER NOT NULL,
+	`car`
+	`comment`	TEXT,
+	PRIMARY KEY(`id`)
+);
+
 COMMIT;

@@ -17,7 +17,7 @@
                             name="session_id" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
-                        {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
+                        {{session.name + ' ' + session['instructor'] + ' ' + session['training'] + ' '}} {{'training.' + session['type'] | translate}}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
@@ -52,11 +52,11 @@
             <br>
             <mat-form-field  appearance="outline">
                 <mat-label>{{'weekday.placeholder.time' | translate}}</mat-label>
-                <mat-select formControlName="time" [(ngModel)]="weekday.time"
+                <mat-select formControlName="time" [(ngModel)]="weekday.time" (selectionChange)="onChange()"
                             name="time" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let time of times" [value]="time">
-                        {{ time }}
+                        <span [ngStyle]="{color: timeExist(time) ? 'red' : 'green'}">{{ time }}</span>
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="time.hasError('required')">{{'messages.field_required_error' | translate}}

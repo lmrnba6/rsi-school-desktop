@@ -1,0 +1,74 @@
+<h2>{{'transport.title'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="transportForm">
+        <div class="container">
+            <button [disabled]="transportForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field  appearance="outline">
+                <mat-label>{{'transport.placeholder.day' | translate}}</mat-label>
+                <mat-select (selectionChange)="onChange()" formControlName="day" [(ngModel)]="transport.day"
+                            name="day" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let day of days" [value]="day">
+                        {{'weekday.placeholder.'+ day | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="day.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'transport.placeholder.car' | translate}}</mat-label>
+                <mat-select (selectionChange)="onChange()" formControlName="car" [(ngModel)]="transport.car"
+                            name="car" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let car of cars" [value]="car.id">
+                        {{car.name + ' ' + car.make + ' ' + car.seat}} {{'car.placeholder.seat' | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="car.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field  appearance="outline">
+                <mat-label>{{'transport.placeholder.direction' | translate}}</mat-label>
+                <mat-select formControlName="direction" [(ngModel)]="transport.direction"
+                            name="direction" required>
+                    <mat-option>--</mat-option>
+                    <mat-option value="from">{{'transport.placeholder.from' | translate}}</mat-option>
+                    <mat-option value="to">{{'transport.placeholder.to' | translate}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="time.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field  appearance="outline">
+                <mat-label>{{'transport.placeholder.time' | translate}}</mat-label>
+                <mat-select formControlName="time" (selectionChange)="onChange()" [(ngModel)]="transport.time"
+                            name="time" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let time of times" [value]="time">
+                        <span [ngStyle]="{color: timeExist(time) ? 'red' : 'green'}">{{ time }}</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="time.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'transport.placeholder.comment' | translate}}</mat-label>
+                <textarea name="comment" formControlName="comment" [(ngModel)]="transport.comment" matInput
+                          ></textarea>
+                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+        </div>
+    </form>
+</mat-card>

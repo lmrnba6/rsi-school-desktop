@@ -3,24 +3,24 @@ import {DialogsService} from '../_services/dialogs.service';
 import {MessagesService} from "../_services/messages.service";
 import {Router} from '@angular/router';
 import {AbstractTableSetting} from "../model/abstractTableSetting";
-import './visitor.component.scss';
+import './car.component.scss';
 import {TranslateService} from "@ngx-translate/core";
-import {Visitor} from "../model/visitor";
+import {Car} from "../model/car";
 import {Session} from "../model/session";
 import {AuthenticationService} from "../_services/authentication.service";
 
 @Component({
-    selector: 'app-visitor',
-    templateUrl: './visitor.component.html',
+    selector: 'app-car',
+    templateUrl: './car.component.html',
 })
-export class VisitorComponent implements OnInit, OnChanges {
+export class CarComponent implements OnInit, OnChanges {
 
     @Input() public session: Session;
     public filter: string = '';
     public data: any;
     public tableName: string;
     public setting: AbstractTableSetting;
-    public visitor: Visitor;
+    public car: Car;
     public block: boolean;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -30,6 +30,8 @@ export class VisitorComponent implements OnInit, OnChanges {
     public sortName: string = 'name';
     public sortDirection: string = 'ASC';
     public isAdmin: boolean;
+    public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
+
 
     constructor(
         private dialogsService: DialogsService,
@@ -45,6 +47,18 @@ export class VisitorComponent implements OnInit, OnChanges {
         this.initSetting();
     }
 
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }
+    }
+
+    getPath() {
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
+    }
+
     ngOnChanges(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
@@ -55,8 +69,8 @@ export class VisitorComponent implements OnInit, OnChanges {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        Promise.all([ Visitor
-            .getAllPaged(offset, limit, sort, order, filter), Visitor.getCount(this.filter)])
+        Promise.all([ Car
+            .getAllPaged(offset, limit, sort, order, filter), Car.getCount(this.filter)])
             .then(
                 values => {
                     this.block = false;
@@ -89,18 +103,22 @@ export class VisitorComponent implements OnInit, OnChanges {
 
     public initSetting(): void {
         this.setting = new AbstractTableSetting();
-        this.setting.settingColumn = !this.session;;
+        this.setting.settingColumn = this.isAdmin;;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.session;
+        this.setting.filter = true;
         this.setting.addRow = true;
         this.setting.cols = [
-            {columnDef: 'name', header: 'visitor.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
-            {columnDef: 'phone', header: 'visitor.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},
-            {columnDef: 'date', header: 'visitor.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'comment', header: 'visitor.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
+            {columnDef: 'name', header: 'car.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
+            {columnDef: 'make', header: 'car.placeholder.make', type: 'text', cell: (row: any) => `${row.make}`},
+            {columnDef: 'plate', header: 'car.placeholder.plate', type: 'text', cell: (row: any) => `${row.plate}`},
+            {columnDef: 'seat', header: 'car.placeholder.seat', type: 'text', cell: (row: any) => `${row.seat}`},
         ];
-        !this.session &&
+        this.isAdmin &&
         this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+    }
+
+    goBack() {
+        this.router.navigate(['transportation']);
     }
 
     /**
@@ -112,7 +130,7 @@ export class VisitorComponent implements OnInit, OnChanges {
             .subscribe(confirm => {
                 if (confirm) {
                     this.block = true;
-                    Visitor
+                    Car
                         .delete(id)
                         .then(
                             () => {
@@ -134,15 +152,15 @@ export class VisitorComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        this.router.navigate(['visitor/form']);
+        this.router.navigate(['car/form']);
     }
 
     /**
      * onEditRow
      */
-    public onEditRow(event: Visitor): void {
-        this.visitor = event;
-        this.router.navigate(['visitor/form/' + event.id]);
+    public onEditRow(event: Car): void {
+        this.car = event;
+        this.router.navigate(['car/form/' + event.id]);
 
     }
 

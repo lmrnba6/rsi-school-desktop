@@ -67,10 +67,13 @@ export class Session {
     }
 
     public static getAll(): Promise<Session[]> {
-        const sql = `SELECT s.*, t.name as training, i.name as instructor, t.type as type
+        const sql = `SELECT distinct s.*, t.name as training, i.name as instructor, t.type as type, (s."limit" - count(e.id)) as availability
                         FROM "session" as s 
                         inner join "training" as t on s.training_id = t.id
-                        inner join "instructor" as i on s.instructor_id = i.id `;
+                        inner join "instructor" as i on s.instructor_id = i.id 
+                        left join "enrollment" as e on s.id = e.session_id
+                        group by s.id, t.name, i.name, t.type
+                        `;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -359,6 +362,7 @@ export class Session {
         this.limit = row['limit'];
         this.instructor_id = row['instructor_id'];
         this.training_id = row['training_id'];
+        this['availability'] = row['availability'];
         this['interns'] = row['interns'];
         this['enrollments'] = row['enrollments'];
         this['instructors'] = row['instructors'];

@@ -243,3 +243,38 @@ DROP TABLE IF EXISTS "register";
       "username" TEXT,
   	PRIMARY KEY("id")
   );
+
+  DROP TABLE IF EXISTS "car";
+    CREATE TABLE IF NOT EXISTS "car" (
+    	"id"	SERIAL NOT NULL,
+    	"name"  TEXT NOT NULL,
+        "make"  TEXT,
+        "plate"	TEXT,
+        "seat"	INTEGER NOT NULL,
+        "comment" TEXT,
+    	PRIMARY KEY("id")
+    );
+
+    DROP TABLE IF EXISTS "transport";
+    CREATE TABLE IF NOT EXISTS "transport" (
+        "id"	SERIAL NOT NULL,
+        "time"  TEXT NOT NULL,
+        "day"  TEXT NOT NULL,
+        "direction" TEXT NOT NULL,
+        "comment" TEXT,
+        "car"	INTEGER NOT NULL,
+        FOREIGN KEY(car) REFERENCES "car"(id),
+        PRIMARY KEY("id")
+    );
+
+     DROP TABLE IF EXISTS "commute";
+        CREATE TABLE IF NOT EXISTS "commute" (
+            "id"	SERIAL NOT NULL,
+            "comment" TEXT,
+            "address" TEXT NOT NULL,
+            "transport"	INTEGER NOT NULL,
+            "intern"	INTEGER NOT NULL,
+            FOREIGN KEY(intern) REFERENCES "intern"(id),
+            FOREIGN KEY(transport) REFERENCES "transport"(id),
+            PRIMARY KEY("id")
+        );

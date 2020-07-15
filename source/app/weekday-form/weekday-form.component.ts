@@ -28,6 +28,9 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
     public room_id: FormControl;
     public session_id: FormControl;
     public sessions: Array<Session> = [];
+    public weekdaysByRoom: Array<Weekday> = [];
+    public weekdaysBySession: Array<Weekday> = [];
+    public weekTimeToEdit: string;
     public rooms: Array<Room> = [];
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -103,6 +106,7 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
             .get(id)
             .then((val: Weekday) => {
                 this.weekday = val;
+                this.weekTimeToEdit = this.weekday.time;
                 this.onSessionChange();
             });
     }
@@ -168,16 +172,30 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
             this.generateTime();
             Promise.all([Weekday.getAllByRoomAndName(this.weekday.room_id as number, this.weekday.name),
                 Weekday.getAllBySessionAndName(this.weekday.session_id as number, this.weekday.name)]).then(weekdays => {
-                this.times = this.times.filter(time => !weekdays[0].some(weekday =>
-                    this.overlaps(weekday.time, time)));
-                this.times = this.times.filter(time => !weekdays[1].find(weekday =>
-                    this.overlaps(weekday.time, time)));
-                this.isOnEdit && this.times.push(this.weekday.time);
+                    this.weekdaysByRoom = weekdays[0];
+                    this.weekdaysBySession = weekdays[1];
+                // this.times = this.times.filter(time => !weekdays[0].some(weekday =>
+                //     this.overlaps(weekday.time, time)));
+                // this.times = this.times.filter(time => !weekdays[1].find(weekday =>
+                //     this.overlaps(weekday.time, time)));
+                // this.isOnEdit && this.times.push(this.weekday.time);
+                if(this.timeExist(this.weekday.time)) {
+                    this.weekday.time = '';
+                }
             });
         }
     }
 
+    timeExist(time : string) {
+        const a = this.weekdaysByRoom.some(weekday =>
+            this.overlaps(weekday.time, time));
+        const b = this.weekdaysBySession.some(weekday =>
+            this.overlaps(weekday.time, time));
+        return ((a || b) && !this.isOnEdit) || (this.isOnEdit && ((a || b) && time !== this.weekTimeToEdit));
+    }
+
     overlaps(time1: string, time2: string) {
+        if(!time1 || !time2) return false;
         const start1 = moment(time1.slice(0,5), 'LT');
         const end1 = moment(time1.slice(-5), 'LT');
         const range1 = moment.range(start1, end1);

@@ -54,6 +54,11 @@ import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
 import {ChargeFormComponent} from "./charge-form/charge-form.component";
 import {CommentFormComponent} from "./comment-form/comment-form.component";
+import {TransportationComponent} from "./transportation/transportation.component";
+import {CarComponent} from "./car/car.component";
+import {CarFormComponent} from "./car-form/car-form.component";
+import {TransportComponent} from "./transport/transport.component";
+import {TransportFormComponent} from "./transport-form/transport-form.component";
 
 const appRoutes: Routes = [
     {
@@ -92,6 +97,10 @@ const appRoutes: Routes = [
             {
                 path: 'settings/database',
                 component: DatabaseComponent
+            },
+            {
+                path: 'settings/transportation',
+                component: TransportationComponent
             },
             {
                 path: 'settings/school',
@@ -136,6 +145,42 @@ const appRoutes: Routes = [
             {
                 path: 'visitor/form/:id',
                 component: VisitorFormComponent
+            },
+            {
+                path: 'transportation',
+                component: TransportationComponent
+            },
+            {
+                path: 'transportation/car',
+                component: CarComponent
+            },
+            {
+                path: 'transportation/program',
+                component: TransportComponent
+            },
+            {
+                path: 'car',
+                component: CarComponent
+            },
+            {
+                path: 'car/form',
+                component: CarFormComponent
+            },
+            {
+                path: 'car/form/:id',
+                component: CarFormComponent
+            },
+            {
+                path: 'transport',
+                component: TransportComponent
+            },
+            {
+                path: 'transport/form',
+                component: TransportFormComponent
+            },
+            {
+                path: 'transport/form/:id',
+                component: TransportFormComponent
             },
             {
                 path: 'comment/form/:user/:employee/:page',
