@@ -1,6 +1,6 @@
 <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
 </app-loader>
-<h2>{{'instructor.title' | translate}} - {{instructor?.name}} - <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
+<h2>{{'instructor.title' | translate}} - {{instructor?.name}} - <img *ngIf="!isInstructor" (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
 <mat-tab-group *ngIf="instructor" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>

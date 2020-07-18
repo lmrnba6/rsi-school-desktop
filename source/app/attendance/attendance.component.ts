@@ -48,6 +48,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
     public sessions: Array<Session> = [];
     public attendances: Array<Attendance> = [];
     public isAdmin: boolean;
+    public isUser: boolean;
     public isInstructor: boolean;
     public instructorId: number;
     public user: User;
@@ -64,6 +65,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         this.user = this.authService.getCurrentUser();
         this.isAdmin = this.user.role === 'admin';
+        this.isUser = this.user.role === 'user';
         this.isInstructor = this.user.role === 'teacher';
         this.getParams();
         //this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
@@ -214,7 +216,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.intern && !this.instructor && !this.weekday;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern && !this.instructor && !this.weekday;
-        this.setting.addRow = true;
+        this.setting.addRow = this.isAdmin && this.isUser;
         this.setting.cols = [
             {columnDef: 'date', header: 'attendance.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {

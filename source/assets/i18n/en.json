@@ -528,7 +528,8 @@
     "session_full": "This group is full",
     "notEnrolled_message": "This student is not registered for this training",
     "transfer_intern_message": "Do you really want to create a new student and delete this visitor?",
-    "visitor_remaining_message": "You still have visitors! \n Do you want to consult the list?"
+    "visitor_remaining_message": "You still have visitors! \n Do you want to consult the list?",
+    "user_missing_message": "Please create a user account first!"
   },
   "buttons": {
     "save": "Save",

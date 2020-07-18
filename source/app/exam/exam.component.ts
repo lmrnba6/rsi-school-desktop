@@ -33,6 +33,7 @@ export class ExamComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
+    public isUser: boolean;
     public isInstructor: boolean;
     public user: User;
     constructor(
@@ -46,6 +47,7 @@ export class ExamComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         this.user = this.authService.getCurrentUser();
         this.isAdmin = this.user.role === 'admin';
+        this.isUser = this.user.role === 'admin';
         this.isInstructor = this.user.role === 'teacher';
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
@@ -104,7 +106,7 @@ export class ExamComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.intern && !this.session;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern && !this.session;
-        this.setting.addRow = true;
+        this.setting.addRow = this.isAdmin || this.isUser || this.isInstructor;
         this.setting.cols = [
             {columnDef: 'date', header: 'exam.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {columnDef: 'mark', header: 'exam.placeholder.mark', type: 'text', cell: (row: any) => `${row.mark}`},

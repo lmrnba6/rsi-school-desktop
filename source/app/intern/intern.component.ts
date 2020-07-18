@@ -47,7 +47,7 @@ export class InternComponent implements OnInit, OnChanges {
         this.isParent = this.user.role === 'parent';
         if(this.user.role === 'student') {
             Intern.getByUser(this.authService.getCurrentUser().id).then(intern => {
-                intern && this.router.navigate(['intern-management/intern/' + intern.id]);
+                intern && this.router.navigate(['intern-management-intern/' + intern.id]);
             })
         }
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';

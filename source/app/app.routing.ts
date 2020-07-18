@@ -342,19 +342,19 @@ const appRoutes: Routes = [
                 component: InstructorManagementComponent
             },
             {
-                path: 'intern-management/intern/:intern',
+                path: 'intern-management-intern/:intern',
                 component: InternManagementComponent
             },
             {
-                path: 'instructor-management/instructor/:instructor',
+                path: 'instructor-management-instructor/:instructor',
                 component: InstructorManagementComponent
             },
             {
-                path: 'intern-management/intern/:intern/:tab',
+                path: 'intern-management-intern/:intern/:tab',
                 component: InternManagementComponent
             },
             {
-                path: 'instructor-management/instructor/:instructor/:tab',
+                path: 'instructor-management-instructor/:instructor/:tab',
                 component: InstructorManagementComponent
             },
             {

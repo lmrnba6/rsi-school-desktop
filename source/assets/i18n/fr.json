@@ -530,7 +530,8 @@
     "session_full": "Ce groupe est complet",
     "notEnrolled_message": "Cet étudiant n'est pas inscrit à cette formation",
     "transfer_intern_message": "Voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?",
-    "visitor_remaining_message": "Vous avez encore des visiteurs! \n Voulez-vous consulter la liste?"
+    "visitor_remaining_message": "Vous avez encore des visiteurs! \n Voulez-vous consulter la liste?",
+    "user_missing_message": "Veuillez d'abord créer un compte utilisateur!"
   },
   "buttons": {
     "save": "Sauvegarder",

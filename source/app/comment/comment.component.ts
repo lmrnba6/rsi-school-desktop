@@ -32,6 +32,7 @@ export class CommentComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
+    public isUser: boolean;
 
     constructor(
         private dialogsService: DialogsService,
@@ -43,6 +44,7 @@ export class CommentComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.isUser = this.authService.getCurrentUser().role === 'user';
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
     }
@@ -95,7 +97,7 @@ export class CommentComponent implements OnInit, OnChanges {
         this.setting.settingColumn = true;;
         this.setting.tableName = this.tableName;
         this.setting.filter = true;
-        this.setting.addRow = true;
+        this.setting.addRow = this.isAdmin || this.isUser;
         this.setting.cols = [
             {columnDef: 'date', header: 'comment.placeholder.date', type: 'date', cell: (row: any) => `0${row.date}`},
             {columnDef: 'comment', header: 'comment.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
@@ -136,8 +138,10 @@ export class CommentComponent implements OnInit, OnChanges {
     public onAddRow(): void {
         const user = this.intern || this.instructor;
         const page = this.intern ? 'intern' : this.instructor ? 'instructor' : 'none';
-        if(user){
+        if(user && user.user_id){
             this.router.navigate(['comment/form/'+ user.user_id + '/'+user.id+'/' + page]);
+        } else {
+            this.messagesService.notifyMessage(this.translate.instant('messages.user_missing_message'), '', 'error');
         }
     }
 
@@ -148,8 +152,11 @@ export class CommentComponent implements OnInit, OnChanges {
         this.comment = event;
         const user = this.intern || this.instructor;
         const page = this.intern ? 'intern' : this.instructor ? 'instructor' : 'none';
-        if(user) {
+        if(user && user.user_id) {
             this.router.navigate(['comment/form/'+ user.user_id + '/'+ user.id + '/' + page+ '/' + event.id]);
+        }
+        else {
+            this.messagesService.notifyMessage(this.translate.instant('messages.user_missing_message'), '', 'error');
         }
 
     }

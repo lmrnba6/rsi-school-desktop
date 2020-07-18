@@ -31,6 +31,7 @@ export class ChargeComponent implements OnInit, OnChanges {
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
     public isIntern: boolean;
+    public isUser: boolean;
     public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(
@@ -58,6 +59,7 @@ export class ChargeComponent implements OnInit, OnChanges {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
         this.isIntern = this.authService.getCurrentUser().role === 'student';
+        this.isUser = this.authService.getCurrentUser().role === 'user';
         this.initSetting();
     }
 
@@ -111,7 +113,7 @@ export class ChargeComponent implements OnInit, OnChanges {
         this.setting.settingColumn = this.isAdmin;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.isIntern;
-        this.setting.addRow = !this.isIntern;
+        this.setting.addRow = this.isUser || this.isAdmin;
         this.setting.cols = [
             {columnDef: 'date', header: 'charge.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {

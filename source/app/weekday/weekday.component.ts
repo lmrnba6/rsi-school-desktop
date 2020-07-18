@@ -10,6 +10,7 @@ import {Intern} from "../model/intern";
 import {Session} from "../model/session";
 import {Room} from "../model/room";
 import {Instructor} from "../model/instructor";
+import {AuthenticationService} from "../_services/authentication.service";
 
 
 @Component({
@@ -46,16 +47,22 @@ export class WeekdayComponent implements OnInit, OnChanges {
     public wednesday: any;
     public thursday: any;
     public friday: any;
+    public isAdmin: boolean;
+    public isUser: boolean;
 
 
     constructor(
         private dialogsService: DialogsService,
         public messagesService: MessagesService,
         private router: Router,
+        private authService: AuthenticationService,
         private translate: TranslateService,) {
     }
 
     ngOnInit(): void {
+        const user = this.authService.getCurrentUser();
+        this.isAdmin = user.role === 'admin';
+        this.isAdmin = user.role === 'user';
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
         this.initWeekSetting();
@@ -148,7 +155,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.session && !this.room && !this.instructor && !this.intern;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.session && !this.room  && !this.instructor && !this.intern;
-        this.setting.addRow = true;
+        this.setting.addRow = this.isAdmin || this.isUser;
         this.setting.cols = [
             {columnDef: 'name', header: 'weekday.placeholder.name', type: 'day', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.name)}`},
             {columnDef: 'time', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},

@@ -31,6 +31,7 @@ export class EnrollmentComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
+    public isUser: boolean;
 
     constructor(
         private dialogsService: DialogsService,
@@ -42,6 +43,8 @@ export class EnrollmentComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.isUser = this.authService.getCurrentUser().role === 'user';
+
         this.initSetting();
         if(!this.intern) {
             this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
@@ -97,7 +100,7 @@ export class EnrollmentComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.intern;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern;
-        this.setting.addRow = true;
+        this.setting.addRow = this.isAdmin || this.isUser;
         this.setting.cols = [
             {columnDef: 'intern', header: 'enrollment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`},
             {columnDef: 'training_id', header: 'enrollment.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training_id}`},

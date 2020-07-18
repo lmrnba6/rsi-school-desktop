@@ -67,7 +67,7 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="resultImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.result' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.transport' | translate}}"  matTooltipPosition="after" class="nav_item" routerLink="/commuting">
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.transport' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/commuting">
                     <!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="carImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.transport' | translate}}</span>
@@ -99,7 +99,7 @@
                 </a>
                 <br>
             </mat-nav-list>
-            <p style="position: absolute; top: 0">v 1.0.22</p>
+            <p style="position: absolute; top: 0">v 1.0.23</p>
         </mat-sidenav>
         <mat-sidenav-content>
             <!-- <button mat-icon-button class="btnMenu" (click)="sidenav.toggle(); openCloseNavSide()">

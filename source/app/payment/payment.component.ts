@@ -30,6 +30,7 @@ export class PaymentComponent implements OnInit, OnChanges {
     public sortName: string = 'date';
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
+    public isUser: boolean;
     public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(
@@ -56,6 +57,7 @@ export class PaymentComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.isUser = this.authService.getCurrentUser().role === 'user';
         this.initSetting();
     }
 
@@ -109,7 +111,7 @@ export class PaymentComponent implements OnInit, OnChanges {
         this.setting.settingColumn = this.isAdmin;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern;
-        this.setting.addRow = true;
+        this.setting.addRow = this.isAdmin || this.isUser;
         this.setting.cols = [
             {columnDef: 'date', header: 'payment.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {
