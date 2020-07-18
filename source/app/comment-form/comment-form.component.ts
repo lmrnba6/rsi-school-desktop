@@ -129,7 +129,8 @@ export class CommentFormComponent implements OnInit, OnChanges {
     }
 
     goBack() {
-        this.router.navigate([this.page + '-management/'+ this.employeeId]);
+        this.router.navigate([this.page + '-management/'+ this.employeeId + '/' +
+        (this.page === 'intern' ? 8 : this.page === 'instructor' ? 5 : 0)]);
     }
 
     /**

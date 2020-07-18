@@ -41,6 +41,8 @@ export class LayoutComponent implements OnInit {
     public accountingImage = `${this.getPath()}dist/assets/images/accountingImage.png`;
     public settingsImage = `${this.getPath()}dist/assets/images/settingsImage.png`;
     public resultImage = `${this.getPath()}dist/assets/images/resultImage.png`;
+    public carImage = `${this.getPath()}dist/assets/images/carImage.png`;
+
 
     public buttons: Array<FloatingActionButton> = [];
 

@@ -1,0 +1,13 @@
+
+<span class="pull-left glyphicon glyphicon-{{ data.icon }}" style="font-weight: bold;font-size:20px; margin-right:5%; margin-bottom: 10px; -webkit-text-fill-color:#f93e3e"></span>
+<h3>{{ data.title | translate}}</h3>
+<mat-divider style="margin-bottom:5%;"></mat-divider>
+<h3 style="margin-bottom:10%;">{{ data.message | translate}}</h3>
+<div>
+<mat-form-field style="width: 100%; font-size: 1.5rem;"  appearance="outline">
+    <mat-label>{{data.label | translate}}</mat-label>
+    <input *ngIf="data.type === 'text'" [(ngModel)]="data.value" matInput>
+</mat-form-field>
+</div>
+<button  style="float: right" type="button" mat-raised-button (click)="dialogRef.close(data.value)">{{'buttons.yes' | translate}}</button>
+<button  style="float: right" type="button" mat-button (click)="dialogRef.close(data.value)">{{'buttons.cancel' | translate}}</button>

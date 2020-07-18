@@ -26,6 +26,7 @@ export class InternManagementComponent implements OnInit {
     public weekdayImage = `${this.getPath()}dist/assets/images/weekdayImage.png`;
     public attendanceImage = `${this.getPath()}dist/assets/images/attendanceImage.png`;
     public paymentImage = `${this.getPath()}dist/assets/images/paymentImage.png`;
+    public carImage = `${this.getPath()}dist/assets/images/carImage.png`;
     public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
     constructor(public messagesService: MessagesService,
@@ -41,6 +42,12 @@ export class InternManagementComponent implements OnInit {
         const l = window.location.href.split('/');
         const c = l.length - l.indexOf('index.html');
         return '../'.repeat(c);
+    }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }
     }
 
 
@@ -59,6 +66,9 @@ export class InternManagementComponent implements OnInit {
             } else {
                 this.isOnEdit = false;
                 this.intern = new Intern();
+            }
+            if(res.tab) {
+                this.tabSelected = res.tab
             }
         });
     }

@@ -76,7 +76,12 @@ export class Transport {
 
 
     public static getAll(): Promise<Transport[]> {
-        const sql = `SELECT * FROM "transport"`;
+        const sql = `SELECT t.*, c.name as car_name, c.make as car_make, (c.seat - count(i.id)) as available
+                            FROM "commute" as x
+                            RIGHT JOIN transport as t ON t.id = x.transport 
+                            LEFT JOIN intern as i ON i.id = x.intern
+                            INNER JOIN car as c ON c.id = t.car
+                            group by t.id, c.name,c.make, c.seat`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -171,6 +176,7 @@ export class Transport {
         this.car = row['car'];
         this['car_name'] = row['car_name'];
         this['car_make'] = row['car_make'];
+        this['available'] = row['available'];
         return this;
     }
 }

@@ -67,6 +67,11 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="resultImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.result' | translate}}</span>
                 </a>
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.transport' | translate}}"  matTooltipPosition="after" class="nav_item" routerLink="/commuting">
+                    <!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="carImage" alt="">
+                    <span *ngIf="iconsShown">{{'menu.transport' | translate}}</span>
+                </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.payment' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/payments">
 <!--                    <span class="glyphicon glyphicon-usd"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="paymentImage" alt="">

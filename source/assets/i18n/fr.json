@@ -11,7 +11,9 @@
     "password": "Mot de passe"
   },
   "abstractTable": {
-    "filter": "Recherche"
+    "filter": "Recherche",
+    "printTitleMessage": "Veuillez choisir un titre qui sera en haut de la page",
+    "pageTitle": "Titre"
   },
   "inbox": {
     "title": "Messages",
@@ -34,6 +36,7 @@
     "individual": "Individuel"
   },
   "menu": {
+    "transport": "transport",
     "account": "Compte",
     "settings": "Paramètre",
     "intern": "Étudiants",
@@ -134,12 +137,29 @@
   "transport": {
     "title": "Programme",
     "placeholder": {
+      "interns": "Étudiants",
+      "from": "Étudiant",
+      "to": "École",
+      "availability": "Disponible",
+      "time" : "Temps",
+      "day": "Jour",
+      "comment": "Commentaire",
+      "car": "Bus",
+      "direction": "Direction"
+    }
+  },
+  "commute": {
+    "title": "Transport",
+    "placeholder": {
+      "address": "adresse",
       "from": "École => Étudiant",
       "to": "Étudiant => École",
-      "availability": "Available",
-      "time" : "Time",
-      "day": "Day",
-      "comment": "Comment",
+      "intern": "Étudiant",
+      "availability": "Disponible",
+      "time" : "Temps",
+      "day": "Jour",
+      "seat": "Sièges",
+      "comment": "Commentaire",
       "car": "Bus",
       "direction": "Direction"
     }
@@ -376,6 +396,7 @@
     "enrollment": "Inscription",
     "comment": "Commentaires",
     "attendance": "Présence",
+    "transport": "Transport",
     "exam": "Examen",
     "payment": "Paiement",
     "weekday": "Programme",

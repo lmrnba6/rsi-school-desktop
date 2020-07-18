@@ -55,6 +55,14 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="carImage" alt=""> {{'intern-management.transport' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-commute [intern]="intern"></app-commute>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
       <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="chargeImage" alt=""> {{'intern-management.charge' | translate}}
     </ng-template>
     <div class="tab-content">

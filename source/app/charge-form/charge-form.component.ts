@@ -164,7 +164,7 @@ export class ChargeFormComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['intern-management/'+ this.internSelected.id]);
+        this.router.navigate(['intern-management/'+ this.internSelected.id + '/' + 7]);
     }
 
 

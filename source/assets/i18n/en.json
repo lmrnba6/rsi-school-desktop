@@ -11,7 +11,9 @@
     "password": "Password"
   },
   "abstractTable": {
-    "filter": "Research"
+    "filter": "Research",
+    "printTitleMessage": "Please choose a title that will be on the top of the page",
+    "pageTitle": "Title"
   },
   "inbox": {
     "title": "Messages",
@@ -34,6 +36,7 @@
     "individual": "Individual"
   },
   "menu": {
+    "transport": "transport",
     "account": "Account",
     "settings": "Settings",
     "intern": "Students",
@@ -134,13 +137,30 @@
   "transport": {
     "title": "Program",
     "placeholder": {
-      "from": "School => Student",
-      "to": "Student => School",
+      "interns": "Students",
+      "from": "Student",
+      "to": "School",
       "availability": "Available",
       "time" : "Time",
       "day": "Day",
       "comment": "Comment",
       "car": "Bus",
+      "direction": "Direction"
+    }
+  },
+  "commute": {
+    "title": "Transport",
+    "placeholder": {
+      "address": "Address",
+      "from": "School => Student",
+      "to": "Student => School",
+      "availability": "Available",
+      "intern": "Student",
+      "time" : "Time",
+      "day": "Day",
+      "comment": "Comment",
+      "car": "Bus",
+      "seat": "Seats",
       "direction": "Direction"
     }
   },
@@ -375,6 +395,7 @@
     "enrollment": "Registration",
     "comment": "Comments",
     "attendance": "Présence",
+    "transport": "Transport",
     "exam": "Examination",
     "payment": "Payment",
     "weekday": "Schedule",

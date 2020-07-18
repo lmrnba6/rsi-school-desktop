@@ -61,6 +61,9 @@ export class InstructorManagementComponent implements OnInit {
                 this.isOnEdit = false;
                 this.instructor = new Instructor();
             }
+            if(res.tab) {
+                this.tabSelected = res.tab
+            }
         });
     }
 

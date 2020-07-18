@@ -4,7 +4,7 @@
                placeholder="{{'abstractTable.filter' | translate}}">
         <span matSuffix class="glyphicon glyphicon-search"></span>
     </mat-form-field>
-    <a *ngIf="setting?.filter" class="pull-right" [routerLink]="" (click)="onAddRow()">
+    <a *ngIf="setting?.addRow" class="pull-right" [routerLink]="" (click)="onAddRow()">
         <img (error)="fixImage($event)" style="width: 50px" [src]="addImage" alt="">
     </a>
     <a class="pull-right" [routerLink]="" (click)="captureScreen('save')">
@@ -48,7 +48,7 @@
                         <span style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#007bff"
                               class="glyphicon glyphicon-info-sign"></span>
                     </a>
-                    <mat-checkbox *ngIf="isAdmin" [checked]="row['selected']" (change)="row['selected'] = !row['selected']"></mat-checkbox>
+                    <mat-checkbox *ngIf="setting.selectOne" [checked]="row['selected']" (change)="row['selected'] = !row['selected']"></mat-checkbox>
                 </mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='boolean'">
@@ -74,7 +74,7 @@
                     <span [class]="'glyphicon glyphicon-' + column.cell(row)" style="font-weight: bold;font-size:20px;-webkit-text-fill-color:#0000"></span>
                 </mat-cell>
             </ng-container>
-            <ng-container *ngIf="column.type==='text' || column.type==='day'">
+            <ng-container *ngIf="column.type==='text' || column.type==='day' || column.type==='car' || column.type==='direction'">
                 <mat-cell [ngClass]="column.class" *matCellDef="let row"> {{ column.cell(row) }}</mat-cell>
             </ng-container>
             <ng-container *ngIf="column.type==='date'">

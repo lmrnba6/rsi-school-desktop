@@ -1,0 +1,47 @@
+<h2>{{'transport.title'| translate}}</h2>
+<div style="display: flex; justify-content: center; font-size: 1.5rem; margin-top: 5%">
+    <mat-form-field appearance="outline" style="margin-right: 10px">
+        <mat-label>{{'transport.placeholder.day' | translate}}</mat-label>
+        <mat-select (selectionChange)="onChange()" [(ngModel)]="day">
+            <mat-option *ngFor="let d of days" [value]="d">
+                {{'weekday.placeholder.' + d | translate}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="margin-left: 10px">
+        <mat-label>{{'transport.placeholder.car' | translate}}</mat-label>
+        <mat-select (selectionChange)="onChange()" [(ngModel)]="car">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let c of cars" [value]="c.id">
+                {{c.name + ' ' + c.make + ' ' + c.seat}} {{'car.placeholder.seat' | translate}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="margin-left: 10px">
+        <mat-label>{{'transport.placeholder.direction' | translate}}</mat-label>
+        <mat-select (selectionChange)="onChange()" [(ngModel)]="direction">
+            <mat-option>--</mat-option>
+            <mat-option value="from"><span style="color: #2b7bff">&#8594; {{'transport.placeholder.from' | translate}}</span></mat-option>
+            <mat-option value="to"><span style="color: #dc3545">{{'transport.placeholder.to' | translate}} &#8592;</span></mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <app-abstract-table [page]="'commuting'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)"
+                        (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting"
+                        [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)"
+                        (addRow)="onAddRow()"></app-abstract-table>
+</mat-card>
+<hr>
+<div *ngIf="internDisplayed">
+    <h2>{{'intern.title'| translate}} - {{internData?.paging?.totalCount}} </h2>
+    <mat-divider></mat-divider>
+    <mat-card>
+        <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+        </app-loader>
+        <app-abstract-table [page]="'intern'" [setting]="internSetting" (filter)="onFilterIntern($event)"
+                            [data]="internData"></app-abstract-table>
+    </mat-card>
+</div>

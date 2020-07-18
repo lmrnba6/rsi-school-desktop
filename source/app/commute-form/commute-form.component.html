@@ -1,0 +1,61 @@
+<h2>{{'commute.title'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <form [formGroup]="commuteForm">
+        <div class="container">
+            <button [disabled]="commuteForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <mat-form-field  appearance="outline">
+                <mat-label>{{'commute.placeholder.day' | translate}}</mat-label>
+                <mat-select (selectionChange)="onChange()" formControlName="day" [(ngModel)]="daySelected"
+                            name="day" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let day of days" [value]="day">
+                        {{'weekday.placeholder.'+ day | translate}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="day.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field  appearance="outline">
+                <mat-label>{{'commute.placeholder.time' | translate}}</mat-label>
+                <mat-select formControlName="time" (selectionChange)="onChange()" [(ngModel)]="commute.transport"
+                            name="time" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let transport of transports" [value]="transport.id">
+                            {{ transport.time }} - {{'transport.placeholder.' + transport.direction | translate}} -
+                            {{transport['car_name']}} {{transport['car_make']}} -
+                        <span [ngStyle]="{color: transportExist(transport) ? 'red' : 'green'}">
+                            {{transport['available']}} {{'car.placeholder.seat' | translate}}
+                            {{'transport.placeholder.availability' | translate}}
+                        </span>
+                    </mat-option>'
+                </mat-select>
+                <mat-error *ngIf="time.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'commute.placeholder.address' | translate}}</mat-label>
+                <textarea name="address" formControlName="address" [(ngModel)]="commute.address" matInput
+                ></textarea>
+                <mat-error *ngIf="address.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'commute.placeholder.comment' | translate}}</mat-label>
+                <textarea name="comment" formControlName="comment" [(ngModel)]="commute.comment" matInput
+                          ></textarea>
+                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+        </div>
+    </form>
+</mat-card>

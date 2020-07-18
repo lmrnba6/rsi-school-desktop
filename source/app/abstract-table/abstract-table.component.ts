@@ -1,24 +1,7 @@
-import {
-    Component,
-    OnInit,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    ViewChild, ViewEncapsulation
-} from '@angular/core';
-import {PageEvent} from '@angular/material';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
 import {AfterViewInit} from '@angular/core/src/metadata/lifecycle_hooks';
-import {
-    MatPaginator,
-    MatSort,
-    MatTableDataSource,
-} from '@angular/material';
-
-const jspdf = require('jspdf');
 import 'jspdf-autotable'
-
-const html2canvas = require('html2canvas');
 import './abstract-table.component.scss';
 import {AbstractTableSetting} from "../model/abstractTableSetting";
 import {MessagesService} from "../_services/messages.service";
@@ -42,6 +25,11 @@ import {Visitor} from "../model/visitor";
 import {AuthenticationService} from "../_services/authentication.service";
 import {Register} from "../model/register";
 import {Weekday} from "../model/weekday";
+import {PromptService} from "../_services/prompt.service";
+import {Prompt} from "../model/prompt";
+const jspdf = require('jspdf');
+
+const html2canvas = require('html2canvas');
 import printJS = require("print-js");
 
 @Component({
@@ -88,14 +76,14 @@ export class AbstractTableComponent
     public isAdmin: boolean;
 
 
-    constructor(public messagesService: MessagesService, private translate: TranslateService, private dialogsService: DialogsService, private auth: AuthenticationService) {
+    constructor(public messagesService: MessagesService, private translate: TranslateService, private dialogsService: DialogsService, private promptService: PromptService, private auth: AuthenticationService) {
     }
 
     ngOnInit(): void {
         this.isAdmin = this.auth.getCurrentUser().role === 'admin';
         this.printImage = `${this.getPath()}dist/assets/images/printImage.png`;
         this.addImage = `${this.getPath()}dist/assets/images/addImage.png`;
-        this.saveImage = `${this.getPath()}dist/assets/images/saveImage.png'`;
+        this.saveImage = `${this.getPath()}dist/assets/images/saveImage.png`;
     }
 
     fixImage(event: any) {
@@ -109,7 +97,7 @@ export class AbstractTableComponent
         //prime table
         this.printImage = `${this.getPath()}dist/assets/images/printImage.png`;
         this.addImage = `${this.getPath()}dist/assets/images/addImage.png`;
-        this.saveImage = `${this.getPath()}dist/assets/images/saveImage.png'`;
+        this.saveImage = `${this.getPath()}dist/assets/images/saveImage.png`;
 
 
         this.cols = [];
@@ -135,6 +123,24 @@ export class AbstractTableComponent
     }
 
     public captureScreen(type: string) {
+        const data: Prompt = {
+            icon: 'list-alt',
+            label: 'abstractTable.pageTitle',
+            message:'abstractTable.printTitleMessage',
+            title:'abstractTable.pageTitle',
+            type: 'text',
+            value: ''
+        }
+        this.promptService
+            .confirm(data)
+            .subscribe(value => {
+                    if (value) {
+                        this.printOrSave(type, value);
+                    }
+                });
+    }
+
+    public printOrSave(type: string, title: string) {
         window['html2canvas'] = html2canvas;
         let doc = new jspdf();
         let data: any = [];
@@ -148,6 +154,12 @@ export class AbstractTableComponent
                 } else if (col.type === 'date') {
                     o[this.translate.instant(col.header)] = this.integerToString(obj[col.columnDef]);
                     arr.push(this.integerToString(obj[col.columnDef]));
+                } else if (col.type === 'car') {
+                    o[this.translate.instant(col.header)] = obj['car_name'] + ' ' + obj['car_make'];
+                    arr.push(obj['car_name'] + ' ' + obj['car_make']);
+                } else if (col.type === 'direction') {
+                    o[this.translate.instant(col.header)] = this.translate.instant('transport.placeholder.' + obj[col.columnDef]);
+                    arr.push(this.translate.instant('transport.placeholder.' + obj[col.columnDef]));
                 } else if (col.type === 'boolean') {
                     o[this.translate.instant(col.header)] = obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no');
                     arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no'));
@@ -164,18 +176,37 @@ export class AbstractTableComponent
         });
         doc.autoTable({
             head: [this.displayedHeaders],
-            body: data
+            body: data,
+            didDrawPage:  () => {
+                // Header
+                doc.setFontSize(20);
+                doc.setTextColor(40);
+                doc.setFontStyle('normal');
+                // if (base64Img) {
+                //     doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
+                // }
+                doc.text(title,20, 20);
+
+                // Footer
+                const str = "Page " + doc.internal.getNumberOfPages()
+                // Total page number plugin only available in jspdf v1.0+
+                doc.setFontSize(10);
+
+                // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+                doc.text(str, 10, doc.internal.pageSize.height - 10);
+            },
+            margin: {top: 30, bottom: 20}
         });
         if (type === 'print') {
             printJS({
                 printable: dataJson,
                 properties: this.displayedHeaders,
                 type: 'json',
-                header: '<h1></h1>',
+                header: `<h1>${title}</h1>`,
                 style: 'h1 { text-align: center; }',
                 gridHeaderStyle: 'background: #007bff; text-align: left; font-family: arial; border: 1px solid black; margin: 10px;',
                 gridStyle: 'text-align: left; font-family: arial; border: 1px solid black; margin: 10px;'
-            })
+            });
         } else if (type === 'save') {
             doc.save((this.page || '') + '-list.pdf');
         }

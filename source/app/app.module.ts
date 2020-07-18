@@ -110,6 +110,10 @@ import {CarFormComponent} from "./car-form/car-form.component";
 import {TransportationComponent} from "./transportation/transportation.component";
 import {TransportComponent} from "./transport/transport.component";
 import {TransportFormComponent} from "./transport-form/transport-form.component";
+import {CommuteComponent} from "./commute/commute.component";
+import {CommuteFormComponent} from "./commute-form/commute-form.component";
+import {CommutingComponent} from "./commuting/commuting.component";
+import {PromptDialogComponent} from "./prompt-dialog/prompt-dialog.component";
 
 
 @NgModule({
@@ -248,9 +252,13 @@ import {TransportFormComponent} from "./transport-form/transport-form.component"
         CarFormComponent,
         TransportationComponent,
         TransportComponent,
-        TransportFormComponent
+        TransportFormComponent,
+        CommuteComponent,
+        CommuteFormComponent,
+        CommutingComponent,
+        PromptDialogComponent
     ],
-    entryComponents: [ConfirmDialogComponent, InfoDialogComponent],
+    entryComponents: [ConfirmDialogComponent, InfoDialogComponent, PromptDialogComponent],
     providers: [
         { provide: MatPaginatorIntl, useClass: MatPaginatorClass },
         {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},

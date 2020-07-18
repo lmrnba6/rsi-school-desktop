@@ -15,6 +15,7 @@ export class AbstractTableSetting {
   paging: boolean;
   tools: boolean;
   selectAll: boolean;
+  selectOne: boolean;
   deleteAll: boolean;
 }
 

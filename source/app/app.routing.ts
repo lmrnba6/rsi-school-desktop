@@ -59,6 +59,9 @@ import {CarComponent} from "./car/car.component";
 import {CarFormComponent} from "./car-form/car-form.component";
 import {TransportComponent} from "./transport/transport.component";
 import {TransportFormComponent} from "./transport-form/transport-form.component";
+import {CommuteComponent} from "./commute/commute.component";
+import {CommuteFormComponent} from "./commute-form/commute-form.component";
+import {CommutingComponent} from "./commuting/commuting.component";
 
 const appRoutes: Routes = [
     {
@@ -181,6 +184,18 @@ const appRoutes: Routes = [
             {
                 path: 'transport/form/:id',
                 component: TransportFormComponent
+            },
+            {
+                path: 'commute',
+                component: CommuteComponent
+            },
+            {
+                path: 'commute/form/:internId',
+                component: CommuteFormComponent
+            },
+            {
+                path: 'commute/form/:internId/:commuteId',
+                component: CommuteFormComponent
             },
             {
                 path: 'comment/form/:user/:employee/:page',
@@ -307,11 +322,23 @@ const appRoutes: Routes = [
                 component: AttendanceFormComponent
             },
             {
+                path: 'commuting',
+                component: CommutingComponent
+            },
+            {
                 path: 'intern-management/:id',
                 component: InternManagementComponent
             },
             {
+                path: 'intern-management/:id/:tab',
+                component: InternManagementComponent
+            },
+            {
                 path: 'instructor-management/:id',
+                component: InstructorManagementComponent
+            },
+            {
+                path: 'instructor-management/:id/:tab',
                 component: InstructorManagementComponent
             },
             {
@@ -320,6 +347,14 @@ const appRoutes: Routes = [
             },
             {
                 path: 'instructor-management/instructor/:instructor',
+                component: InstructorManagementComponent
+            },
+            {
+                path: 'intern-management/intern/:intern/:tab',
+                component: InternManagementComponent
+            },
+            {
+                path: 'instructor-management/instructor/:instructor/:tab',
                 component: InstructorManagementComponent
             },
             {
