@@ -152,8 +152,8 @@
     "title": "Transport",
     "placeholder": {
       "address": "Address",
-      "from": "School => Student",
-      "to": "Student => School",
+      "from": "Student",
+      "to": "School",
       "availability": "Available",
       "intern": "Student",
       "time" : "Time",
