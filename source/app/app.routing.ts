@@ -53,7 +53,7 @@ import {MessagesComponent} from "./messages/messages.component";
 import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
 import {ChargeFormComponent} from "./charge-form/charge-form.component";
-import {CommentFormComponent} from "./comment-form/comment-form.component";
+import {CommentInternFormComponent} from "./comment-intern-form/comment-intern-form.component";
 import {TransportationComponent} from "./transportation/transportation.component";
 import {CarComponent} from "./car/car.component";
 import {CarFormComponent} from "./car-form/car-form.component";
@@ -62,6 +62,7 @@ import {TransportFormComponent} from "./transport-form/transport-form.component"
 import {CommuteComponent} from "./commute/commute.component";
 import {CommuteFormComponent} from "./commute-form/commute-form.component";
 import {CommutingComponent} from "./commuting/commuting.component";
+import {CommentInstructorFormComponent} from "./comment-instructor-form/comment-instructor-form.component";
 
 const appRoutes: Routes = [
     {
@@ -198,12 +199,20 @@ const appRoutes: Routes = [
                 component: CommuteFormComponent
             },
             {
-                path: 'comment/form/:user/:employee/:page',
-                component: CommentFormComponent
+                path: 'comment-intern/form/:intern',
+                component: CommentInternFormComponent
             },
             {
-                path: 'comment/form/:user/:employee/:page/:id',
-                component: CommentFormComponent
+                path: 'comment-intern/form/:intern/:id',
+                component: CommentInternFormComponent
+            },
+            {
+                path: 'comment-instructor/form/:instructor',
+                component: CommentInstructorFormComponent
+            },
+            {
+                path: 'comment-instructor/form/:instructor/:id',
+                component: CommentInstructorFormComponent
             },
             {
                 path: 'instructor',

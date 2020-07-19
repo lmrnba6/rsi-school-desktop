@@ -19,12 +19,20 @@ export const sql = [
 
     `ALTER TABLE payment DROP COLUMN training;`,
 
-    `CREATE TABLE IF NOT EXISTS "comment" (
+    `CREATE TABLE IF NOT EXISTS "commentIntern" (
 	"id"	SERIAL NOT NULL,
 	"comment"	TEXT NOT NULL,
 	"date"  TEXT NOT NULL,
-	"employee"	INTEGER NOT NULL,
-	FOREIGN KEY(employee) REFERENCES "user"(id),
+	"intern"    INTEGER NOT NULL,
+	FOREIGN KEY(intern) REFERENCES "intern"(id),
+	PRIMARY KEY("id"));`,
+
+    `CREATE TABLE IF NOT EXISTS "commentInstructor" (
+	"id"	SERIAL NOT NULL,
+	"comment"	TEXT NOT NULL,
+	"date"  TEXT NOT NULL,
+	"instructor"    INTEGER NOT NULL,
+	FOREIGN KEY(instructor) REFERENCES "instructor"(id),
 	PRIMARY KEY("id"));`,
 
     `CREATE TABLE IF NOT EXISTS "car" (

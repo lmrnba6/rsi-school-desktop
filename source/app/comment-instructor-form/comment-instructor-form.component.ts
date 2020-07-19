@@ -1,28 +1,25 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MessagesService} from "../_services/messages.service";
 import {ActivatedRoute, Router} from '@angular/router';
-import {Comment} from "../model/comment";
-import './comment-form.component.scss';
+import './comment-instructor-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
+import {CommentInstructor} from "../model/commentInstructor";
+import {Instructor} from "../model/instructor";
 
 @Component({
-    selector: 'app-comment-form',
-    templateUrl: './comment-form.component.html',
+    selector: 'app-comment-instructor-form',
+    templateUrl: './comment-instructor-form.component.html',
 })
-export class CommentFormComponent implements OnInit, OnChanges {
+export class CommentInstructorFormComponent implements OnInit, OnChanges {
 
-    @Input() public comment: Comment;
-    @Output() public next: EventEmitter<any> = new EventEmitter()
+    @Input() public comment: CommentInstructor;
     public block: boolean;
     public isOnEdit: boolean;
     public commentForm: FormGroup;
     public comments: FormControl;
     public date: FormControl;
-    public userId: number;
-    public employeeId: number;
-    public page: string;
-
+    public instructor: Instructor;
 
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -52,32 +49,36 @@ export class CommentFormComponent implements OnInit, OnChanges {
      */
     public getParams(): void {
         this.route.params.subscribe(res => {
-            this.page = res.page;
             if (res.id) {
                 this.getData(res.id);
-                this.userId = res.user;
-                this.employeeId = res.employee;
                 this.isOnEdit = true;
             } else {
-                this.userId = res.user;
-                this.employeeId = res.employee;
                 this.isOnEdit = false;
-                this.comment = new Comment();
+                this.comment = new CommentInstructor();
                 this.comment.date = new Date();
             }
+            this.getInstructor(res.instructor);
         });
+    }
+
+    public getInstructor(id: number): void {
+        Instructor
+            .get(id)
+            .then(val => {
+                this.instructor = val;
+            });
     }
 
     /**
      * get data
      *
-     * @param  {string} name comment name
+     * @param  {string} name comment-instructor name
      * @returns void
      */
     public getData(id: number): void {
-        Comment
+        CommentInstructor
             .get(id)
-            .then((val: Comment) => {
+            .then(val => {
                 this.comment = val;
                 this.comment.date = new Date(Number(this.comment.date));
             });
@@ -107,15 +108,15 @@ export class CommentFormComponent implements OnInit, OnChanges {
      */
     public onSaveOrUpdate(): void {
         this.comment.date = (this.comment.date as Date).getTime();
-        this.comment.employee = this.userId;
-        let internPromise: Promise<any>;
+        this.comment.instructor = this.instructor.id;
+        let instructorPromise: Promise<any>;
         if (this.isOnEdit) {
-            internPromise = this.comment.update();
+            instructorPromise = this.comment.update();
         } else {
-            internPromise = this.comment.insert();
+            instructorPromise = this.comment.insert();
         }
 
-    internPromise.then(
+    instructorPromise.then(
         () => {
             this.block = false;
             this.goBack();
@@ -129,8 +130,7 @@ export class CommentFormComponent implements OnInit, OnChanges {
     }
 
     goBack() {
-        this.router.navigate([this.page + '-management/'+ this.employeeId + '/' +
-        (this.page === 'intern' ? 8 : this.page === 'instructor' ? 5 : 0)]);
+        this.router.navigate(['instructor-management/'+ this.instructor.id + '/' +  8]);
     }
 
     /**

@@ -3,26 +3,24 @@ import {DialogsService} from '../_services/dialogs.service';
 import {MessagesService} from "../_services/messages.service";
 import {Router} from '@angular/router';
 import {AbstractTableSetting} from "../model/abstractTableSetting";
-import './comment.component.scss';
+import './comment-intern.component.scss';
 import {TranslateService} from "@ngx-translate/core";
-import {Comment} from "../model/comment";
 import {AuthenticationService} from "../_services/authentication.service";
 import {Intern} from "../model/intern";
-import {Instructor} from "../model/instructor";
+import {CommentIntern} from "../model/commentIntern";
 
 @Component({
-    selector: 'app-comment',
-    templateUrl: './comment.component.html',
+    selector: 'app-comment-intern',
+    templateUrl: './comment-intern.component.html',
 })
-export class CommentComponent implements OnInit, OnChanges {
+export class CommentInternComponent implements OnInit, OnChanges {
 
     @Input() public intern: Intern;
-    @Input() public instructor: Instructor;
     public filter: string = '';
     public data: any;
     public tableName: string;
     public setting: AbstractTableSetting;
-    public comment: Comment;
+    public comment: CommentIntern;
     public block: boolean;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -59,9 +57,8 @@ export class CommentComponent implements OnInit, OnChanges {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        const user = this.intern ? this.intern.user_id : this.instructor ? this.instructor.user_id : 0;
-        Promise.all([ Comment
-            .getAllPaged(offset, limit, sort, order, filter, Number(user)), Comment.getCount(this.filter)])
+        Promise.all([ CommentIntern
+            .getAllPaged(offset, limit, sort, order, filter, this.intern.id), CommentIntern.getCount(this.filter, this.intern.id)])
             .then(
                 values => {
                     this.block = false;
@@ -114,7 +111,7 @@ export class CommentComponent implements OnInit, OnChanges {
             .subscribe(confirm => {
                 if (confirm) {
                     this.block = true;
-                    Comment
+                    CommentIntern
                         .delete(id)
                         .then(
                             () => {
@@ -136,29 +133,15 @@ export class CommentComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        const user = this.intern || this.instructor;
-        const page = this.intern ? 'intern' : this.instructor ? 'instructor' : 'none';
-        if(user && user.user_id){
-            this.router.navigate(['comment/form/'+ user.user_id + '/'+user.id+'/' + page]);
-        } else {
-            this.messagesService.notifyMessage(this.translate.instant('messages.user_missing_message'), '', 'error');
-        }
+        this.router.navigate(['comment-intern/form/'+ this.intern.id]);
     }
 
     /**
      * onEditRow
      */
-    public onEditRow(event: Comment): void {
+    public onEditRow(event: CommentIntern): void {
         this.comment = event;
-        const user = this.intern || this.instructor;
-        const page = this.intern ? 'intern' : this.instructor ? 'instructor' : 'none';
-        if(user && user.user_id) {
-            this.router.navigate(['comment/form/'+ user.user_id + '/'+ user.id + '/' + page+ '/' + event.id]);
-        }
-        else {
-            this.messagesService.notifyMessage(this.translate.instant('messages.user_missing_message'), '', 'error');
-        }
-
+        this.router.navigate(['comment-intern/form/'+ this.intern.id + '/' + event.id]);
     }
 
     onFilter(filter: string) {

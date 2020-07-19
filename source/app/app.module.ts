@@ -103,8 +103,8 @@ import {RegisterComponent} from "./register/register.component";
 import {RegisterFormComponent} from "./register-form/register-form.component";
 import {ChargeComponent} from "./charge/charge.component";
 import {ChargeFormComponent} from "./charge-form/charge-form.component";
-import {CommentComponent} from "./comment/comment.component";
-import {CommentFormComponent} from "./comment-form/comment-form.component";
+import {CommentInternComponent} from "./comment-intern/comment-intern.component";
+import {CommentInternFormComponent} from "./comment-intern-form/comment-intern-form.component";
 import {CarComponent} from "./car/car.component";
 import {CarFormComponent} from "./car-form/car-form.component";
 import {TransportationComponent} from "./transportation/transportation.component";
@@ -114,6 +114,8 @@ import {CommuteComponent} from "./commute/commute.component";
 import {CommuteFormComponent} from "./commute-form/commute-form.component";
 import {CommutingComponent} from "./commuting/commuting.component";
 import {PromptDialogComponent} from "./prompt-dialog/prompt-dialog.component";
+import {CommentInstructorComponent} from "./comment-instructor/comment-instructor.component";
+import {CommentInstructorFormComponent} from "./comment-instructor-form/comment-instructor-form.component";
 
 
 @NgModule({
@@ -246,8 +248,8 @@ import {PromptDialogComponent} from "./prompt-dialog/prompt-dialog.component";
         RegisterFormComponent,
         ChargeComponent,
         ChargeFormComponent,
-        CommentComponent,
-        CommentFormComponent,
+        CommentInternComponent,
+        CommentInternFormComponent,
         CarComponent,
         CarFormComponent,
         TransportationComponent,
@@ -256,7 +258,9 @@ import {PromptDialogComponent} from "./prompt-dialog/prompt-dialog.component";
         CommuteComponent,
         CommuteFormComponent,
         CommutingComponent,
-        PromptDialogComponent
+        PromptDialogComponent,
+        CommentInstructorComponent,
+        CommentInstructorFormComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent, PromptDialogComponent],
     providers: [

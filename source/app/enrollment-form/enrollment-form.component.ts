@@ -10,8 +10,7 @@ import {Intern} from "../model/intern";
 import {Training} from "../model/training";
 import {DialogsService} from "../_services/dialogs.service";
 import {Charge} from "../model/charge";
-import {Comment} from "../model/comment";
-import {User} from "../model/user";
+import {CommentIntern} from "../model/commentIntern";
 
 @Component({
     selector: 'app-enrollment-form',
@@ -238,13 +237,12 @@ export class EnrollmentFormComponent implements OnInit {
                     charge = charge + Number(training.training_fees);
                 }
                 if (this.backpack) {
-                    const comment: Comment = new Comment();
+                    const comment: CommentIntern = new CommentIntern();
                     comment.date = new Date().getTime();
                     comment.comment = "L'étudiant à reçu un sac à dos pour " + session.name;
-                    User.getByUserName(this.internSelected.id).then(user => {
-                        comment.employee = user.id;
-                        comment.insert().then();
-                    })
+                    comment.intern = this.enrollment.intern_id as number;
+                    comment.insert().then();
+
                 }
                 if (this.books_fees) {
                     charge = charge + Number(training.books_fees);
@@ -259,7 +257,7 @@ export class EnrollmentFormComponent implements OnInit {
                 newCharge.rest = charge;
                 newCharge.session = this.enrollment.session_id;
                 newCharge.comment = "Frais à payer pour " + session.name
-                newCharge.insert().then(() =>{
+                newCharge.insert().then(() => {
                     this.block = false;
                     Charge.getSold(newCharge.intern as number).then(sold => {
                             Intern.updateSold(newCharge.intern as number, sold[0].sold).then();

@@ -1,0 +1,46 @@
+.save {
+  color: #FFFFFF;
+  margin-right: 2px !important;
+  width: 12% !important;
+}
+
+.transfer {
+  background: #0098ff;
+  color: white;
+  width: 12%;
+}
+
+.cancel {
+  color: #FFFFFF;
+  margin-right: 2px !important;
+  width: 12% !important;
+  padding: 0px 10px 0 0 !important;
+}
+
+.container .mat-form-field {
+  width: 50%;
+  font-size: 14px;
+}
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+video {
+  width: 170px !important;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}
+
+//.mat-form-field-appearance-legacy .mat-form-field-infix {
+//  padding: .4375em 5px;
+//  border-left: solid 6px rgb(0, 176, 255);
+//  background: rgba(0, 123, 255, 0.14);
+//}
