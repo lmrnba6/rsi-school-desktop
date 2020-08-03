@@ -103,9 +103,16 @@ export class AttendanceComponent implements OnInit, OnChanges {
                 this.session_id = this.weekday.session_id as number;
                 this.onByDate();
             }
-            const instructorId: number = this.instructor ? this.instructor.id : this.instructorId;
-            if (instructorId) {
-                this.sessions = this.sessions.filter(session => session.instructor_id === instructorId);
+            if(this.isInstructor) {
+                Instructor.getByUser(this.user.id).then(inst => {
+                    this.instructor = inst;
+                    this.sessions = this.sessions.filter(session => session.instructor_id === inst.id);
+                })
+            } else {
+                const instructorId: number = this.instructor ? this.instructor.id : this.instructorId;
+                if (instructorId) {
+                    this.sessions = this.sessions.filter(session => session.instructor_id === instructorId);
+                }
             }
         });
     }
@@ -213,16 +220,16 @@ export class AttendanceComponent implements OnInit, OnChanges {
 
     public initSetting(): void {
         this.setting = new AbstractTableSetting();
-        this.setting.settingColumn = !this.intern && !this.instructor && !this.weekday;
+        this.setting.settingColumn = this.isUser || this.isAdmin;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.intern && !this.instructor && !this.weekday;
-        this.setting.addRow = this.isAdmin && this.isUser;
+        this.setting.filter = this.isUser || this.isAdmin;
+        this.setting.addRow = this.isUser || this.isAdmin;
         this.setting.cols = [
             {columnDef: 'date', header: 'attendance.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {
                 columnDef: 'day',
                 header: 'attendance.placeholder.day',
-                type: 'text',
+                type: 'day',
                 cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.day)}`
             },
             {
@@ -232,31 +239,31 @@ export class AttendanceComponent implements OnInit, OnChanges {
                 cell: (row: any) => `${row.present}`
             },
             {
-                columnDef: 'training_id',
+                columnDef: 'training',
                 header: 'attendance.placeholder.training_id',
                 type: 'text',
                 cell: (row: any) => `${row.training}`
             },
             {
-                columnDef: 'session_id',
+                columnDef: 'session',
                 header: 'attendance.placeholder.session_id',
                 type: 'text',
                 cell: (row: any) => `${row.session}`
             },
             {
-                columnDef: 'intern_id',
+                columnDef: 'intern',
                 header: 'attendance.placeholder.intern_id',
                 type: 'text',
                 cell: (row: any) => `${row.intern}`
             },
             {
-                columnDef: 'instructor_id',
+                columnDef: 'instructor',
                 header: 'attendance.placeholder.instructor_id',
                 type: 'text',
                 cell: (row: any) => `${row.instructor}`
             },
             {
-                columnDef: 'room_id',
+                columnDef: 'number',
                 header: 'attendance.placeholder.room_id',
                 type: 'text',
                 cell: (row: any) => `${row.number}`
@@ -268,7 +275,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
                 cell: (row: any) => `${row.time}`
             }
         ];
-        !this.intern && !this.instructor && !this.weekday &&
+        (this.isUser || this.isAdmin) &&
         this.setting.cols.push({
             columnDef: 'settings',
             class: 'a10',

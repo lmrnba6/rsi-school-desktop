@@ -13,11 +13,23 @@ export const sql = [
 
     `ALTER TABLE payment ADD COLUMN charge INTEGER REFERENCES "charge"(id);`,
 
+    `ALTER TABLE exam ADD COLUMN passed INTEGER`,
+
+    `ALTER TABLE exam ADD COLUMN questionnaire_id INTEGER REFERENCES "questionnaire"(id);`,
+
     `ALTER TABLE intern ADD COLUMN user_id INTEGER REFERENCES "user"(id);`,
 
     `ALTER TABLE instructor ADD COLUMN user_id INTEGER REFERENCES "user"(id);`,
 
     `ALTER TABLE payment DROP COLUMN training;`,
+
+    `alter table exam alter comment drop not null;`,
+
+    `alter table exam alter mark drop not null;`,
+
+    `alter table exam alter result drop not null;`,
+
+    `alter table exam alter retake drop not null;`,
 
     `CREATE TABLE IF NOT EXISTS "commentIntern" (
 	"id"	SERIAL NOT NULL,
@@ -62,5 +74,47 @@ export const sql = [
             "intern"	INTEGER NOT NULL,
             FOREIGN KEY(intern) REFERENCES "intern"(id),
             FOREIGN KEY(transport) REFERENCES "transport"(id),
-            PRIMARY KEY("id"));`
+            PRIMARY KEY("id"));`,
+
+    `CREATE TABLE IF NOT EXISTS "questionnaire" (
+    "id"	SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "timed" INTEGER NOT NULL,
+    "jump"	INTEGER NOT NULL,
+    "number"	INTEGER NOT NULL,
+    "training"	INTEGER,
+    FOREIGN KEY(training) REFERENCES "training"(id),
+    PRIMARY KEY("id")
+);`,
+
+    `CREATE TABLE IF NOT EXISTS "question" (
+    "id"	SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "note" TEXT,
+    "sequence" INTEGER NOT NULL,
+    "type"	TEXT NOT NULL,
+    "questionnaire"	INTEGER NOT NULL,
+    FOREIGN KEY(questionnaire) REFERENCES "questionnaire"(id),
+    PRIMARY KEY("id")
+);`,
+
+    `CREATE TABLE IF NOT EXISTS "answer" (
+    "id"	SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "note" TEXT,
+    "correct" INTEGER,
+    "question"	INTEGER NOT NULL,
+    FOREIGN KEY(question) REFERENCES "question"(id),
+    PRIMARY KEY("id")
+);`,
+    `CREATE TABLE IF NOT EXISTS "mark" (
+    "id" SERIAL NOT NULL,
+    "answer" TEXT NOT NULL,
+    "exam" INTEGER NOT NULL,
+    "question" INTEGER NOT NULL,
+    FOREIGN KEY(exam) REFERENCES "exam"(id),
+    FOREIGN KEY(question) REFERENCES "question"(id),
+    PRIMARY KEY("id")
+);`
 ]

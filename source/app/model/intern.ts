@@ -178,6 +178,28 @@ export class Intern{
             });
     }
 
+    public static getAllPagedByInstructor(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, instructor: number): Promise<Intern[]> {
+        const sql = `SELECT DISTINCT i.id, i.name, i.birth, i.email, i.phone, i.phone2, i.name_arabic, i.sold, i."isAllowed",i."isPromo", i."isVip" FROM "enrollment" as e 
+                            INNER JOIN "intern" as i ON e.intern_id = i.id
+                            INNER JOIN "session" as s ON e.session_id = s.id
+                            INNER JOIN "instructor" ins ON s.instructor_id = ins.id
+                            WHERE ins.id = ${instructor} AND i.name ILIKE '%${filter}%'
+                           
+                            ORDER BY i.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
+        const values = {
+        };
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: Intern[] = [];
+                for (const row of rows) {
+                    const intern = new Intern().fromRow(row);
+                    users.push(intern);
+                }
+                return users;
+            });
+    }
+
     public static getAllPagedBySessions(pageIndex: number, pageSize: number, sort: string, order: string,filter: string, sessions: string): Promise<Intern[]> {
         const where: string = sessions ? `s.id in (${sessions}) and` : '';
         const sql = `SELECT DISTINCT i.id, i.name, i.birth, i.email, i.phone, i.phone2, i.name_arabic, i.sold, i."isAllowed", i."isPromo", i."isVip" FROM "enrollment" as e 
@@ -302,6 +324,19 @@ export class Intern{
             });
     }
 
+    public static nameExist(name: string) {
+        const sql = `SELECT * FROM "intern" WHERE title = '${name}'`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    throw new Error('duplicated name');
+                } else {
+                    return null;
+                }
+            });
+    }
     public static delete(id: number): Promise<void> {
         const sql = `
             DELETE FROM "intern" WHERE id = ${id}`;

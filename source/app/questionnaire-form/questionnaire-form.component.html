@@ -1,0 +1,196 @@
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<h2>{{'questionnaire.title' | translate}} - {{questionnaire.title}} - <img (error)="fixImage($event)"
+                                                                           style="margin-right: 5px; width: 40px; cursor: pointer;"
+                                                                           (click)="goBack()" [src]="backImage" alt="">
+</h2>
+<mat-tab-group (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="infoImage" alt="">
+            {{'questionnaire.placeholder.description' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <br>
+            <form [formGroup]="questionnaireForm">
+                <div class="container">
+                    <button [disabled]="(questionnaireForm.invalid)" class="pull-right save"
+                            (click)="onSave()" type="button" mat-button>
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    </button>
+                    <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{'questionnaire.placeholder.title' | translate}}</mat-label>
+                        <input name="title" type="text" formControlName="title" (blur)="handleTitle($event.target.value)"
+                               [(ngModel)]="questionnaire.title" matInput
+                               required autofocus>
+                        <mat-error *ngIf="title.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{'questionnaire.placeholder.description' | translate}}</mat-label>
+                        <textarea name="description" type="text" formControlName="description"
+                                  [(ngModel)]="questionnaire.description" matInput
+                        ></textarea>
+                        <mat-error
+                                *ngIf="description.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{'questionnaire.placeholder.training' | translate}}</mat-label>
+                        <mat-select formControlName="training" [(ngModel)]="questionnaire.training"
+                                    name="training" required>
+                            <mat-option [value]="null">--</mat-option>
+                            <mat-option *ngFor="let training of trainings" [value]="training.id">
+                                {{training.name | translate}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="training.hasError('required')">{{'messages.field_required_error' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                </div>
+            </form>
+            <div class="container">
+                <mat-checkbox style="font-size: 1.5rem"
+                              [(ngModel)]="questionnaire.timed">{{('questionnaire.placeholder.timed') | translate}}</mat-checkbox>
+                <br>
+                <mat-checkbox style="font-size: 1.5rem"
+                              [(ngModel)]="questionnaire.jump">{{('questionnaire.placeholder.jump') | translate}}</mat-checkbox>
+                <br>
+<!--                <mat-checkbox style="font-size: 1.5rem"-->
+<!--                              [(ngModel)]="questionnaire.save">{{('questionnaire.placeholder.canSave') | translate}}</mat-checkbox>-->
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab *ngIf="questionnaire.id > 0">
+        <ng-template mat-tab-label>
+            <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="assessmentImage" alt="">
+            {{'questionnaire.placeholder.questions' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <h2>{{'questionnaire.placeholder.questions' | translate}} </h2>
+            <br>
+            <div cdkDropList (cdkDropListDropped)="drop($event)" class="example-list">
+                <mat-expansion-panel cdkDrag style="border: solid; margin: 5px"
+                                     *ngFor="let question of questions; let i = index;"
+                                     [expanded]="step === question.id" (opened)="setQuestion(question.id)">
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="glyphicon glyphicon-move"></span>
+                            {{'questionnaire.placeholder.question' | translate}} {{i + 1}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{question.title.substr(0, 100) + question.title.length > 100 ? '...' : ''}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-form-field style="width: 70%" appearance="outline">
+                        <mat-label>{{'questionnaire.placeholder.question' | translate}}</mat-label>
+                        <textarea matInput [(ngModel)]="question.title" required></textarea>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field style="width: 40%" appearance="outline">
+                        <mat-label>{{'questionnaire.placeholder.type' | translate}}</mat-label>
+                        <mat-select [(ngModel)]="question.type">
+                            <mat-option [value]="'qcm'">
+                                {{'questionnaire.placeholder.qcm' | translate}}
+                            </mat-option>
+                            <mat-option [value]="'text'">
+                                {{'questionnaire.placeholder.text' | translate}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field style="width: 60%" appearance="outline">
+                        <mat-label>{{'questionnaire.placeholder.note' | translate}}</mat-label>
+                        <textarea matInput [(ngModel)]="question.note"></textarea>
+                    </mat-form-field>
+                    <br>
+                    <mat-accordion *ngIf="question.type === 'qcm'" class="example-headers-align">
+                        <mat-expansion-panel style="border: solid;" [expanded]="true" hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{'questionnaire.placeholder.answers' | translate}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngFor="let answer of answers; let x = index">
+                                    <span (click)="deleteAnswer(answer.id)"
+                                          style="color: red; margin-right: 10px; cursor: pointer"
+                                          class="glyphicon glyphicon-trash"></span>
+                                <mat-form-field style="width: 70%; margin-right: 10px" appearance="outline">
+                                    <mat-label>{{'questionnaire.placeholder.answer' | translate}} {{x + 1}}</mat-label>
+                                    <textarea [(ngModel)]="answer.title" matInput required></textarea>
+                                </mat-form-field>
+                                <mat-checkbox
+                                        [(ngModel)]="answer.correct">{{'questionnaire.placeholder.correct' | translate}}</mat-checkbox>
+                            </div>
+                            <mat-action-row>
+                                <button style="margin-left: 5px" mat-raised-button
+                                        style="background: #00c100; color: white"
+                                        (click)="addAnswer()">{{'questionnaire.placeholder.addAnswer' | translate}}</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-action-row>
+                        <button *ngIf="question.id !== -1" mat-raised-button
+                                style="background: red; color: white;margin-right: 10px"
+                                (click)="deleteQuestion(question.id)">{{'questionnaire.placeholder.deleteQuestion' | translate}}</button>
+                        <button style="margin-left: 5px" mat-raised-button style="background: #2b7bff; color: white"
+                                color="primary"
+                                (click)="saveQuestion(question.id, i+1)">{{'questionnaire.placeholder.save' | translate}}</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab *ngIf="questionnaire.id > 0">
+        <ng-template mat-tab-label>
+            <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="printImage" alt="">
+            {{'questionnaire.placeholder.print' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <br>
+            <div class="container">
+                <button class="pull-right save" type="button" (click)="print()" mat-button>
+                    <span class="glyphicon glyphicon-print"></span>
+                </button>
+                <div id="questionnaire">
+                    <h1 style="text-align: center; color: black">{{questionnaire.title}}</h1>
+                    <div style="margin-left: 50px">
+                        <span>Nom:</span>
+                        <br>
+                        <span>Groupe:</span>
+                        <br>
+                        <span>Date:</span>
+                        <br>
+                        <span>Enseignant:</span>
+                        <br>
+                        <span>Note:</span>
+                    </div>
+
+                    <ul style="list-style-type: none" *ngFor="let q of questions; let i = index;">
+                        <li *ngIf="q.type === 'qcm' && q.id > 0"
+                            style="margin: 10px; border: solid 1px; padding: 10px; border-radius: 5px">
+                            <p style="margin: 10px 0"><strong>Question {{i + 1}}
+                                : </strong>{{q.title}} {{q.note ? '( ' : ''}}{{q.note}}{{q.note ? ' )' : ''}}</p>
+
+                            <p style="margin: 5px 0" *ngFor="let a of q['answers']; let x = index;"><strong
+                                    style="margin-left: 20px; font-weight: bold">{{getLetter(x)}}: </strong>{{a.title}}
+                            </p>
+                        </li>
+                        <li *ngIf="q.type === 'text' && q.id > 0"
+                            style="margin: 10px; border: solid 1px; padding: 10px; border-radius: 5px">
+                            <p style="margin: 10px 0"><strong>Question{{i + 1}}
+                                : </strong>{{q.title}} {{q.note ? '( ' : ''}}{{q.note}}{{q.note ? ' )' : ''}}</p>
+
+                            <div style="margin: 10px; border: solid 1px; padding: 40px 10px; border-radius: 5px"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

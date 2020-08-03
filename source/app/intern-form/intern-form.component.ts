@@ -321,6 +321,15 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    handleName(name: string) {
+        if(!this.isOnEdit){
+            Intern.nameExist(name).catch(() => {
+                this.intern.name = '';
+                this.messagesService.notifyMessage(this.translate.instant('messages.name_exist'), '', 'error');
+            });
+        }
+    }
+
 
 
     savePhoto() {

@@ -1,7 +1,49 @@
-<h2>{{'exam.title'| translate}}</h2>
+<h2>{{'exam.title'| translate}} - <img *ngIf="!intern && !session" (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
 <mat-divider></mat-divider>
-<mat-card>
-  <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
-  </app-loader>
-  <app-abstract-table [page]="'exam'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
-</mat-card>
+<mat-tab-group *ngIf="!intern" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="sessionImage" alt=""> {{'exam.placeholder.session_id' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <h2>{{'exam.bySession'| translate}}</h2>
+        <br>
+      <div class="example-list">
+        <mat-expansion-panel   [expanded]="!internOpen" (opened)="internOpen = false" style="border: solid; margin: 5px">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="glyphicon glyphicon-th"></span>
+              {{'exam.placeholder.session_id'  | translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+      <app-abstract-table [page]="'exam-session'"  (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="settingBySession" [data]="dataBySession" (editRow)="onEditRowBySession($event)" (addRow)="onAddRow()"></app-abstract-table>
+        </mat-expansion-panel>
+        <br>
+        <mat-expansion-panel [expanded]="internOpen" style="border: solid; margin: 5px">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="glyphicon glyphicon-user"></span>
+              {{'exam.placeholder.interns'  | translate}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{sessionSelected?.session}} {{sessionSelected ? sessionSelected.interns : 0}} {{'exam.placeholder.interns' | translate}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-abstract-table [page]="'exam-intern'"  [setting]="settingByInterns" [data]="dataByInterns" (editRow)="onEditRow($event)"></app-abstract-table>
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="internImage" alt=""> {{'exam.placeholder.intern_id' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <h2>{{'exam.byIntern'| translate}}</h2>
+      <br>
+        <app-abstract-table [page]="'exam-intern'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<app-abstract-table *ngIf="intern" [page]="'exam-intern'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
+

@@ -1,0 +1,11 @@
+<h2>{{'assessment.title'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-nav-list>
+  <mat-nav-list><a mat-list-item routerLink="/questionnaire">
+    <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="assessmentImage" alt="">
+    {{'assessment.questionnaire' | translate}}</a></mat-nav-list>
+  <mat-nav-list><a mat-list-item routerLink="/exam">
+    <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="examImage" alt="">
+    {{'menu.exam' | translate}}</a></mat-nav-list>
+</mat-nav-list>
+

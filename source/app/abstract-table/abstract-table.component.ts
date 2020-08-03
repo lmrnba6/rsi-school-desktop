@@ -27,6 +27,7 @@ import {Register} from "../model/register";
 import {Weekday} from "../model/weekday";
 import {PromptService} from "../_services/prompt.service";
 import {Prompt} from "../model/prompt";
+
 const jspdf = require('jspdf');
 
 const html2canvas = require('html2canvas');
@@ -116,7 +117,7 @@ export class AbstractTableComponent
         }
     }
 
-    getPath(){
+    getPath() {
         const l = window.location.href.split('/');
         const c = l.length - l.indexOf('index.html');
         return '../'.repeat(c);
@@ -126,18 +127,18 @@ export class AbstractTableComponent
         const data: Prompt = {
             icon: 'list-alt',
             label: 'abstractTable.pageTitle',
-            message:'abstractTable.printTitleMessage',
-            title:'abstractTable.pageTitle',
+            message: 'abstractTable.printTitleMessage',
+            title: 'abstractTable.pageTitle',
             type: 'text',
             value: ''
         }
         this.promptService
             .confirm(data)
             .subscribe(value => {
-                    if (value) {
-                        this.printOrSave(type, value);
-                    }
-                });
+                if (value) {
+                    this.printOrSave(type, value);
+                }
+            });
     }
 
     public printOrSave(type: string, title: string) {
@@ -162,7 +163,7 @@ export class AbstractTableComponent
                     arr.push(this.translate.instant('transport.placeholder.' + obj[col.columnDef]));
                 } else if (col.type === 'boolean') {
                     o[this.translate.instant(col.header)] = obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no');
-                    arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no'));
+                    arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : arr.push(obj[col.columnDef]) === null ? '' : this.translate.instant('buttons.no'));
                 } else if (col.type === 'day') {
                     o[this.translate.instant(col.header)] = this.translate.instant('weekday.placeholder.' + obj[col.columnDef]);
                     arr.push(this.translate.instant('weekday.placeholder.' + obj[col.columnDef]));
@@ -177,7 +178,7 @@ export class AbstractTableComponent
         doc.autoTable({
             head: [this.displayedHeaders],
             body: data,
-            didDrawPage:  () => {
+            didDrawPage: () => {
                 // Header
                 doc.setFontSize(20);
                 doc.setTextColor(40);
@@ -185,7 +186,7 @@ export class AbstractTableComponent
                 // if (base64Img) {
                 //     doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
                 // }
-                doc.text(title,20, 20);
+                doc.text(title, 20, 20);
 
                 // Footer
                 const str = "Page " + doc.internal.getNumberOfPages()
@@ -358,7 +359,13 @@ export class AbstractTableComponent
     }
 
     public getStyleRow(row: any) {
-        if (this.page === 'register') {
+        if (this.page === 'exam-session') {
+            if (Number(row.date) < new Date().getTime()) {
+                return {background: '#ffe6e6'}
+            } else {
+                return {background: '#d9ffe1'}
+            }
+        } else if (this.page === 'register') {
             if (Number(row.amount) < 0) {
                 return {background: '#ffe6e6'}
             } else {

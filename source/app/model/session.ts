@@ -107,7 +107,7 @@ export class Session {
     }
 
     public static getAllSessionsByInstructor(id: number): Promise<Session[]> {
-        const sql = `SELECT s.id FROM "session" as s 
+        const sql = `SELECT s.id, s.name, t.name as training, i.name as instructor FROM "session" as s 
 				inner join "training" as t on s.training_id = t.id
                 inner join "instructor" as i on s.instructor_id = i.id 
                 where i.id = ${id}`

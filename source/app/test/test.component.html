@@ -1,0 +1,58 @@
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
+<div *ngIf="!testStarted" style="text-align: center" class="testContainer">
+    <h1>{{questionnaire?.title}}</h1>
+    <h3>{{questionnaire?.description}}</h3>
+    <br>
+    <br>
+    <h3>{{questions?.length}} {{'questionnaire.placeholder.questions' | translate}}</h3>
+    <h3 *ngIf="questionnaire?.timed">{{exam?.time}} min</h3>
+    <div class="testButtonDiv">
+        <button *ngIf="!exam.passed" class="startButton" mat-button
+                (click)="start()">{{'questionnaire.placeholder.start' | translate}}</button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button class="backButton" mat-button (click)="back()">{{'questionnaire.placeholder.back'| translate}}</button>
+    </div>
+</div>
+<div *ngIf="testStarted" class="testFormContainer">
+    <div *ngIf="questionnaire.timed" class="testTime"><strong>{{'questionnaire.placeholder.timeLeft' | translate}}:</strong> {{timeLeft}} min</div>
+    <br><br>
+    <h1>{{questionnaire?.title}}</h1>
+    <h3>{{'questionnaire.placeholder.question' | translate}} {{currentQuestion.sequence}}</h3>
+    <div *ngIf="currentQuestion" class="questionContainer">
+        <div class="title">{{currentQuestion?.title}} {{currentQuestion.note ? ('(' + currentQuestion.note + ')') : ''}}</div>
+        <div class="answers">
+            <div *ngIf="currentQuestion.type === 'qcm'">
+                <mat-radio-group
+                        aria-labelledby="example-radio-group-label"
+                        class="example-radio-group"
+                        [(ngModel)]="currentQuestion['answer']">
+                    <mat-radio-button style="font-size: 1.5rem" class="example-radio-button"
+                                      *ngFor="let a of currentQuestion['answers']; let i = index" [value]="a">
+                        {{a.title}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="currentQuestion.type === 'text'">
+                <mat-form-field style="width: 100%; font-size: 1.5rem;" appearance="outline">
+                    <mat-label>{{'questionnaire.placeholder.answer' | translate}}</mat-label>
+                    <textarea [(ngModel)]="currentQuestion['answer']" matInput
+                              required></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="testFooter">
+        <button [ngStyle]="{opacity: !currentQuestion['answer'] ? 0 : 1, 'pointer-events' : !currentQuestion['answer'] ? 0 : 1}"
+                class="next" mat-button (click)="next()">
+            {{(currentQuestion.sequence >= questions.length && currentQuestion['answer'] ? 'questionnaire.placeholder.finish' : 'questionnaire.placeholder.next') | translate}}</button>
+        <p>{{currentQuestion.sequence}} / {{questions.length}}</p>
+        <button [ngStyle]="{opacity: !questionnaire.jump || currentQuestion.sequence === 1 ? 0 : 1, 'pointer-events' : !questionnaire.jump || currentQuestion.sequence === 1 ? 'none' : ''}"
+                class="previous" mat-button
+                (click)="previous()">{{'questionnaire.placeholder.previous' | translate}}</button>
+    </div>
+</div>
+

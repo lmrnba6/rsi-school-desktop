@@ -31,6 +31,7 @@ export class InternComponent implements OnInit, OnChanges {
     public sortName: string = 'name';
     public sortDirection: string = 'ASC';
     public isAdmin: boolean;
+    public isUser: boolean;
     public isParent: boolean;
     public user: User;
 
@@ -51,6 +52,7 @@ export class InternComponent implements OnInit, OnChanges {
             })
         }
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
+        this.isUser = this.authService.getCurrentUser().role === 'user';
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
     }
@@ -110,15 +112,15 @@ export class InternComponent implements OnInit, OnChanges {
         this.setting = new AbstractTableSetting();
         this.setting.settingColumn = !this.session;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.session && !this.isParent;
-        this.setting.addRow = !this.isParent;
+        this.setting.filter = this.isUser || this.isAdmin;
+        this.setting.addRow = this.isUser || this.isAdmin;
         this.setting.cols = [
             {columnDef: 'name',class: 'a20', header: 'intern.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
             {columnDef: 'phone',class: 'a10', header: 'intern.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},
             {columnDef: 'sold',class: 'a10', header: 'intern.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold}`},
             {columnDef: 'name_arabic',class: 'a15', header: 'intern.placeholder.name_arabic', type: 'text', cell: (row: any) => `${row.name_arabic || ''}`},
         ];
-        if(!this.session) {
+        if(this.isUser || this.isAdmin) {
             this.setting.cols.push({columnDef: 'weekdays',class: this.isAdmin ? 'a40' : 'a35', header: 'weekday.title', type: 'html', cell: (row: any) => `${this.handleLines(row.weekdays || '')}`});
             this.setting.cols.push({columnDef: 'settings',class: this.isAdmin ? 'a10' : 'a5', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
         }

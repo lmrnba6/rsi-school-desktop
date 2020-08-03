@@ -36,6 +36,7 @@
     "individual": "Individual"
   },
   "menu": {
+    "assessment": "Assessment",
     "transport": "transport",
     "account": "Account",
     "settings": "Settings",
@@ -91,9 +92,9 @@
       "medical": "Medical certificate",
       "residence": "Copy of the cart stay (for foreigners)",
       "backpack": "Received a backpack?",
-      "fees": "Add training fees to sold?",
-      "fees_enrollment": "Add enrollment fees to sold?",
-      "fees_books": "Add books fees to sold?",
+      "fees": "Add training fees to sold",
+      "fees_enrollment": "Add enrollment fees to sold",
+      "fees_books": "Add books fees to sold",
       "isAllowed": "Blocked",
       "photo": "Photo",
       "scholar": "Scholar level",
@@ -123,6 +124,46 @@
     "title": "Transport",
     "car": "Buses",
     "program": "Program"
+  },
+  "assessment": {
+    "title": "Assessment",
+    "questionnaire": "Questionnaire"
+  },
+  "questionnaire": {
+    "title": "Questionnaire",
+    "placeholder": {
+      "timeLeft": "Time left",
+      "next": "Next",
+      "previous": "Previous",
+      "finish": "Finish",
+      "start": "Start",
+      "back": "Back",
+      "print": "Print",
+      "title": "Title",
+      "description": "Description",
+      "timed": "Is timed",
+      "time": "Time",
+      "jump": "Can jump between questions?",
+      "number": "Number of questions",
+      "canSave": "Can save and exit?",
+      "training": "Training",
+      "note": "Note",
+      "sequence": "Sequence",
+      "type": "Type",
+      "correct": "Is answer correct",
+      "questions": "Questions",
+      "question": "Question",
+      "answers": "Answers",
+      "answer": "Answer",
+      "deleteAnswer": "Delete",
+      "addAnswer": "Add an answer",
+      "addQuestion": "Add a question",
+      "deleteQuestion": "Delete the question",
+      "correct": "Correct?",
+      "qcm": "Multiple answer question",
+      "text": "Text question",
+      "save": "Save"
+    }
   },
   "car": {
     "title": "Buses",
@@ -307,7 +348,16 @@
   },
   "exam": {
     "title": "Exams",
+    "bySession": "By Group",
+    "byIntern": "By student",
     "placeholder": {
+      "interns": "Students",
+      "type": "Type",
+      "individual": "Per student",
+      "group": "Per group",
+      "passed": "Done",
+      "yes": "Yes",
+      "no": "No",
       "type" : "Type",
       "mark": "Note",
       "result": "Accepted",
@@ -317,7 +367,8 @@
       "date": "Date",
       "time": "Duration",
       "intern_id": "Student",
-      "session_id": "Groupe"
+      "session_id": "Groupe",
+      "questionnaire_id": "Questionnaire"
     }
   },
   "course": {
@@ -504,10 +555,15 @@
     "salary": "Salary"
   },
   "messages": {
+    "next_question_warning_message": "Do you really want to validate this answer?",
+    "no_questionnaire_attached_message": "This exam is not available!",
+    "start_test_warning_message": "Do you really want to start the test?",
     "error_field_required": "This field is required",
     "error_login": "Wrong username or password",
     "field_required_error": "You must enter a value",
-    "remove_row_warning_message": "Do you really want to delete this ligne?",
+    "remove_row_warning_message": "Do you really want to delete this line?",
+    "remove_answer_warning_message": "Do you really want to delete this answer?",
+    "remove_question_warning_message": "Do you really want to delete this question?",
     "warning_title": "Warning",
     "operation_success_message": "Successful : Operation success",
     "something_went_wrong_message": "An error has occurred",
@@ -522,14 +578,18 @@
     "intern_already_enrolled": "Student already enrolled to this group",
     "blocked": "Blocked",
     "phone_exist": "This phone number exist already",
-    "name_exist": "This group name exist already",
+    "name_exist": "This name exist already",
     "username_exist": "This username exist already",
     "account_exist": "This user has an account already",
     "session_full": "This group is full",
     "notEnrolled_message": "This student is not registered for this training",
     "transfer_intern_message": "Do you really want to create a new student and delete this visitor?",
     "visitor_remaining_message": "You still have visitors! \n Do you want to consult the list?",
-    "user_missing_message": "Please create a user account first!"
+    "user_missing_message": "Please create a user account first!",
+    "questionnaire_not_valid": "The question is not valid",
+    "questionnaire_answer_not_valid": "One of the answers is not valid",
+    "questionnaire_answers_required" : "At least one answer is required for this type of question",
+    "questionnaire_correct_required": "One answer should be correct"
   },
   "buttons": {
     "save": "Save",

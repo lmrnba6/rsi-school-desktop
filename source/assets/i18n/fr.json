@@ -36,6 +36,7 @@
     "individual": "Individuel"
   },
   "menu": {
+    "assessment": "Évaluation",
     "transport": "transport",
     "account": "Compte",
     "settings": "Paramètre",
@@ -91,9 +92,9 @@
       "medical": "Certificat medical",
       "residence": "Copie de la cate séjour (pour les étrangers)",
       "backpack": "Reçu un sac à dos?",
-      "fees": "Ajouter les frais de formation au sold?",
-      "fees_enrollment": "Ajouter les frais d'inscription au sold?",
-      "fees_books": "Ajouter les frais des livres au sold?",
+      "fees": "Ajouter les frais de formation au solde",
+      "fees_enrollment": "Ajouter les frais d'inscription au solde",
+      "fees_books": "Ajouter les frais des livres au solde",
       "isAllowed": "Bloqué(e)",
       "photo": "Photo",
       "scholar": "Niveau scolaire",
@@ -123,6 +124,46 @@
     "title": "Transport",
     "car": "Bus",
     "program": "Programme"
+  },
+  "assessment": {
+    "title": "Évaluation",
+    "questionnaire": "Questionnaire"
+  },
+  "questionnaire": {
+    "title": "Questionnaire",
+    "placeholder": {
+      "next": "Suivant",
+      "previous": "Précédent",
+      "finish": "Terminer",
+      "timeLeft": "Temps restant",
+      "start": "Commencer",
+      "back": "Retour",
+      "print": "Imprimer",
+      "title": "Title",
+      "description": "Description",
+      "timed": "Est chronométré?",
+      "time": "Temps",
+      "jump": "Peut sauter entre les questions?",
+      "number": "Nombre de questions",
+      "canSave": "Peut enregistrer et quitter l'examen?",
+      "training": "Formation",
+      "note": "Remarque",
+      "sequence": "Sequence",
+      "type": "Type",
+      "correct": "La réponse est-elle correcte?",
+      "questions": "Questions",
+      "question": "Question",
+      "answers": "Réponses",
+      "answer": "Réponse",
+      "addAnswer": "Ajouter une réponse",
+      "deleteAnswer": "Supprimer la dernière réponse",
+      "addQuestion": "Ajouter une question",
+      "deleteQuestion": "Supprimer le question",
+      "correct": "Correct?",
+      "qcm": "Question à réponses multiples",
+      "text": "Questions à réponses texte",
+      "save": "Sauvegarder"
+    }
   },
   "car": {
     "title": "Bus",
@@ -308,7 +349,16 @@
   },
   "exam": {
     "title": "Examens",
+    "bySession": "Par Groupe",
+    "byIntern": "Par étudiant",
     "placeholder": {
+      "interns": "Étudiants",
+      "type": "Type",
+      "individual": "Par étudiant",
+      "group": "Par groupe",
+      "passed": "Passé",
+      "yes": "Oui",
+      "no": "Non",
       "type" : "Type",
       "mark": "Note",
       "result": "Admis(e)",
@@ -318,7 +368,8 @@
       "date": "Date",
       "time": "Durée",
       "intern_id": "Étudiant",
-      "session_id": "Groupe"
+      "session_id": "Groupe",
+      "questionnaire_id": "Questionnaire"
     }
   },
   "course": {
@@ -506,10 +557,15 @@
     "salary": "Salaire"
   },
   "messages": {
+    "next_question_warning_message": "Voulez-vous vraiment valider cette réponse?",
+    "no_questionnaire_attached_message": "Cet examen n'est pas disponible!",
+    "start_test_warning_message": "Voulez-vous vraiment commencer l'examen?",
     "error_field_required": "Ce champ est obligatoir",
     "error_login": "Mauvais nom d'utilisateur ou mot de passe",
     "field_required_error": "Vous devez rentrer une valeur",
     "remove_row_warning_message": "Voulez-vous vraiment supprimer cette ligne?",
+    "remove_answer_warning_message": "Voulez-vous vraiment supprimer cette réponse?",
+    "remove_question_warning_message": "Voulez-vous vraiment supprimer cette question?",
     "warning_title": "Attention",
     "operation_success_message": "Succès: Opération réussie",
     "something_went_wrong_message": "Une erreur est survenue",
@@ -524,14 +580,18 @@
     "intern_already_enrolled": "Étudiant déja inscrit à ce groupe",
     "blocked": "Bloqué(e)",
     "phone_exist": "Ce numéro de téléphone est existant",
-    "name_exist": "Ce nom de groupe est existant",
+    "name_exist": "Ce nom est existant",
     "username_exist": "Ce nom d'utilisateur est existant",
     "account_exist": "Cet utilisateur est existant",
     "session_full": "Ce groupe est complet",
     "notEnrolled_message": "Cet étudiant n'est pas inscrit à cette formation",
     "transfer_intern_message": "Voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?",
     "visitor_remaining_message": "Vous avez encore des visiteurs! \n Voulez-vous consulter la liste?",
-    "user_missing_message": "Veuillez d'abord créer un compte utilisateur!"
+    "user_missing_message": "Veuillez d'abord créer un compte utilisateur!",
+    "questionnaire_not_valid": "La question n'est pas valide",
+    "questionnaire_answer_not_valid": "L'une des réponses n'est pas valide",
+    "questionnaire_answers_required": "Au moins une réponse est requise pour ce type de question",
+    "questionnaire_correct_required": "Une réponse doit être correcte"
   },
   "buttons": {
     "save": "Sauvegarder",

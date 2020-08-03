@@ -152,7 +152,7 @@ export class CommutingComponent implements OnInit, OnChanges {
         this.setting.tableName = this.tableName;
         this.setting.filter = false;
         this.setting.paging = false;
-        this.setting.addRow = true;
+        this.setting.addRow = false;
         this.setting.cols = [
             {columnDef: 'time', header: 'transport.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
             {columnDef: 'day', header: 'transport.placeholder.day', type: 'day', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.day)}`},

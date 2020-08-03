@@ -1,17 +1,32 @@
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
 <h2>{{'exam.title'| translate}}</h2>
-<mat-divider></mat-divider>
-<mat-card>
-    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
-    </app-loader>
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="infoImage" alt="">
+            {{'questionnaire.placeholder.description' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <div class="container">
+        <mat-form-field *ngIf="!isOnEdit" appearance="outline">
+            <mat-label>{{'exam.placeholder.type' | translate}}</mat-label>
+            <mat-select [(ngModel)]="type" (valueChange)="onTypeChanged($event)">
+                <mat-option [value]="'individual'">{{'exam.placeholder.individual' | translate}}</mat-option>
+                <mat-option [value]="'group'">{{'exam.placeholder.group' | translate}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br></div>
     <form [formGroup]="examForm">
         <div class="container">
-            <button [disabled]="examForm.invalid && !internSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="examForm.invalid || (!internSelected && type === 'individual')" class="pull-right save" (click)="onSave()"
+                    type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-            <mat-form-field class="example-full-width"  appearance="outline">
+            <mat-form-field *ngIf="type === 'individual'" class="example-full-width" appearance="outline">
                 <mat-label>{{'exam.placeholder.intern_id' | translate}}</mat-label>
                 <input name="intern_id" formControlName="intern_id" matInput [ngModel]="internSelected"
                        (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
@@ -23,20 +38,33 @@
                         {{intern?.name}}
                     </mat-option>
                 </mat-autocomplete>
-                <mat-error *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
+                <mat-error
+                        *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'exam.placeholder.session_id' | translate}}</mat-label>
                 <mat-select formControlName="session_id" [(ngModel)]="exam.session_id"
+                            (valueChange)="onSessionChange($event)"
                             name="session_id" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
-                        {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}}
+                        {{session.name + ' ' + session['instructor'] + ' ' + session['training'] + ' '}}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
                 </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'exam.placeholder.questionnaire_id' | translate}}</mat-label>
+                <mat-select formControlName="questionnaire_id" [(ngModel)]="exam.questionnaire_id"
+                            name="questionnaire_id">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let q of questionnaires" [value]="q.id">
+                        {{q.title}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">
@@ -53,15 +81,15 @@
                 <input name="time" type="number" formControlName="time"
                        [(ngModel)]="exam.time" matInput
                        required>
-                <span matSuffix>h</span>
+                <span matSuffix>min</span>
                 <mat-error *ngIf="time.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'exam.placeholder.mark' | translate}}</mat-label>
-                <input name="mark" type="number" (blur)="parseAmount($event.target.value)" formControlName="mark"
+                <input name="mark" type="number" (blur)="parseAmount($event.target['value'])" formControlName="mark"
                        [ngModel]="exam.mark" matInput
-                       required>
+                >
                 <span matSuffix>/100</span>
                 <mat-error *ngIf="mark.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
@@ -75,8 +103,67 @@
         </div>
     </form>
     <div class="container">
-        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="exam.result">{{'exam.placeholder.result' | translate}}</mat-checkbox>
+        <mat-form-field appearance="outline">
+            <mat-label>{{'exam.placeholder.passed' | translate}}</mat-label>
+            <mat-select [(ngModel)]="exam.passed">
+                <mat-option [value]="null">--</mat-option>
+                <mat-option [value]="1">{{'exam.placeholder.yes' | translate}}</mat-option>
+                <mat-option [value]="0">{{'exam.placeholder.no' | translate}}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <br>
-        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="exam.retake">{{'exam.placeholder.retake' | translate}}</mat-checkbox>
+        <mat-form-field appearance="outline">
+            <mat-label>{{'exam.placeholder.result' | translate}}</mat-label>
+            <mat-select [(ngModel)]="exam.result">
+                <mat-option [value]="null">--</mat-option>
+                <mat-option [value]="1">{{'exam.placeholder.yes' | translate}}</mat-option>
+                <mat-option [value]="0">{{'exam.placeholder.no' | translate}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>{{'exam.placeholder.retake' | translate}}</mat-label>
+            <mat-select [(ngModel)]="exam.retake">
+                <mat-option [value]="null">--</mat-option>
+                <mat-option [value]="1">{{'exam.placeholder.yes' | translate}}</mat-option>
+                <mat-option [value]="0">{{'exam.placeholder.no' | translate}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
     </div>
-</mat-card>
+        </div>
+    </mat-tab>
+    <mat-tab *ngIf="exam.passed">
+        <ng-template mat-tab-label>
+            <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="assessmentImage" alt="">
+            {{'questionnaire.placeholder.answers' | translate}}
+        </ng-template>
+        <div class="tab-content">
+            <br>
+            <div class="container">
+                <button class="pull-right save" type="button" (click)="print()" mat-button>
+                    <span class="glyphicon glyphicon-print"></span>
+                </button>
+                <div id="questionnaire">
+                    <h1 style="text-align: center; color: black">{{exam['questionnaire']}}</h1>
+                    <div style="margin-left: 50px">
+                        <span>Nom: {{exam['intern']}}</span>
+                        <br>
+                        <span>Formation: {{exam['training'] || ''}}</span>
+                        <br>
+                        <span>Note: {{exam.mark || ''}}</span>
+                    </div>
+                    <ul style="list-style-type: none" *ngFor="let q of marks; let i = index;">
+                        <li  style="margin: 10px; border: solid 1px; padding: 10px; border-radius: 5px">
+                            <p style="margin: 10px 0"><strong>Question {{i + 1}}
+                                : </strong>{{q.question}} {{q['note'] ? '( ' : ''}}{{q['note']}}{{q['note'] ? ' )' : ''}}</p>
+
+                            <p style="margin: 10px 0"><strong>{{'questionnaire.placeholder.answer' | translate}} {{i + 1}}
+                                : </strong>{{q.answer}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

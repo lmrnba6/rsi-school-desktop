@@ -114,10 +114,12 @@ export class SessionFormComponent implements OnInit, OnChanges {
     }
 
     onNameChange() {
-        Session.nameExist(this.session.name).catch(() => {
-            this.session.name = '';
-            this.messagesService.notifyMessage(this.translate.instant('messages.name_exist'), '', 'error');
-        })
+        if(!this.isOnEdit) {
+            Session.nameExist(this.session.name).catch(() => {
+                this.session.name = '';
+                this.messagesService.notifyMessage(this.translate.instant('messages.name_exist'), '', 'error');
+            })
+        }
     }
 
     /**

@@ -47,20 +47,25 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="weekdayImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.weekday' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.exam' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/exam">
-<!--                    <span class="glyphicon glyphicon-pencil"></span>-->
-                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="examImage" alt="">
-                    <span *ngIf="iconsShown">{{'menu.exam' | translate}}</span>
-                </a>
+<!--                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.exam' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/exam">-->
+<!--&lt;!&ndash;                    <span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
+<!--                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="examImage" alt="">-->
+<!--                    <span *ngIf="iconsShown">{{'menu.exam' | translate}}</span>-->
+<!--                </a>-->
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.room' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/room">
 <!--                    <span class="glyphicon glyphicon-modal-window"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="roomImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.room' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.attendance' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/attendance">
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.attendance' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/attendance">
 <!--                    <span class="glyphicon glyphicon-ok-circle"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="attendanceImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.attendance' | translate}}</span>
+                </a>
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.assessment' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/assessment">
+                    <!--                    <span class="glyphicon glyphicon-ok-circle"></span>-->
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="testImage" alt="">
+                    <span *ngIf="iconsShown">{{'menu.assessment' | translate}}</span>
                 </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.result' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/result">
 <!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
@@ -99,7 +104,7 @@
                 </a>
                 <br>
             </mat-nav-list>
-            <p style="position: absolute; top: 0">v 1.0.24</p>
+            <p style="position: absolute; top: 0">v 1.0.25</p>
         </mat-sidenav>
         <mat-sidenav-content>
             <!-- <button mat-icon-button class="btnMenu" (click)="sidenav.toggle(); openCloseNavSide()">

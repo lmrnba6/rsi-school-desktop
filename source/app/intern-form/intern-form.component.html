@@ -41,7 +41,7 @@
             <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
             <mat-form-field appearance="outline">
                 <mat-label>{{'intern.placeholder.name' | translate}}</mat-label>
-                <input id="name" name="name" formControlName="name" [(ngModel)]="intern.name" matInput
+                <input id="name" name="name" formControlName="name" [(ngModel)]="intern.name" matInput (blur)="handleName($event.target.value)"
                        required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
@@ -139,10 +139,10 @@
     <!--<h4 style="font-weight: bold">{{'intern.documents' | translate}}</h4>-->
     <br>
     <div class="container">
-        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="intern.isAllowed">{{'intern.placeholder.isAllowed' | translate}}</mat-checkbox>
+        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="intern.isAllowed">{{'intern.placeholder.isAllowed' | translate}}</mat-checkbox>
         <br>
-        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="intern.isPromo">{{'intern.placeholder.isPromo' | translate}}</mat-checkbox>
+        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="intern.isPromo">{{'intern.placeholder.isPromo' | translate}}</mat-checkbox>
         <br>
-        <mat-checkbox style="font-size: 1.2rem" [(ngModel)]="intern.isVip">{{'intern.placeholder.isVip' | translate}}</mat-checkbox>
+        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="intern.isVip">{{'intern.placeholder.isVip' | translate}}</mat-checkbox>
     </div>
 </mat-card>

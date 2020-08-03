@@ -1,3 +1,5 @@
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+</app-loader>
 <h2>{{'transport.title'| translate}}</h2>
 <div style="display: flex; justify-content: center; font-size: 1.5rem; margin-top: 5%">
     <mat-form-field appearance="outline" style="margin-right: 10px">
@@ -26,22 +28,27 @@
         </mat-select>
     </mat-form-field>
 </div>
-<mat-card>
-    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
-    </app-loader>
+<div class="example-list">
+    <mat-expansion-panel   [expanded]="!internDisplayed" (opened)="internDisplayed = false" style="border: solid; margin: 5px">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span class="glyphicon glyphicon-calendar"></span>
+                {{'transport.title'  | translate}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
     <app-abstract-table [page]="'commuting'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)"
                         (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting"
-                        [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)"
-                        (addRow)="onAddRow()"></app-abstract-table>
-</mat-card>
-<hr>
-<div *ngIf="internDisplayed">
-    <h2>{{'intern.title'| translate}} - {{internData?.paging?.totalCount}} </h2>
-    <mat-divider></mat-divider>
-    <mat-card>
-        <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
-        </app-loader>
+                        [data]="data" (editRow)="onEditRow($event)"></app-abstract-table>
+    </mat-expansion-panel>
+    <br>
+    <mat-expansion-panel *ngIf="internDisplayed"   [expanded]="internDisplayed" style="border: solid; margin: 5px">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span class="glyphicon glyphicon-user"></span>
+                {{'intern.title' | translate}} - {{internData?.paging?.totalCount}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
         <app-abstract-table [page]="'intern'" [setting]="internSetting" (filter)="onFilterIntern($event)"
                             [data]="internData"></app-abstract-table>
-    </mat-card>
+    </mat-expansion-panel>
 </div>

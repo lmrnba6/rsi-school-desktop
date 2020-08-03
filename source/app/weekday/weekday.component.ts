@@ -62,7 +62,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         const user = this.authService.getCurrentUser();
         this.isAdmin = user.role === 'admin';
-        this.isAdmin = user.role === 'user';
+        this.isUser = user.role === 'user';
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.initSetting();
         this.initWeekSetting();

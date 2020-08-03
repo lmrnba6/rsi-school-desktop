@@ -189,14 +189,17 @@ CREATE TABLE IF NOT EXISTS "exam" (
 	"id"	SERIAL NOT NULL,
 	"date"  TEXT NOT NULL,
 	"time"  TEXT NOT NULL,
-	"comment"  TEXT NOT NULL,
-	"mark"	INTEGER NOT NULL,
-	"result" INTEGER NOT NULL,
-	"retake" INTEGER NOT NULL,
+	"comment"  TEXT,
+	"mark"	INTEGER,
+	"passed"	INTEGER,
+	"result" INTEGER,
+	"retake" INTEGER,
 	"intern_id"	INTEGER NOT NULL,
 	"session_id"	INTEGER NOT NULL,
+	"questionnaire_id" INTEGER
     FOREIGN KEY(intern_id) REFERENCES "intern"(id),
     FOREIGN KEY(session_id) REFERENCES "session"(id),
+    FOREIGN KEY(questionnaire_id) REFERENCES "questionnaire"(id),
 	PRIMARY KEY("id")
 );
 
@@ -241,50 +244,97 @@ CREATE TABLE IF NOT EXISTS "charge" (
 );
 
 DROP TABLE IF EXISTS "register";
-  CREATE TABLE IF NOT EXISTS "register" (
-  	"id"	SERIAL NOT NULL,
-  	"date"  TEXT NOT NULL,
-      "amount"  NUMERIC NOT NULL,
-      "comment"	TEXT NOT NULL,
-      "intern"	TEXT,
-      "training"    TEXT,
-      "sold"  NUMERIC,
-      "rest"  NUMERIC,
-      "username" TEXT,
-  	PRIMARY KEY("id")
-  );
+CREATE TABLE IF NOT EXISTS "register" (
+"id"	SERIAL NOT NULL,
+"date"  TEXT NOT NULL,
+  "amount"  NUMERIC NOT NULL,
+  "comment"	TEXT NOT NULL,
+  "intern"	TEXT,
+  "training"    TEXT,
+  "sold"  NUMERIC,
+  "rest"  NUMERIC,
+  "username" TEXT,
+PRIMARY KEY("id")
+);
 
-  DROP TABLE IF EXISTS "car";
-    CREATE TABLE IF NOT EXISTS "car" (
-    	"id"	SERIAL NOT NULL,
-    	"name"  TEXT NOT NULL,
-        "make"  TEXT,
-        "plate"	TEXT,
-        "seat"	INTEGER NOT NULL,
-        "comment" TEXT,
-    	PRIMARY KEY("id")
-    );
+DROP TABLE IF EXISTS "car";
+CREATE TABLE IF NOT EXISTS "car" (
+    "id"	SERIAL NOT NULL,
+    "name"  TEXT NOT NULL,
+    "make"  TEXT,
+    "plate"	TEXT,
+    "seat"	INTEGER NOT NULL,
+    "comment" TEXT,
+    PRIMARY KEY("id")
+);
 
-    DROP TABLE IF EXISTS "transport";
-    CREATE TABLE IF NOT EXISTS "transport" (
-        "id"	SERIAL NOT NULL,
-        "time"  TEXT NOT NULL,
-        "day"  TEXT NOT NULL,
-        "direction" TEXT NOT NULL,
-        "comment" TEXT,
-        "car"	INTEGER NOT NULL,
-        FOREIGN KEY(car) REFERENCES "car"(id),
-        PRIMARY KEY("id")
-    );
+DROP TABLE IF EXISTS "transport";
+CREATE TABLE IF NOT EXISTS "transport" (
+    "id"	SERIAL NOT NULL,
+    "time"  TEXT NOT NULL,
+    "day"  TEXT NOT NULL,
+    "direction" TEXT NOT NULL,
+    "comment" TEXT,
+    "car"	INTEGER NOT NULL,
+    FOREIGN KEY(car) REFERENCES "car"(id),
+    PRIMARY KEY("id")
+);
 
-     DROP TABLE IF EXISTS "commute";
-        CREATE TABLE IF NOT EXISTS "commute" (
-            "id"	SERIAL NOT NULL,
-            "comment" TEXT,
-            "address" TEXT NOT NULL,
-            "transport"	INTEGER NOT NULL,
-            "intern"	INTEGER NOT NULL,
-            FOREIGN KEY(intern) REFERENCES "intern"(id),
-            FOREIGN KEY(transport) REFERENCES "transport"(id),
-            PRIMARY KEY("id")
-        );
+DROP TABLE IF EXISTS "commute";
+CREATE TABLE IF NOT EXISTS "commute" (
+    "id"	SERIAL NOT NULL,
+    "comment" TEXT,
+    "address" TEXT NOT NULL,
+    "transport"	INTEGER NOT NULL,
+    "intern"	INTEGER NOT NULL,
+    FOREIGN KEY(intern) REFERENCES "intern"(id),
+    FOREIGN KEY(transport) REFERENCES "transport"(id),
+    PRIMARY KEY("id")
+);
+
+DROP TABLE IF EXISTS "questionnaire";
+CREATE TABLE IF NOT EXISTS "questionnaire" (
+    "id"	SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "timed" INTEGER NOT NULL,
+    "jump"	INTEGER NOT NULL,
+    "number"	INTEGER NOT NULL,
+    "training"	INTEGER,
+    FOREIGN KEY(training) REFERENCES "training"(id),
+    PRIMARY KEY("id")
+);
+
+DROP TABLE IF EXISTS "question";
+CREATE TABLE IF NOT EXISTS "question" (
+    "id"	SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "note" TEXT,
+    "sequence" INTEGER NOT NULL,
+    "type"	TEXT NOT NULL,
+    "questionnaire"	INTEGER NOT NULL,
+    FOREIGN KEY(questionnaire) REFERENCES "questionnaire"(id),
+    PRIMARY KEY("id")
+);
+
+DROP TABLE IF EXISTS "answer";
+CREATE TABLE IF NOT EXISTS "answer" (
+    "id"	SERIAL NOT NULL,
+    "note" TEXT,
+    "title" TEXT NOT NULL,
+    "correct" INTEGER,
+    "question"	INTEGER NOT NULL,
+    FOREIGN KEY(question) REFERENCES "question"(id),
+    PRIMARY KEY("id")
+);
+
+DROP TABLE IF EXISTS "mark";
+CREATE TABLE IF NOT EXISTS "mark" (
+    "id"	SERIAL NOT NULL,
+    "answer" TEXT NOT NULL,
+    "exam" INTEGER NOT NULL,
+    "question"	INTEGER NOT NULL,
+    FOREIGN KEY(exam) REFERENCES "exam"(id),
+    FOREIGN KEY(question) REFERENCES "question"(id),
+    PRIMARY KEY("id")
+);

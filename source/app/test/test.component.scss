@@ -1,0 +1,83 @@
+.testContainer {
+
+  h1 {
+    font-size: 5rem;
+    color: black;
+    margin-top: 8%;
+  }
+
+  h3 {
+    color: gray;
+  }
+
+  .testButtonDiv {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 20%;
+
+    .startButton {
+      background: #2b7bff;
+      color: white;
+      height: 10rem;
+      width: 25rem;
+      font-size: 4rem;
+    }
+
+    .backButton {
+      background: red;
+      color: white;
+      font-size: 2rem
+    }
+  }
+}
+
+.testFormContainer {
+  h1 {
+    color: black;
+  }
+
+  .testTime {
+    color: #28a745;
+    font-size: 2rem;
+    position: absolute;
+    right: 10px;
+    top: 10px
+  }
+
+  .questionContainer {
+    border: solid;
+    border-radius: 5px;
+    padding: 20px;
+
+    .title {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+  }
+
+  .testFooter {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 20px;
+
+    .next {
+      color: white;
+      background: #007bff;
+      flex-grow: 1;
+    }
+
+    .previous {
+      flex-grow: 1;
+      color: white;
+      background: red;
+    }
+
+    p {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 2rem;
+    }
+  }
+}

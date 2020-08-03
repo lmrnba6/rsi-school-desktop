@@ -63,6 +63,10 @@ import {CommuteComponent} from "./commute/commute.component";
 import {CommuteFormComponent} from "./commute-form/commute-form.component";
 import {CommutingComponent} from "./commuting/commuting.component";
 import {CommentInstructorFormComponent} from "./comment-instructor-form/comment-instructor-form.component";
+import {AssessmentComponent} from "./assessment/assessment.component";
+import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
+import {QuestionnaireFormComponent} from "./questionnaire-form/questionnaire-form.component";
+import {TestComponent} from "./test/test.component";
 
 const appRoutes: Routes = [
     {
@@ -101,6 +105,10 @@ const appRoutes: Routes = [
             {
                 path: 'settings/database',
                 component: DatabaseComponent
+            },
+            {
+                path: 'test/:questionnaire/:intern/:exam',
+                component: TestComponent
             },
             {
                 path: 'settings/transportation',
@@ -149,6 +157,22 @@ const appRoutes: Routes = [
             {
                 path: 'visitor/form/:id',
                 component: VisitorFormComponent
+            },
+            {
+                path: 'assessment',
+                component: AssessmentComponent
+            },
+            {
+                path: 'questionnaire',
+                component: QuestionnaireComponent
+            },
+            {
+                path: 'questionnaire/form',
+                component: QuestionnaireFormComponent
+            },
+            {
+                path: 'questionnaire/form/:id',
+                component: QuestionnaireFormComponent
             },
             {
                 path: 'transportation',

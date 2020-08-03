@@ -48,6 +48,9 @@
     .mat-header-row {
       background: $primary;
       min-height: 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
     .mat-header-cell {

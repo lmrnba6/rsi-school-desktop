@@ -67,7 +67,6 @@ import {AttendanceComponent} from "./attendance/attendance.component";
 import {EnrollmentComponent} from "./enrollment/enrollment.component";
 import {EnrollmentFormComponent} from "./enrollment-form/enrollment-form.component";
 import {DocumentComponent} from "./document/document.component";
-import { CKEditorModule } from 'ng2-ckeditor';
 import {PvComponent} from "./pv/pv.component";
 import {ResultComponent} from "./result/result.component";
 import {WeekdayComponent} from "./weekday/weekday.component";
@@ -116,6 +115,12 @@ import {CommutingComponent} from "./commuting/commuting.component";
 import {PromptDialogComponent} from "./prompt-dialog/prompt-dialog.component";
 import {CommentInstructorComponent} from "./comment-instructor/comment-instructor.component";
 import {CommentInstructorFormComponent} from "./comment-instructor-form/comment-instructor-form.component";
+import {AssessmentComponent} from "./assessment/assessment.component";
+import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
+import {QuestionnaireFormComponent} from "./questionnaire-form/questionnaire-form.component";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {TestComponent} from "./test/test.component";
 
 
 @NgModule({
@@ -168,7 +173,6 @@ import {CommentInstructorFormComponent} from "./comment-instructor-form/comment-
         MatAutocompleteModule,
         MatNativeDateModule,
         MatAutocompleteModule,
-        CKEditorModule,
         ChartsModule,
         MatProgressBarModule,
         MatStepperModule,
@@ -181,7 +185,9 @@ import {CommentInstructorFormComponent} from "./comment-instructor-form/comment-
         MessageModule,
         MessagesModule,
         ToastModule,
-        FloatingActionMenuModule
+        FloatingActionMenuModule,
+        CKEditorModule,
+        DragDropModule,
     ],
     declarations: [
         SafePipe,
@@ -260,7 +266,11 @@ import {CommentInstructorFormComponent} from "./comment-instructor-form/comment-
         CommutingComponent,
         PromptDialogComponent,
         CommentInstructorComponent,
-        CommentInstructorFormComponent
+        CommentInstructorFormComponent,
+        AssessmentComponent,
+        QuestionnaireComponent,
+        QuestionnaireFormComponent,
+        TestComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent, PromptDialogComponent],
     providers: [

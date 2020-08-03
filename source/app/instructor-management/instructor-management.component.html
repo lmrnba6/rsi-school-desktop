@@ -18,7 +18,7 @@
       <app-session [instructor]="instructor"></app-session>
     </div>
   </mat-tab>
-  <mat-tab>
+  <mat-tab *ngIf="!isInstructor">
     <ng-template mat-tab-label>
       <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="attendanceImage" alt=""> {{'instructor-management.attendance' | translate}}
     </ng-template>
