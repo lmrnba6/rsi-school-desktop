@@ -10,6 +10,11 @@ export class School {
     public id = -1;
     public name = '';
     public photo = '';
+    public address = '';
+    public phone1 = '';
+    public phone2 = '';
+    public email = '';
+    public website = ''
     public dist = ''
 
     public static getCount(filter: string): Promise<School[]> {
@@ -67,8 +72,9 @@ export class School {
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "school" (name, photo, dist)
-            VALUES('${this.name}', '${this.photo}', '${this.dist}')`;
+            INSERT INTO "school" (name, photo, dist, address, phone1,phone2, email,website)
+            VALUES('${this.name}', '${this.photo}', '${this.dist}', '${this.address}', '${this.phone1}', 
+            '${this.phone2}', '${this.email}', '${this.website}')`;
 
         const values = {
         };
@@ -86,7 +92,8 @@ export class School {
     public update(): Promise<void> {
         const sql = `
             UPDATE "school"
-               SET name = '${this.name}', photo = '${this.photo}', dist = '${this.dist}'
+               SET name = '${this.name}', photo = '${this.photo}', address = '${this.address}', phone1 = '${this.phone1}', 
+               phone2 = '${this.phone2}', dist = '${this.dist}', email = '${this.email}', website = '${this.website}'
              WHERE id = ${this.id}`;
 
         const values = {
@@ -120,6 +127,11 @@ export class School {
         this.name = row['name'];
         this.photo = row['photo'];
         this.dist = row['dist'];
+        this.address = row['address'];
+        this.phone1 = row['phone1'];
+        this.phone2 = row['phone2'];
+        this.email = row['email'];
+        this.website = row['website'];
         return this;
     }
 }

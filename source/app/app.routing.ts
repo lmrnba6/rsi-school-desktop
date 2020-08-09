@@ -439,6 +439,10 @@ const appRoutes: Routes = [
                 component: PvComponent
             },
             {
+                path: 'document/pv/:name/:id/:interns',
+                component: PvComponent
+            },
+            {
                 path: 'result',
                 component: ResultComponent
             },

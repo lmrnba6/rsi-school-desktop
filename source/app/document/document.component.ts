@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import './document.component.scss';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Session} from "../model/session";
 import {Intern} from "../model/intern";
 import {Router} from "@angular/router";
@@ -14,10 +15,11 @@ export class DocumentComponent implements OnInit {
 
     session_id: number;
     sessions = [];
+    public internsToPrint: Array<Intern> = [];
     public interns: Array<Intern> = [];
     public internsFiltered: Array<Intern> = [];
     public internSelected: Intern;
-    attendanceForm: boolean;
+    readonly separatorKeysCodes: number[] = [ENTER, COMMA];
     card: boolean;
     receipt: boolean;
     form: boolean;
@@ -30,6 +32,7 @@ export class DocumentComponent implements OnInit {
     public idImage = `${this.getPath()}dist/assets/images/idImage.png`;
     public paymentImage = `${this.getPath()}dist/assets/images/paymentImage.png`;
     public pvImage = `${this.getPath()}dist/assets/images/pvImage.png`;
+    public diplomaImage = `${this.getPath()}dist/assets/images/diplomaImage.png`;
 
     constructor(private router: Router, private translate: TranslateService, private messagesService: MessagesService) {
     }
@@ -53,12 +56,20 @@ export class DocumentComponent implements OnInit {
         this.open = type === this.open ? '' : type;
     }
 
+    remove(i: Intern): void {
+        const index = this.internsToPrint.indexOf(i);
+
+        if (index >= 0) {
+            this.internsToPrint.splice(index, 1);
+        }
+    }
+
     onAttendanceForm() {
         this.router.navigate(['/document/pv/intern/' + this.session_id]);
     }
 
     public displayFn(intern: Intern) {
-        return intern ? intern.name : this.internSelected.name;
+        return intern ? intern.name : this.internSelected ? this.internSelected.name : '';
     }
 
     public internOnChange(event: any): void {
@@ -76,14 +87,25 @@ export class DocumentComponent implements OnInit {
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
     }
 
+    public printDiploma() {
+        const interns = this.internsToPrint.reduce((a,b,i) =>
+            a+b.id + (i < this.internsToPrint.length-1 ? ',' : ''),'');
+        this.router.navigate(['/document/pv/card/0/' + interns]);
+    }
+
     public internOnSelect(intern: Intern): void {
         this.internSelected = intern;
         if (this.open === 'card') {
-            this.router.navigate(['/document/pv/card/' + this.internSelected.id]);
+            if(this.internsToPrint.length < 8){
+                this.internsToPrint.push(intern);
+                (this.internSelected as any) = null;
+            }
         } else if (this.open === 'receipt') {
             this.router.navigate(['/document/pv/receipt/' + this.internSelected.id]);
         } else if (this.open === 'form') {
             this.router.navigate(['/document/pv/form/' + this.internSelected.id]);
+        }else if (this.open === 'diploma') {
+            this.router.navigate(['/document/pv/diploma/' + this.internSelected.id]);
         }
     }
 

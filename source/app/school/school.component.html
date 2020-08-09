@@ -30,8 +30,38 @@
             <mat-form-field appearance="outline">
                 <mat-label>{{'intern.placeholder.dist' | translate}}</mat-label>
                 <input id="dist" name="dist" formControlName="dist" [(ngModel)]="school.dist" matInput
-                       autofocus>
+                       >
                 <mat-error *ngIf="dist.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.address' | translate}}</mat-label>
+                <input id="address" name="name" formControlName="address" [(ngModel)]="school.address" matInput
+                       required>
+                <mat-error *ngIf="address.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.phone' | translate}}</mat-label>
+                <input id="phone" name="phone1" formControlName="phone1" [(ngModel)]="school.phone1" matInput
+                       required>
+                <mat-error *ngIf="phone1.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.phone2' | translate}}</mat-label>
+                <input id="phone2" name="phone2" formControlName="phone2" [(ngModel)]="school.phone2" matInput
+                       >
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.email' | translate}}</mat-label>
+                <input id="email" name="email" formControlName="email" [(ngModel)]="school.email" matInput
+                       required>
+                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'intern.placeholder.website' | translate}}</mat-label>
+                <input id="website" name="website" formControlName="website" [(ngModel)]="school.website" matInput
+                       >
             </mat-form-field>
         </div>
     </form>

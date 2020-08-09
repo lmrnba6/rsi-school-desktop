@@ -153,6 +153,11 @@ CREATE TABLE IF NOT EXISTS "school" (
 	"id"	SERIAL NOT NULL,
 	"name"	TEXT NOT NULL,
 	"dist"	TEXT,
+	"address"	TEXT,
+	"phone1"	TEXT,
+	"phone2"	TEXT,
+	"email"	TEXT,
+	"website"	TEXT,
 	"photo"  BYTEA,
 	PRIMARY KEY("id")
 );

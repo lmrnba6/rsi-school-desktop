@@ -72,6 +72,7 @@ export class Session {
                         inner join "training" as t on s.training_id = t.id
                         inner join "instructor" as i on s.instructor_id = i.id 
                         left join "enrollment" as e on s.id = e.session_id
+                        where s.closed = false
                         group by s.id, t.name, i.name, t.type
                         `;
         const values = {};
@@ -91,7 +92,7 @@ export class Session {
         const sql = `SELECT t.name, count(t.id) as instructors FROM "session" as s 
 				inner join "training" as t on s.training_id = t.id
                 inner join "instructor" as i on s.instructor_id = i.id 
-                where s.start between '${date1}' and '${date2}'
+                where s.start between '${date1}' and '${date2}'  and s.closed = false
                 group by t.name;`;
         const values = {};
 
@@ -110,7 +111,7 @@ export class Session {
         const sql = `SELECT s.id, s.name, t.name as training, i.name as instructor FROM "session" as s 
 				inner join "training" as t on s.training_id = t.id
                 inner join "instructor" as i on s.instructor_id = i.id 
-                where i.id = ${id}`
+                where i.id = ${id} and s.closed = false`
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -212,7 +213,7 @@ export class Session {
                                                 LEFT JOIN "instructor" AS i ON s.instructor_id = i.id
                                                 LEFT JOIN "training" as t ON s.training_id = t.id
                                                 LEFT JOIN "room" as r ON w.room_id = r.id
-                                                WHERE i.id = ${instructor}
+                                                WHERE i.id = ${instructor}  and s.closed = false
                                                 
                             group by s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, i.name, t.name, x.interns
                             ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex})`;
@@ -238,7 +239,7 @@ export class Session {
                                                     INNER JOIN "instructor" AS ins ON instructor_id = ins.id
                                                     INNER JOIN "weekday" AS w ON s.id = w.session_id
                                                   
-                                                   WHERE w.room_id = ${room}`;
+                                                   WHERE w.room_id = ${room} AND s.closed = false`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -281,7 +282,7 @@ export class Session {
                                                     INNER JOIN "training" AS t ON training_id = t.id
                                                     INNER JOIN "instructor" AS ins ON instructor_id = ins.id
                                                   
-                                                   WHERE i.id = ${intern}`;
+                                                   WHERE i.id = ${intern}  and s.closed = false`;
         const values = {};
 
         return TheDb.selectAll(sql, values)

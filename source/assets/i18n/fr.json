@@ -73,6 +73,7 @@
     "documents": "Documents requis",
     "years": "Ans",
     "placeholder": {
+      "website": "Site web",
       "comment": "Commentaire",
       "isVip": "VIP",
       "isPromo": "Promotion",
@@ -476,6 +477,10 @@
     "attendance": "Présence"
   },
   "document": {
+    "diplomaTitle": "Attestation de succès",
+    "diplomaCertify": "Ceci est pour certifier que ",
+    "diplomaCompleted": "à réussi la formation",
+    "diplomaDated": "attribuée le",
     "title" : "Document",
     "intern": "Liste des étudiants",
     "session_open_pv": "PV d'ouverture  de session",
@@ -486,9 +491,12 @@
     "session_result": "Document de délibération  de session",
     "card": "Carte d'étudiant",
     "form": "Fiche d'inscription",
-    "receipt": "Bon de paiement"
+    "receipt": "Bon de paiement",
+    "diploma": "Diplome"
   },
   "pv": {
+    "cardTitle": "Carte d'étuduant",
+    "studentId": "Identifiant",
     "information" : "Information",
     "session" : "Groupe",
     "document": "Aperçu",
@@ -496,7 +504,7 @@
     "date": "Date",
     "title": "Titre",
     "edit_description": "Modifier le document",
-    "center": "",
+    "center": "Nom du l'école",
     "group": "Groupe",
     "student_list": "Liste des étudiants",
     "present": "Présent?",
@@ -507,7 +515,7 @@
     "form": "Fiche d'inscription",
     "receipt": "Bon de paiement",
     "birth": "Date de naissance",
-    "name" : "Nom et prénom",
+    "name" : "Nom",
     "email": "Courriel",
     "address": "Adresse",
     "name_arabic": "Nom en deuxième langue ",

@@ -14,10 +14,17 @@ import {MessagesService} from "../_services/messages.service";
     templateUrl: './school.component.html'
 })
 export class SchoolComponent implements OnInit {
-
+    public color: string = 'warn';
+    public mode: string = 'indeterminate';
+    public value: number = 100;
     public schoolForm: FormGroup;
     public name: FormControl;
     public dist: FormControl;
+    public address: FormControl;
+    public phone1: FormControl;
+    public phone2: FormControl;
+    public email: FormControl;
+    public website: FormControl;
     public photo: any;
     public block: boolean;
     public school: School;
@@ -51,9 +58,19 @@ export class SchoolComponent implements OnInit {
     public initForm(): void {
         this.name = new FormControl(null, [Validators.required]);
         this.dist = new FormControl(null);
+        this.phone1 = new FormControl(null, [Validators.required]);
+        this.phone2 = new FormControl(null);
+        this.address = new FormControl(null, [Validators.required]);
+        this.email = new FormControl(null, [Validators.required]);
+        this.website = new FormControl(null);
         this.schoolForm = this.fb.group({
             name: this.name,
-            dist: this.dist
+            dist: this.dist,
+            address: this.address,
+            phone1: this.phone1,
+            phone2: this.phone2,
+            email: this.email,
+            website: this.website
         });
     }
 
@@ -69,6 +86,11 @@ export class SchoolComponent implements OnInit {
                     school.name = '';
                     school.photo = '';
                     school.dist = '';
+                    school.address = '';
+                    school.phone1 = '';
+                    school.phone2 = '';
+                    school.email = '';
+                    school.website = '';
                     school.insert().then();
                     this.getData();
                 }

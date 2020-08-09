@@ -18,10 +18,17 @@ import {School} from "../model/school";
 })
 export class PvComponent implements OnInit {
     logo = ''
+    address = '';
+    phone1 = '';
+    phone2 = '';
+    email = '';
+    website = '';
     data: any;
     pvName: string;
     id: number;
     date: Date = new Date;
+    options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateDiploma: string = '';
     title: string;
     center: string;
     payment: Payment;
@@ -32,6 +39,7 @@ export class PvComponent implements OnInit {
     instructor: Instructor;
     training: Training;
     interns: Array<Intern> = [];
+    internsCard: string = '';
     results: Array<any> = [];
     intern: Intern;
     payments: Array<Payment> = [];
@@ -48,10 +56,18 @@ export class PvComponent implements OnInit {
 
     ngOnInit() {
         this.getParams();
-        this.getDataTableByDate();
-        this.getInternsBySession();
+        if(this.pvName !== 'card') {
+            this.getDataTableByDate();
+            this.getInternsBySession();
+        }
         this.title = this.pvName === 'form' ? this.translate.instant('pv.form') : this.title;
+        this.dateDiploma = new Date().toLocaleDateString('fr-FR');
         this.getCenter();
+    }
+
+    capitalize(s) {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
     }
 
     getCenter() {
@@ -61,6 +77,11 @@ export class PvComponent implements OnInit {
             if(school.length) {
                 this.center = school[0].name;
                 this.logo = 'data:image/png;base64,' + school[0].photo;
+                this.address = school[0].address;
+                this.phone1 = school[0].phone1;
+                this.phone2 = school[0].phone2;
+                this.email = school[0].email;
+                this.website = school[0].website;
             }
         })
     }
@@ -80,16 +101,28 @@ export class PvComponent implements OnInit {
     }
 
     getIntern() {
-        Intern.get(this.id as number).then(intern => {
-            this.intern = intern;
-            this.getReceipts();
-            this.getTraining();
-            this.getSessions();
-            this.pvName === 'card' && JsBarcode("#barcode", this.intern.id.toString().padStart(10, '0'), {width:2,
-                height:40});
-            this.pvName === 'form' && JsBarcode("#barcode2", this.intern.id.toString().padStart(10, '0'), {width:2,
-                height:40});
-        });
+        if(this.pvName === 'card') {
+            const promises: Array<Promise<Intern>> = [];
+            this.internsCard.split(',').forEach(i => promises.push(Intern.get(Number(i))));
+            Promise.all(promises).then(val => {
+                this.interns = val;
+                this.interns.forEach((intern, i) => {
+                    JsBarcode("#barcode" + i, intern.id.toString().padStart(10, '0'), {
+                        width: 2,
+                        height: 40
+                    });
+                })
+            });
+        }else {
+            Intern.get(this.id as number).then(intern => {
+                this.intern = intern;
+                this.getReceipts();
+                this.getTraining();
+                this.getSessions();
+                this.pvName === 'form' && JsBarcode("#barcode2", this.intern.id.toString().padStart(10, '0'), {width:2,
+                    height:40});
+            });
+        }
     }
 
     getTraining() {
@@ -109,7 +142,7 @@ export class PvComponent implements OnInit {
             this.payments = payments;
             this.payments.forEach(payment => payment.date = new Date(Number(payment.date)).toLocaleDateString('fr-FR') as any);
             if(this.payments.length) {
-                this.payment = this.payments[this.payments.length - 1];
+                this.payment = this.payments[0];
             }
             this.onPaymentChange();
         })
@@ -172,6 +205,9 @@ export class PvComponent implements OnInit {
         this.route.params.subscribe(res => {
             this.pvName = res.name;
             this.id = res.id;
+            if(res.name === 'card'){
+                this.internsCard = res.interns;
+            }
             this.title = this.pvName === 'intern' ? this.translate.instant('pv.student_list') : this.title;
             this.getIntern();
         });

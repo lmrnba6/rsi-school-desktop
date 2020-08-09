@@ -13,7 +13,7 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div class="container">
-                <mat-form-field  *ngIf="pvName !=='form'" appearance="outline">
+                <mat-form-field *ngIf="pvName !=='form' && pvName!=='diploma'" appearance="outline">
                     <mat-label>{{'pv.date' | translate}}</mat-label>
                     <input id="test" [(ngModel)]="date" matInput
                            placeholder="{{'pv.date' | translate}}" required [matDatepicker]="picker">
@@ -21,21 +21,22 @@
                     <mat-datepicker touchUi #picker></mat-datepicker>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName!=='receipt' && pvName!=='form'" appearance="outline">
+                <mat-form-field *ngIf="pvName!=='receipt' && pvName!=='form' && pvName!=='diploma'"
+                                appearance="outline">
                     <mat-label>{{'pv.title' | translate}}</mat-label>
                     <input [(ngModel)]="title" matInput
                            required>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName !=='form' && pvName!=='card'" appearance="outline">
+                <mat-form-field *ngIf="pvName !=='form' && pvName!=='card' && pvName!=='diploma'" appearance="outline">
                     <mat-label>{{'pv.center' | translate}}</mat-label>
-                <input [(ngModel)]="center" matInput
-                       required>
-            </mat-form-field>
+                    <input [(ngModel)]="center" matInput
+                           required>
+                </mat-form-field>
                 <br>
                 <mat-form-field *ngIf="pvName==='receipt'" appearance="outline">
                     <mat-label>{{'payment.title' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onPaymentChange()" [(ngModel)]="payment" >
+                    <mat-select (selectionChange)="onPaymentChange()" [(ngModel)]="payment">
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let payment of payments" [value]="payment">
                             {{payment.amount}} DA => {{payment.date}}
@@ -43,10 +44,10 @@
                     </mat-select>
                 </mat-form-field>
                 <br>
-                <mat-form-field *ngIf="pvName==='form'" appearance="outline">
+                <mat-form-field *ngIf="pvName==='form' || pvName === 'diploma'" appearance="outline">
                     <mat-label>{{'enrollment.placeholder.session_id' | translate}}</mat-label>
                     <mat-select [(ngModel)]="session"
-                               >
+                    >
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let session of sessions" [value]="session">
                             {{session.training + ' ' + session.session}}
@@ -66,26 +67,29 @@
     <h2>{{'pv.document' | translate}}</h2>
     <mat-card style="border: solid">
         <div id="intern" *ngIf="pvName === 'intern'">
-                        <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
-                                style="font-size: 20.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif; color: black;">{{center?.toUpperCase()}} </span></strong>
-                        </p>
+            <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
+                    style="font-size: 20.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif; color: black;">{{center?.toUpperCase()}} </span></strong>
+            </p>
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{'pv.student_list' | translate}} </span></u></strong>
             </p>
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
-                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.group' | translate}}: </u></span></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.group' | translate}}
+                : </u></span></strong><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;"></span></u></strong><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{session?.name}}</span></u></strong><strong><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; </span></strong>
             </p>
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
-                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.instructor' | translate}}: </u></span></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.instructor' | translate}}
+                : </u></span></strong><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;"></span></u></strong><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{instructor?.name}}</span></u></strong><strong><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; </span></strong>
             </p>
             <p style="text-align: center; direction: rtl; unicode-bidi: embed;"><strong><span
-                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.training' | translate}}: </u></span></strong><strong><u><span
+                    style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp;<u>{{'pv.training' | translate}}
+                : </u></span></strong><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;"></span></u></strong><strong><u><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">{{training?.name}}</span></u></strong><strong><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; </span></strong>
@@ -93,7 +97,8 @@
             <p style="direction: rtl; unicode-bidi: embed; text-align: center;"><strong><span
                     style="font-size: 18.0pt; line-height: 115%; font-family: 'Traditional Arabic',serif;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></strong>
             </p>
-            <table class="tables" style="border-collapse: collapse; border: none; margin-left: 4.8pt; margin-right: 4.8pt;"
+            <table class="tables"
+                   style="border-collapse: collapse; border: none; margin-left: 4.8pt; margin-right: 4.8pt;"
                    width="0">
                 <tbody>
                 <tr>
@@ -115,7 +120,8 @@
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{'intern.placeholder.phone' | translate}}</span></strong>
                         </p>
                     </td>
-                    <td *ngFor="let i of attendances" style="width: 92.15pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
+                    <td *ngFor="let i of attendances"
+                        style="width: 92.15pt; border: solid black 1.0pt;  background: #D9D9D9; padding: 0cm 5.4pt 0cm 5.4pt;"
                         width="123">
                         <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{i.date}}</span></strong>
@@ -129,9 +135,10 @@
                     </td>
                 </tr>
                 <tr *ngFor="let intern of interns; let i = index;" style="height: 23.15pt;">
-                    <td style="width: 28.4pt; border: solid black 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;" width="38">
+                    <td style="width: 28.4pt; border: solid black 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
+                        width="38">
                         <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
-                                style="font-size: 10.0pt; font-family: 'Traditional Arabic',serif;">{{i+1}}</span></strong>
+                                style="font-size: 10.0pt; font-family: 'Traditional Arabic',serif;">{{i + 1}}</span></strong>
                         </p>
                     </td>
                     <td style="width: 92.15pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
@@ -146,15 +153,17 @@
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">0{{intern.phone}}</span></strong>
                         </p>
                     </td>
-                    <td *ngFor="let i of attendances; let x = index" style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
+                    <td *ngFor="let i of attendances; let x = index"
+                        style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
                         width="95">
                         <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;">{{intern['attendances'][x] ?
                             intern['attendances'][x].present === 1 ? 'P' :
-                            intern['attendances'][x].present === 0 ? 'A' : 'N/O' : 'N/O'}}</span></strong>
+                                intern['attendances'][x].present === 0 ? 'A' : 'N/O' : 'N/O'}}</span></strong>
                         </p>
                     </td>
-                    <td style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"  width="95">
+                    <td style="border-right: solid 1px; width: 70.9pt; border-top: none; border-left: solid black 1.0pt; border-bottom: solid black 1.0pt;  padding: 0cm 5.4pt 0cm 5.4pt; height: 23.15pt;"
+                        width="95">
                         <p style="margin-bottom: .0001pt; text-align: center; line-height: normal;"><strong><span
                                 style="font-size: 12.0pt; font-family: 'Traditional Arabic',serif;"></span></strong>
                         </p>
@@ -183,83 +192,83 @@
                 <tbody>
                 <tr>
                     <td>
-                        <p ><strong>Date:</strong></p>
+                        <p><strong>Date:</strong></p>
                     </td>
                     <td>
-                        <p >{{date.toLocaleDateString('fr-FR')}}</p>
+                        <p>{{date.toLocaleDateString('fr-FR')}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td >
+                    <td>
                         <p><strong>Nom:</strong></p>
                     </td>
-                    <td >
+                    <td>
                         <p>{{intern?.name}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p ><strong>Formation:</strong></p>
+                        <p><strong>Formation:</strong></p>
                     </td>
-                    <td >
-                        <p >{{payment['session_name']}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        <p ><strong>Mois:</strong></p>
-                    </td>
-                    <td >
-                        <p >{{payment.month}}</p>
+                    <td>
+                        <p>{{payment['session_name']}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td >
-                        <p ><strong>Nature:</strong></p>
+                    <td>
+                        <p><strong>Mois:</strong></p>
                     </td>
-                    <td >
-                        <p >{{payment.comment}}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        <p ><strong>Montant:</strong></p>
-                    </td>
-                    <td >
-                        <p >{{payment.amount}} DA</p>
+                    <td>
+                        <p>{{payment.month}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td >
-                        <p ><strong>Solde:</strong></p>
+                    <td>
+                        <p><strong>Nature:</strong></p>
                     </td>
-                    <td >
-                        <p >{{intern.sold}} DA</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        <p ><strong>Reste:</strong></p>
-                    </td>
-                    <td >
-                        <p >{{payment.rest || payment.rest === 0 ? 0 : '?'}} DA</p>
+                    <td>
+                        <p>{{payment.comment}}</p>
                     </td>
                 </tr>
                 <tr>
-                    <td >
-                        <p ><strong>-------</strong></p>
+                    <td>
+                        <p><strong>Montant:</strong></p>
                     </td>
-                    <td >
-                        <p >--------</p>
+                    <td>
+                        <p>{{payment.amount}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>Solde:</strong></p>
+                    </td>
+                    <td>
+                        <p>{{intern.sold}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>Reste:</strong></p>
+                    </td>
+                    <td>
+                        <p>{{payment.rest || payment.rest === 0 ? 0 : '?'}} DA</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>-------</strong></p>
+                    </td>
+                    <td>
+                        <p>--------</p>
                     </td>
 
                 </tr>
                 <tr>
-                    <td >
-                        <p ><strong>Total:</strong></p>
+                    <td>
+                        <p><strong>Total:</strong></p>
                     </td>
-                    <td >
-                        <p >{{payment.amount}} DA</p>
+                    <td>
+                        <p>{{payment.amount}} DA</p>
                     </td>
                 </tr>
                 </tbody>
@@ -267,77 +276,133 @@
             <h1 *ngIf="payment.error === 1" style="color: red">**** Erreur ****</h1>
         </div>
         <div id="card" *ngIf="pvName === 'card'">
-            <!--<table style="border: solid; width: 405pt; border-collapse: collapse; height: 220px;" width="0">-->
-                <!--<tbody>-->
-                <!--<tr style="height: 30.0pt;">-->
-                    <!--<td style="width: 200.625px; padding: 0cm 5.4pt; height: 130px;" rowspan="5">-->
-                        <!--<img style="width: 100%;  height: 100%; border-radius: 20%;" src="data:image/png;base64,{{intern.photo}}" alt="" width="119" height="128" /></td>-->
-                    <!--<td style="width: 307.625px; border-top: 1pt solid #a6a6a6; border-left: none; border-bottom: none; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">-->
-                        <!--<p style="margin-bottom: .0001pt; line-height: normal;"><strong><span style="font-family: 'Arial',sans-serif; color: #404040;">{{center}}</span></strong></p>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr style="height: 30.0pt;">-->
-                    <!--<td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 10px;">-->
-                        <!--<p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern?.name}}</span></p>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr style="height: 30.0pt;">-->
-                    <!--<td style="width: 307.625px; border-top: none; border-bottom: none; border-left: none; border-image: initial; border-right: 1pt solid windowtext; padding: 0cm 5.4pt; height: 30px;">-->
-                        <!--<p style="margin-bottom: .0001pt; line-height: normal;"><span style="font-family: 'Arial',sans-serif; color: #595959;">{{intern.phone}}</span></p>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-                <!--<img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>-->
-            <!--</table>-->
-            <!--<p>&nbsp;</p>-->
-            <div id="holder" style="text-align: center;">
-                <div class="box" style=" width: 250px; height: 330px; border: 1px solid black; background: -webkit-linear-gradient(top,#eee,#fff, #ddd);">
-                    <div class="tie"></div>
-                    <h1 style="margin: 5px auto">{{center}}</h1>
-                    <img style=" width: 120px;
-                        margin: 0px 0 0 0;
-                        border:1px solid #eee;
-                        border-radius: 2px;
-                        background-color:rgba(255,255,255,0.5);
-                        padding: 4px;" [src]="intern?.photo | safe" />
-                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
-                        font-weight: normal;
-                        font-size: 18px;
-                        margin: 5px 0 3px 0;
-                        background-image: -webkit-linear-gradient(top,#999,#666);"
-                        class="rname">{{intern?.name}}</h1>
-                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
-                        font-weight: normal;
-                        font-size: 18px;
-                        margin: 5px 0 3px 0;"  class="postitle">0{{intern?.phone}}</h1>
-                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
-                        font-weight: normal;
-                        font-size: 18px;
-                        margin: 5px 0 3px 0;"  class="sig">{{intern?.email}}</h1>
-                    <h1 style=" font-family: 'trebuchet ms', 'sans serif';
-                        font-weight: normal;
-                        font-size: 18px;
-                        margin: 5px 0 3px 0;
-                        font-size: 12px;
-                        font-weight: bold;
-                        margin:0; padding:0;
-                        text-transform: uppercase;"  class="postitle"><img style="height: 60px; width: 80%;" id="barcode"/></h1>
+            <div *ngFor="let i of [0,2,4,6]">
+                <div style="display: flex; margin-bottom: 5px">
+                    <div style="    width: 330px;    height: 200px;    border: 1px dashed;    padding: 5px; margin-right: 10px">
+                        <div [ngStyle]="{display: !interns[i] ? 'none' : ''}">
+                            <div style="display:flex;align-items: center; border: 1px solid; border-radius: 5px; padding: 5px">
+                                <img src="{{logo}}" width=30px height=30px alt="">
+                                <div style="flex-grow: 1; text-align: center;">
+                                    <p style="margin: 0; font-size: 1.5rem; ">{{center}}</p>
+                                    <p style="margin:0; font-size:0.5rem">{{
+                                        (address ? address + ' - ' : '') +
+                                        (phone1 ? phone1 + ' - ' : '') +
+                                        (phone2 ? phone2 + ' - ' : '') +
+                                        (email ? email + ' - ' : '') +
+                                        (website || '')}}</p>
+                                </div>
+                            </div>
+                            <div style="text-align: center;"><p style="margin: 0">{{'pv.cardTitle' | translate}}</p>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+
+                                <div style="flex-grow:1">
+<!--                                    <p style="margin:10px"><strong>{{'pv.studentId' |translate}}-->
+<!--                                        : </strong>{{interns[i]?.id}}-->
+<!--                                    </p>-->
+                                    <p style="margin:10px"><strong>{{'pv.name' | translate}}
+                                        : </strong>{{interns[i]?.name}}
+                                    </p>
+                                    <p style="margin: 0 10px"><strong>{{'pv.phone' | translate}}
+                                        : </strong>0{{interns[i]?.phone}}
+                                    </p>
+                                    <img style="width: 80%;    height: 50px;   margin: 0;" id="barcode{{i}}"
+                                         alt="">
+                                </div>
+                                <img style="border-radius: 5px; margin:10px"
+                                     [src]="interns[i]?.photo | safe" width=100px height=100px
+                                     alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="    width: 330px;    height: 200px;    border: 1px dashed;    padding: 5px;">
+                        <div [ngStyle]="{display: !interns[i+1] ? 'none' : ''}">
+                            <div style="display:flex;align-items: center; border: 1px solid; border-radius: 5px; padding: 5px">
+                                <img src="{{logo}}" width=30px height=30px alt="">
+                                <div style="flex-grow: 1; text-align: center;">
+                                    <p style="margin: 0; font-size: 1.5rem; ">{{center}}</p>
+                                    <p style="margin:0; font-size:0.5rem">{{
+                                        (address ? address + ' - ' : '') +
+                                        (phone1 ? phone1 + ' - ' : '') +
+                                        (phone2 ? phone2 + ' - ' : '') +
+                                        (email ? email + ' - ' : '') +
+                                        (website || '')}}</p>
+                                </div>
+                            </div>
+                            <div style="text-align: center;"><p style="margin: 0">{{'pv.cardTitle' | translate}}</p>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+
+                                <div style="flex-grow:1">
+<!--                                    <p style="margin:10px"><strong>{{'pv.studentId' |translate}}-->
+<!--                                        : </strong>{{interns[i + 1]?.id}}-->
+<!--                                    </p>-->
+                                    <p style="margin:10px"><strong>{{'pv.name' | translate}}
+                                        : </strong>{{interns[i + 1]?.name}}</p>
+                                    <p style="margin: 0 10px"><strong>{{'pv.phone' | translate}}
+                                        : </strong>0{{interns[i + 1]?.phone}}
+                                    </p>
+                                    <img style="width: 80%;    height: 50px;   margin: 0;" id="barcode{{i+1}}"
+                                         alt="">
+                                </div>
+                                <img style="border-radius: 5px; margin:10px"
+                                     [src]="interns[i+1]?.photo | safe" width=100px height=100px
+                                     alt="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <p></p>
             </div>
         </div>
         <div id="form" *ngIf="pvName === 'form'">
             <p style="text-align: center;">&nbsp;</p>
-            <p style="text-align: center;"><img src="{{logo}}" alt="" width="91" height="91" /></p>
-            <p style="text-align: center;"><u><span style="font-size: 28.0pt; line-height: 107%;">{{'pv.form' | translate}}</span></u></p>
-            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img style="float: right;" [src]="intern?.photo | safe" alt="" width="92" height="92" /></p>
-            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode2"/></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name' | translate}}:   {{intern?.name}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.birth' | translate}}&nbsp;:  {{getDate(intern?.birth)}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.phone' | translate}}&nbsp;:   0{{intern?.phone}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name_arabic' | translate}}&nbsp;:   {{intern?.name_arabic}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.scholar' | translate}}&nbsp;:   {{'intern.placeholder.'+intern?.scholar | translate}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.training' | translate}}&nbsp;:   {{session['training']}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.session' | translate}}&nbsp;:   {{session['session']}}</span></p>
+            <p style="text-align: center;"><img src="{{logo}}" alt="" width="91" height="91"/></p>
+            <p style="text-align: center;"><u><span
+                    style="font-size: 28.0pt; line-height: 107%;">{{'pv.form' | translate}}</span></u></p>
+            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img
+                    style="float: right;" [src]="intern?.photo | safe" alt="" width="92" height="92"/></p>
+            <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img
+                    class="pull-right" style="clear: both; margin-top: 15px;" id="barcode2"/></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name' | translate}}
+                :   {{intern?.name}}</span></p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.birth' | translate}}&nbsp;:  {{getDate(intern?.birth)}}</span>
+            </p>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.phone' | translate}}&nbsp;:   0{{intern?.phone}}</span>
+            </p>
+            <p style="line-height: 150%;"><span
+                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.name_arabic' | translate}}&nbsp;:   {{intern?.name_arabic}}</span>
+            </p>
+            <p style="line-height: 150%;"><span
+                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.scholar' | translate}}&nbsp;:   {{'intern.placeholder.' + intern?.scholar | translate}}</span>
+            </p>
+            <p style="line-height: 150%;"><span
+                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.training' | translate}}&nbsp;:   {{session?.training}}</span>
+            </p>
+            <p style="line-height: 150%;"><span
+                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.session' | translate}}&nbsp;:   {{session?.session}}</span>
+            </p>
+        </div>
+        <div *ngIf="pvName === 'diploma'" style="margin-top: 20%">
+            <div id="diploma" *ngIf="pvName === 'diploma'"
+                 style="width: 100vw; height: 100vh; -webkit-transform: rotate(-90deg);">
+                <p style="text-align: center;">&nbsp;</p>
+                <div style="padding:20px; text-align:center;">
+                    <div style="padding:20px; text-align:center;">
+                        <p style="text-align: center;"><img src="{{logo}}" alt="" width="300" height="300"/></p>
+                        <span style="font-size:70px; font-weight:bold">{{'document.diplomaTitle' | translate}}</span>
+                        <br><br>
+                        <span style="font-size:35px"><i>{{'document.diplomaCertify' | translate}}</i></span>
+                        <br><br>
+                        <span style="font-size:40px"><b>{{intern?.name}}</b></span><br/><br/>
+                        <span style="font-size:35px"><i>{{'document.diplomaCompleted' | translate}}</i></span>
+                        <br/><br/>
+                        <span style="font-size:40px">{{session?.training}}</span> <br/><br/>
+                        <span style="font-size:35px"><i>{{'document.diplomaDated' | translate}}</i></span><br>
+                        <span style="font-size:40px">{{dateDiploma}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </mat-card>
 </mat-card>

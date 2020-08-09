@@ -13,6 +13,16 @@ export const sql = [
 
     `ALTER TABLE payment ADD COLUMN charge INTEGER REFERENCES "charge"(id);`,
 
+    `ALTER TABLE school ADD COLUMN address TEXT`,
+
+    `ALTER TABLE school ADD COLUMN phone1 TEXT`,
+
+    `ALTER TABLE school ADD COLUMN phone2 TEXT`,
+
+    `ALTER TABLE school ADD COLUMN email TEXT`,
+
+    `ALTER TABLE school ADD COLUMN website TEXT`,
+
     `ALTER TABLE exam ADD COLUMN passed INTEGER`,
 
     `ALTER TABLE exam ADD COLUMN questionnaire_id INTEGER REFERENCES "questionnaire"(id);`,

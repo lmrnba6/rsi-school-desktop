@@ -73,6 +73,7 @@
     "documents": "Required document",
     "years": "Years old",
     "placeholder": {
+      "website": "Website",
       "comment": "Comment",
       "isVip": "VIP",
       "isPromo": "Promotion",
@@ -475,6 +476,10 @@
     "weekday": "Program"
   },
   "document": {
+    "diplomaTitle": "Certificate of Completion",
+    "diplomaCertify": "This is to certify that",
+    "diplomaCompleted": "has completed the course",
+    "diplomaDated": "awarded on",
     "title" : "Document",
     "intern": "List of students",
     "session_open_pv": "Login PV",
@@ -485,9 +490,12 @@
     "session_result": "Document de délibération  de session",
     "card": "Student card",
     "form": "Student form",
-    "receipt": "Student Receipt"
+    "receipt": "Student Receipt",
+    "diploma": "Diploma"
   },
   "pv": {
+    "cardTitle": "Student card",
+    "studentId": "Student ID",
     "information" : "Information",
     "session" : "Group",
     "document": "Preview",
@@ -495,7 +503,7 @@
     "date": "Date",
     "title": "Title",
     "edit_description": "Edit document",
-    "center": "",
+    "center": "School name",
     "group": "Group",
     "student_list": "Student list",
     "present": "Present?",
@@ -506,7 +514,7 @@
     "form": "Enrollment From",
     "receipt": "Student Receipt",
     "birth": "Date of birth",
-    "name" : "Full name",
+    "name" : "Name",
     "email": "Email",
     "address": "Address",
     "name_arabic": "Name in second language",

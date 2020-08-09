@@ -80,7 +80,7 @@ export class Payment {
         const sql = `SELECT p.*, s.name as session_name FROM "payment" p
                             LEFT JOIN "charge" AS c ON p.charge = c.id 
                             LEFT JOIN "session" AS s ON c.session = s.id 
-        WHERE intern_id = ${intern} ORDER BY p.date ASC`;
+        WHERE intern_id = ${intern} ORDER BY p.date DESC`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
