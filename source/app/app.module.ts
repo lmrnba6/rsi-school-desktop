@@ -121,6 +121,7 @@ import {QuestionnaireFormComponent} from "./questionnaire-form/questionnaire-for
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {TestComponent} from "./test/test.component";
+import {ReportComponent} from "./report/report.component";
 
 
 @NgModule({
@@ -270,7 +271,8 @@ import {TestComponent} from "./test/test.component";
         AssessmentComponent,
         QuestionnaireComponent,
         QuestionnaireFormComponent,
-        TestComponent
+        TestComponent,
+        ReportComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent, PromptDialogComponent],
     providers: [

@@ -127,6 +127,7 @@ export class EnrollmentFormComponent implements OnInit {
                 this.getInternToEnroll(res.in)
             } else {
                 this.isOnEdit = false;
+                this.express = true;
                 this.enrollment = new Enrollment();
                 this.enrollment.date = new Date();
             }
@@ -223,7 +224,7 @@ export class EnrollmentFormComponent implements OnInit {
             .subscribe(confirm => {
                 if (confirm) {
                     const session = this.sessions.find(s => s.id === this.enrollment.session_id);
-                    this.router.navigate(['/payment/express/' + id + '/' + (session ? session.training_id : '')]);
+                    this.router.navigate(['/payment/express/' + id + '/' + (session ? session.id : '')]);
 
                 }
             });

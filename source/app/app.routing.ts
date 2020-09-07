@@ -67,6 +67,7 @@ import {AssessmentComponent} from "./assessment/assessment.component";
 import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
 import {QuestionnaireFormComponent} from "./questionnaire-form/questionnaire-form.component";
 import {TestComponent} from "./test/test.component";
+import {ReportComponent} from "./report/report.component";
 
 const appRoutes: Routes = [
     {
@@ -493,6 +494,10 @@ const appRoutes: Routes = [
             {
                 path: 'accounting',
                 component: AccountingComponent
+            },
+            {
+                path: 'accounting/report',
+                component: ReportComponent
             },
         ]
     },

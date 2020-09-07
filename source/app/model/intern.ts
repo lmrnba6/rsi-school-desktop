@@ -325,7 +325,7 @@ export class Intern{
     }
 
     public static nameExist(name: string) {
-        const sql = `SELECT * FROM "intern" WHERE title = '${name}'`;
+        const sql = `SELECT * FROM "intern" WHERE name ilike '${name}'`;
         const values = {};
 
         return TheDb.selectOne(sql, values)

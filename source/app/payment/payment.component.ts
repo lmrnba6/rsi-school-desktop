@@ -132,19 +132,25 @@ export class PaymentComponent implements OnInit, OnChanges {
                 type: 'text',
                 cell: (row: any) => `${row.session_name || ''}`
             },
-            this.intern ? {
-                    columnDef: 'rest',
-                    header: 'register.placeholder.rest',
-                    type: 'text',
-                    cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''
-                } :
-                {
-                    columnDef: 'intern',
-                    header: 'payment.placeholder.intern_id',
-                    type: 'text',
-                    cell: (row: any) => `${row.intern}`
-                }
+            {
+                columnDef: 'rest',
+                header: 'register.placeholder.rest',
+                type: 'text',
+                cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''
+            },
+            {
+                columnDef: 'sold',
+                header: 'register.placeholder.sold',
+                type: 'text',
+                cell: (row: any) => row.rest ? `${Number(row.sold).toFixed(0)} DA` : ''
+            },
         ];
+        this.intern && this.setting.cols.push({
+            columnDef: 'intern',
+            header: 'payment.placeholder.intern_id',
+            type: 'text',
+            cell: (row: any) => `${row.intern}`
+        });
         this.isAdmin &&
         this.setting.cols.push({
             columnDef: 'settings',

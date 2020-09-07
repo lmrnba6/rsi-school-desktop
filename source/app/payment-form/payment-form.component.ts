@@ -80,7 +80,7 @@ export class PaymentFormComponent implements OnInit {
 
     public getInternToPay(id: number, tr: number): void {
         Promise.all([Intern
-            .get(id), Charge.get(tr)])
+            .get(id), Charge.getBySession(tr, id)])
             .then((val: any) => {
                 this.internSelected = val[0];
                 this.chargeSelected = val[1];
@@ -215,9 +215,10 @@ export class PaymentFormComponent implements OnInit {
             () => {
                 if (this.chargeSelected) {
                     this.manageInternSold();
+                } else {
+                    !this.offer && this.manageRegister(this.payment, this.payment.rest);
                 }
                 this.goToReceipt();
-                !this.offer && this.manageRegister(this.payment, this.payment.rest);
                 this.block = false;
                 this.goBack();
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
@@ -251,6 +252,7 @@ export class PaymentFormComponent implements OnInit {
             register.training = this.chargeSelected.session_name;
             register.username = payment.username;
             register.rest = rest;
+            register.responsible = this.auth.getCurrentUser().username;
             register.insert().catch(() => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
@@ -273,7 +275,9 @@ export class PaymentFormComponent implements OnInit {
             Charge.updateRest(this.payment.rest, this.chargeSelected.id).then(() => {
                 this.block = false
                 Charge.getSold(this.chargeSelected.intern as number).then(sold => {
+                        this.internSelected.sold = sold[0].sold;
                         Intern.updateSold(this.chargeSelected.intern as number, sold[0].sold).then();
+                        !this.offer && this.manageRegister(this.payment, this.payment.rest);
                     }, () => {
                         this.block = false;
                         this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');

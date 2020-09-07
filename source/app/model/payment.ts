@@ -101,7 +101,7 @@ export class Payment {
                             WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,s.name as session_name, p.error 
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,s.name as session_name, p.error,p.rest, i.sold 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id
                             LEFT JOIN "charge" AS c ON p.charge = c.id 
@@ -124,7 +124,7 @@ export class Payment {
     }
 
     public static getAllPagedByIntern(pageIndex: number, pageSize: number, sort: string, order: string, intern: number): Promise<Payment[]> {
-        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.error, p.rest, s.name as session_name 
+        const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern_id, i.name as intern, p.username,p.error, p.rest,i.sold, s.name as session_name 
                             FROM "payment" AS p 
                             INNER JOIN "intern" AS i ON p.intern_id = i.id 
                             LEFT JOIN "charge" AS c ON p.charge = c.id 
@@ -227,6 +227,7 @@ export class Payment {
         this.charge = row['charge'];
         this.intern_id = row['intern_id'];
         this['intern'] = row['intern'];
+        this['sold'] = row['sold']
         this['session_name'] = row['session_name'];
         return this;
     }

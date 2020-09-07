@@ -62,6 +62,21 @@ export class Charge {
             });
     }
 
+    public static getBySession(id: number, int: number): Promise<Charge> {
+        const sql = `SELECT c.*, s.name as session_name  FROM "charge" as c 
+        INNER JOIN "session" as s ON s.id = c.session WHERE c.session = ${id} and c.intern = ${int}`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return new Charge().fromRow(row);
+                } else {
+                    throw new Error('Expected to find 1 Charge. Found 0.');
+                }
+            });
+    }
+
 
     public static getAll(): Promise<Charge[]> {
         const sql = `SELECT * FROM "charge" ORDER BY date DESC`;

@@ -251,7 +251,7 @@
                         <p><strong>Reste:</strong></p>
                     </td>
                     <td>
-                        <p>{{payment.rest || payment.rest === 0 ? 0 : '?'}} DA</p>
+                        <p>{{payment.rest ? payment.rest : payment.rest === 0 ? 0 : '?'}} DA</p>
                     </td>
                 </tr>
                 <tr>

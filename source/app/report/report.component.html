@@ -1,0 +1,21 @@
+<h2>{{ 'accounting.report' | translate}} - <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
+<mat-divider></mat-divider>
+<mat-card>
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <mat-form-field class="register_search" appearance="outline">
+        <mat-label>{{'register.placeholder.from' | translate}}</mat-label>
+        <input [(ngModel)]="from" matInput (dateChange)="generate()"
+               required [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="register_search" style="margin-left: 20px" appearance="outline">
+        <mat-label>{{'register.placeholder.to' | translate}}</mat-label>
+        <input [(ngModel)]="to" matInput (dateChange)="generate()"
+               required [matDatepicker]="picker1">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker1></mat-datepicker>
+    </mat-form-field>
+    <button style="color: white; background: #2b7bff; float: right" mat-button><span class="glyphicon glyphicon-print"></span></button>
+</mat-card>

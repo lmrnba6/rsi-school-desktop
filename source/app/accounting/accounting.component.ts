@@ -30,8 +30,21 @@ export class AccountingComponent implements OnInit {
     constructor(private translate: TranslateService, private messagesService: MessagesService) {
     }
 
+    public reportImage = `${this.getPath()}dist/assets/images/reportImage.png`;
+
+    getPath(){
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
+    }
+
     ngOnInit() {
     }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }    }
 
 
     onMonthChange() {

@@ -544,6 +544,7 @@
     "polarArea": "Polar"
   },
   "accounting": {
+    "report": "Financial report",
     "title": "Accounting",
     "month": "Month",
     "January": "January",
