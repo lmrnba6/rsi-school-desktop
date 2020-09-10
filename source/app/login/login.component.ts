@@ -8,7 +8,9 @@ import {Instructor} from "../model/instructor";
 import {School} from "../model/school";
 import {Intern} from "../model/intern";
 import {Settings} from "../model/settings";
-const {sql} = require('../../assets/data/sql-update.js');
+const {sqlUpdate} = require('../../assets/data/sql-update.js');
+const {sqlInit} = require('../../assets/data/sql-init.js');
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -34,7 +36,17 @@ export class LoginComponent implements OnInit {
     }
 
     updateDatabase() {
-        this.asyncForEach(sql , async (query: any) =>{
+        this.asyncForEach(sqlUpdate , async (query: any) =>{
+            try {
+                await Settings.client.query(query);
+            }catch (e) {
+                console.error(e);
+            }
+        })
+    }
+
+    initDatabase() {
+        this.asyncForEach(sqlInit , async (query: any) =>{
             try {
                 await Settings.client.query(query);
             }catch (e) {
@@ -50,6 +62,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.initDatabase();
         this.updateDatabase();
         this.image = `../../dist/assets/images/${Math.floor(Math.random() * 6) + 1 }.jpg`;
         (document.getElementById('clouds') as HTMLElement).style.backgroundImage = `url(${this.image})`;

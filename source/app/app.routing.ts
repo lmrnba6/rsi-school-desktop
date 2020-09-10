@@ -320,6 +320,14 @@ const appRoutes: Routes = [
                 component: ExamFormComponent
             },
             {
+                path: 'exam/form/intern/:intern',
+                component: ExamFormComponent
+            },
+            {
+                path: 'exam/form-by-session/:group',
+                component: ExamFormComponent
+            },
+            {
                 path: 'exam/form/:id',
                 component: ExamFormComponent
             },

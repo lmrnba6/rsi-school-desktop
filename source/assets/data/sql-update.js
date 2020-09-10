@@ -1,4 +1,4 @@
-export const sql = [
+export const sqlUpdate = [
     `CREATE TABLE IF NOT EXISTS "charge" (
   	"id"	SERIAL NOT NULL,
   	"amount"	NUMERIC NOT NULL,

@@ -412,7 +412,11 @@ export class ExamComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        this.router.navigate(['exam/form']);
+        this.router.navigate([ this.intern ? ('exam/form/intern/' + this.intern.id) : 'exam/form']);
+    }
+
+    public onAddRowBySession(): void {
+        this.router.navigate([ 'exam/form-by-session/group']);
     }
 
     /**

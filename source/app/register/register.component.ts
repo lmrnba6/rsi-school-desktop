@@ -129,7 +129,7 @@ export class RegisterComponent implements OnInit, OnChanges {
 
     public initSetting(): void {
         this.setting = new AbstractTableSetting();
-        this.setting.settingColumn = this.isAdmin;
+        this.setting.settingColumn = false;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern;
         this.setting.paging = false;
@@ -144,8 +144,8 @@ export class RegisterComponent implements OnInit, OnChanges {
             {columnDef: 'rest', header: 'register.placeholder.rest', type: 'text', cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''},
             {columnDef: 'responsible', header: 'register.placeholder.responsible', type: 'text', cell: (row: any) => row.responsible || ''}
         ];
-        this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
+        // this.isAdmin &&
+        // this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});
     }
 
     /**

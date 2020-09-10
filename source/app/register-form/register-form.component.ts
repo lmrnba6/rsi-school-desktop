@@ -24,7 +24,8 @@ export class RegisterFormComponent implements OnInit {
     public mode: string = 'indeterminate';
     public value: number = 100;
     public oldPayment: number;
-    public sign: string = '+'
+    public sign: string = '+';
+    public isUser: boolean;
 
     constructor(private fb: FormBuilder,
                 public messagesService: MessagesService,
@@ -36,6 +37,7 @@ export class RegisterFormComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.isUser = this.auth.getCurrentUser().role === 'user';
         this.getParams();
     }
 
@@ -92,6 +94,7 @@ export class RegisterFormComponent implements OnInit {
             comment: this.comment,
             responsible: this.responsible
         });
+        this.isUser && this.responsible.disable();
     }
 
     /**

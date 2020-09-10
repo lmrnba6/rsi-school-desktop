@@ -183,11 +183,12 @@
                 <strong><span style="font-size: 16.0pt; font-family: 'Traditional Arabic',serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{date?.toLocaleDateString('fr-FR')}} </span></strong>
             </p>
         </div>
-        <div id="receipt" *ngIf="pvName === 'receipt' && payment">
-            <p style="margin: 0">{{payment.username}}</p>
-            <img style="margin-left: 3%;" src="{{logo}}" alt="" width="250" height="250">
-            <p style="margin-left: 25%;">{{center}}</p>
-            <p style="margin-left: 25%;">{{payment_code}}</p>
+        <div style="width: 25%; margin: 0" id="receipt" *ngIf="pvName === 'receipt' && payment">
+            <div style="width: 100%; text-align: center; margin: auto">
+                <img style="margin:auto; text-align: center" src="{{logo}}" alt="" width="100" height="100">
+                <p>{{center}}</p>
+                <p>{{payment_code}}</p>
+            </div>
             <table>
                 <tbody>
                 <tr>
@@ -274,6 +275,7 @@
                 </tbody>
             </table>
             <h1 *ngIf="payment.error === 1" style="color: red">**** Erreur ****</h1>
+            <p>{{payment.username}}</p>
         </div>
         <div id="card" *ngIf="pvName === 'card'">
             <div *ngFor="let i of [0,2,4,6]">
@@ -297,9 +299,9 @@
                             <div style="display: flex; align-items: center;">
 
                                 <div style="flex-grow:1">
-<!--                                    <p style="margin:10px"><strong>{{'pv.studentId' |translate}}-->
-<!--                                        : </strong>{{interns[i]?.id}}-->
-<!--                                    </p>-->
+                                    <!--                                    <p style="margin:10px"><strong>{{'pv.studentId' |translate}}-->
+                                    <!--                                        : </strong>{{interns[i]?.id}}-->
+                                    <!--                                    </p>-->
                                     <p style="margin:10px"><strong>{{'pv.name' | translate}}
                                         : </strong>{{interns[i]?.name}}
                                     </p>
@@ -334,9 +336,9 @@
                             <div style="display: flex; align-items: center;">
 
                                 <div style="flex-grow:1">
-<!--                                    <p style="margin:10px"><strong>{{'pv.studentId' |translate}}-->
-<!--                                        : </strong>{{interns[i + 1]?.id}}-->
-<!--                                    </p>-->
+                                    <!--                                    <p style="margin:10px"><strong>{{'pv.studentId' |translate}}-->
+                                    <!--                                        : </strong>{{interns[i + 1]?.id}}-->
+                                    <!--                                    </p>-->
                                     <p style="margin:10px"><strong>{{'pv.name' | translate}}
                                         : </strong>{{interns[i + 1]?.name}}</p>
                                     <p style="margin: 0 10px"><strong>{{'pv.phone' | translate}}
@@ -364,23 +366,23 @@
                     style="float: right;" [src]="intern?.photo | safe" alt="" width="92" height="92"/></p>
             <p style="text-align: center;"><span style="font-size: 28.0pt; line-height: 107%;">&nbsp;</span><img
                     class="pull-right" style="clear: both; margin-top: 15px;" id="barcode2"/></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.name' | translate}}
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.name' | translate}}</strong>
                 :   {{intern?.name}}</span></p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.birth' | translate}}&nbsp;:  {{getDate(intern?.birth)}}</span>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.birth' | translate}}</strong>&nbsp;:  {{getDate(intern?.birth)}}</span>
             </p>
-            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;">{{'pv.phone' | translate}}&nbsp;:   0{{intern?.phone}}</span>
-            </p>
-            <p style="line-height: 150%;"><span
-                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.name_arabic' | translate}}&nbsp;:   {{intern?.name_arabic}}</span>
+            <p style="line-height: 150%;"><span style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.phone' | translate}}</strong>&nbsp;:   0{{intern?.phone}}</span>
             </p>
             <p style="line-height: 150%;"><span
-                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.scholar' | translate}}&nbsp;:   {{'intern.placeholder.' + intern?.scholar | translate}}</span>
+                    style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.name_arabic' | translate}}</strong>&nbsp;:   {{intern?.name_arabic}}</span>
             </p>
             <p style="line-height: 150%;"><span
-                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.training' | translate}}&nbsp;:   {{session?.training}}</span>
+                    style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.scholar' | translate}}</strong>&nbsp;:   {{'intern.placeholder.' + intern?.scholar | translate}}</span>
             </p>
             <p style="line-height: 150%;"><span
-                    style="font-size: 18.0pt; line-height: 150%;">{{'pv.session' | translate}}&nbsp;:   {{session?.session}}</span>
+                    style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.training' | translate}}</strong>&nbsp;:   {{session?.training}}</span>
+            </p>
+            <p style="line-height: 150%;"><span
+                    style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.session' | translate}}</strong>&nbsp;:   {{session?.session}}</span>
             </p>
         </div>
         <div *ngIf="pvName === 'diploma'" style="margin-top: 20%">

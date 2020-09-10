@@ -77,6 +77,13 @@ export class ExamFormComponent implements OnInit {
         this.getSessions(this.type);
     }
 
+    getIntern(id: number) {
+        Intern.get(id).then(intern => {
+            this.internSelected = intern;
+            this.getSessions(this.type);
+        })
+    }
+
     private getSessions(type: string) {
         if (this.isInstructor) {
             Instructor.getByUser(Number(this.user.id)).then((ins: Instructor) => {
@@ -135,6 +142,18 @@ export class ExamFormComponent implements OnInit {
      */
     public getParams(): void {
         this.route.params.subscribe(res => {
+            if (res.group) {
+                this.isOnEdit = false;
+                this.exam = new Exam();
+                (this.exam.questionnaire_id as any) = null;
+                this.type = 'group';
+            }
+            if(res.intern) {
+                this.isOnEdit = false;
+                this.exam = new Exam();
+                (this.exam.questionnaire_id as any) = null;
+                this.getIntern(res.intern);
+            }
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;

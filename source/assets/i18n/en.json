@@ -481,7 +481,7 @@
     "diplomaCompleted": "has completed the course",
     "diplomaDated": "awarded on",
     "title" : "Document",
-    "intern": "List of students",
+    "intern": "List of students (With attendances)",
     "session_open_pv": "Login PV",
     "session_open": "Sign-in document",
     "session_close_pv": "PV de cloture  de session",

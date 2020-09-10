@@ -198,7 +198,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
         this.comment = new FormControl(null);
         this.phone = new FormControl(null, [Validators.required]);
         this.phone2 = new FormControl(null);
-        this.sold = new FormControl({value: 0, disabled:!this.isAdmin});
+        this.sold = new FormControl({value: 0, disabled:true});
         this.birth = new FormControl(null, [Validators.required]);
         this.name_arabic = new FormControl(null);
         this.scholar = new FormControl(null);

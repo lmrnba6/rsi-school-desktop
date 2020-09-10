@@ -92,7 +92,7 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="documentImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.document' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/accounting">
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/accounting">
 <!--                    <span class="glyphicon glyphicon-equalizer"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="accountingImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.accounting' | translate}}</span>

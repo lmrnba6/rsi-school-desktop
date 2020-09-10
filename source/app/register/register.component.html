@@ -5,7 +5,7 @@
   </app-loader>
   <div class="container">
     <br>
-    <h3>{{'register.sold' | translate}} = <strong style="color: #28a745;"> {{getSold().toFixed(0)}} DA</strong></h3>
+    <h3>{{'register.sold' | translate}} = <strong [ngStyle]="{color: getSold() > 0 ?  '#28a745' : 'red'}"> {{getSold().toFixed(0)}} DA</strong></h3>
     <br>
     <mat-form-field class="register_search" appearance="outline">
       <mat-label>{{'register.placeholder.from' | translate}}</mat-label>

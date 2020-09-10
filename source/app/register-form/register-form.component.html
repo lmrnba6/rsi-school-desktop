@@ -28,7 +28,7 @@
                 <mat-label>{{'register.placeholder.responsible' | translate}}</mat-label>
                 <input name="responsible" type="text" formControlName="responsible"
                        [ngModel]="register.responsible" matInput
-                       required autofocus>
+                       required [disabled]="isUser">
                 <mat-error *ngIf="responsible.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
