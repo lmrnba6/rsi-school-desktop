@@ -116,6 +116,7 @@ export const sqlInit = [
     "name"	TEXT NOT NULL,
     "phone"	TEXT NOT NULL,
     "comment"	TEXT NOT NULL,
+    "date"  TEXT NOT NULL,
     PRIMARY KEY("id")
 );`
     ,
@@ -147,21 +148,6 @@ export const sqlInit = [
     "email"	TEXT,
     "website"	TEXT,
     "photo"  BYTEA,
-    PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "payment" (
-    "id"	SERIAL NOT NULL,
-    "amount"	NUMERIC NOT NULL,
-    "rest"	NUMERIC,
-    "username" TEXT,
-    "date"  TEXT NOT NULL,
-    "comment"  TEXT NOT NULL,
-    "charge"  INTEGER,
-    "month"  TEXT NOT NULL,
-    "intern_id"	INTEGER NOT NULL,
-    FOREIGN KEY(intern_id) REFERENCES "intern"(id),
-    FOREIGN KEY(charge) REFERENCES "charge"(id),
     PRIMARY KEY("id")
 );`
     ,
@@ -230,6 +216,22 @@ export const sqlInit = [
     PRIMARY KEY("id")
 );`
     ,
+    `CREATE TABLE IF NOT EXISTS "payment" (
+    "id"	SERIAL NOT NULL,
+    "amount"	NUMERIC NOT NULL,
+    "rest"	NUMERIC,
+    "username" TEXT,
+    "date"  TEXT NOT NULL,
+    "comment"  TEXT NOT NULL,
+    "charge"  INTEGER,
+    "error"  INTEGER,
+    "month"  TEXT NOT NULL,
+    "intern_id"	INTEGER NOT NULL,
+    FOREIGN KEY(intern_id) REFERENCES "intern"(id),
+    FOREIGN KEY(charge) REFERENCES "charge"(id),
+    PRIMARY KEY("id")
+);`
+    ,
     `CREATE TABLE IF NOT EXISTS "register" (
     "id"	SERIAL NOT NULL,
     "date"  TEXT NOT NULL,
@@ -240,6 +242,7 @@ export const sqlInit = [
     "sold"  NUMERIC,
     "rest"  NUMERIC,
     "username" TEXT,
+    "responsible" TEXT,
     PRIMARY KEY("id")
 );`
     ,

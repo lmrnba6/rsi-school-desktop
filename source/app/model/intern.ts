@@ -23,7 +23,6 @@ export class Intern{
     public isPromo: number | boolean = 0;
     public isVip: number | boolean = 0;
     public parent: any;
-    public comment = '';
     public user_id: number | User;
 
 
@@ -112,7 +111,7 @@ export class Intern{
     }
 
     public static getInternBySession(session_id: number ): Promise<Intern[]> {
-        const sql = `SELECT i.id, i.name, i.phone, i.phone2, i.email, i.birth, i.address, i.comment,i.user_id, i."isAllowed",i."isPromo", i."isVip", i.scholar, i.sold 
+        const sql = `SELECT i.id, i.name, i.phone, i.phone2, i.email, i.birth, i.address, i.user_id, i."isAllowed",i."isPromo", i."isVip", i.scholar, i.sold 
                                                    FROM "enrollment" AS e 
                                                    INNER JOIN "session" AS s ON e.session_id = s.id
                                                    INNER JOIN "intern" AS i ON e.intern_id = i.id
@@ -132,7 +131,7 @@ export class Intern{
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Intern[]> {
-        const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.comment,i.user_id,i.name_arabic,
+        const sql = `select i.id, i.name, i.phone, i.sold, i."isAllowed",i."isPromo", i."isVip",i.user_id,i.name_arabic,
                             STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays 
                             from intern as i 
                             left join enrollment as e  on e.intern_id = i.id
@@ -224,9 +223,8 @@ export class Intern{
 
     public insert(): Promise<void> {
         const sql = `
-            INSERT INTO "intern" (name, birth, name_arabic, address, comment, phone, phone2, email, sold, "isAllowed", "isPromo", "isVip", scholar, photo, parent)
-            VALUES('${this.name ? this.name.replace(/\'/g, "''") : ''}', '${this.birth}', '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}','${this.address ? this.address.replace(/\'/g, "''"):''}', '${this.comment ? this.comment.replace(/\'/g, "''"):''}', 
-            '${this.phone}', '${this.phone2}', '${this.email ? this.email.replace(/\'/g, "''") : ''}', ${this.sold}, ${this.isAllowed},${this.isPromo}, ${this.isVip}, '${this.scholar}', '${this.photo}', ${this.parent}) RETURNING *`;
+            INSERT INTO "intern" (name, birth, name_arabic, address, phone, phone2, email, sold, "isAllowed", "isPromo", "isVip", scholar, photo, parent)
+            VALUES('${this.name ? this.name.replace(/\'/g, "''") : ''}', '${this.birth}', '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}','${this.address ? this.address.replace(/\'/g, "''"):''}', '${this.phone}', '${this.phone2}', '${this.email ? this.email.replace(/\'/g, "''") : ''}', ${this.sold}, ${this.isAllowed},${this.isPromo}, ${this.isVip}, '${this.scholar}', '${this.photo}', ${this.parent}) RETURNING *`;
 
         const values = {
         };
@@ -294,7 +292,7 @@ export class Intern{
         const sql = `
             UPDATE "intern"
                SET user_id = ${this.user_id}, name = '${this.name ? this.name.replace(/\'/g, "''"): ''}', birth = '${this.birth}', name_arabic = '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}', 
-               address = '${this.address ? this.address.replace(/\'/g, "''"): ''}', comment = '${this.comment ? this.comment.replace(/\'/g, "''"): ''}', phone = '${this.phone}',  phone2 = '${this.phone2}', "isAllowed" = ${this.isAllowed},"isPromo" = ${this.isPromo}, "isVip" = ${this.isVip}, 
+               address = '${this.address ? this.address.replace(/\'/g, "''"): ''}', phone = '${this.phone}',  phone2 = '${this.phone2}', "isAllowed" = ${this.isAllowed},"isPromo" = ${this.isPromo}, "isVip" = ${this.isVip}, 
                email = '${this.email ? this.email.replace(/\'/g, "''"): ''}', sold = ${this.sold},  scholar = '${this.scholar}',  photo = '${this.photo}', parent = ${this.parent}   
              WHERE id = ${this.id}`;
 
@@ -358,7 +356,6 @@ export class Intern{
         this.birth = Number(row['birth']);
         this.name_arabic = row['name_arabic'];
         this.address = row['address'];
-        this.comment = row['comment'];
         this.phone = row['phone'];
         this.phone2 = row['phone2'];
         this.email = row['email'];

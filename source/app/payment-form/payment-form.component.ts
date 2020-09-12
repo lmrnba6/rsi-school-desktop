@@ -84,6 +84,8 @@ export class PaymentFormComponent implements OnInit {
             .then((val: any) => {
                 this.internSelected = val[0];
                 this.chargeSelected = val[1];
+                this.payment.charge = this.chargeSelected.id;
+                this.payment.intern_id = this.internSelected.id;
                 this.intern.patchValue(val[0].id);
                 this.charge.patchValue(val[1].id);
                 this.payment.date = new Date();

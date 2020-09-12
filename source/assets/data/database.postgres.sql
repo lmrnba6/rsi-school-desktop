@@ -125,6 +125,7 @@ CREATE TABLE IF NOT EXISTS "visitor" (
 	"name"	TEXT NOT NULL,
 	"phone"	TEXT NOT NULL,
 	"comment"	TEXT NOT NULL,
+	"date"  TEXT NOT NULL,
 	PRIMARY KEY("id")
 );
 

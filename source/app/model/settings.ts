@@ -62,14 +62,14 @@ export class Settings {
         user: 'postgres',
         host: '127.0.0.1',
         database: 'ee',
-        password: 'Shootdunk86',
+        password: '',
         port: 5435
     }
 
     public static dbSshTunnel = {
         host: '176.58.103.5',
         username: 'root',
-        password: 'Shootdunk86',
+        password: '',
         srcPort: 5435,
         srcAddr: '127.0.0.1',
         dstPort: 5432,

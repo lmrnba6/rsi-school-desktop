@@ -264,8 +264,8 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
             if(this.isTransfer){
                 this.deleteVisitor();
             }
-            this.intern.id && this.goToEnrollment(this.intern.id);
             this.createUser();
+            this.intern.id && this.goToEnrollment(this.intern.id);
             this.goBack();
             this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
         },
