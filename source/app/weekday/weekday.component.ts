@@ -63,7 +63,20 @@ export class WeekdayComponent implements OnInit, OnChanges {
         const user = this.authService.getCurrentUser();
         this.isAdmin = user.role === 'admin';
         this.isUser = user.role === 'user';
-        this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+        if(user.role === 'teacher') {
+            this.block = true;
+            Instructor.getByUser(user.id).then(i => {
+                this.instructor = i;
+                this.block = false;
+                this.initSetting();
+                this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+            }, () => {
+                this.block = false;
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+            });
+        }else {
+            this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+        }
         this.initSetting();
         this.initWeekSetting();
         this.toDay();

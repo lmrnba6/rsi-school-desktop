@@ -186,8 +186,8 @@ export const sqlInit = [
     "retake" INTEGER,
     "intern_id"	INTEGER NOT NULL,
     "session_id"	INTEGER NOT NULL,
-    "questionnaire_id" INTEGER
-FOREIGN KEY(intern_id) REFERENCES "intern"(id),
+    "questionnaire_id" INTEGER,
+    FOREIGN KEY(intern_id) REFERENCES "intern"(id),
     FOREIGN KEY(session_id) REFERENCES "session"(id),
     FOREIGN KEY(questionnaire_id) REFERENCES "questionnaire"(id),
     PRIMARY KEY("id")

@@ -63,6 +63,7 @@ export class VisitorFormComponent implements OnInit, OnChanges {
             } else {
                 this.isOnEdit = false;
                 this.visitor = new Visitor();
+                this.visitor.date = new Date();
             }
         });
     }

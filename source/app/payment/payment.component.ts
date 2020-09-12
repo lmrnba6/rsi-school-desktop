@@ -145,7 +145,7 @@ export class PaymentComponent implements OnInit, OnChanges {
                 cell: (row: any) => row.rest ? `${Number(row.sold).toFixed(0)} DA` : ''
             },
         ];
-        this.intern && this.setting.cols.push({
+        !this.intern && this.setting.cols.push({
             columnDef: 'intern',
             header: 'payment.placeholder.intern_id',
             type: 'text',

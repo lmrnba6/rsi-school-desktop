@@ -356,6 +356,10 @@ const appRoutes: Routes = [
                 component: AttendanceFormComponent
             },
             {
+                path: 'attendance/form-instructor/:instructorId/:sessionId',
+                component: AttendanceFormComponent
+            },
+            {
                 path: 'attendance/form/:id',
                 component: AttendanceFormComponent
             },

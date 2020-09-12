@@ -72,6 +72,7 @@ export class AttendanceFormComponent implements OnInit {
             this.sessions = sessions;
             if(this.instructorId) {
                 this.sessions = this.sessions.filter(session => session.instructor_id === this.instructorId);
+                this.onInternsChange();
             }
         });
     }
@@ -88,9 +89,14 @@ export class AttendanceFormComponent implements OnInit {
                 this.instructorId = Number(res.instructorId)
                 this.isOnEdit = false;
                 this.attendance = new Attendance();
+                this.attendance.date = new Date();
+                // if(res.sessionId) {
+                //     this.attendance.session_id = res.sessionId;
+                // }
             } else {
                 this.isOnEdit = false;
                 this.attendance = new Attendance();
+                this.attendance.date = new Date();
             }
         });
     }
@@ -195,6 +201,7 @@ export class AttendanceFormComponent implements OnInit {
                 Intern.getInternBySession(this.attendance.session_id as number).then(interns => {
                     this.interns = interns;
                     this.interns.forEach(intern => intern['selected'] = 1);
+                    this.getWeekdays();
                 })
         }
     }

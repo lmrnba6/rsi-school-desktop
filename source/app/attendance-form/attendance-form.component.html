@@ -13,11 +13,11 @@
             </button>
             <mat-form-field appearance="outline">
                 <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
-                <mat-select (selectionChange)="onInternsChange()" formControlName="session_id" [(ngModel)]="attendance.session_id"
+                <mat-select [(ngModel)]="attendance.session_id" (selectionChange)="onInternsChange()" formControlName="session_id"
                             name="session_id" required [disabled]="isOnEdit">
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
-                        {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
+                        {{session.name + ' ' + session?.instructor + ' ' + session?.training + ' '}} {{'training.' + session?.type | translate}}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}

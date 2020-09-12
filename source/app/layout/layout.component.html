@@ -42,7 +42,7 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="trainingImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.training' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.weekday' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/weekday">
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.weekday' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/weekday">
 <!--                    <span class="glyphicon glyphicon-calendar"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="weekdayImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.weekday' | translate}}</span>
@@ -67,11 +67,6 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="testImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.assessment' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.result' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/result">
-<!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
-                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="resultImage" alt="">
-                    <span *ngIf="iconsShown">{{'menu.result' | translate}}</span>
-                </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.transport' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/commuting">
                     <!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="carImage" alt="">
@@ -92,6 +87,11 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="documentImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.document' | translate}}</span>
                 </a>
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.result' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/result">
+                    <!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="resultImage" alt="">
+                    <span *ngIf="iconsShown">{{'menu.result' | translate}}</span>
+                </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/accounting">
 <!--                    <span class="glyphicon glyphicon-equalizer"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="accountingImage" alt="">
@@ -104,7 +104,7 @@
                 </a>
                 <br>
             </mat-nav-list>
-            <p style="position: absolute; top: 0">v 1.0.26</p>
+            <p style="position: absolute; top: 0">v 1.0.27</p>
         </mat-sidenav>
         <mat-sidenav-content>
             <!-- <button mat-icon-button class="btnMenu" (click)="sidenav.toggle(); openCloseNavSide()">

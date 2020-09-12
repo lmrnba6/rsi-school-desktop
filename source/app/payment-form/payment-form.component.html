@@ -53,10 +53,10 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'payment.placeholder.charge' | translate}}</mat-label>
-                <mat-select formControlName="charge" (selectionChange)="onChargeChange($event.value)" [(ngModel)]="payment.charge"
+                <mat-select formControlName="charge" (selectionChange)="onChargeChange($event.value)"
                             name="charge" required>
                     <mat-option value="">----</mat-option>
-                    <mat-option value="0">{{'charge.noCharge' | translate}}</mat-option>
+                    <mat-option value="-1">{{'charge.noCharge' | translate}}</mat-option>
                     <mat-option *ngFor="let charge of charges" [value]="charge.id">
                         {{charge['session_name']}} <span [ngStyle]="{color: charge.rest > 0 ? 'red' : 'green'}">{{charge.rest}} DA</span>
                     </mat-option>

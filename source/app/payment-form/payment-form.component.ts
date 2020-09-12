@@ -181,6 +181,8 @@ export class PaymentFormComponent implements OnInit {
         this.chargeSelected = this.charges.find(s => s.id === id);
         if(!this.chargeSelected){
             (this.payment.charge as any) = null;
+        } else {
+            this.payment.charge = id as any;
         }
     }
 

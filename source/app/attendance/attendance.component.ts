@@ -339,7 +339,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
      */
     public onAddRow(): void {
         const id: string = String(this.instructor ? this.instructor.id : this.instructorId);
-        this.router.navigate([`attendance/form-instructor/${id}`]);
+        this.router.navigate([`attendance/form-instructor/${id}` + (this.session_id ? ('/'+ this.session_id) : '')]);
     }
 
     /**

@@ -37,7 +37,7 @@
   },
   "menu": {
     "assessment": "Évaluation",
-    "transport": "transport",
+    "transport": "Transport",
     "account": "Compte",
     "settings": "Paramètre",
     "intern": "Étudiants",
@@ -357,7 +357,7 @@
       "type": "Type",
       "individual": "Par étudiant",
       "group": "Par groupe",
-      "passed": "Passé",
+      "passed": "Accompli",
       "yes": "Oui",
       "no": "Non",
       "type" : "Type",
@@ -524,6 +524,7 @@
 
   },
   "result": {
+    "type": "Type",
     "title": "Statistques",
     "edit_description": "Modifier les paramètres",
     "edit": "Paramètres",
@@ -595,7 +596,7 @@
     "session_full": "Ce groupe est complet",
     "notEnrolled_message": "Cet étudiant n'est pas inscrit à cette formation",
     "transfer_intern_message": "Voulez-vous vraiment créer un nouvel étudiant et supprimer ce visiteur?",
-    "visitor_remaining_message": "Vous avez encore des visiteurs! \n Voulez-vous consulter la liste?",
+    "visitor_remaining_message": "Votre liste des visiteurs n'est pas vide! \n Voulez-vous consulter la liste?",
     "user_missing_message": "Veuillez d'abord créer un compte utilisateur!",
     "questionnaire_not_valid": "La question n'est pas valide",
     "questionnaire_answer_not_valid": "L'une des réponses n'est pas valide",

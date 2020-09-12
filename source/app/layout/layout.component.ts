@@ -120,7 +120,7 @@ export class LayoutComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.auth.getCurrentUser().role === 'user') {
-            this.notifyVisitorCount();
+            // this.notifyVisitorCount();
         }
         this.user = this.auth.getCurrentUser();
         this.isInstructor = this.user.role === 'teacher';

@@ -45,7 +45,7 @@ export class ResultComponent implements OnInit {
         this.setting.settingColumn = false;
         this.setting.tableName = this.tableName;
         this.setting.filter = false;
-        this.setting.addRow = true;
+        this.setting.addRow = false;
         this.setting.paging = false;
         this.setting.cols = [
             {columnDef: 'name', header: 'result.name', type: 'text', cell: (row: any) => `${row.name}`},
