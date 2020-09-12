@@ -232,12 +232,10 @@ export class InboxFormComponent implements OnInit {
             this.block = true;
             Intern.getInternBySession(this.userSelected.id).then(interns => {
                 interns.forEach( i => {
-                    User.getByUsername(Number(i.phone)).then(int => {
                         this.inbox.date = new Date().getTime();
                         this.inbox.from = this.user.id;
-                        this.inbox.to = int.id;
+                        this.inbox.to = i.user_id;
                         this.inbox.insert().then();
-                    })
                 })
                 this.block = false;
                 this.goBack();

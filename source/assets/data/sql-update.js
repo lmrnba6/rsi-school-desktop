@@ -127,4 +127,8 @@ export const sqlUpdate = [
     FOREIGN KEY(question) REFERENCES "question"(id),
     PRIMARY KEY("id")
 );`
+    ,
+    `ALTER TABLE questionnaire ADD COLUMN save INTEGER NOT NULL`,
+    `ALTER TABLE visitor ADD COLUMN date TEXT NOT NULL`,
+    `ALTER TABLE register ADD COLUMN responsible TEXT`
 ]

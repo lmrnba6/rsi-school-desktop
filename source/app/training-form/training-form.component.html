@@ -22,7 +22,7 @@
                 <mat-label>{{'training.placeholder.time' | translate}}</mat-label>
                 <input name="time" formControlName="time" type="number" [(ngModel)]="training.time" matInput
                        required>
-                <span matSuffix>h</span>
+                <span matSuffix>min</span>
                 <mat-error *ngIf="time.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>

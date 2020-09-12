@@ -8,6 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Session} from "../model/session";
 import {Instructor} from "../model/instructor";
 import {AuthenticationService} from "../_services/authentication.service";
+import {User} from "../model/user";
 
 @Component({
     selector: 'app-session',
@@ -31,6 +32,7 @@ export class SessionComponent implements OnInit, OnChanges {
     public sortDirection: string = 'ASC';
     public isAdmin: boolean;
     public isUser: boolean;
+    public user: User;
 
     constructor(
         private dialogsService: DialogsService,
@@ -41,9 +43,22 @@ export class SessionComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.isAdmin = this.authService.getCurrentUser().role === 'admin';
-        this.isUser = this.authService.getCurrentUser().role === 'user';
-        this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+        this.user = this.authService.getCurrentUser();
+        this.isAdmin = this.user.role === 'admin';
+        this.isUser = this.user.role === 'user';
+        if (this.user.role === 'teacher') {
+            Instructor.getByUser(this.user.id).then(i => {
+                    this.instructor = i;
+                    this.initSetting();
+                    this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+                },
+                () => {
+                    this.block = false;
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                });
+        } else {
+            this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
+        }
         this.initSetting();
     }
 
@@ -59,7 +74,7 @@ export class SessionComponent implements OnInit, OnChanges {
         this.block = true;
         Promise.all([this.instructor ?
             Session.getAllPagedByInstructor(offset, limit, sort, order, this.instructor.id) : Session
-            .getAllPaged(offset, limit, sort, order, filter), this.instructor ? Session.getCountByInstructor(this.instructor.id) :
+                .getAllPaged(offset, limit, sort, order, filter), this.instructor ? Session.getCountByInstructor(this.instructor.id) :
             Session.getCount(this.filter)])
             .then(
                 values => {
@@ -98,14 +113,57 @@ export class SessionComponent implements OnInit, OnChanges {
         this.setting.filter = !this.instructor;
         this.setting.addRow = this.isAdmin || this.isUser;
         this.setting.cols = [
-            {columnDef: 'name', class: 'a15', header: 'session.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
-            {columnDef: 'weekdays',class: 'a25', header: 'session.placeholder.enrollments', type: 'html', cell: (row: any) => `${this.handleLines(row.weekdays || '')}`},
-            {columnDef: 'limit',class: 'a10', header: 'session.placeholder.limit', type: 'text', cell: (row: any) => `${row.limit}`},
-            {columnDef: 'interns',class: 'a10', header: 'session.placeholder.interns', type: 'text', cell: (row: any) => `${row.interns}`},
-            {columnDef: 'instructor',class: 'a20', header: 'session.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor}`},
-            {columnDef: 'training',class: 'a10', header: 'session.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training}`}
+            {
+                columnDef: 'name',
+                class: 'a15',
+                header: 'session.placeholder.name',
+                type: 'text',
+                cell: (row: any) => `${row.name}`
+            },
+            {
+                columnDef: 'weekdays',
+                class: 'a25',
+                header: 'session.placeholder.enrollments',
+                type: 'html',
+                cell: (row: any) => `${this.handleLines(row.weekdays || '')}`
+            },
+            {
+                columnDef: 'limit',
+                class: 'a10',
+                header: 'session.placeholder.limit',
+                type: 'text',
+                cell: (row: any) => `${row.limit}`
+            },
+            {
+                columnDef: 'interns',
+                class: 'a10',
+                header: 'session.placeholder.interns',
+                type: 'text',
+                cell: (row: any) => `${row.interns}`
+            },
+            {
+                columnDef: 'instructor',
+                class: 'a20',
+                header: 'session.placeholder.instructor_id',
+                type: 'text',
+                cell: (row: any) => `${row.instructor}`
+            },
+            {
+                columnDef: 'training',
+                class: 'a10',
+                header: 'session.placeholder.training_id',
+                type: 'text',
+                cell: (row: any) => `${row.training}`
+            }
         ];
-        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: true});
+        this.setting.cols.push({
+            columnDef: 'settings',
+            class: 'a10',
+            header: '',
+            type: 'settings',
+            delete: this.isAdmin,
+            editRow: true
+        });
     }
 
     translateDates(d: string) {
@@ -118,7 +176,7 @@ export class SessionComponent implements OnInit, OnChanges {
         weekdays[5] = "friday";
         weekdays[6] = "saturday";
         weekdays.forEach(s => {
-            const reg = new RegExp(s,'g')
+            const reg = new RegExp(s, 'g')
             d = d.replace(reg, this.translate.instant('weekday.placeholder.' + s))
         });
         return d;
@@ -127,10 +185,11 @@ export class SessionComponent implements OnInit, OnChanges {
     handleLines(text: string) {
         text = text || '';
         const list = text.split('---');
-        const s = list.reduce((a,b) => {
-            a = a + `<li class="timeTable">${b}</li>`; return a
-        },'')
-        return text ?`<ul>${this.translateDates(s)}</ul>` : '';
+        const s = list.reduce((a, b) => {
+            a = a + `<li class="timeTable">${b}</li>`;
+            return a
+        }, '')
+        return text ? `<ul>${this.translateDates(s)}</ul>` : '';
     }
 
     public onRowDeleted(id: number): void {

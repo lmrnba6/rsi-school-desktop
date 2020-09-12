@@ -10,7 +10,7 @@
       <app-instructor-form [instructor]="instructor"></app-instructor-form>
     </div>
   </mat-tab>
-  <mat-tab>
+  <mat-tab *ngIf="!isInstructor">
     <ng-template mat-tab-label>
       <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="sessionImage" alt=""> {{'instructor-management.session' | translate}}
     </ng-template>
@@ -26,14 +26,14 @@
       <app-attendance [instructor]="instructor"></app-attendance>
     </div>
   </mat-tab>
-<!--  <mat-tab>-->
-<!--    <ng-template mat-tab-label>-->
-<!--      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="weekdayImage" alt=""> {{'instructor-management.weekday' | translate}}-->
-<!--    </ng-template>-->
-<!--    <div class="tab-content">-->
-<!--      <app-weekday [instructor]="instructor"></app-weekday>-->
-<!--    </div>-->
-<!--  </mat-tab>-->
+  <mat-tab *ngIf="!isInstructor">
+    <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="weekdayImage" alt=""> {{'instructor-management.weekday' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-weekday [instructor]="instructor"></app-weekday>
+    </div>
+  </mat-tab>
 <!--  <mat-tab>-->
 <!--    <ng-template mat-tab-label>-->
 <!--      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="paymentImage" alt=""> {{'intern-management.payment' | translate}}-->

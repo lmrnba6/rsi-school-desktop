@@ -35,6 +35,7 @@ export class PvComponent implements OnInit {
     payment_code: string;
     object: string;
     session: Session ;
+    trainingName: string;
     sessions: Array<any> = [] ;
     instructor: Instructor;
     training: Training;
@@ -68,6 +69,10 @@ export class PvComponent implements OnInit {
     capitalize(s) {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
+    }
+
+    onSessionNameChange(t: Session) {
+        this.trainingName = t ? t['training'] : '';
     }
 
     getCenter() {

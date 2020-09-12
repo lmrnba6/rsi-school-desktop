@@ -284,6 +284,7 @@ export const sqlInit = [
     "description" TEXT,
     "timed" INTEGER NOT NULL,
     "jump"	INTEGER NOT NULL,
+    "save"	INTEGER NOT NULL,
     "number"	INTEGER NOT NULL,
     "training"	INTEGER,
     FOREIGN KEY(training) REFERENCES "training"(id),

@@ -206,20 +206,22 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
     }
     
     generateTime() {
-        let d = new Date();
-        d.setHours(0,0,0,0);
-        let date = d.getDate();
+        let startDate = new Date();
+        startDate.setHours(0,0,0,0);
+        let date = startDate.getDate();
         let timeArr: any = [];
-        while ( date == d.getDate() )
+        while ( date == startDate.getDate() )
         {
-            let hours: any = d.getHours();
-            let minutes: any = d.getMinutes();
-            let end = d.getHours() + Number(this.training.time);
-            hours = hours == 0 ? 0: hours;
-            hours = ( "0" + hours ).slice(-2);
-            minutes = ( "0" + d.getMinutes() ).slice(-2);
-            timeArr.push( hours + ":" + minutes + ' - ' + end + ":" + minutes);
-            d.setMinutes( d.getMinutes() + 15);
+            let hoursStart: any = startDate.getHours();
+            let minutesStart: any = startDate.getMinutes();
+            const endDate = new Date(startDate.getTime() + Number(this.training.time)*60000);
+            let hoursEnd: any = endDate.getHours();
+            let minutesEnd: any = endDate.getMinutes();
+            hoursStart = hoursStart == 0 ? 0: hoursStart;
+            hoursStart = ( "0" + hoursStart ).slice(-2);
+            minutesStart = ( "0" + startDate.getMinutes() ).slice(-2);
+            timeArr.push( hoursStart + ":" + minutesStart + ' - ' + hoursEnd + ":" + (minutesEnd === 0 ? '00' : minutesEnd));
+            startDate.setMinutes( startDate.getMinutes() + 15);
         }
         this.times = timeArr.slice( 28, 85 );
     }

@@ -86,7 +86,7 @@ export class TrainingComponent implements OnInit {
     this.setting.addRow = true;
     this.setting.cols = [
       { columnDef: 'name', header: 'training.placeholder.name', type: 'text', cell: (row: any) => `${row.name}` },
-      { columnDef: 'time', header: 'training.placeholder.time', type: 'text', cell: (row: any) => `${row.time} h`},
+      { columnDef: 'time', header: 'training.placeholder.time', type: 'text', cell: (row: any) => `${row.time} min`},
       { columnDef: 'type', header: 'training.placeholder.type', type: 'text', cell: (row: any) => `${row.type}` }
     ];
       this.isAdmin &&

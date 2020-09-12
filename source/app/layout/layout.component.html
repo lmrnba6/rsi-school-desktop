@@ -32,7 +32,7 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="inboxImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.inbox' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.session' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/session">
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.session' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isIntern && !isParent" routerLink="/session">
 <!--                    <span class="glyphicon glyphicon-th"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="sessionImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.session' | translate}}</span>
@@ -104,7 +104,7 @@
                 </a>
                 <br>
             </mat-nav-list>
-            <p style="position: absolute; top: 0">v 1.0.28</p>
+            <p style="position: absolute; top: 0">v 1.0.29</p>
         </mat-sidenav>
         <mat-sidenav-content>
             <!-- <button mat-icon-button class="btnMenu" (click)="sidenav.toggle(); openCloseNavSide()">

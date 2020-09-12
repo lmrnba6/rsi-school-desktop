@@ -42,7 +42,7 @@
                         name="weekday_id" required>
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let weekday of weekdays" [value]="weekday['weekday_id']">
-                    {{weekday.time | translate}}
+                    {{weekday?.time | translate}}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="weekday_id.hasError('required')">{{'messages.field_required_error' | translate}}

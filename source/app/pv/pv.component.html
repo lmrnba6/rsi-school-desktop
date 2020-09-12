@@ -20,21 +20,25 @@
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker></mat-datepicker>
                 </mat-form-field>
+                <div *ngIf="pvName!=='receipt' && pvName!=='form' && pvName!=='diploma'">
                 <br>
-                <mat-form-field *ngIf="pvName!=='receipt' && pvName!=='form' && pvName!=='diploma'"
-                                appearance="outline">
+                <mat-form-field appearance="outline">
                     <mat-label>{{'pv.title' | translate}}</mat-label>
                     <input [(ngModel)]="title" matInput
                            required>
                 </mat-form-field>
+                </div>
+                <div *ngIf="pvName !=='form' && pvName!=='card' && pvName!=='diploma'">
                 <br>
-                <mat-form-field *ngIf="pvName !=='form' && pvName!=='card' && pvName!=='diploma'" appearance="outline">
+                <mat-form-field appearance="outline">
                     <mat-label>{{'pv.center' | translate}}</mat-label>
                     <input [(ngModel)]="center" matInput
                            required>
                 </mat-form-field>
+                </div>
+                <div *ngIf="pvName==='receipt'">
                 <br>
-                <mat-form-field *ngIf="pvName==='receipt'" appearance="outline">
+                <mat-form-field appearance="outline">
                     <mat-label>{{'payment.title' | translate}}</mat-label>
                     <mat-select (selectionChange)="onPaymentChange()" [(ngModel)]="payment">
                         <mat-option>--</mat-option>
@@ -43,17 +47,24 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <br>
-                <mat-form-field *ngIf="pvName==='form' || pvName === 'diploma'" appearance="outline">
+                </div>
+                <div *ngIf="pvName==='form' || pvName === 'diploma'">
+                <mat-form-field appearance="outline">
                     <mat-label>{{'enrollment.placeholder.session_id' | translate}}</mat-label>
-                    <mat-select [(ngModel)]="session"
-                    >
+                    <mat-select [(ngModel)]="session" (valueChange)="onSessionNameChange($event)">
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let session of sessions" [value]="session">
                             {{session.training + ' ' + session.session}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                <br>
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'training.title' | translate}}</mat-label>
+                    <input [(ngModel)]="trainingName" matInput
+                           required>
+                </mat-form-field>
+                </div>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
@@ -379,7 +390,7 @@
                     style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.scholar' | translate}}</strong>&nbsp;:   {{'intern.placeholder.' + intern?.scholar | translate}}</span>
             </p>
             <p style="line-height: 150%;"><span
-                    style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.training' | translate}}</strong>&nbsp;:   {{session?.training}}</span>
+                    style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.training' | translate}}</strong>&nbsp;:   {{trainingName}}</span>
             </p>
             <p style="line-height: 150%;"><span
                     style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.session' | translate}}</strong>&nbsp;:   {{session?.session}}</span>
@@ -399,7 +410,7 @@
                         <span style="font-size:40px"><b>{{intern?.name}}</b></span><br/><br/>
                         <span style="font-size:35px"><i>{{'document.diplomaCompleted' | translate}}</i></span>
                         <br/><br/>
-                        <span style="font-size:40px">{{session?.training}}</span> <br/><br/>
+                        <span style="font-size:40px">{{trainingName}}</span> <br/><br/>
                         <span style="font-size:35px"><i>{{'document.diplomaDated' | translate}}</i></span><br>
                         <span style="font-size:40px">{{dateDiploma}}</span>
                     </div>

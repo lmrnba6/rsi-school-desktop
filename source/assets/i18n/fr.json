@@ -465,6 +465,7 @@
     "information" : "Information",
     "weekday": "Programme",
     "intern": "Étudiants",
+    "attendance": "Présences",
     "exam": "Examen"
   },
   "weekday-management": {

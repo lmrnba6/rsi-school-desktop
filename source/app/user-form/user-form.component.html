@@ -41,7 +41,7 @@
           </mat-form-field>
           <br>
           <mat-form-field *ngIf="user?.role === 'teacher'" class="example-full-width" appearance="outline">
-              <mat-label>{{'payment_instructor.placeholder.instructor_id' | translate}}</mat-label>
+              <mat-label>{{'user.teacher' | translate}}</mat-label>
               <input name="instructor" [disabled]="isOnEdit" formControlName="instructor" matInput [ngModel]="instructorSelected"
                      (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto"
                      required>
@@ -55,7 +55,7 @@
               <mat-error *ngIf="instructor?.invalid || !instructorSelected">{{'messages.field_required_error' | translate}}</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="user?.role === 'student'" class="example-full-width" appearance="outline">
-              <mat-label>{{'payment.placeholder.intern_id' | translate}}</mat-label>
+              <mat-label>{{'user.student' | translate}}</mat-label>
               <input name="intern" [disabled]="isOnEdit" formControlName="intern" matInput [ngModel]="internSelected"
                      (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
                      required>
