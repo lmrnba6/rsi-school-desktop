@@ -65,6 +65,18 @@
                            required>
                 </mat-form-field>
                 </div>
+<!--                <mat-form-field *ngIf="pvName==='diploma'" appearance="outline">-->
+<!--                    <mat-label>{{'pv.orientation' | translate}}</mat-label>-->
+<!--                    <mat-select [(ngModel)]="orientation">-->
+<!--                        <mat-option>&#45;&#45;</mat-option>-->
+<!--                        <mat-option value="landscape">-->
+<!--                            {{'pv.landscape' | translate}}-->
+<!--                        </mat-option>-->
+<!--                        <mat-option value="portrait">-->
+<!--                            {{'pv.portrait' | translate}}-->
+<!--                        </mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
             </div>
         </mat-expansion-panel>
     </mat-accordion>
@@ -73,7 +85,7 @@
         <span class="glyphicon glyphicon-print"></span>
     </button>
     <button class="pull-right cancel" type="button" (click)="goBack()" mat-button>
-        <span class="glyphicon glyphicon-remove"></span>
+        <span class="glyphicon glyphicon-arrow-left"></span>
     </button>
     <h2>{{'pv.document' | translate}}</h2>
     <mat-card style="border: solid">
@@ -396,13 +408,30 @@
                     style="font-size: 18.0pt; line-height: 150%;"><strong>{{'pv.session' | translate}}</strong>&nbsp;:   {{session?.session}}</span>
             </p>
         </div>
-        <div *ngIf="pvName === 'diploma'" style="margin-top: 20%">
-            <div id="diploma" *ngIf="pvName === 'diploma'"
-                 style="width: 100vw; height: 100vh; -webkit-transform: rotate(-90deg);">
+        <div *ngIf="pvName === 'diploma'">
+            <div id="diploma"  style="width: 100vw; height: 100vh; -webkit-transform: rotate(-90deg);">
                 <p style="text-align: center;">&nbsp;</p>
                 <div style="padding:20px; text-align:center;">
                     <div style="padding:20px; text-align:center;">
-                        <p style="text-align: center;"><img src="{{logo}}" alt="" width="300" height="300"/></p>
+                        <p style="text-align: center; margin-bottom: 2rem;"><img src="{{logo}}" alt="" width="300" height="300"/></p>
+                        <span style="font-size:70px; font-weight:bold">{{'document.diplomaTitle' | translate}}</span>
+                        <br><br>
+                        <span style="font-size:35px"><i>{{'document.diplomaCertify' | translate}}</i></span>
+                        <br><br>
+                        <span style="font-size:40px"><b>{{intern?.name}}</b></span><br/><br/>
+                        <span style="font-size:35px"><i>{{'document.diplomaCompleted' | translate}}</i></span>
+                        <br/><br/>
+                        <span style="font-size:40px">{{trainingName}}</span> <br/><br/>
+                        <span style="font-size:35px"><i>{{'document.diplomaDated' | translate}}</i></span><br>
+                        <span style="font-size:40px">{{dateDiploma}}</span>
+                    </div>
+                </div>
+            </div>
+            <div id="diploma"  style="width: 100vw; height: 100vh; -webkit-transform: rotate(-90deg);">
+                <p style="text-align: center;">&nbsp;</p>
+                <div style="padding:20px; text-align:center;">
+                    <div style="padding:20px; text-align:center;">
+                        <p style="text-align: center; margin-bottom: 2rem;"><img src="{{logo}}" alt="" width="300" height="300"/></p>
                         <span style="font-size:70px; font-weight:bold">{{'document.diplomaTitle' | translate}}</span>
                         <br><br>
                         <span style="font-size:35px"><i>{{'document.diplomaCertify' | translate}}</i></span>

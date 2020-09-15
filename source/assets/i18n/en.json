@@ -494,6 +494,9 @@
     "diploma": "Diploma"
   },
   "pv": {
+    "orientation": "Orientation",
+    "portrait": "Portrait",
+    "landscape": "Landscape",
     "cardTitle": "Student card",
     "studentId": "Student ID",
     "information" : "Information",

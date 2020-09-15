@@ -32,6 +32,7 @@ h2 {
     background: $edit;
     color: #FFFFFF;
     width: 10%;
+    z-index: 1;
 }
 
 .cancel {
@@ -39,6 +40,7 @@ h2 {
     margin-right: 2px !important;
     width: 10%;
     padding: 0px 10px 0 0 !important;
+    z-index: 1;
 }
 
 @media print {

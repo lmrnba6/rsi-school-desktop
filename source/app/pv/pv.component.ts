@@ -49,6 +49,7 @@ export class PvComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
+    public orientation: string = 'landscape';
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
