@@ -65,18 +65,18 @@
                            required>
                 </mat-form-field>
                 </div>
-<!--                <mat-form-field *ngIf="pvName==='diploma'" appearance="outline">-->
-<!--                    <mat-label>{{'pv.orientation' | translate}}</mat-label>-->
-<!--                    <mat-select [(ngModel)]="orientation">-->
-<!--                        <mat-option>&#45;&#45;</mat-option>-->
-<!--                        <mat-option value="landscape">-->
-<!--                            {{'pv.landscape' | translate}}-->
-<!--                        </mat-option>-->
-<!--                        <mat-option value="portrait">-->
-<!--                            {{'pv.portrait' | translate}}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
+                <mat-form-field *ngIf="pvName==='diploma'" appearance="outline">
+                    <mat-label>{{'pv.orientation' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="orientation">
+                        <mat-option>--</mat-option>
+                        <mat-option value="landscape">
+                            {{'pv.landscape' | translate}}
+                        </mat-option>
+                        <mat-option value="portrait">
+                            {{'pv.portrait' | translate}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
@@ -409,7 +409,7 @@
             </p>
         </div>
         <div *ngIf="pvName === 'diploma'">
-            <div id="diploma"  style="width: 100vw; height: 100vh; -webkit-transform: rotate(-90deg);">
+            <div id="diploma" *ngIf="orientation=== 'landscape'"  style="width: 100vw; height: 100vh; -webkit-transform: rotate(-90deg);">
                 <p style="text-align: center;">&nbsp;</p>
                 <div style="padding:20px; text-align:center;">
                     <div style="padding:20px; text-align:center;">
@@ -427,7 +427,7 @@
                     </div>
                 </div>
             </div>
-            <div id="diploma"  style="width: 100vw; height: 100vh; -webkit-transform: rotate(-90deg);">
+            <div id="diploma" *ngIf="orientation=== 'portrait'"  style="width: 100vw; height: 100vh;">
                 <p style="text-align: center;">&nbsp;</p>
                 <div style="padding:20px; text-align:center;">
                     <div style="padding:20px; text-align:center;">
