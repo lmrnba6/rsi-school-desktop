@@ -1,3 +1,4 @@
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48"></app-loader>
 <header>
     <section>
         <h1 id="logo">{{center}}
@@ -7,6 +8,9 @@
         </h1>
         <nav>
             <ul>
+                <li *ngIf="isCloud && (isUser || isAdmin)" (click)="syncDbServer()" class="pull-left"><p>
+                    <img (error)="fixImage($event)" style="width: 30px" [src]="cloudImage" alt="">
+                </li>
                 <li (click)="goHome()" class="pull-left"><p>
                     <img (error)="fixImage($event)" style="width: 30px" [src]="homeImage" alt="">
                     <!--          <span class="glyphicon glyphicon-home"> </span>-->

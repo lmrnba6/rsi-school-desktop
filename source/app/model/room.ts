@@ -71,7 +71,7 @@ export class Room {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "room" (number, capacity)
             VALUES('${this.number}', '${this.capacity}')`;
@@ -79,7 +79,7 @@ export class Room {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Room to be inserted. Was ${result.changes}`);
@@ -89,7 +89,25 @@ export class Room {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "room" (id,number, capacity)
+            VALUES(${this.id},'${this.number}', '${this.capacity}')`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Room to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "room"
                SET number = '${this.number}', capacity = '${this.capacity}'
@@ -98,7 +116,7 @@ export class Room {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Room to be updated. Was ${result.changes}`);
@@ -106,14 +124,14 @@ export class Room {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "room" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Room to be deleted. Was ${result.changes}`);

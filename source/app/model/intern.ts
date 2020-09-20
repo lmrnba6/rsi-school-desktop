@@ -221,7 +221,7 @@ export class Intern{
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "intern" (name, birth, name_arabic, address, phone, phone2, email, sold, "isAllowed", "isPromo", "isVip", scholar, photo, parent)
             VALUES('${this.name ? this.name.replace(/\'/g, "''") : ''}', '${this.birth}', '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}','${this.address ? this.address.replace(/\'/g, "''"):''}', '${this.phone}', '${this.phone2}', '${this.email ? this.email.replace(/\'/g, "''") : ''}', ${this.sold}, ${this.isAllowed},${this.isPromo}, ${this.isVip}, '${this.scholar}', '${this.photo}', ${this.parent}) RETURNING *`;
@@ -229,7 +229,25 @@ export class Intern{
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
+            .then((result: any) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Intern to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.id;
+                }
+            });
+    }
+
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "intern" (id, name, birth, name_arabic, address, phone, phone2, email, sold, "isAllowed", "isPromo", "isVip", scholar, photo, parent)
+            VALUES(${this.id}, '${this.name ? this.name.replace(/\'/g, "''") : ''}', '${this.birth}', '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}','${this.address ? this.address.replace(/\'/g, "''"):''}', '${this.phone}', '${this.phone2}', '${this.email ? this.email.replace(/\'/g, "''") : ''}', ${this.sold}, ${this.isAllowed},${this.isPromo}, ${this.isVip}, '${this.scholar}', '${this.photo}', ${this.parent}) RETURNING *`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
             .then((result: any) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Intern to be inserted. Was ${result.changes}`);
@@ -288,7 +306,7 @@ export class Intern{
             });
     }
 
-    public update(): Promise<void> {
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "intern"
                SET user_id = ${this.user_id}, name = '${this.name ? this.name.replace(/\'/g, "''"): ''}', birth = '${this.birth}', name_arabic = '${this.name_arabic ? this.name_arabic.replace(/\'/g, "''") : ''}', 
@@ -299,7 +317,7 @@ export class Intern{
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Intern to be updated. Was ${result.changes}`);
@@ -335,14 +353,14 @@ export class Intern{
                 }
             });
     }
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "intern" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Intern to be deleted. Was ${result.changes}`);

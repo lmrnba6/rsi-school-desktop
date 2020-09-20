@@ -138,7 +138,7 @@ export class Register {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "register" (amount, date, responsible, comment, intern, training, sold, rest, username)
             VALUES(${this.amount}, '${this.date}','${this.responsible}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
@@ -147,7 +147,7 @@ export class Register {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Register to be inserted. Was ${result.changes}`);
@@ -157,7 +157,26 @@ export class Register {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "register" (id,amount, date, responsible, comment, intern, training, sold, rest, username)
+            VALUES(${this.id},${this.amount}, '${this.date}','${this.responsible}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
+            '${this.intern}', '${this.training}', ${this.sold}, ${this.rest}, '${this.username}')`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Register to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "register"
                SET amount = ${this.amount}, date = '${this.date}',responsible = '${this.responsible}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', 
@@ -167,7 +186,7 @@ export class Register {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Register to be updated. Was ${result.changes}`);
@@ -175,14 +194,14 @@ export class Register {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "register" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Register to be deleted. Was ${result.changes}`);

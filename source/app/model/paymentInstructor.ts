@@ -115,7 +115,7 @@ export class Payment_instructor {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "payment_instructor" (amount, date, comment, instructor_id)
             VALUES(${this.amount}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', ${this.instructor_id})`;
@@ -123,7 +123,7 @@ export class Payment_instructor {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Payment_instructor to be inserted. Was ${result.changes}`);
@@ -133,7 +133,25 @@ export class Payment_instructor {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "payment_instructor" (id,amount, date, comment, instructor_id)
+            VALUES(${this.id}, ${this.amount}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', ${this.instructor_id})`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Payment_instructor to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "payment_instructor"
                SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', instructor_id = '${this.instructor_id}'
@@ -142,7 +160,7 @@ export class Payment_instructor {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Payment_instructor to be updated. Was ${result.changes}`);
@@ -150,14 +168,14 @@ export class Payment_instructor {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "payment_instructor" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Payment_instructor to be deleted. Was ${result.changes}`);

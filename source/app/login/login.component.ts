@@ -36,29 +36,19 @@ export class LoginComponent implements OnInit {
     }
 
     updateDatabase() {
-        this.asyncForEach(sqlUpdate , async (query: any) =>{
             try {
-                await Settings.client.query(query);
+                Settings.client.query(sqlUpdate);
             }catch (e) {
                 console.error(e);
             }
-        })
     }
 
     initDatabase() {
-        this.asyncForEach(sqlInit , async (query: any) =>{
             try {
-                await Settings.client.query(query);
+                Settings.client.query(sqlInit);
             }catch (e) {
                 console.error(e);
             }
-        })
-    }
-
-    async asyncForEach(array: any, callback: any) {
-        for (let index = 0; index < array.length; index++) {
-            await callback(array[index], index, array);
-        }
     }
 
     ngOnInit() {

@@ -124,7 +124,7 @@ export class Instructor {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "instructor" (name, name_arabic, address, phone, email, sold, "isFullTime")
             VALUES('${this.name ? this.name.replace(/\'/g, "''") : ''}', '${this.name_arabic.replace(/\'/g, "''")}', '${this.address.replace(/\'/g, "''")}', '${this.phone}', '${this.email.replace(/\'/g, "''")}', ${this.sold}, ${this.isFullTime}) RETURNING *`;
@@ -132,7 +132,25 @@ export class Instructor {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
+            .then((result: any) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Instructor to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.id;
+                }
+            });
+    }
+
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "instructor" (id,name, name_arabic, address, phone, email, sold, "isFullTime")
+            VALUES(${this.id},'${this.name ? this.name.replace(/\'/g, "''") : ''}', '${this.name_arabic.replace(/\'/g, "''")}', '${this.address.replace(/\'/g, "''")}', '${this.phone}', '${this.email.replace(/\'/g, "''")}', ${this.sold}, ${this.isFullTime}) RETURNING *`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
             .then((result: any) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Instructor to be inserted. Was ${result.changes}`);
@@ -176,7 +194,7 @@ export class Instructor {
             });
     }
 
-    public update(): Promise<void> {
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "instructor"
                SET user_id = ${this.user_id}, name = '${this.name ? this.name.replace(/\'/g, "''") : ''}', name_arabic = '${this.name_arabic.replace(/\'/g, "''")}', address = '${this.address.replace(/\'/g, "''")}', phone = '${this.phone}', 
@@ -186,7 +204,7 @@ export class Instructor {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Instructor to be updated. Was ${result.changes}`);
@@ -194,14 +212,14 @@ export class Instructor {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "instructor" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Instructor to be deleted. Was ${result.changes}`);

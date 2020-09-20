@@ -76,7 +76,7 @@ export class Car {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "car" (name, make, plate, seat, comment)
             VALUES('${this.name}', '${this.make}','${this.plate}', ${this.seat}, '${this.comment ? this.comment.replace(/\'/g, "''") : ''}')`;
@@ -84,7 +84,7 @@ export class Car {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Car to be inserted. Was ${result.changes}`);
@@ -94,7 +94,25 @@ export class Car {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "car" (id,name, make, plate, seat, comment)
+            VALUES(${this.id}, '${this.name}', '${this.make}','${this.plate}', ${this.seat}, '${this.comment ? this.comment.replace(/\'/g, "''") : ''}')`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Car to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "car"
                SET name = '${this.name}', make = '${this.make}', plate = '${this.plate}', seat= ${this.seat}, comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}'   
@@ -103,7 +121,7 @@ export class Car {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Car to be updated. Was ${result.changes}`);
@@ -111,14 +129,14 @@ export class Car {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "car" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Car to be deleted. Was ${result.changes}`);

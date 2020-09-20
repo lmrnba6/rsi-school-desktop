@@ -113,7 +113,7 @@ export class Inbox {
     }
 
     
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const fromCol = Settings.isDbLocal ? `'from'` : `"from"`;
         const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
         const sql = `
@@ -123,7 +123,7 @@ export class Inbox {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Inbox to be inserted. Was ${result.changes}`);
@@ -133,7 +133,27 @@ export class Inbox {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const fromCol = Settings.isDbLocal ? `'from'` : `"from"`;
+        const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
+        const sql = `
+            INSERT INTO "inbox" (id,subject, date, content, ${fromCol}, ${toCol}, deleted, read)
+            VALUES(${this.id}, '${this.subject ? this.subject.replace(/\'/g, "''") : ''}', ${this.date}, '${this.content.replace(/\'/g, "''")}',${this.from}, ${this.to}, ${this.deleted}, ${this.read}) ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Inbox to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const fromCol = Settings.isDbLocal ? `'from'` : `"from"`;
         const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
         const sql = `
@@ -145,7 +165,7 @@ export class Inbox {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Inbox to be updated. Was ${result.changes}`);
@@ -153,14 +173,14 @@ export class Inbox {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "inbox" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Inbox to be deleted. Was ${result.changes}`);

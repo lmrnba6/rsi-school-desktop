@@ -73,7 +73,20 @@ export class Transport {
             });
     }
 
+    public static getAllNoException(): Promise<Transport[]> {
+        const sql = `SELECT * FROM "transport"`;
+        const values = {};
 
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: Transport[] = [];
+                for (const row of rows) {
+                    const transport = new Transport().fromRow(row);
+                    users.push(transport);
+                }
+                return users;
+            });
+    }
 
     public static getAll(): Promise<Transport[]> {
         const sql = `SELECT t.*, c.name as car_name, c.make as car_make, (c.seat - count(i.id)) as available
@@ -117,7 +130,7 @@ export class Transport {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "transport" (time, day, direction, car, comment)
             VALUES('${this.time}', '${this.day}','${this.direction}', ${this.car}, '${this.comment ? this.comment.replace(/\'/g, "''") : ''}')`;
@@ -125,7 +138,7 @@ export class Transport {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Transport to be inserted. Was ${result.changes}`);
@@ -135,7 +148,25 @@ export class Transport {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "transport" (id,time, day, direction, car, comment)
+            VALUES(${this.id},'${this.time}', '${this.day}','${this.direction}', ${this.car}, '${this.comment ? this.comment.replace(/\'/g, "''") : ''}')`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Transport to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "transport"
                SET time = '${this.time}', day = '${this.day}', direction = '${this.direction}', car= ${this.car}, comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}'   
@@ -144,7 +175,7 @@ export class Transport {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Transport to be updated. Was ${result.changes}`);
@@ -152,14 +183,14 @@ export class Transport {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "transport" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Transport to be deleted. Was ${result.changes}`);

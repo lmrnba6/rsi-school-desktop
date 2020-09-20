@@ -115,7 +115,7 @@
                 <mat-error *ngIf="sold.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field class="example-full-width" style="display: none" appearance="outline">
+            <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{'intern.placeholder.parent' | translate}}</mat-label>
                 <input name="parent" formControlName="parent" matInput [ngModel]="userSelected"
                        (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
@@ -124,16 +124,11 @@
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="userOnSelect($event.option.value)">
                     <mat-option *ngFor="let parent of usersFiltered" [value]="parent">
-                        {{parent?.name}}
+                        {{parent?.name}} {{parent?.username}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="outline" style="display: none">
-                <mat-label>{{'intern.placeholder.comment' | translate}}</mat-label>
-                <textarea name="comment" formControlName="comment" [(ngModel)]="intern.comment" matInput
-                          ></textarea>
-            </mat-form-field>
         </div>
     </form>
     <!--<h4 style="font-weight: bold">{{'intern.documents' | translate}}</h4>-->

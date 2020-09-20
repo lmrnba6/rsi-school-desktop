@@ -1,68 +1,119 @@
-<h2>{{'administration.school'| translate}}  <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
+<h2>{{'administration.school'| translate}}  <img (error)="fixImage($event)"
+                                                 style="margin-right: 5px; width: 40px; cursor: pointer;"
+                                                 (click)="goBack()" [src]="backImage" alt=""></h2>
 <mat-divider></mat-divider>
 <mat-card id="contentToConvert">
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
     </app-loader>
     <form [formGroup]="schoolForm">
-        <div class="container">
-            <button [disabled]="schoolForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
-                <span class="glyphicon glyphicon-floppy-disk"></span>
-            </button>
-            <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
-                <span class="glyphicon glyphicon-arrow-left"></span>
-            </button>
-            <div class="pull-right" style="clear: both">
-                <mat-card style="width:200px;height:200px;">
-                    <img style="width:170px;height:170px;" [src]="photo" />
-                </mat-card>
-                <button style="background: #6fbbff; width: 100%; border-radius: 20px; margin-top: 5px;"
-                        type="button" (click)="openFile()" mat-button>
-                    <span class="glyphicon glyphicon-picture"></span>
-                </button>
-            </div>
-            <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'intern.placeholder.name' | translate}}</mat-label>
-                <input id="name" name="name" formControlName="name" [(ngModel)]="school.name" matInput
-                       required autofocus>
-                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'intern.placeholder.dist' | translate}}</mat-label>
-                <input id="dist" name="dist" formControlName="dist" [(ngModel)]="school.dist" matInput
-                       >
-                <mat-error *ngIf="dist.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'intern.placeholder.address' | translate}}</mat-label>
-                <input id="address" name="name" formControlName="address" [(ngModel)]="school.address" matInput
-                       required>
-                <mat-error *ngIf="address.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'intern.placeholder.phone' | translate}}</mat-label>
-                <input id="phone" name="phone1" formControlName="phone1" [(ngModel)]="school.phone1" matInput
-                       required>
-                <mat-error *ngIf="phone1.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'intern.placeholder.phone2' | translate}}</mat-label>
-                <input id="phone2" name="phone2" formControlName="phone2" [(ngModel)]="school.phone2" matInput
-                       >
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'intern.placeholder.email' | translate}}</mat-label>
-                <input id="email" name="email" formControlName="email" [(ngModel)]="school.email" matInput
-                       required>
-                <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'intern.placeholder.website' | translate}}</mat-label>
-                <input id="website" name="website" formControlName="website" [(ngModel)]="school.website" matInput
-                       >
-            </mat-form-field>
-        </div>
+        <button [disabled]="schoolForm.invalid" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+        </button>
+        <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </button>
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span style="color: #2b7bff"
+                          class="glyphicon glyphicon-info-sign"></span> {{'administration.information' | translate}}
+                </ng-template>
+                <div class="tab-content">
+                    <div class="container">
+                        <div class="pull-right" style="clear: both">
+                            <mat-card style="width:200px;height:200px;">
+                                <img style="width:170px;height:170px;" [src]="photo"/>
+                            </mat-card>
+                            <button style="background: #6fbbff; width: 100%; border-radius: 20px; margin-top: 5px;"
+                                    type="button" (click)="openFile()" mat-button>
+                                <span class="glyphicon glyphicon-picture"></span>
+                            </button>
+                        </div>
+                        <img class="pull-right" style="clear: both; margin-top: 15px;" id="barcode"/>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'intern.placeholder.name' | translate}}</mat-label>
+                            <input id="name" name="name" formControlName="name" [(ngModel)]="school.name" matInput
+                                   required autofocus>
+                            <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'intern.placeholder.dist' | translate}}</mat-label>
+                            <input id="dist" name="dist" formControlName="dist" [(ngModel)]="school.dist" matInput
+                            >
+                            <mat-error *ngIf="dist.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'intern.placeholder.address' | translate}}</mat-label>
+                            <input id="address" name="name" formControlName="address" [(ngModel)]="school.address"
+                                   matInput
+                                   required>
+                            <mat-error
+                                    *ngIf="address.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'intern.placeholder.phone' | translate}}</mat-label>
+                            <input id="phone" name="phone1" formControlName="phone1" [(ngModel)]="school.phone1"
+                                   matInput
+                                   required>
+                            <mat-error
+                                    *ngIf="phone1.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'intern.placeholder.phone2' | translate}}</mat-label>
+                            <input id="phone2" name="phone2" formControlName="phone2" [(ngModel)]="school.phone2"
+                                   matInput
+                            >
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'intern.placeholder.email' | translate}}</mat-label>
+                            <input id="email" name="email" formControlName="email" [(ngModel)]="school.email" matInput
+                                   required>
+                            <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'intern.placeholder.website' | translate}}</mat-label>
+                            <input id="website" name="website" formControlName="website" [(ngModel)]="school.website"
+                                   matInput>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span style="color: #2b7bff"
+                          class="glyphicon glyphicon-cloud"></span> {{'administration.remote' | translate}}
+                </ng-template>
+                <div class="tab-content">
+                    <div class="container">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Api' | translate}}</mat-label>
+                            <input name="api" formControlName="api" [(ngModel)]="school.api" matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Host' | translate}}</mat-label>
+                            <input name="host" formControlName="host" [(ngModel)]="school.host" matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Database' | translate}}</mat-label>
+                            <input name="db" formControlName="db" [(ngModel)]="school.db" matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'User' | translate}}</mat-label>
+                            <input name="user" formControlName="user" [(ngModel)]="school.user" matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Password' | translate}}</mat-label>
+                            <input name="password" formControlName="password" [(ngModel)]="school.password" matInput>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
     </form>
 </mat-card>

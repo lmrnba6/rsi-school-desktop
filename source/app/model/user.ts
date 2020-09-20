@@ -155,7 +155,7 @@ export class User {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "user" (name, username, password, role) 
             VALUES('${this.name}', '${this.username}', '${this.password}', '${this.role}') ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
@@ -163,7 +163,7 @@ export class User {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result: any) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 User to be inserted. Was ${result.changes}`);
@@ -173,7 +173,25 @@ export class User {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "user" (id,name, username, password, role) 
+            VALUES(${this.id}, '${this.name}', '${this.username}', '${this.password}', '${this.role}') ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result: any) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 User to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.id;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "user"
                SET name = '${this.name}', username = '${this.username}', password = '${this.password}', role = '${this.role}'
@@ -182,7 +200,7 @@ export class User {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 User to be updated. Was ${result.changes}`);
@@ -190,14 +208,14 @@ export class User {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "user" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 User to be deleted. Was ${result.changes}`);

@@ -66,6 +66,21 @@ export class Session {
             });
     }
 
+    public static getAllNoException(): Promise<Session[]> {
+        const sql = `SELECT * FROM "session"`;
+        const values = {};
+
+        return TheDb.selectAll(sql, values)
+            .then((rows) => {
+                const users: Session[] = [];
+                for (const row of rows) {
+                    const session = new Session().fromRow(row);
+                    users.push(session);
+                }
+                return users;
+            });
+    }
+
     public static getAll(): Promise<Session[]> {
         const sql = `SELECT distinct s.*, t.name as training, i.name as instructor, t.type as type, (s."limit" - count(e.id)) as availability
                         FROM "session" as s 
@@ -296,7 +311,7 @@ export class Session {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = Settings.isDbLocal ? `
             INSERT INTO "session" (name, start, end,\`limit\`, instructor_id, training_id, closed)
             VALUES('${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id}, ${this.closed})` :
@@ -307,7 +322,7 @@ export class Session {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Session to be inserted. Was ${result.changes}`);
@@ -317,7 +332,28 @@ export class Session {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = Settings.isDbLocal ? `
+            INSERT INTO "session" (id,name, start, end,\`limit\`, instructor_id, training_id, closed)
+            VALUES(${this.id}, '${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id}, ${this.closed})` :
+            `
+            INSERT INTO "session" (id, name, start, "end", "limit", instructor_id, training_id, closed)
+            VALUES(${this.id}, '${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id}, ${this.closed})`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Session to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = Settings.isDbLocal ? `
             UPDATE "session"
                SET name = '${this.name}', start = ${this.start}, end = ${this.end}, \`limit\` = ${this.limit}, instructor_id = '${this.instructor_id}',
@@ -332,7 +368,7 @@ export class Session {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Session to be updated. Was ${result.changes}`);
@@ -340,14 +376,14 @@ export class Session {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "session" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Session to be deleted. Was ${result.changes}`);

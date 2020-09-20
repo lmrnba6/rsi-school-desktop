@@ -142,7 +142,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
 
     public userOnChange(event: any): void {
         if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {            this.block = true;
-            User.getAllPaged(0, 5, 'name', '', event.target.value).then(
+            User.getAllPaged(0, 10, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.usersFiltered = users.filter(u => u.role === 'parent')

@@ -60,6 +60,8 @@
     "register": "Register"
   },
   "administration": {
+    "information" : "Information",
+    "remote": "Web Database",
     "title": "Administration",
     "transportation": "Transport",
     "transport": "Programe",

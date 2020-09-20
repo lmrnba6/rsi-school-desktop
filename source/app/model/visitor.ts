@@ -71,15 +71,15 @@ export class Visitor {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "visitor" (name, phone, comment, date)
-            VALUES('${this.name}', '${this.phone}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', '${this.date}')`;
+            VALUES('${this.name}', '${this.phone}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', '${this.date}') RETURNING *`;
 
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Visitor to be inserted. Was ${result.changes}`);
@@ -89,16 +89,34 @@ export class Visitor {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
         const sql = `
-            UPDATE "visitor"
-               SET name = '${this.name}', date = '${this.date}', phone = '${this.phone}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}'   
-             WHERE id = ${this.id}`;
+            INSERT INTO "visitor" (id,name, phone, comment, date)
+            VALUES(${this.id},'${this.name}', '${this.phone}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', '${this.date}') RETURNING *`;
 
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Visitor to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
+        const sql = `
+            UPDATE "visitor"
+               SET name = '${this.name}', date = '${this.date}', phone = '${this.phone}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}'   
+             WHERE id = ${this.id} RETURNING *`;
+
+        const values = {
+        };
+
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Visitor to be updated. Was ${result.changes}`);
@@ -106,14 +124,14 @@ export class Visitor {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
-            DELETE FROM "visitor" WHERE id = ${id}`;
+            DELETE FROM "visitor" WHERE id = ${id} RETURNING *`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Visitor to be deleted. Was ${result.changes}`);

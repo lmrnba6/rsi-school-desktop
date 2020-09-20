@@ -60,6 +60,8 @@
     "register": "Caisse"
   },
   "administration": {
+    "information" : "Information",
+    "db": "Base de données Web",
     "title": "Administration",
     "reception": "Acceuil",
     "school": "École",

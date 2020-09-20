@@ -1,5 +1,11 @@
 import {existsSync, readFileSync, writeFileSync} from 'fs';
 import * as path from 'path';
+const {sqlDrop} = require('../../assets/data/sql-drop.js');
+const {sqlInit} = require('../../assets/data/sql-init.js');
+const {sqlUpdate} = require('../../assets/data/sql-update.js');
+const {sqlInitRemote} = require('../../assets/data/sql-init-remote.js');
+
+
 
 const openSshTunnel = require('open-ssh-tunnel');
 
@@ -17,11 +23,14 @@ import {TheDb} from "./thedb";
  * @class Settings
  */
 export class Settings {
+    public static api: string = ''
     public static serialNumber: string = '';
     public static isDbLocal = false;
+    public static isCloud = true;
     public static isDbLocalServer = true;
     public static isHerokuServer = false;
     public static client: Client;
+    public static cloudClient: Client;
     public static isDebug: boolean = false;
     public static dbClientLocal: {
         user: string,
@@ -31,10 +40,26 @@ export class Settings {
         port: number
     } = {
         user: 'postgres',
-        host: '127.0.0.1',
+        host: 'localhost',
         database: 'postgres',
-        password: '',
+        password: 'admin',
         port: 5432
+    }
+
+    public static dbCloudClient: {
+        user: string,
+        host: string,
+        database: string,
+        password: string,
+        port: number,
+        // ssl: boolean
+    } = {
+        user: '',
+        host: '',
+        database: '',
+        password: '',
+        port: 5432,
+        // ssl: false
     }
 
     public static dbHeroku: {
@@ -151,9 +176,10 @@ export class Settings {
         //server.close();
     }
 
-    public static queryServerAll(sql: string): Promise<any> {
+    public static queryServerAll(sql: string, cloud?: boolean): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            Settings.client.query(sql, (err, row) => {
+            const client: Client = cloud ? Settings.cloudClient : Settings.client;
+            client.query(sql, (err, row) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -163,9 +189,10 @@ export class Settings {
         });
     }
 
-    public static queryServerChange(sql: string): Promise<any> {
+    public static queryServerChange(sql: string, cloud?: boolean): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            Settings.client.query(sql, (err,res: any) => {
+            const client: Client = cloud ? Settings.cloudClient : Settings.client;
+            client.query(sql, (err,res: any) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -175,13 +202,63 @@ export class Settings {
         });
     }
 
-    public static queryServerOne(sql: string): Promise<any> {
+    public static queryServerOne(sql: string, cloud?: boolean): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            Settings.client.query(sql, (err, row) => {
+            const client: Client = cloud ? Settings.cloudClient : Settings.client;
+            client.query(sql, (err, row) => {
                 if (err) {
                     reject(err);
                 } else {
                     resolve(row.rows[0]);
+                }
+            });
+        });
+    }
+
+    public static updateAll(): Promise<void> {
+        return new Promise<any>((resolve, reject) => {
+            Settings.cloudClient.query(sqlUpdate, (err,res: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
+                }
+            });
+        });
+    }
+
+    public static createAll(): Promise<void> {
+        return new Promise<any>((resolve, reject) => {
+            Settings.cloudClient.query(sqlInit, (err,res: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
+                }
+            });
+        });
+    }
+
+    public static createAllRemote(): Promise<void> {
+        return new Promise<any>((resolve, reject) => {
+            Settings.cloudClient.query(sqlInitRemote, (err,res: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
+                }
+            });
+        });
+    }
+
+
+    public static dropAll(): Promise<void> {
+        return new Promise<any>((resolve, reject) => {
+            Settings.cloudClient.query(sqlDrop, (err,res: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
                 }
             });
         });

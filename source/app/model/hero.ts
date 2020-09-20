@@ -55,7 +55,7 @@ export class Hero {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO hero (name)
             VALUES($name)`;
@@ -64,7 +64,7 @@ export class Hero {
             $name: this.name,
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Hero to be inserted. Was ${result.changes}`);
@@ -74,7 +74,7 @@ export class Hero {
             });
     }
 
-    public update(): Promise<void> {
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE hero
                SET name = $name
@@ -84,7 +84,7 @@ export class Hero {
             $name: this.name,
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Hero to be updated. Was ${result.changes}`);

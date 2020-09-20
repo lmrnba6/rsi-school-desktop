@@ -25,6 +25,11 @@ export class SchoolComponent implements OnInit {
     public phone2: FormControl;
     public email: FormControl;
     public website: FormControl;
+    public api: FormControl;
+    public host: FormControl;
+    public db: FormControl;
+    public user: FormControl;
+    public password: FormControl;
     public photo: any;
     public block: boolean;
     public school: School;
@@ -63,6 +68,11 @@ export class SchoolComponent implements OnInit {
         this.address = new FormControl(null, [Validators.required]);
         this.email = new FormControl(null, [Validators.required]);
         this.website = new FormControl(null);
+        this.api = new FormControl(null);
+        this.host = new FormControl(null);
+        this.db = new FormControl(null);
+        this.user = new FormControl(null);
+        this.password = new FormControl(null);
         this.schoolForm = this.fb.group({
             name: this.name,
             dist: this.dist,
@@ -70,7 +80,12 @@ export class SchoolComponent implements OnInit {
             phone1: this.phone1,
             phone2: this.phone2,
             email: this.email,
-            website: this.website
+            website: this.website,
+            api: this.api,
+            host: this.host,
+            db: this.db,
+            user: this.user,
+            password: this.password
         });
     }
 
@@ -91,6 +106,11 @@ export class SchoolComponent implements OnInit {
                     school.phone2 = '';
                     school.email = '';
                     school.website = '';
+                    // School.api = '';
+                    // School.host = '';
+                    // School.db = '';
+                    // School.user = '';
+                    // School.password = '';
                     school.insert().then();
                     this.getData();
                 }

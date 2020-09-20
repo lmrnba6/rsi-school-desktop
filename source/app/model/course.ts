@@ -64,7 +64,7 @@ export class Course {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO course (name, time, training_id)
             VALUES('${this.name}', '${this.time}', '${this.training_id}')`;
@@ -72,7 +72,7 @@ export class Course {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Course to be inserted. Was ${result.changes}`);
@@ -82,7 +82,7 @@ export class Course {
             });
     }
 
-    public update(): Promise<void> {
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE course
                SET name = '${this.name}', time = '${this.time}', training_id = '${this.training_id}'
@@ -91,7 +91,7 @@ export class Course {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Course to be updated. Was ${result.changes}`);
@@ -99,14 +99,14 @@ export class Course {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM course WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Course to be deleted. Was ${result.changes}`);

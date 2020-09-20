@@ -51,8 +51,7 @@ export class Question {
     }
 
     public static getAll(): Promise<Question[]> {
-        const sql = `SELECT q.*
-                            FROM "question"`;
+        const sql = `SELECT * FROM "question"`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -128,7 +127,7 @@ export class Question {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "question" (title, type,note, sequence, questionnaire)
             VALUES('${this.title}', '${this.type}', 
@@ -138,7 +137,7 @@ export class Question {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result: any) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Question to be inserted. Was ${result.changes}`);
@@ -148,7 +147,27 @@ export class Question {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "question" (id, title, type,note, sequence, questionnaire)
+            VALUES(${this.id},'${this.title}', '${this.type}', 
+            '${this.note ? this.note.replace(/\'/g, "''") : ''}', 
+            ${this.sequence}, ${this.questionnaire}) RETURNING *`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result: any) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Question to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.id;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "question"
                SET title = '${this.title}', type = '${this.type}', 
@@ -159,7 +178,7 @@ export class Question {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Question to be updated. Was ${result.changes}`);
@@ -167,14 +186,14 @@ export class Question {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "question" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Question to be deleted. Was ${result.changes}`);

@@ -1,4 +1,4 @@
-export const sqlInit = [
+export const sqlInit =
     `CREATE TABLE IF NOT EXISTS "user" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
@@ -6,9 +6,9 @@ export const sqlInit = [
     "password"	TEXT NOT NULL,
     "role"	TEXT NOT NULL,
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "training" (
+);
+
+    CREATE TABLE IF NOT EXISTS "training" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "time"	TEXT NOT NULL,
@@ -17,9 +17,22 @@ export const sqlInit = [
     "books_fees"	INTEGER NOT NULL,
     "enrollment_fees"	INTEGER NOT NULL,
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "instructor" (
+);
+
+CREATE TABLE IF NOT EXISTS "questionnaire" (
+    "id"	SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "timed" INTEGER NOT NULL,
+    "jump"	INTEGER NOT NULL,
+    "save"	INTEGER NOT NULL,
+    "number"	INTEGER NOT NULL,
+    "training"	INTEGER,
+    FOREIGN KEY(training) REFERENCES "training"(id),
+    PRIMARY KEY("id")
+);
+
+    CREATE TABLE IF NOT EXISTS "instructor" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "name_arabic"	TEXT NOT NULL,
@@ -31,9 +44,9 @@ export const sqlInit = [
     "user_id" INTEGER,
     FOREIGN KEY(user_id) REFERENCES "user"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "session" (
+);
+
+    CREATE TABLE IF NOT EXISTS "session" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "start"  TEXT NOT NULL,
@@ -45,9 +58,9 @@ export const sqlInit = [
     FOREIGN KEY(instructor_id) REFERENCES "instructor"(id),
     FOREIGN KEY(training_id) REFERENCES "training"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "inbox" (
+);
+
+    CREATE TABLE IF NOT EXISTS "inbox" (
     "id"	SERIAL NOT NULL,
     "date"	TEXT NOT NULL,
     "from"  INTEGER NOT NULL,
@@ -59,9 +72,9 @@ export const sqlInit = [
     FOREIGN KEY("from") REFERENCES "user"(id),
     FOREIGN KEY("to") REFERENCES "user"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "attachment" (
+);
+
+    CREATE TABLE IF NOT EXISTS "attachment" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "file"  BYTEA NOT NULL,
@@ -69,16 +82,16 @@ export const sqlInit = [
     "inbox_id"  INTEGER NOT NULL,
     FOREIGN KEY(inbox_id) REFERENCES "inbox"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "room" (
+);
+
+    CREATE TABLE IF NOT EXISTS "room" (
     "id"	SERIAL NOT NULL,
     "number"	TEXT NOT NULL,
     "capacity"  INTEGER NOT NULL,
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "weekday" (
+);
+
+    CREATE TABLE IF NOT EXISTS "weekday" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "time"  TEXT NOT NULL,
@@ -87,9 +100,9 @@ export const sqlInit = [
     FOREIGN KEY(session_id) REFERENCES "session"(id),
     FOREIGN KEY(room_id) REFERENCES "room"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "intern" (
+);
+
+    CREATE TABLE IF NOT EXISTS "intern" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "birth"	TEXT,
@@ -109,36 +122,36 @@ export const sqlInit = [
     FOREIGN KEY(user_id) REFERENCES "user"(id),
     FOREIGN KEY(parent) REFERENCES "user"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "visitor" (
+);
+
+    CREATE TABLE IF NOT EXISTS "visitor" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "phone"	TEXT NOT NULL,
     "comment"	TEXT NOT NULL,
     "date"  TEXT NOT NULL,
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "commentIntern" (
+);
+
+    CREATE TABLE IF NOT EXISTS "commentIntern" (
     "id"	SERIAL NOT NULL,
     "comment"	TEXT NOT NULL,
     "date"  TEXT NOT NULL,
     "intern"	INTEGER NOT NULL,
     FOREIGN KEY(intern) REFERENCES "intern"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "commentInstructor" (
+);
+
+    CREATE TABLE IF NOT EXISTS "commentInstructor" (
     "id"	SERIAL NOT NULL,
     "comment"	TEXT NOT NULL,
     "date"  TEXT NOT NULL,
     "instructor"	INTEGER NOT NULL,
     FOREIGN KEY(instructor) REFERENCES "instructor"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "school" (
+);
+
+    CREATE TABLE IF NOT EXISTS "school" (
     "id"	SERIAL NOT NULL,
     "name"	TEXT NOT NULL,
     "dist"	TEXT,
@@ -148,10 +161,15 @@ export const sqlInit = [
     "email"	TEXT,
     "website"	TEXT,
     "photo"  BYTEA,
+    "api" TEXT,
+    "host" TEXT,
+    "db" TEXT,
+    "user" TEXT,
+    "password" TEXT,
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "payment_instructor" (
+);
+
+    CREATE TABLE IF NOT EXISTS "payment_instructor" (
     "id"	SERIAL NOT NULL,
     "amount"	NUMERIC NOT NULL,
     "date"  TEXT NOT NULL,
@@ -159,9 +177,9 @@ export const sqlInit = [
     "instructor_id"	INTEGER NOT NULL,
     FOREIGN KEY(instructor_id) REFERENCES "instructor"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "exam" (
+);
+
+    CREATE TABLE IF NOT EXISTS "exam" (
     "id"	SERIAL NOT NULL,
     "date"  TEXT NOT NULL,
     "time"  TEXT NOT NULL,
@@ -177,9 +195,9 @@ export const sqlInit = [
     FOREIGN KEY(session_id) REFERENCES "session"(id),
     FOREIGN KEY(questionnaire_id) REFERENCES "questionnaire"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "attendance" (
+);
+
+    CREATE TABLE IF NOT EXISTS "attendance" (
     "id"	SERIAL NOT NULL,
     "date"  TEXT NOT NULL,
     "present"	INTEGER NOT NULL,
@@ -190,9 +208,9 @@ export const sqlInit = [
     FOREIGN KEY(weekday_id) REFERENCES "weekday"(id),
     FOREIGN KEY(intern_id) REFERENCES "intern"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "enrollment" (
+);
+
+    CREATE TABLE IF NOT EXISTS "enrollment" (
     "id"	SERIAL NOT NULL,
     "comment"  TEXT NOT NULL,
     "date"  TEXT NOT NULL,
@@ -201,9 +219,9 @@ export const sqlInit = [
     FOREIGN KEY(session_id) REFERENCES "session"(id),
     FOREIGN KEY(intern_id) REFERENCES "intern"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "charge" (
+);
+
+    CREATE TABLE IF NOT EXISTS "charge" (
     "id"	SERIAL NOT NULL,
     "amount"	NUMERIC NOT NULL,
     "rest"	NUMERIC,
@@ -214,9 +232,9 @@ export const sqlInit = [
     FOREIGN KEY(intern) REFERENCES "intern"(id),
     FOREIGN KEY(session) REFERENCES "session"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "payment" (
+);
+
+    CREATE TABLE IF NOT EXISTS "payment" (
     "id"	SERIAL NOT NULL,
     "amount"	NUMERIC NOT NULL,
     "rest"	NUMERIC,
@@ -230,9 +248,9 @@ export const sqlInit = [
     FOREIGN KEY(intern_id) REFERENCES "intern"(id),
     FOREIGN KEY(charge) REFERENCES "charge"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "register" (
+);
+
+    CREATE TABLE IF NOT EXISTS "register" (
     "id"	SERIAL NOT NULL,
     "date"  TEXT NOT NULL,
     "amount"  NUMERIC NOT NULL,
@@ -244,9 +262,9 @@ export const sqlInit = [
     "username" TEXT,
     "responsible" TEXT,
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "car" (
+);
+
+    CREATE TABLE IF NOT EXISTS "car" (
     "id"	SERIAL NOT NULL,
     "name"  TEXT NOT NULL,
     "make"  TEXT,
@@ -254,9 +272,9 @@ export const sqlInit = [
     "seat"	INTEGER NOT NULL,
     "comment" TEXT,
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "transport" (
+);
+
+    CREATE TABLE IF NOT EXISTS "transport" (
     "id"	SERIAL NOT NULL,
     "time"  TEXT NOT NULL,
     "day"  TEXT NOT NULL,
@@ -265,9 +283,9 @@ export const sqlInit = [
     "car"	INTEGER NOT NULL,
     FOREIGN KEY(car) REFERENCES "car"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "commute" (
+);
+
+    CREATE TABLE IF NOT EXISTS "commute" (
     "id"	SERIAL NOT NULL,
     "comment" TEXT,
     "address" TEXT NOT NULL,
@@ -276,22 +294,9 @@ export const sqlInit = [
     FOREIGN KEY(intern) REFERENCES "intern"(id),
     FOREIGN KEY(transport) REFERENCES "transport"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "questionnaire" (
-    "id"	SERIAL NOT NULL,
-    "title" TEXT NOT NULL,
-    "description" TEXT,
-    "timed" INTEGER NOT NULL,
-    "jump"	INTEGER NOT NULL,
-    "save"	INTEGER NOT NULL,
-    "number"	INTEGER NOT NULL,
-    "training"	INTEGER,
-    FOREIGN KEY(training) REFERENCES "training"(id),
-    PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "question" (
+);
+
+    CREATE TABLE IF NOT EXISTS "question" (
     "id"	SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "note" TEXT,
@@ -300,9 +305,9 @@ export const sqlInit = [
     "questionnaire"	INTEGER NOT NULL,
     FOREIGN KEY(questionnaire) REFERENCES "questionnaire"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "answer" (
+);
+
+    CREATE TABLE IF NOT EXISTS "answer" (
     "id"	SERIAL NOT NULL,
     "note" TEXT,
     "title" TEXT NOT NULL,
@@ -310,9 +315,9 @@ export const sqlInit = [
     "question"	INTEGER NOT NULL,
     FOREIGN KEY(question) REFERENCES "question"(id),
     PRIMARY KEY("id")
-);`
-    ,
-    `CREATE TABLE IF NOT EXISTS "mark" (
+);
+
+    CREATE TABLE IF NOT EXISTS "mark" (
     "id"	SERIAL NOT NULL,
     "answer" TEXT NOT NULL,
     "exam" INTEGER NOT NULL,
@@ -320,5 +325,5 @@ export const sqlInit = [
     FOREIGN KEY(exam) REFERENCES "exam"(id),
     FOREIGN KEY(question) REFERENCES "question"(id),
     PRIMARY KEY("id")
-);`
-]
+);
+`

@@ -14,8 +14,13 @@ export class School {
     public phone1 = '';
     public phone2 = '';
     public email = '';
-    public website = ''
-    public dist = ''
+    public website = '';
+    public dist = '';
+    public api = '';
+    public host = '';
+    public db = '';
+    public user = '';
+    public password = '';
 
     public static getCount(filter: string): Promise<School[]> {
         return TheDb.selectAll(`SELECT count(*) as count FROM "school" WHERE name LIKE '%${filter}%' OR 
@@ -70,7 +75,7 @@ export class School {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "school" (name, photo, dist, address, phone1,phone2, email,website)
             VALUES('${this.name}', '${this.photo}', '${this.dist}', '${this.address}', '${this.phone1}', 
@@ -79,7 +84,7 @@ export class School {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 School to be inserted. Was ${result.changes}`);
@@ -89,17 +94,37 @@ export class School {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "school" (id, name, photo, dist, address, phone1,phone2, email,website)
+            VALUES(${this.id}, '${this.name}', '${this.photo}', '${this.dist}', '${this.address}', '${this.phone1}', 
+            '${this.phone2}', '${this.email}', '${this.website}')`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 School to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "school"
                SET name = '${this.name}', photo = '${this.photo}', address = '${this.address}', phone1 = '${this.phone1}', 
-               phone2 = '${this.phone2}', dist = '${this.dist}', email = '${this.email}', website = '${this.website}'
+               phone2 = '${this.phone2}', dist = '${this.dist}', email = '${this.email}', website = '${this.website}',
+               api = '${this.api}', host = '${this.host}', db = '${this.db}', "user" = '${this.user}', password = '${this.password}'
              WHERE id = ${this.id}`;
 
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 School to be updated. Was ${result.changes}`);
@@ -107,14 +132,14 @@ export class School {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "school" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 School to be deleted. Was ${result.changes}`);
@@ -132,6 +157,11 @@ export class School {
         this.phone2 = row['phone2'];
         this.email = row['email'];
         this.website = row['website'];
+        this.api = row['api'];
+        this.host = row['host'];
+        this.db = row['db'];
+        this.user = row['user'];
+        this.password = row['password'];
         return this;
     }
 }

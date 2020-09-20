@@ -273,7 +273,7 @@ group by w.time`;
     }
 
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "weekday" (name, time, session_id, room_id)
             VALUES('${this.name}', '${this.time}', ${this.session_id}, ${this.room_id})`;
@@ -281,7 +281,7 @@ group by w.time`;
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Weekday to be inserted. Was ${result.changes}`);
@@ -291,7 +291,25 @@ group by w.time`;
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "weekday" (id,name, time, session_id, room_id)
+            VALUES(${this.id},'${this.name}', '${this.time}', ${this.session_id}, ${this.room_id})`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Weekday to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "weekday"
                SET name = '${this.name}', time = '${this.time}', session_id = ${this.session_id}, room_id = ${this.room_id}
@@ -300,7 +318,7 @@ group by w.time`;
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Weekday to be updated. Was ${result.changes}`);
@@ -308,13 +326,13 @@ group by w.time`;
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "weekday" WHERE id = ${id}`;
 
         const values = {};
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Weekday to be deleted. Was ${result.changes}`);

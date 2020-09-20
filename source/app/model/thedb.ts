@@ -31,7 +31,7 @@ export class TheDb {
         }): Settings.queryServerOne(sql);
     }
 
-    public static selectAll(sql: string, values: {}): Promise<Array<{}>> {
+    public static selectAll(sql: string, values: {}, cloud?: boolean): Promise<Array<{}>> {
         return Settings.isDbLocal ? new Promise<{}>((resolve, reject) => {
             TheDb.db.all(sql, values, (err, rows) => {
                 if (err) {
@@ -40,22 +40,22 @@ export class TheDb {
                     resolve(rows);
                 }
             });
-        }): Settings.queryServerAll(sql);
+        }): Settings.queryServerAll(sql, cloud);
     }
 
-    public static insert(sql: string, values: {}): Promise<IDbResult> {
-        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql);
+    public static insert(sql: string, values: {}, cloud?: boolean): Promise<IDbResult> {
+        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
     }
 
-    public static update(sql: string, values: {}): Promise<IDbResult> {
-        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql);
+    public static update(sql: string, values: {}, cloud?: boolean): Promise<IDbResult> {
+        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
     }
 
-    public static delete(sql: string, values: {}): Promise<IDbResult> {
-        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql);
+    public static delete(sql: string, values: {}, cloud?: boolean): Promise<IDbResult> {
+        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
     }
 
-    public static query(sql: string): Promise<void> {
+    public static query(sql: string, cloud?: boolean): Promise<void> {
         return Settings.isDbLocal ? new Promise<void>((resolve, reject) => {
             TheDb.db.run(sql, {}, (err) => {
                 if (err) {
@@ -64,7 +64,7 @@ export class TheDb {
                     resolve();
                 }
             });
-        }): Settings.queryServerAll(sql);
+        }): Settings.queryServerAll(sql, cloud);
     }
 
     public static beginTxn(): Promise<void> {

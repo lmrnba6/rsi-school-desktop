@@ -164,7 +164,7 @@ export class Payment {
             });
     }
 
-    public insert(): Promise<void> {
+    public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "payment" (amount,rest, username, date, comment, charge, month, intern_id)
             VALUES(${this.amount}, ${this.rest}, '${this.username}', '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',${this.charge},'${this.month.replace(/\'/g, "''")}', ${this.intern_id})`;
@@ -172,7 +172,7 @@ export class Payment {
         const values = {
         };
 
-        return TheDb.insert(sql, values)
+        return TheDb.insert(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Payment to be inserted. Was ${result.changes}`);
@@ -182,7 +182,25 @@ export class Payment {
             });
     }
 
-    public update(): Promise<void> {
+    public insertWithId(cloud?: boolean): Promise<void> {
+        const sql = `
+            INSERT INTO "payment" (id, amount,rest, username, date, comment, charge, month, intern_id)
+            VALUES(${this.id},${this.amount}, ${this.rest}, '${this.username}', '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',${this.charge},'${this.month.replace(/\'/g, "''")}', ${this.intern_id})`;
+
+        const values = {
+        };
+
+        return TheDb.insert(sql, values, cloud)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 Payment to be inserted. Was ${result.changes}`);
+                } else {
+                    this.id = result.lastID;
+                }
+            });
+    }
+
+    public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "payment"
                SET amount = ${this.amount}, error = ${this.error}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', charge = ${this.charge}
@@ -192,7 +210,7 @@ export class Payment {
         const values = {
         };
 
-        return TheDb.update(sql, values)
+        return TheDb.update(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Payment to be updated. Was ${result.changes}`);
@@ -200,14 +218,14 @@ export class Payment {
             });
     }
 
-    public static delete(id: number): Promise<void> {
+    public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "payment" WHERE id = ${id}`;
 
         const values = {
         };
 
-        return TheDb.delete(sql, values)
+        return TheDb.delete(sql, values, cloud)
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Payment to be deleted. Was ${result.changes}`);
