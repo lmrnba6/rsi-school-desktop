@@ -1,4 +1,4 @@
-<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48"></app-loader>
+<app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48" [type]="'progress'"></app-loader>
 <header>
     <section>
         <h1 id="logo">{{center}}
@@ -8,8 +8,22 @@
         </h1>
         <nav>
             <ul>
-                <li *ngIf="isCloud && (isUser || isAdmin)" (click)="syncDbServer()" class="pull-left"><p>
-                    <img (error)="fixImage($event)" style="width: 30px" [src]="cloudImage" alt="">
+<!--                <li *ngIf="connected && isCloud && (isUser || isAdmin)" class="pull-left">-->
+<!--                    <p>-->
+<!--                        <app-indicator [color]="'led-green-blink'"></app-indicator>-->
+<!--                    </p>-->
+<!--                </li>-->
+                <li *ngIf="!connected && isCloud && (isUser || isAdmin)" class="pull-left">
+                    <p>
+                        <app-indicator [color]="'led-red-blink'"></app-indicator>
+                    </p>
+                </li>
+                <li *ngIf="isCloud && connected && (isUser || isAdmin)" (click)="syncDbServer()" class="pull-left"><p>
+                    <img *ngIf="!block" (error)="fixImage($event)" style="width: 30px" [src]="cloudImage" alt="">
+                    <img *ngIf="block" (error)="fixImage($event)" style="width: 30px" [src]="cloudSync" alt="">
+                </li>
+                <li *ngIf="isCloud && connected && (isUser || isAdmin) && block" (click)="syncDbServer()" class="pull-left"><p>
+                    {{value.toFixed(0)}}%
                 </li>
                 <li (click)="goHome()" class="pull-left"><p>
                     <img (error)="fixImage($event)" style="width: 30px" [src]="homeImage" alt="">
@@ -23,16 +37,6 @@
                         <img (error)="fixImage($event)" style="width: 30px" [src]="powerImage" alt="">
                         <!--{{'nav.logout' | translate}}-->
                     </p></li>
-                <!--        <li *ngIf="connected" class="pull-right">-->
-                <!--          <p>-->
-                <!--          <app-indicator [color]="'led-green-blink'"></app-indicator>-->
-                <!--          </p>-->
-                <!--        </li>-->
-                <!--        <li *ngIf="!connected" class="pull-right">-->
-                <!--          <p>-->
-                <!--          <app-indicator [color]="'led-red-blink'"></app-indicator>-->
-                <!--          </p>-->
-                <!--        </li>-->
                 <li class="pull-right">
                     <p>
                         <img (error)="fixImage($event)" style="width: 30px; margin-right: 5px" [src]="userImage" alt="">{{user.name}}

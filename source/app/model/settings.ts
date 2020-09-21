@@ -46,22 +46,6 @@ export class Settings {
         port: 5432
     }
 
-    public static dbCloudClient: {
-        user: string,
-        host: string,
-        database: string,
-        password: string,
-        port: number,
-        // ssl: boolean
-    } = {
-        user: '',
-        host: '',
-        database: '',
-        password: '',
-        port: 5432,
-        // ssl: false
-    }
-
     public static dbHeroku: {
         user: string,
         host: string,

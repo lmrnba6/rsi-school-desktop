@@ -604,7 +604,8 @@
     "questionnaire_not_valid": "The question is not valid",
     "questionnaire_answer_not_valid": "One of the answers is not valid",
     "questionnaire_answers_required" : "At least one answer is required for this type of question",
-    "questionnaire_correct_required": "One answer should be correct"
+    "questionnaire_correct_required": "One answer should be correct",
+    "sync_warning_message": "The synchronisation will take few minutes (3-6 minutes) and all web users will be blocked. Do you really want to proceed?"
   },
   "buttons": {
     "save": "Save",

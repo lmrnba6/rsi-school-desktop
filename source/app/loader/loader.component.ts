@@ -10,7 +10,7 @@ export class LoaderComponent implements OnInit {
   @Input() public mode: string;
   @Input() public value: string;
   @Input() public diameter: string;
-
+  @Input() public type: string;
   constructor() { }
 
   ngOnInit() {

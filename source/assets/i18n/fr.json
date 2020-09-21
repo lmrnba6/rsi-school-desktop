@@ -607,7 +607,8 @@
     "questionnaire_not_valid": "La question n'est pas valide",
     "questionnaire_answer_not_valid": "L'une des réponses n'est pas valide",
     "questionnaire_answers_required": "Au moins une réponse est requise pour ce type de question",
-    "questionnaire_correct_required": "Une réponse doit être correcte"
+    "questionnaire_correct_required": "Une réponse doit être correcte",
+    "sync_warning_message": "La synchronisation prendra quelques minutes (3-6 minutes) et tous les utilisateurs Web seront bloqués. Voulez-vous vraiment continuer?"
   },
   "buttons": {
     "save": "Sauvegarder",

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, NgZone, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../_services/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -35,6 +35,7 @@ import {Commute} from "../model/commute";
 import {Question} from "../model/question";
 import {Answer} from "../model/answer";
 import {Mark} from "../model/mark";
+import {DialogsService} from "../_services/dialogs.service";
 
 
 @Component({
@@ -60,7 +61,7 @@ export class NavComponent implements OnInit {
     public block: boolean;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
-    public value: number = 100;
+    public value: number = 0;
     public inboxImage = `${this.getPath()}dist/assets/images/inboxImage.png`;
     public userImage = `${this.getPath()}dist/assets/images/userImage.png`;
     public powerImage = `${this.getPath()}dist/assets/images/powerImage.png`;
@@ -73,6 +74,8 @@ export class NavComponent implements OnInit {
                 private translate: TranslateService,
                 private messagesService: MessagesService,
                 private network: NetworkService,
+                private dialogsService: DialogsService,
+                private _ngZone: NgZone
     ) {
         this.lang = this.translate.currentLang;
         this.languageText = this.lang === 'fr' ? 'English' : 'Français';
@@ -86,8 +89,10 @@ export class NavComponent implements OnInit {
         this.getMessages();
         this.messagesService.messagesSubject.subscribe(() => this.getMessages());
         this.network.connectedObservable.subscribe(connected => {
-            !connected && alert(this.translate.instant('messages.network.offline'))
-            this.connected = connected;
+            this._ngZone.run(() => {
+                !connected && alert(this.translate.instant('messages.network.offline'))
+                this.connected = connected;
+            });
         });
     }
 
@@ -103,7 +108,7 @@ export class NavComponent implements OnInit {
                     database: school.db,
                     password: school.password,
                     port: 5432,
-                    // ssl: false
+                    ssl: true,
                 });
             }
         })
@@ -148,12 +153,12 @@ export class NavComponent implements OnInit {
     }
 
     connectDbServer() {
-        return new Promise(resolve => {
-            if (!Settings.cloudClient['_connected']) {
+        return new Promise((resolve, reject) => {
+            if (!Settings.cloudClient['_connected'] && !Settings.cloudClient['_connecting']) {
                 Settings.cloudClient.connect().then(() => {
                     resolve()
                 }, (e) => {
-                    throw new Error(e);
+                    reject(e);
                 });
             } else {
                 resolve()
@@ -162,133 +167,206 @@ export class NavComponent implements OnInit {
     }
 
     syncDbServer() {
-        try {
-            this.block = true;
-            this.connectDbServer().then(async () => {
-                if (Settings.cloudClient['_connected']) {
-                    await this.syncInboxRemote();
-                    await this.syncMarkRemote();
-                    await this.initAllRemoteTables();
-                    let users = await User.getAll();
-                    await Promise.all(users.map(u => u.insertWithId(true)));
-                    let trainings = await Training.getAll();
-                    await Promise.all(trainings.map(u => u.insertWithId(true)));
-                    let questionnaires = await Questionnaire.getAll();
-                    await Promise.all(questionnaires.map(u => u.insertWithId(true)));
-                    let instructors = await Instructor.getAll();
-                    await Promise.all(instructors.map(u => u.insertWithId(true)));
-                    let sessions = await Session.getAllNoException();
-                    await Promise.all(sessions.map(u => u.insertWithId(true)));
-                    let inboxes = await Inbox.getAll();
-                    await Promise.all(inboxes.map(u => u.insertWithId(true)));
-                    let rooms = await Room.getAll();
-                    await Promise.all(rooms.map(u => u.insertWithId(true)));
-                    let weekdays = await Weekday.getAll();
-                    await Promise.all(weekdays.map(u => u.insertWithId(true)));
-                    let interns = await Intern.getAll();
-                    await Promise.all(interns.map(u => u.insertWithId(true)));
-                    let visitors = await Visitor.getAll();
-                    await Promise.all(visitors.map(u => u.insertWithId(true)));
-                    let commentInterns = await CommentIntern.getAll();
-                    await Promise.all(commentInterns.map(u => u.insertWithId(true)));
-                    let commentInstructors = await CommentInstructor.getAll();
-                    await Promise.all(commentInstructors.map(u => u.insertWithId(true)));
-                    let schools = await School.getAll();
-                    await Promise.all(schools.map(u => u.insertWithId(true)));
-                    let paymentInstructors = await Payment_instructor.getAll();
-                    await Promise.all(paymentInstructors.map(u => u.insertWithId(true)));
-                    let exams = await Exam.getAll();
-                    await Promise.all(exams.map(u => u.insertWithId(true)));
-                    let attendances = await Attendance.getAll();
-                    await Promise.all(attendances.map(u => u.insertWithId(true)));
-                    let enrollments = await Enrollment.getAll();
-                    await Promise.all(enrollments.map(u => u.insertWithId(true)));
-                    let charges = await Charge.getAll();
-                    await Promise.all(charges.map(u => u.insertWithId(true)));
-                    let payments = await Payment.getAll();
-                    await Promise.all(payments.map(u => u.insertWithId(true)));
-                    let registers = await Register.getAll();
-                    await Promise.all(registers.map(u => u.insertWithId(true)));
-                    let cars = await Car.getAll();
-                    await Promise.all(cars.map(u => u.insertWithId(true)));
-                    let transports = await Transport.getAllNoException();
-                    await Promise.all(transports.map(u => u.insertWithId(true)));
-                    let commutes = await Commute.getAll();
-                    await Promise.all(commutes.map(u => u.insertWithId(true)));
-                    let questions = await Question.getAll();
-                    await Promise.all(questions.map(u => u.insertWithId(true)));
-                    let answers = await Answer.getAll();
-                    await Promise.all(answers.map(u => u.insertWithId(true)));
-                    let marks = await Mark.getAll();
-                    await Promise.all(marks.map(u => u.insertWithId(true)));
-                    this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
-                    this.block = false;
+        this.dialogsService
+            .confirm('messages.warning_title', 'messages.sync_warning_message', true, 'warning-sign')
+            .subscribe(confirm => {
+                if (confirm) {
+                    this.block = true;
+                    this.connectDbServer().then(async () => {
+                            try {
+                                if (Settings.cloudClient['_connected']) {
+                                    const createPromises: Array<Promise<any>> = [];
+                                    createPromises.push(Settings.createAll());
+                                    createPromises.push(Settings.createAllRemote());
+                                    createPromises.push(Settings.updateAll());
+                                    await Promise.all(createPromises);
+                                    this._ngZone.run(() => {
+                                        this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    });
+                                    const inboxesRemote = await InboxRemote.getAll();
+                                    const inboxPromises: Array<Promise<any>> = [];
+                                    inboxesRemote.forEach(m => {
+                                        const message = new Inbox();
+                                        Object.keys(m).forEach(s => message[s] = m[s]);
+                                        inboxPromises.push(message.insert());
+                                    });
+                                    await Promise.all(inboxPromises);
+                                    this._ngZone.run(() => {
+                                        this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    });
+                                    const marksRemote = await MarkRemote.getAll();
+                                    const markPromises: Array<Promise<any>> = [];
+                                    marksRemote.forEach(m => {
+                                        const mark = new Mark();
+                                        Object.keys(m).forEach(s => mark[s] = m[s]);
+                                        markPromises.push(mark.insert());
+                                    });
+                                    await Promise.all(inboxPromises);
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    const promises: Array<Promise<any>> = [];
+                                    promises.push(Settings.dropAll());
+                                    promises.push(Settings.createAll());
+                                    promises.push(Settings.createAllRemote());
+                                    promises.push(Settings.updateAll());
+                                    await Promise.all(promises);
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let users = await User.getAll();
+                                    await Promise.all(users.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let trainings = await Training.getAll();
+                                    await Promise.all(trainings.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let questionnaires = await Questionnaire.getAll();
+                                    await Promise.all(questionnaires.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let instructors = await Instructor.getAll();
+                                    await Promise.all(instructors.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let sessions = await Session.getAllNoException();
+                                    await Promise.all(sessions.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let inboxes = await Inbox.getAll();
+                                    await Promise.all(inboxes.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let rooms = await Room.getAll();
+                                    await Promise.all(rooms.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let weekdays = await Weekday.getAll();
+                                    await Promise.all(weekdays.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let interns = await Intern.getAll();
+                                    await Promise.all(interns.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let visitors = await Visitor.getAll();
+                                    await Promise.all(visitors.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let commentInterns = await CommentIntern.getAll();
+                                    await Promise.all(commentInterns.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let commentInstructors = await CommentInstructor.getAll();
+                                    await Promise.all(commentInstructors.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let schools = await School.getAll();
+                                    await Promise.all(schools.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let paymentInstructors = await Payment_instructor.getAll();
+                                    await Promise.all(paymentInstructors.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let exams = await Exam.getAll();
+                                    await Promise.all(exams.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let attendances = await Attendance.getAll();
+                                    await Promise.all(attendances.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let enrollments = await Enrollment.getAll();
+                                    await Promise.all(enrollments.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let charges = await Charge.getAll();
+                                    await Promise.all(charges.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let payments = await Payment.getAll();
+                                    await Promise.all(payments.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let registers = await Register.getAll();
+                                    await Promise.all(registers.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let cars = await Car.getAll();
+                                    await Promise.all(cars.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let transports = await Transport.getAllNoException();
+                                    await Promise.all(transports.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let commutes = await Commute.getAll();
+                                    await Promise.all(commutes.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let questions = await Question.getAll();
+                                    await Promise.all(questions.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let answers = await Answer.getAll();
+                                    await Promise.all(answers.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    let marks = await Mark.getAll();
+                                    await Promise.all(marks.map(u => u.insertWithId(true)));
+                                    this._ngZone.run(() => {
+                                        this.value = this.value + 3.33;
+                                    });
+                                    this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                                    this.block = false;
+                                    this.value = 0;
+                                }
+                                this.block = false;
+                                this.value = 0;
+                            } catch (e) {
+                                this.block = false;
+                                this.value = 0;
+                                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                            }
+                        }, () => {
+                        this.value = 0;
+                        this.block = false;
+                        this.messagesService.notifyMessage(this.translate.instant('Can\'t connect'), '', 'error');
+                        }
+                    );
                 }
-                this.block = false;
             });
-        } catch (e) {
-            this.showError()
-        }
-    }
-
-    private showError() {
-        this.block = false;
-        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-    }
-
-    private initAllRemoteTables() {
-        return new Promise<any>((resolve, reject) => {
-            const promises: Array<Promise<any>> = [];
-            promises.push(Settings.dropAll());
-            promises.push(Settings.createAll());
-            promises.push(Settings.createAllRemote());
-            promises.push(Settings.updateAll());
-            Promise.all(promises).then((e) => resolve(e)).catch((e) => {
-                reject(e)
-            });
-        });
-    }
-
-    private syncInboxRemote(): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            InboxRemote.getAll().then(messages => {
-                const promises: Array<Promise<any>> = [];
-                messages.forEach(m => {
-                    const message = new Inbox();
-                    Object.keys(m).forEach(s => message[s] = m[s]);
-                    promises.push(message.insert());
-                });
-                Promise.all(promises).then(() => resolve(), (e) => {
-                    reject(e)
-                });
-            }, (e) => {
-                reject(e)
-            });
-        });
-    }
-
-    private syncMarkRemote(): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            MarkRemote.getAll().then(marks => {
-                const prommises: Array<Promise<any>> = [];
-                marks.forEach(m => {
-                    const mark = new Mark();
-                    Object.keys(m).forEach(s => mark[s] = m[s]);
-                    prommises.push(mark.insert());
-                });
-                Promise.all(prommises).then(() => resolve(), ((e) => {
-                    reject(e)
-                }));
-            }, (e) => {
-                reject(e)
-            });
-        });
-    }
-
-    isRoot() {
-        const paths = window.location.pathname.split('/');
-        const test = paths.pop();
-        return paths.pop() === 'index.html' && test === '';
     }
 
     goBack() {
