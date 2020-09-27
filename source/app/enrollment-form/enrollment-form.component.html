@@ -49,7 +49,7 @@
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field  appearance="outline">
+            <mat-form-field  appearance="outline" style="display: none">
                 <mat-label>{{'enrollment.placeholder.comment' | translate}}</mat-label>
                 <textarea name="comment" formControlName="comment" [(ngModel)]="enrollment.comment" matInput
                 ></textarea>
@@ -59,12 +59,32 @@
     </form>
     <br>
     <div *ngIf="!isOnEdit" class="container">
-        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="training_fees">{{'intern.placeholder.fees' | translate}}</mat-checkbox>
+        <mat-form-field  appearance="outline">
+            <mat-label>{{'training.placeholder.enrollment_fees' | translate}}</mat-label>
+            <input type="number" min="0" [(ngModel)]="enrollment_fees" matInput>
+        </mat-form-field>
         <br>
-        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>
+        <mat-form-field  appearance="outline">
+            <mat-label>{{'training.placeholder.books_fees' | translate}}</mat-label>
+            <input type="number" min="0" [(ngModel)]="books_fees" matInput>
+        </mat-form-field>
         <br>
-        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>
+        <mat-form-field  appearance="outline">
+            <mat-label>{{'training.placeholder.training_fees' | translate}}</mat-label>
+            <input type="number" min="0" [(ngModel)]="training_fees" matInput>
+        </mat-form-field>
         <br>
-        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="backpack">{{'intern.placeholder.backpack' | translate}}</mat-checkbox>
+        <mat-form-field  appearance="outline">
+            <mat-label>{{'enrollment.placeholder.comment' | translate}}</mat-label>
+            <textarea [(ngModel)]="chargeComment" matInput
+            ></textarea>
+        </mat-form-field>
+<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="training_fees">{{'intern.placeholder.fees' | translate}}</mat-checkbox>-->
+<!--        <br>-->
+<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>-->
+<!--        <br>-->
+<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>-->
+<!--        <br>-->
+<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="backpack">{{'intern.placeholder.backpack' | translate}}</mat-checkbox>-->
     </div>
 </mat-card>

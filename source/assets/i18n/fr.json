@@ -573,6 +573,7 @@
     "salary": "Salaire"
   },
   "messages": {
+    "zero_charge_message": "Voulez-vous vraiment facturer cet étudiant 0 DA",
     "next_question_warning_message": "Voulez-vous vraiment valider cette réponse?",
     "no_questionnaire_attached_message": "Cet examen n'est pas disponible!",
     "start_test_warning_message": "Voulez-vous vraiment commencer l'examen?",

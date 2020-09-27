@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MessagesService} from "../_services/messages.service";
 import {ActivatedRoute, Router} from '@angular/router';
 import {Enrollment} from "../model/enrollment";
@@ -7,10 +7,8 @@ import './enrollment-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
 import {Session} from "../model/session";
 import {Intern} from "../model/intern";
-import {Training} from "../model/training";
 import {DialogsService} from "../_services/dialogs.service";
 import {Charge} from "../model/charge";
-import {CommentIntern} from "../model/commentIntern";
 
 @Component({
     selector: 'app-enrollment-form',
@@ -32,10 +30,10 @@ export class EnrollmentFormComponent implements OnInit {
     public sessions: Array<Session> = [];
     public internsFiltered: Array<Intern> = [];
     public internSelected: Intern | any;
-    public training_fees: boolean;
-    public enrollment_fees: boolean;
-    public books_fees: boolean;
-    public backpack: boolean
+    public training_fees: number;
+    public enrollment_fees: number;
+    public books_fees: number;
+    public chargeComment: string;
 
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -78,6 +76,11 @@ export class EnrollmentFormComponent implements OnInit {
                 if (enrollments.some(enrollment => enrollment.session_id === this.enrollment.session_id)) {
                     (this.enrollment.session_id as any) = undefined;
                     this.messagesService.notifyMessage(this.translate.instant('messages.intern_already_enrolled'), '', 'error');
+                } else {
+                    const session = this.sessions.find(s => this.enrollment.session_id === s.id);
+                    this.training_fees = session ? session['training_fees'] : 0;
+                    this.books_fees = session ? session['books_fees'] : 0;
+                    this.enrollment_fees = session ? session['enrollment_fees'] : 0;
                 }
             }, () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
@@ -184,7 +187,18 @@ export class EnrollmentFormComponent implements OnInit {
      * onSave
      */
     public onSave(): void {
-        this.onSaveOrUpdate();
+        const charge = Number(this.enrollment_fees) + Number(this.books_fees) + Number(this.training_fees);
+        if (charge > 0) {
+            this.onSaveOrUpdate();
+        } else {
+            this.dialogsService
+                .confirm('messages.warning_title', 'messages.zero_charge_message', true, 'usd')
+                .subscribe(confirm => {
+                    if (confirm) {
+                        this.onSaveOrUpdate();
+                    }
+                });
+        }
     }
 
 
@@ -203,14 +217,13 @@ export class EnrollmentFormComponent implements OnInit {
         this.block = true;
         coursePromise.then(
             () => {
-                this.block = false;
-                !this.isOnEdit && this.manageInternSold();
-                if (this.express) {
-                    this.goToPayment(this.internSelected.id)
-                } else {
+                if (this.isOnEdit) {
+                    this.block = false;
                     this.goBack();
+                    this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                } else {
+                    this.manageInternSold();
                 }
-                this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
@@ -231,49 +244,54 @@ export class EnrollmentFormComponent implements OnInit {
     }
 
     manageInternSold() {
-        Session.get(this.enrollment.session_id as number).then(session => {
-            Training.get(session.training_id as number).then(training => {
-                let charge = 0;
-                if (this.training_fees) {
-                    charge = charge + Number(training.training_fees);
-                }
-                if (this.backpack) {
-                    const comment: CommentIntern = new CommentIntern();
-                    comment.date = new Date().getTime();
-                    comment.comment = "L'étudiant à reçu un sac à dos pour " + session.name;
-                    comment.intern = this.enrollment.intern_id as number;
-                    comment.insert().then();
-
-                }
-                if (this.books_fees) {
-                    charge = charge + Number(training.books_fees);
-                }
-                if (this.enrollment_fees) {
-                    charge = charge + Number(training.enrollment_fees);
-                }
-                const newCharge = new Charge();
-                newCharge.amount = charge;
-                newCharge.date = new Date().getTime();
-                newCharge.intern = this.internSelected.id;
-                newCharge.rest = charge;
-                newCharge.session = this.enrollment.session_id;
-                newCharge.comment = "Frais à payer pour " + session.name
-                newCharge.insert().then(() => {
-                    this.block = false;
-                    Charge.getSold(newCharge.intern as number).then(sold => {
-                            Intern.updateSold(newCharge.intern as number, sold[0].sold).then();
+        let charge = 0;
+        if (this.training_fees) {
+            charge = charge + Number(this.training_fees);
+        }
+        if (this.books_fees) {
+            charge = charge + Number(this.books_fees);
+        }
+        if (this.enrollment_fees) {
+            charge = charge + Number(this.enrollment_fees);
+        }
+        if (charge > 0) {
+            const newCharge = new Charge();
+            newCharge.amount = charge;
+            newCharge.date = new Date().getTime();
+            newCharge.intern = this.internSelected.id;
+            newCharge.rest = charge;
+            newCharge.session = this.enrollment.session_id;
+            newCharge.comment = this.chargeComment;
+            newCharge.insert().then(() => {
+                this.block = false;
+                Charge.getSold(newCharge.intern as number).then(sold => {
+                        Intern.updateSold(newCharge.intern as number, sold[0].sold).then(() => {
+                            this.goBack();
+                            if (this.express) {
+                                this.goToPayment(this.internSelected.id)
+                            }
                         }, () => {
                             this.block = false;
                             this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                        }
-                    )
-                }, () => {
-                    this.block = false;
-                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                });
-                this.block = true;
-            })
-        })
+                        });
+                    }, () => {
+                        this.block = false;
+                        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    }
+                )
+            }, () => {
+                this.block = false;
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+            });
+        } else {
+            this.block = false;
+            this.goBack();
+            if (this.express) {
+                this.goToPayment(this.internSelected.id)
+            }
+            this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+
+        }
     }
 
 

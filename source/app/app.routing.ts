@@ -104,6 +104,10 @@ const appRoutes: Routes = [
                 component: InboxFormComponent
             },
             {
+                path: 'inbox-reply/:intern',
+                component: InboxFormComponent
+            },
+            {
                 path: 'settings/database',
                 component: DatabaseComponent
             },

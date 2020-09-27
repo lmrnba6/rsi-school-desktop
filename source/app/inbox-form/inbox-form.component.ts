@@ -10,6 +10,7 @@ import {MessagesService} from "../_services/messages.service";
 import {Attachment} from "../model/attachment";
 import {Session} from "../model/session";
 import {Intern} from "../model/intern";
+
 @Component({
     selector: 'app-inbox-form',
     templateUrl: './inbox-form.component.html',
@@ -33,7 +34,7 @@ export class InboxFormComponent implements OnInit {
     public user: User;
     public attachments: Array<Attachment> = [];
     public groupSelected: string = 'individual';
-    public groupList: Array<{value: string, viewValue: string}> = [];
+    public groupList: Array<{ value: string, viewValue: string }> = [];
     public sessions: Array<Session> = [];
     public isInstructor: boolean;
     public isIntern: boolean;
@@ -44,7 +45,7 @@ export class InboxFormComponent implements OnInit {
                 private translate: TranslateService,
                 private authService: AuthenticationService,
                 private messagesService: MessagesService
-                ) {
+    ) {
     }
 
     public ngOnInit(): void {
@@ -70,7 +71,7 @@ export class InboxFormComponent implements OnInit {
 
     }
 
-    public onGroupChange(event: {value: string}) {
+    public onGroupChange(event: { value: string }) {
         this.groupSelected = event.value;
         if (this.groupSelected !== 'individual' && this.groupSelected !== 'groups') {
             this.inboxForm.removeControl('to');
@@ -81,13 +82,28 @@ export class InboxFormComponent implements OnInit {
         }
     }
 
+    public getUser(id: number) {
+        User.get(id).then(user => {
+                this.userSelected = user;
+            },
+            () => {
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                this.block = false;
+            });
+    }
+
 
     /**
      * getParams
      */
     public getParams(): void {
         this.route.params.subscribe(res => {
-            if (res.id) {
+            if (res.intern) {
+                this.getUser(res.intern);
+                this.isOnEdit = false;
+                this.inbox = new Inbox();
+                this.inbox.date = new Date();
+            } else if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
             } else {
@@ -100,15 +116,16 @@ export class InboxFormComponent implements OnInit {
     }
 
     public displayFn(user: any) {
-        if(this.groupSelected === 'groups') {
+        if (this.groupSelected === 'groups') {
             return user ? user.name + ' ' + user.training + ' ' + user.instructor : '';
         }
         return user ? user.name : this.userSelected ? this.userSelected.name : '';
     }
 
     public userOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {            this.block = true;
-            if(this.groupSelected === 'groups') {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.block = true;
+            if (this.groupSelected === 'groups') {
                 Session.getAllPaged(0, 30, 'name', '', event.target.value).then(
                     users => {
                         this.block = false;
@@ -146,7 +163,7 @@ export class InboxFormComponent implements OnInit {
             .get(id)
             .then((val: Inbox) => {
                 this.inbox = val;
-                if(this.inbox.from !== this.user.id ) {
+                if (this.inbox.from !== this.user.id) {
                     this.inbox.read = 1;
                     this.inbox.update().then();
                 }
@@ -161,11 +178,10 @@ export class InboxFormComponent implements OnInit {
     }
 
 
-
     onUpload(event: any) {
         const _this = this;
         let reader = new FileReader();
-        if(event.target.files && event.target.files.length > 0) {
+        if (event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             reader.readAsDataURL(file);
             reader.onload = () => {
@@ -222,76 +238,80 @@ export class InboxFormComponent implements OnInit {
         });
     }
 
+    public onReply() {
+       this.router.navigate(['inbox-reply/' + this.inbox.from]);
+    }
+
     /**
      * onSave
      */
     public onSave(): void {
-        if(this.groupSelected === 'individual'){
+        if (this.groupSelected === 'individual') {
             this.onSaveOrUpdate();
-        }else if(this.groupSelected === 'groups') {
+        } else if (this.groupSelected === 'groups') {
             this.block = true;
             Intern.getInternBySession(this.userSelected.id).then(interns => {
-                interns.forEach( i => {
-                        this.inbox.date = new Date().getTime();
-                        this.inbox.from = this.user.id;
-                        this.inbox.to = i.user_id;
-                        this.inbox.insert().then();
+                interns.forEach(i => {
+                    this.inbox.date = new Date().getTime();
+                    this.inbox.from = this.user.id;
+                    this.inbox.to = i.user_id;
+                    this.inbox.insert().then();
                 })
                 this.block = false;
                 this.goBack();
                 this.saveAttachments(this.inbox.id);
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             })
-        }else if(this.groupSelected === 'students') {
+        } else if (this.groupSelected === 'students') {
             this.block = true;
             User.getAllStudents().then(interns => {
-                interns.forEach( i => {
-                        this.inbox.date = new Date().getTime();
-                        this.inbox.from = this.user.id;
-                        this.inbox.to = i.id;
-                        this.inbox.insert().then();
+                interns.forEach(i => {
+                    this.inbox.date = new Date().getTime();
+                    this.inbox.from = this.user.id;
+                    this.inbox.to = i.id;
+                    this.inbox.insert().then();
                 })
                 this.block = false;
                 this.goBack();
                 this.saveAttachments(this.inbox.id);
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             })
-        }else if(this.groupSelected === 'teachers') {
+        } else if (this.groupSelected === 'teachers') {
             this.block = true;
             User.getAllTeachers().then(teach => {
-                teach.forEach( i => {
-                        this.inbox.date = new Date().getTime();
-                        this.inbox.from = this.user.id;
-                        this.inbox.to = i.id;
-                        this.inbox.insert().then();
+                teach.forEach(i => {
+                    this.inbox.date = new Date().getTime();
+                    this.inbox.from = this.user.id;
+                    this.inbox.to = i.id;
+                    this.inbox.insert().then();
                 })
                 this.block = false;
                 this.goBack();
                 this.saveAttachments(this.inbox.id);
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             })
-        }else if(this.groupSelected === 'parents') {
+        } else if (this.groupSelected === 'parents') {
             this.block = true;
             User.getAllParents().then(interns => {
-                interns.forEach( i => {
-                        this.inbox.date = new Date().getTime();
-                        this.inbox.from = this.user.id;
-                        this.inbox.to = i.id;
-                        this.inbox.insert().then();
+                interns.forEach(i => {
+                    this.inbox.date = new Date().getTime();
+                    this.inbox.from = this.user.id;
+                    this.inbox.to = i.id;
+                    this.inbox.insert().then();
                 })
                 this.block = false;
                 this.goBack();
                 this.saveAttachments(this.inbox.id);
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             })
-        }else if(this.groupSelected === 'all') {
+        } else if (this.groupSelected === 'all') {
             this.block = true;
             User.getAll().then(all => {
-                all.forEach( i => {
-                        this.inbox.date = new Date().getTime();
-                        this.inbox.from = this.user.id;
-                        this.inbox.to = i.id;
-                        this.inbox.insert().then();
+                all.forEach(i => {
+                    this.inbox.date = new Date().getTime();
+                    this.inbox.from = this.user.id;
+                    this.inbox.to = i.id;
+                    this.inbox.insert().then();
                 })
                 this.block = false;
                 this.goBack();

@@ -8,6 +8,9 @@
             <button *ngIf="!isOnEdit" [disabled]="(inboxForm.invalid && userSelected)" class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
+            <button *ngIf="isOnEdit && user.id !== inbox.from" [disabled]="(inboxForm.invalid && userSelected)" class="pull-right save" (click)="onReply()" type="button" mat-button>
+                <span class="glyphicon glyphicon-share-alt"></span>
+            </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-arrow-left"></span>
             </button>
@@ -31,13 +34,13 @@
             <mat-form-field *ngIf="!isOnEdit && (groupSelected === 'individual' || groupSelected === 'groups')" class="example-full-width" appearance="outline">
                 <mat-label>{{'inbox.to' | translate}}</mat-label>
                 <input name="to" formControlName="to" matInput
-                       (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto"
+                       (keyup)="userOnChange($event)" matInput [matAutocomplete]="auto" [ngModel]="userSelected"
                        required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="userOnSelect($event.option.value)">
                     <mat-option *ngFor="let to of usersFiltered" [value]="to">
-                        {{to?.name + ' ' + (to?.training || '') + ' ' + (to?.instructor || '')}}
+                        {{to?.name + ' ' + (to?.username || '') + ' ' + (to?.training || '') + ' ' + (to?.instructor || '')}}
                     </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="to.invalid || !userSelected">{{'messages.field_required_error' | translate}}</mat-error>

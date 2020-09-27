@@ -110,7 +110,7 @@ export class ChargeComponent implements OnInit, OnChanges {
 
     public initSetting(): void {
         this.setting = new AbstractTableSetting();
-        this.setting.settingColumn = this.isAdmin;
+        this.setting.settingColumn = true;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.isIntern;
         this.setting.addRow = this.isUser || this.isAdmin;
@@ -141,12 +141,12 @@ export class ChargeComponent implements OnInit, OnChanges {
                 cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''
             }
         ];
-        this.isAdmin && this.setting.cols.push({
+        this.setting.cols.push({
             columnDef: 'settings',
             class: 'a10',
             header: '',
             type: 'settings',
-            delete: true,
+            delete: false,
             editRow: true
         });
     }

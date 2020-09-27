@@ -570,6 +570,7 @@
     "salary": "Salary"
   },
   "messages": {
+    "zero_charge_message": "Do you really want to charge this student 0 DA",
     "next_question_warning_message": "Do you really want to validate this answer?",
     "no_questionnaire_attached_message": "This exam is not available!",
     "start_test_warning_message": "Do you really want to start the test?",

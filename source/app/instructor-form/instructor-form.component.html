@@ -39,15 +39,15 @@
                        required>
                 <mat-error *ngIf="email.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline">
+<!--            <br>-->
+            <mat-form-field appearance="outline" style="display: none">
                 <mat-label>{{'instructor.placeholder.name_arabic' | translate}}</mat-label>
                 <input name="name_arabic" formControlName="name_arabic" [(ngModel)]="instructor.name_arabic" matInput
                        >
                 <mat-error *ngIf="name_arabic.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline">
+<!--            <br>-->
+            <mat-form-field appearance="outline" style="display: none">
                 <mat-label>{{'instructor.placeholder.sold' | translate}}</mat-label>
                 <input name="sold" type="number" formControlName="sold" [(ngModel)]="instructor.sold" matInput
                        [disabled]="!isAdmin">

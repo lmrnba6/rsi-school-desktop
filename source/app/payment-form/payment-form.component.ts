@@ -79,15 +79,17 @@ export class PaymentFormComponent implements OnInit {
     }
 
     public getInternToPay(id: number, tr: number): void {
-        Promise.all([Intern
-            .get(id), Charge.getBySession(tr, id)])
+        Intern.get(id).then((val: any) => {
+            this.internSelected = val;
+            this.payment.intern_id = this.internSelected.id;
+            this.intern.patchValue(val.id);
+            this.payment.date = new Date();
+        });
+        Charge.getBySession(tr, id)
             .then((val: any) => {
-                this.internSelected = val[0];
-                this.chargeSelected = val[1];
+                this.chargeSelected = val;
                 this.payment.charge = this.chargeSelected.id;
-                this.payment.intern_id = this.internSelected.id;
-                this.intern.patchValue(val[0].id);
-                this.charge.patchValue(val[1].id);
+                this.charge.patchValue(val.id);
                 this.payment.date = new Date();
                 this.getCharges();
             });

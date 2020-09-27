@@ -17,7 +17,6 @@ export class ChargeFormComponent implements OnInit {
     public charge: Charge;
     public block: boolean;
     public isOnEdit: boolean;
-    public express: boolean;
     public offer: boolean;
     public chargeForm: FormGroup;
     public date: FormControl;
@@ -96,10 +95,12 @@ export class ChargeFormComponent implements OnInit {
                     this.getSessions();
                 });
                 this.charge.date = new Date(Number(this.charge.date));
-                if (this.isOnEdit || this.express) {
+                if (this.isOnEdit) {
                     this.chargeForm.controls['date'].disable();
                     this.chargeForm.controls['intern'].disable();
                     this.chargeForm.controls['session'].disable();
+                    this.chargeForm.controls['amount'].disable();
+                    this.chargeForm.controls['rest'].disable();
                 }
             });
     }
@@ -136,6 +137,24 @@ export class ChargeFormComponent implements OnInit {
         await this.onSaveOrUpdate();
     }
 
+    updateSold() {
+        this.block = true;
+        Intern.get(this.charge.intern as number).then(intern => {
+            Intern.updateSold(this.charge.intern as number, Number(intern.sold) + Number(this.charge.rest)).then(
+                () => {
+                    this.block = false;
+                    this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                    this.goBack();
+                },
+                () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false;
+                });
+        }, () => {
+            this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+            this.block = false;
+        });
+    }
 
     /**
      * onSave
@@ -152,9 +171,13 @@ export class ChargeFormComponent implements OnInit {
         this.block = true;
         internPromise.then(
             () => {
-                this.block = false;
-                this.goBack();
-                this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                if(this.isOnEdit){
+                    this.goBack();
+                    this.block = false;
+                    this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                } else {
+                    this.updateSold();
+                }
             },
             () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');

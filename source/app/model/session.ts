@@ -82,13 +82,13 @@ export class Session {
     }
 
     public static getAll(): Promise<Session[]> {
-        const sql = `SELECT distinct s.*, t.name as training, i.name as instructor, t.type as type, (s."limit" - count(e.id)) as availability
+        const sql = `SELECT distinct s.*, t.name as training, t.training_fees, t.books_fees, t.enrollment_fees, i.name as instructor, t.type as type, (s."limit" - count(e.id)) as availability
                         FROM "session" as s 
                         inner join "training" as t on s.training_id = t.id
                         inner join "instructor" as i on s.instructor_id = i.id 
                         left join "enrollment" as e on s.id = e.session_id
                         where s.closed = false
-                        group by s.id, t.name, i.name, t.type
+                        group by s.id, t.name, i.name, t.type, t.training_fees, t.books_fees, t.enrollment_fees
                         `;
         const values = {};
 
