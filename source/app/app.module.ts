@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 import {routing} from './app.routing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {LoginComponent} from "./login/login.component";
 import {NavComponent} from "./nav/nav.component";
 import {FooterComponent} from "./footer/footer.component";
@@ -14,25 +14,39 @@ import {LayoutComponent} from "./layout/layout.component";
 import {HomeComponent} from "./home/home.component";
 import {
     MAT_DATE_LOCALE,
-    MatAutocompleteModule, MatBadgeModule,
+    MatAutocompleteModule,
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
-    MatCheckboxModule, MatChipsModule, MatDatepickerModule,
-    MatDialogModule, MatExpansionModule,
-    MatFormFieldModule, MatGridListModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
     MatIconModule,
-    MatInputModule, MatListModule,
-    MatMenuModule, MatNativeDateModule,
-    MatOptionModule, MatPaginatorIntl,
-    MatPaginatorModule, MatProgressBarModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatPaginatorIntl,
+    MatPaginatorModule,
+    MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatRadioModule, MatSelectModule,
+    MatRadioModule,
+    MatSelectModule,
     MatSidenavModule,
     MatSliderModule,
-    MatSlideToggleModule, MatSnackBarModule,
-    MatSortModule, MatStepperModule,
-    MatTableModule, MatTabsModule,
-    MatToolbarModule, MatTooltipModule
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule
 } from "@angular/material";
 import {UserComponent} from "./user/user.component";
 import {UserFormComponent} from "./user-form/user-form.component";
@@ -122,6 +136,7 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {TestComponent} from "./test/test.component";
 import {ReportComponent} from "./report/report.component";
+import {LogsComponent} from "./logs/logs.component";
 
 
 @NgModule({
@@ -272,7 +287,8 @@ import {ReportComponent} from "./report/report.component";
         QuestionnaireComponent,
         QuestionnaireFormComponent,
         TestComponent,
-        ReportComponent
+        ReportComponent,
+        LogsComponent
     ],
     entryComponents: [ConfirmDialogComponent, InfoDialogComponent, PromptDialogComponent],
     providers: [

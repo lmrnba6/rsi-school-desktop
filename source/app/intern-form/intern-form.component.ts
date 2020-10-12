@@ -270,6 +270,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
             this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
         },
         () => {
+            this.intern.birth = new Date(this.intern.birth);
             this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
             this.block = false;
         });
@@ -283,7 +284,7 @@ export class InternFormComponent implements OnInit, OnChanges, OnDestroy {
                 this.block = false;
             },
             () => {
-                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relation'), '', 'error');
                 this.block = false;
             });
     }

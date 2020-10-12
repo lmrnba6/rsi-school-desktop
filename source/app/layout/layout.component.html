@@ -87,6 +87,11 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="documentImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.document' | translate}}</span>
                 </a>
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.logs' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/logs">
+                    <!--                    <span class="glyphicon glyphicon-list-alt"></span>-->
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="errorImage" alt="">
+                    <span *ngIf="iconsShown">{{'menu.logs' | translate}}</span>
+                </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.result' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/result">
                     <!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="resultImage" alt="">

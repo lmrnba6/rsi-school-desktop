@@ -162,6 +162,7 @@ export class AttendanceFormComponent implements OnInit {
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
+                this.attendance.date = new Date(this.attendance.date);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
         });
@@ -187,6 +188,7 @@ export class AttendanceFormComponent implements OnInit {
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
+                this.attendance.date = new Date(this.attendance.date);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
             });

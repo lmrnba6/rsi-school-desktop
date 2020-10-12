@@ -180,6 +180,7 @@ export class ChargeFormComponent implements OnInit {
                 }
             },
             () => {
+                this.charge.date = new Date(this.charge.date);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
             });

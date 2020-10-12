@@ -14,6 +14,7 @@ import {OpenDialogOptions, remote} from 'electron';
 import {Client} from "pg";
 import * as fs from "fs";
 import {TheDb} from "./thedb";
+import moment = require("moment");
 
 /**
  * Class Settings holds information required by the application.
@@ -112,6 +113,7 @@ export class Settings {
     private static dbNameKarma = 'karma-database.db';
     /** Location of settings.json file */
     private static settingsPath: string;
+    public static logsPath: string;
 
     /**
      * Settings.initialize must be called a startup of application and determines the locations of database
@@ -125,6 +127,9 @@ export class Settings {
             if (!existsSync(Settings.settingsPath)) {
                 //this.getHDDSerialNumber(false);
                 Settings.write();
+            }
+            if (!existsSync(Settings.logsPath)) {
+                Settings.writeLogsFile();
             }
             Settings.read();
         }
@@ -165,6 +170,7 @@ export class Settings {
             const client: Client = cloud ? Settings.cloudClient : Settings.client;
             client.query(sql, (err, row) => {
                 if (err) {
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql +  ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve(row.rows);
@@ -178,6 +184,7 @@ export class Settings {
             const client: Client = cloud ? Settings.cloudClient : Settings.client;
             client.query(sql, (err,res: any) => {
                 if (err) {
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql +  ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -191,6 +198,7 @@ export class Settings {
             const client: Client = cloud ? Settings.cloudClient : Settings.client;
             client.query(sql, (err, row) => {
                 if (err) {
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql +  ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve(row.rows[0]);
@@ -203,6 +211,7 @@ export class Settings {
         return new Promise<any>((resolve, reject) => {
             Settings.cloudClient.query(sqlUpdate, (err,res: any) => {
                 if (err) {
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-UPDATE.JS ' +  ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -215,6 +224,7 @@ export class Settings {
         return new Promise<any>((resolve, reject) => {
             Settings.cloudClient.query(sqlInit, (err,res: any) => {
                 if (err) {
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-INIT.JS' +  ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -227,6 +237,7 @@ export class Settings {
         return new Promise<any>((resolve, reject) => {
             Settings.cloudClient.query(sqlInitRemote, (err,res: any) => {
                 if (err) {
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-INIT-REMOTE.JS' +  ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -240,6 +251,7 @@ export class Settings {
         return new Promise<any>((resolve, reject) => {
             Settings.cloudClient.query(sqlDrop, (err,res: any) => {
                 if (err) {
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-DROP.JS' +  ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -252,6 +264,19 @@ export class Settings {
         const settings = JSON.parse(readFileSync(Settings.settingsPath, {encoding: 'utf8'}));
         Settings.fromJson(settings);
         //this.getHDDSerialNumber(true);
+    }
+
+    public static writeLogsFile(text: string = ''): void {
+        if(!fs.existsSync(Settings.logsPath)) {
+            writeFileSync(Settings.logsPath,text + (text ? '\n' : ''), undefined);
+        } else {
+            const data = fs.readFileSync(Settings.logsPath); //read existing contents into data
+            const fd = fs.openSync(Settings.logsPath, 'w+');
+            const buffer = new Buffer(text + (text ? '\n' : ''));
+
+            fs.writeSync(fd, buffer, 0, buffer.length, 0); //write new data
+            fs.writeSync(fd, data, 0, data.length, buffer.length); //append old data
+        }
     }
 
 
@@ -286,6 +311,7 @@ export class Settings {
                 if (data.toString() === '1861986') {
                     Settings.serialNumber = 'ok'
                     Settings.write();
+                    Settings.writeLogsFile();
                 } else {
                     window.close();
                 }
@@ -301,6 +327,7 @@ export class Settings {
                 if (!Settings.hasFixedDbLocation) {
                     Settings.dbPath = filename;
                     Settings.write();
+                    Settings.writeLogsFile();
                 }
             })
             .catch((reason) => {
@@ -333,6 +360,7 @@ export class Settings {
                 if (!Settings.hasFixedDbLocation) {
                     Settings.dbPath = dbPath;
                     Settings.write();
+                    Settings.writeLogsFile();
                 }
             })
             .catch((reason) => {
@@ -377,6 +405,7 @@ export class Settings {
                 Settings.dbPath = path.join(remote.app.getPath(Settings.fixedLocation), 'data', Settings.dbName);
             } else {
                 Settings.settingsPath = path.join(remote.app.getPath('userData'), 'settings.json');
+                Settings.logsPath = path.join(remote.app.getPath('userData'), 'logs.json');
                 Settings.imgFolder = path.join(remote.app.getPath('userData'), 'img');
                 fs.existsSync(Settings.imgFolder) || fs.mkdirSync(Settings.imgFolder);
             }

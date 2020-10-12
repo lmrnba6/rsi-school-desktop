@@ -123,6 +123,7 @@ export class CommentInternFormComponent implements OnInit, OnChanges {
             this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
         },
         () => {
+            this.comment.date = new Date(this.comment.date);
             this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
             this.block = false;
         });

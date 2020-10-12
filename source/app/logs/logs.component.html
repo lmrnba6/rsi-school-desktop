@@ -1,0 +1,7 @@
+<h2>{{'menu.logs'| translate}}</h2>
+<mat-divider></mat-divider>
+<mat-card>
+  <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+  </app-loader>
+  <pre style="font-size: 1.5rem; white-space: pre-wrap">{{data}}</pre>
+</mat-card>

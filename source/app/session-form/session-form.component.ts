@@ -150,6 +150,8 @@ export class SessionFormComponent implements OnInit, OnChanges {
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
+                this.session.start = new Date(this.session.start);
+                this.session.end = new Date(this.session.end);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
             });

@@ -113,7 +113,7 @@ export class CourseComponent implements OnInit {
                             },
                             () => {
                                 this.block = false;
-                                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                                this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relation'), '', 'error');
                             }
                         );
                 }

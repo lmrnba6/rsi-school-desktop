@@ -92,7 +92,7 @@ export class QuestionnaireFormComponent implements OnInit {
                             this.answers = this.answers.filter(x => x.id !== id);
                         }, () => {
                             this.block = false;
-                            this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                            this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relation'), '', 'error');
                         });
                     } else {
                         this.answers.pop();
@@ -199,7 +199,7 @@ export class QuestionnaireFormComponent implements OnInit {
                                 this.questions = this.questions.filter(x => x.id !== id);
                                 this.handleSequences();
                             }, () => {
-                                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                                this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relation'), '', 'error');
                                 this.block = false;
                             });
                         })

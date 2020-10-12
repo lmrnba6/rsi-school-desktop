@@ -150,6 +150,7 @@ export class PaymentInstructorFormComponent implements OnInit {
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
+                this.payment_instructor.date = new Date(this.payment_instructor.date);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
             });

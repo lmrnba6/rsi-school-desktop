@@ -125,6 +125,7 @@ export class RegisterFormComponent implements OnInit {
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
+                this.register.date = new Date(this.register.date);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
             });

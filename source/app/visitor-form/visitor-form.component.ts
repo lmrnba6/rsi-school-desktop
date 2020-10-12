@@ -136,6 +136,7 @@ export class VisitorFormComponent implements OnInit, OnChanges {
             this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
         },
         () => {
+            this.visitor.date = new Date(this.visitor.date);
             this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
             this.block = false;
         });

@@ -36,6 +36,7 @@
     "individual": "Individuel"
   },
   "menu": {
+    "logs": "Journaux",
     "assessment": "Évaluation",
     "transport": "Transport",
     "account": "Compte",
@@ -573,6 +574,7 @@
     "salary": "Salaire"
   },
   "messages": {
+    "unable_delete_relation": "Impossible de supprimer cette ligne car des informations y sont liées",
     "zero_charge_message": "Voulez-vous vraiment facturer cet étudiant 0 DA",
     "next_question_warning_message": "Voulez-vous vraiment valider cette réponse?",
     "no_questionnaire_attached_message": "Cet examen n'est pas disponible!",

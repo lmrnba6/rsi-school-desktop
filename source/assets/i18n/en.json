@@ -36,6 +36,7 @@
     "individual": "Individual"
   },
   "menu": {
+    "logs": "Logs",
     "assessment": "Assessment",
     "transport": "Transport",
     "account": "Account",
@@ -570,6 +571,7 @@
     "salary": "Salary"
   },
   "messages": {
+    "unable_delete_relation": "Cannot delete this line because it has information linked to it",
     "zero_charge_message": "Do you really want to charge this student 0 DA",
     "next_question_warning_message": "Do you really want to validate this answer?",
     "no_questionnaire_attached_message": "This exam is not available!",

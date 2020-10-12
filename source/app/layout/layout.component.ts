@@ -39,6 +39,7 @@ export class LayoutComponent implements OnInit {
     public paymentImage = `${this.getPath()}dist/assets/images/paymentImage.png`;
     public registerImage = `${this.getPath()}dist/assets/images/registerImage.png`;
     public documentImage = `${this.getPath()}dist/assets/images/documentImage.png`;
+    public errorImage = `${this.getPath()}dist/assets/images/errorImage.png`;
     public accountingImage = `${this.getPath()}dist/assets/images/accountingImage.png`;
     public settingsImage = `${this.getPath()}dist/assets/images/settingsImage.png`;
     public resultImage = `${this.getPath()}dist/assets/images/resultImage.png`;

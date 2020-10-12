@@ -226,6 +226,7 @@ export class EnrollmentFormComponent implements OnInit {
                 }
             },
             () => {
+                this.enrollment.date = new Date(this.enrollment.date);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
             });

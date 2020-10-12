@@ -27,6 +27,7 @@ export class InstructorComponent implements OnInit {
     public pageSize: number = 10;
     public sortName: string = 'name';
     public sortDirection: string = 'DESC';
+    public isAdmin: boolean;
 
     constructor(
         private dialogsService: DialogsService,
@@ -37,6 +38,7 @@ export class InstructorComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.isAdmin = this.authService.getCurrentUser().role === 'admin';
         if (this.authService.getCurrentUser().role === 'teacher') {
             Instructor.getByUser(this.authService.getCurrentUser().id).then(instructor => {
                 instructor && this.router.navigate(['instructor-management-instructor/' + instructor.id]);
@@ -125,7 +127,7 @@ export class InstructorComponent implements OnInit {
                 type: 'boolean',
                 cell: (row: any) => `${row.isFullTime}`
             },
-            {columnDef: 'settings', class: 'a10', header: '', type: 'settings', delete: true, editRow: true},
+            {columnDef: 'settings', class: 'a10', header: '', type: 'settings', delete: this.isAdmin, editRow: true},
         ];
     }
 
@@ -176,7 +178,7 @@ export class InstructorComponent implements OnInit {
                             },
                             () => {
                                 this.block = false;
-                                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                                this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relationv'), '', 'error');
                             }
                         );
                 }

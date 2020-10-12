@@ -397,7 +397,7 @@ export class ExamComponent implements OnInit, OnChanges {
                                 } else {
                                     this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
                                 }
-                                this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                                this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relation'), '', 'success');
                             },
                             () => {
                                 this.block = false;
