@@ -1,9 +1,9 @@
 import {existsSync, readFileSync, writeFileSync} from 'fs';
 import * as path from 'path';
 const {sqlDrop} = require('../../assets/data/sql-drop.js');
-const {sqlInit} = require('../../assets/data/sql-init.js');
-const {sqlUpdate} = require('../../assets/data/sql-update.js');
 const {sqlInitRemote} = require('../../assets/data/sql-init-remote.js');
+const {sqlUpdate} = require('../../assets/data/sql-update.js');
+const {sqlInit} = require('../../assets/data/sql-init.js');
 
 
 
@@ -13,8 +13,8 @@ const openSshTunnel = require('open-ssh-tunnel');
 import {OpenDialogOptions, remote} from 'electron';
 import {Client} from "pg";
 import * as fs from "fs";
-import {TheDb} from "./thedb";
 import moment = require("moment");
+import {TheDb} from "./thedb";
 
 /**
  * Class Settings holds information required by the application.

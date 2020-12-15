@@ -9,6 +9,8 @@ import {Intern} from "../model/intern";
 import {Training} from "../model/training";
 import {School} from "../model/school";
 import {AuthenticationService} from "../_services/authentication.service";
+import moment = require("moment");
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
@@ -39,8 +41,8 @@ export class HomeComponent implements OnInit,OnChanges {
     public sessionImage = `${this.getPath()}dist/assets/images/sessionImage.png`;
     public trainingImage = `${this.getPath()}dist/assets/images/trainingImage.png`;
 
-    constructor(private auth: AuthenticationService) {}
-
+    constructor(private auth: AuthenticationService, private router: Router) {
+    }
     getPath(){
         const l = window.location.href.split('/');
         const c = l.length - l.indexOf('index.html');
@@ -48,6 +50,11 @@ export class HomeComponent implements OnInit,OnChanges {
     }
 
     ngOnInit(): void {
+        const exp = localStorage.getItem('expiration');
+        if (!this.auth.getCurrentUser().role.includes('super') && exp && moment(Number(exp)).isBefore(moment())) {
+            this.auth.logout();
+            this.router.navigate(['/login']);
+        }
         this.block = true;
         this.isTeacher = this.auth.getCurrentUser().role === 'teacher';
         this.isIntern = this.auth.getCurrentUser().role === 'student';

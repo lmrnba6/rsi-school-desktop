@@ -9,6 +9,12 @@
 <mat-nav-list>
   <mat-nav-list><a mat-list-item routerLink="/settings/transportation"><img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" [src]="carImage" alt="">{{'administration.transportation' | translate}}</a></mat-nav-list>
 </mat-nav-list>
+<mat-form-field *ngIf="user?.role?.includes('super')" appearance="outline">
+  <mat-label>{{'Date d\'expiration'}}</mat-label>
+  <input  type="date"
+          [ngModel]="date"
+          (input)="handleExpiration($event.target.value)" matInput>
+</mat-form-field>
 <!--<mat-nav-list>-->
   <!--<mat-nav-list><a mat-list-item routerLink="/settings/database"><span class="glyphicon glyphicon-hdd"></span>{{'administration.database' | translate}}</a></mat-nav-list>-->
 <!--</mat-nav-list>-->
