@@ -21,7 +21,7 @@ export class Register {
 
 
     public static getCount(filter: string): Promise<Register[]> {
-        const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "register" WHERE amount LIKE '%${filter}%' OR 
+        const sql = Settings.isDbLocalFile ? `SELECT count(*) as count FROM "register" WHERE amount LIKE '%${filter}%' OR 
                                         date LIKE '%${filter}%'` :
             `SELECT count(*) as count FROM "register" AS p 
                             WHERE                         
@@ -61,7 +61,7 @@ export class Register {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, start: number, end: number): Promise<Register[]> {
-        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
+        const sql = Settings.isDbLocalFile ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
                             FROM "register" AS p 
                             WHERE 
                             p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}'
@@ -87,7 +87,7 @@ export class Register {
     }
 
     public static getAllPagedRecipes(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, start: number, end: number): Promise<Register[]> {
-        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
+        const sql = Settings.isDbLocalFile ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
                             FROM "register" AS p 
                             WHERE 
                             p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}' and p.amount > 0
@@ -113,7 +113,7 @@ export class Register {
     }
 
     public static getAllPagedExpenses(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, start: number, end: number): Promise<Register[]> {
-        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
+        const sql = Settings.isDbLocalFile ? `SELECT p.id, p.amount, p.date, p.comment,p.responsible, p.intern, p.training, p.sold, p.rest 
                             FROM "register" AS p 
                             WHERE 
                             p.comment LIKE '%${filter}%' and p.date between '${start}' and '${end}' and p.amount < 0

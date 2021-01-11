@@ -20,7 +20,7 @@ export class TheDb {
     private static db: Database;
 
     public static selectOne(sql: string, values: {}): Promise<{}> {
-        return Settings.isDbLocal ? new Promise<{}>((resolve, reject) => {
+        return Settings.isDbLocalFile ? new Promise<{}>((resolve, reject) => {
             TheDb.db.get(sql, values, (err, row) => {
                 if (err) {
                     reject(err);
@@ -32,7 +32,7 @@ export class TheDb {
     }
 
     public static selectAll(sql: string, values: {}, cloud?: boolean): Promise<Array<{}>> {
-        return Settings.isDbLocal ? new Promise<{}>((resolve, reject) => {
+        return Settings.isDbLocalFile ? new Promise<{}>((resolve, reject) => {
             TheDb.db.all(sql, values, (err, rows) => {
                 if (err) {
                     reject(err);
@@ -44,19 +44,19 @@ export class TheDb {
     }
 
     public static insert(sql: string, values: {}, cloud?: boolean): Promise<IDbResult> {
-        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
+        return Settings.isDbLocalFile ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
     }
 
     public static update(sql: string, values: {}, cloud?: boolean): Promise<IDbResult> {
-        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
+        return Settings.isDbLocalFile ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
     }
 
     public static delete(sql: string, values: {}, cloud?: boolean): Promise<IDbResult> {
-        return Settings.isDbLocal ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
+        return Settings.isDbLocalFile ? TheDb.change(sql, values): Settings.queryServerChange(sql, cloud);
     }
 
     public static query(sql: string, cloud?: boolean): Promise<void> {
-        return Settings.isDbLocal ? new Promise<void>((resolve, reject) => {
+        return Settings.isDbLocalFile ? new Promise<void>((resolve, reject) => {
             TheDb.db.run(sql, {}, (err) => {
                 if (err) {
                     reject(err);

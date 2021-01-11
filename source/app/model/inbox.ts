@@ -20,8 +20,8 @@ export class Inbox {
 
 
     public static getCount(filter: string, to: number,  deleted: boolean, sent: boolean): Promise<Inbox[]> {
-        const fromCol = Settings.isDbLocal ? `'from'` : `from`;
-        const toCol = Settings.isDbLocal ? `'to'` : `to`;
+        const fromCol = Settings.isDbLocalFile ? `'from'` : `from`;
+        const toCol = Settings.isDbLocalFile ? `'to'` : `to`;
         let where = `(${(deleted || sent) ? 'u1.id' : 'u2.id'}  = ${to}`;
         where += !sent ? ` AND i.deleted = ${deleted ? 1 : 0})` : ')';
         return TheDb.selectAll(`SELECT count(*) as count 
@@ -35,8 +35,8 @@ export class Inbox {
     }
 
     public static getCountUnread(to: number): Promise<Inbox[]> {
-        const fromCol = Settings.isDbLocal ? `'from'` : `from`;
-        const toCol = Settings.isDbLocal ? `'to'` : `to`;
+        const fromCol = Settings.isDbLocalFile ? `'from'` : `from`;
+        const toCol = Settings.isDbLocalFile ? `'to'` : `to`;
         return TheDb.selectAll(`SELECT count(*) as count 
                                 FROM "inbox" AS i 
                             INNER JOIN "user" AS u1 ON i.${fromCol} = u1.id
@@ -47,8 +47,8 @@ export class Inbox {
 
 
     public static get(id: number): Promise<Inbox> {
-        const fromCol = Settings.isDbLocal ? `'from'` : `from`;
-        const toCol = Settings.isDbLocal ? `'to'` : `to`;
+        const fromCol = Settings.isDbLocalFile ? `'from'` : `from`;
+        const toCol = Settings.isDbLocalFile ? `'to'` : `to`;
         const sql = `SELECT i.id, i.subject, i.date, i.content, i.${fromCol}, i.${toCol}, i.deleted, i.read, u1.name as from_user, u2.name as to_user
                                                 ,(select count(*) from attachment as a where a.inbox_id = i.id) as attachments 
                             FROM "inbox" AS i 
@@ -84,8 +84,8 @@ export class Inbox {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, to: number, deleted: boolean, sent: boolean): Promise<Inbox[]> {
-        const fromCol = Settings.isDbLocal ? `'from'` : `from`;
-        const toCol = Settings.isDbLocal ? `'to'` : `to`;
+        const fromCol = Settings.isDbLocalFile ? `'from'` : `from`;
+        const toCol = Settings.isDbLocalFile ? `'to'` : `to`;
         let where = `(${(deleted || sent) ? 'u1.id' : 'u2.id'}  = ${to}`;
         where += !sent ? ` AND i.deleted = ${deleted ? 1 : 0})` : ')';
         const sql = `SELECT i.id, i.subject, i.date, i.content, i.${fromCol}, i.${toCol}, i.deleted, i.read, u1.name as from_user, u2.name as to_user
@@ -114,8 +114,8 @@ export class Inbox {
 
     
     public insert(cloud?: boolean): Promise<void> {
-        const fromCol = Settings.isDbLocal ? `'from'` : `"from"`;
-        const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
+        const fromCol = Settings.isDbLocalFile ? `'from'` : `"from"`;
+        const toCol = Settings.isDbLocalFile ? `'to'` : `"to"`;
         const sql = `
             INSERT INTO "inbox" (subject, date, content, ${fromCol}, ${toCol}, deleted, read)
             VALUES('${this.subject ? this.subject.replace(/\'/g, "''") : ''}', ${this.date}, '${this.content.replace(/\'/g, "''")}',${this.from}, ${this.to}, ${this.deleted}, ${this.read}) ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
@@ -134,8 +134,8 @@ export class Inbox {
     }
 
     public insertWithId(cloud?: boolean): Promise<void> {
-        const fromCol = Settings.isDbLocal ? `'from'` : `"from"`;
-        const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
+        const fromCol = Settings.isDbLocalFile ? `'from'` : `"from"`;
+        const toCol = Settings.isDbLocalFile ? `'to'` : `"to"`;
         const sql = `
             INSERT INTO "inbox" (id,subject, date, content, ${fromCol}, ${toCol}, deleted, read)
             VALUES(${this.id}, '${this.subject ? this.subject.replace(/\'/g, "''") : ''}', ${this.date}, '${this.content.replace(/\'/g, "''")}',${this.from}, ${this.to}, ${this.deleted}, ${this.read}) ${Settings.isDbLocalServer ? 'RETURNING id' : ''}`;
@@ -154,8 +154,8 @@ export class Inbox {
     }
 
     public update(cloud?: boolean): Promise<void> {
-        const fromCol = Settings.isDbLocal ? `'from'` : `"from"`;
-        const toCol = Settings.isDbLocal ? `'to'` : `"to"`;
+        const fromCol = Settings.isDbLocalFile ? `'from'` : `"from"`;
+        const toCol = Settings.isDbLocalFile ? `'to'` : `"to"`;
         const sql = `
             UPDATE "inbox"
                SET subject = '${this.subject ? this.subject.replace(/\'/g, "''") : ''}', date = ${this.date}, content = '${this.content.replace(/\'/g, "''")}', ${fromCol} = ${this.from},

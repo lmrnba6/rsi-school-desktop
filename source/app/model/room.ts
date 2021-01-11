@@ -13,7 +13,7 @@ export class Room {
     public capacity = '';
 
     public static getCount(filter: string): Promise<Room[]> {
-        const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "room" WHERE number ILIKE '%${filter}%' OR 
+        const sql = Settings.isDbLocalFile ? `SELECT count(*) as count FROM "room" WHERE number ILIKE '%${filter}%' OR 
                                         capacity LIKE '%${filter}%'` :
             `SELECT count(*) as count FROM "room" WHERE number LIKE '%${filter}%' OR 
                                         CAST(capacity AS TEXT) LIKE '%${filter}%'`
@@ -51,7 +51,7 @@ export class Room {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Room[]> {
-        const sql = Settings.isDbLocal ? `SELECT * FROM "room" WHERE number ILIKE '%${filter}%' OR 
+        const sql = Settings.isDbLocalFile ? `SELECT * FROM "room" WHERE number ILIKE '%${filter}%' OR 
                             capacity LIKE '%${filter}%'
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
             `SELECT * FROM "room" WHERE number ILIKE '%${filter}%' OR 

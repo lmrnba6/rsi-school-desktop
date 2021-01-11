@@ -16,7 +16,7 @@ export class Payment_instructor {
     public instructor_id: number | Instructor;
 
     public static getCount(filter: string): Promise<Payment_instructor[]> {
-        const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "payment_instructor" WHERE amount LIKE '%${filter}%' OR 
+        const sql = Settings.isDbLocalFile ? `SELECT count(*) as count FROM "payment_instructor" WHERE amount LIKE '%${filter}%' OR 
                                         date LIKE '%${filter}%'` :
             `SELECT count(*) as count FROM "payment_instructor" AS p INNER JOIN "instructor" AS i ON p.instructor_id = i.id WHERE 
                             p.date ILIKE '%${filter}%' OR i.name ILIKE '%${filter}%'`;
@@ -76,7 +76,7 @@ export class Payment_instructor {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Payment_instructor[]> {
-        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment, p.instructor_id FROM "payment_instructor" AS p INNER JOIN "instructor" AS i ON p.instructor_id = i.id WHERE p.amount LIKE '%${filter}%' OR 
+        const sql = Settings.isDbLocalFile ? `SELECT p.id, p.amount, p.date, p.comment, p.instructor_id FROM "payment_instructor" AS p INNER JOIN "instructor" AS i ON p.instructor_id = i.id WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
             `SELECT p.id, p.amount, p.date, p.comment, p.instructor_id FROM "payment_instructor" AS p INNER JOIN "instructor" AS i ON p.instructor_id = i.id WHERE 

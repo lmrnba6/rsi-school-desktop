@@ -142,7 +142,7 @@ export class Session {
 
 
     public static getAllOpenSessions(): Promise<Session[]> {
-        const sql = Settings.isDbLocal ? `SELECT s.*, ins.name as instructor, t.name as training, count(i.id) as interns FROM "session" as s 
+        const sql = Settings.isDbLocalFile ? `SELECT s.*, ins.name as instructor, t.name as training, count(i.id) as interns FROM "session" as s 
 				left join "enrollment" as e On e.session_id = s.id 
 				left join "training" as t on s.training_id = t.id
                 left join "intern" as i on e.intern_id = i.id
@@ -312,7 +312,7 @@ export class Session {
     }
 
     public insert(cloud?: boolean): Promise<void> {
-        const sql = Settings.isDbLocal ? `
+        const sql = Settings.isDbLocalFile ? `
             INSERT INTO "session" (name, start, end,\`limit\`, instructor_id, training_id, closed)
             VALUES('${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id}, ${this.closed})` :
             `
@@ -333,7 +333,7 @@ export class Session {
     }
 
     public insertWithId(cloud?: boolean): Promise<void> {
-        const sql = Settings.isDbLocal ? `
+        const sql = Settings.isDbLocalFile ? `
             INSERT INTO "session" (id,name, start, end,\`limit\`, instructor_id, training_id, closed)
             VALUES(${this.id}, '${this.name}', ${this.start}, ${this.end}, ${this.limit}, ${this.instructor_id}, ${this.training_id}, ${this.closed})` :
             `
@@ -354,7 +354,7 @@ export class Session {
     }
 
     public update(cloud?: boolean): Promise<void> {
-        const sql = Settings.isDbLocal ? `
+        const sql = Settings.isDbLocalFile ? `
             UPDATE "session"
                SET name = '${this.name}', start = ${this.start}, end = ${this.end}, \`limit\` = ${this.limit}, instructor_id = '${this.instructor_id}',
                training_id = '${this.training_id}', closed = ${this.closed}

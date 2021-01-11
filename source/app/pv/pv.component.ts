@@ -62,7 +62,7 @@ export class PvComponent implements OnInit {
             this.getDataTableByDate();
             this.getInternsBySession();
         }
-        this.title = this.pvName === 'form' ? this.translate.instant('pv.form') : this.title;
+        this.title = this.pvName === 'form' ? this.translate.instant('pv.form') : this.pvName === 'receipt' ? this.translate.instant('pv.receipt') : this.title;
         this.dateDiploma = new Date().toLocaleDateString('fr-FR');
         this.getCenter();
     }

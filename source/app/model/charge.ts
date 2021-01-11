@@ -19,7 +19,7 @@ export class Charge {
     public intern: number | Intern;
 
     public static getCount(filter: string): Promise<Charge[]> {
-        const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "charge" WHERE amount LIKE '%${filter}%' OR 
+        const sql = Settings.isDbLocalFile ? `SELECT count(*) as count FROM "charge" WHERE amount LIKE '%${filter}%' OR 
                                         date LIKE '%${filter}%'` :
             `SELECT count(*) as count FROM "charge" AS p 
                             INNER JOIN "intern" AS i ON p.intern = i.id 
@@ -111,7 +111,7 @@ export class Charge {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Charge[]> {
-        const sql = Settings.isDbLocal ? `SELECT p.id, p.amount, p.date, p.comment, p.intern, i.name as intern 
+        const sql = Settings.isDbLocalFile ? `SELECT p.id, p.amount, p.date, p.comment, p.intern, i.name as intern 
                             FROM "charge" AS p 
                             INNER JOIN "intern" AS i ON p.intern = i.id 
                             WHERE p.amount LIKE '%${filter}%' OR 

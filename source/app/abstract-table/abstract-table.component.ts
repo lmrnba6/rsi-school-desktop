@@ -302,7 +302,7 @@ export class AbstractTableComponent
     public applyFilter(filter: any): void {
         //if(filter.keyCode == 13) {
         let filterValue: string = filter.target.value.trim(); // Remove whitespace
-        filterValue = Settings.isDbLocal ? filterValue.toLowerCase() : filterValue; // Datasource defaults to lowercase matches
+        filterValue = Settings.isDbLocalFile ? filterValue.toLowerCase() : filterValue; // Datasource defaults to lowercase matches
         // this.dataSource.filter = filterValue;
         this.filter.emit(filterValue);
         //}

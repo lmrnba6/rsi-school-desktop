@@ -25,7 +25,7 @@ export class Exam {
 
 
     public static getCount(filter: string): Promise<Exam[]> {
-        const sql = Settings.isDbLocal ? `SELECT count(*) as count FROM "exam" WHERE date LIKE '%${filter}%' OR 
+        const sql = Settings.isDbLocalFile ? `SELECT count(*) as count FROM "exam" WHERE date LIKE '%${filter}%' OR 
                                         mark LIKE '%${filter}%'` :
             `SELECT count(*) as count FROM "exam" AS e 
                                              INNER JOIN "session" AS s ON e.session_id = s.id
@@ -166,7 +166,7 @@ export class Exam {
     }
 
     public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Exam[]> {
-        const sql = Settings.isDbLocal ? `SELECT e.id, e.mark, e.result, e.retake, e.date, e.time, e.comment, s.training_id, e.intern_id, e.session_id,q.title as questionnaire, i.name as intern, s.name as session, t.name as training
+        const sql = Settings.isDbLocalFile ? `SELECT e.id, e.mark, e.result, e.retake, e.date, e.time, e.comment, s.training_id, e.intern_id, e.session_id,q.title as questionnaire, i.name as intern, s.name as session, t.name as training
                                             FROM "exam" AS e 
                                              INNER JOIN "training" AS t ON s.training_id = t.id
                                              INNER JOIN "intern" AS i ON e.intern_id = i.id

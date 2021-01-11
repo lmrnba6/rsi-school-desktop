@@ -93,7 +93,7 @@ export class Attendance {
     }
 
     public static getCountByMonth(session: number, start: number, end: number): Promise<Attendance> {
-        const whereDate = Settings.isDbLocal ? `a.date between ${start} and ${end}` : `a.date between '${start}' and '${end}'`;
+        const whereDate = Settings.isDbLocalFile ? `a.date between ${start} and ${end}` : `a.date between '${start}' and '${end}'`;
         const sql = `SELECT count(a.id) as count FROM "attendance" as a 
                                     inner join "session" as s on a.session_id = s.id
                                     where s.id = ${session}  and
@@ -140,7 +140,7 @@ export class Attendance {
     }
 
     public static getAllPagedByInstructor(pageIndex: number, pageSize: number, sort: string, order: string, instructor: number): Promise<Attendance[]> {
-        const groupBy = Settings.isDbLocal ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name, w.name';
+        const groupBy = Settings.isDbLocalFile ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name, w.name';
         const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, w.name as day, r.number,s.name as session, t.name as training, ins.name as instructor, i.name as intern 
                                                     FROM "attendance" AS a INNER JOIN weekday AS w ON a.weekday_id = w.id
                                                    INNER JOIN session AS s ON a.session_id = s.id
@@ -164,7 +164,7 @@ export class Attendance {
     }
 
     public static getAllPagedByWeekday(pageIndex: number, pageSize: number, sort: string, order: string, weekday: number): Promise<Attendance[]> {
-        const groupBy = Settings.isDbLocal ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name, w.name';
+        const groupBy = Settings.isDbLocalFile ? 'a.date' : 'a.id, a.date, w.time, r.number, s.name, t.name, ins.name, i.name, w.name';
         const sql = `SELECT a.id, a.date, a.present, a.weekday_id, a.session_id, a.intern_id, w.time, w.name as day, r.number, s.name as session, t.name as training, ins.name as instructor, i.name as intern 
                                                     FROM "attendance" AS a INNER JOIN weekday AS w ON a.weekday_id = w.id
                                                    INNER JOIN session AS s ON a.session_id = s.id

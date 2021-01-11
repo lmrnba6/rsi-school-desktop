@@ -32,7 +32,7 @@ export class DatabaseComponent implements OnInit {
             .subscribe(confirm => {
                 if (confirm) {
                     Settings.read();
-                    Settings.isDbLocal = !Settings.isDbLocal;
+                    Settings.isDbLocalFile = !Settings.isDbLocalFile;
                     Settings.write();
                     Settings.initialize();
                     this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');

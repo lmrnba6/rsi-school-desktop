@@ -1,13 +1,10 @@
 import {existsSync, readFileSync, writeFileSync} from 'fs';
 import * as path from 'path';
+
 const {sqlDrop} = require('../../assets/data/sql-drop.js');
 const {sqlInitRemote} = require('../../assets/data/sql-init-remote.js');
 const {sqlUpdate} = require('../../assets/data/sql-update.js');
 const {sqlInit} = require('../../assets/data/sql-init.js');
-
-
-
-const openSshTunnel = require('open-ssh-tunnel');
 
 // tslint:disable-next-line:no-implicit-dependencies
 import {OpenDialogOptions, remote} from 'electron';
@@ -26,14 +23,14 @@ import {TheDb} from "./thedb";
 export class Settings {
     public static api: string = ''
     public static serialNumber: string = '';
-    public static isDbLocal = false;
+    public static isDbLocalFile = false;
     public static isCloud = true;
     public static isDbLocalServer = true;
-    public static isHerokuServer = false;
+    public static isDbWebServer = false;
     public static client: Client;
     public static cloudClient: Client;
     public static isDebug: boolean = false;
-    public static dbClientLocal: {
+    public static dbLocalServer: {
         user: string,
         host: string,
         database: string,
@@ -41,13 +38,13 @@ export class Settings {
         port: number
     } = {
         user: 'postgres',
-        host: 'localhost',
+        host: '127.0.0.1',
         database: 'postgres',
         password: 'admin',
         port: 5432
     }
 
-    public static dbHeroku: {
+    public static dbWebServer: {
         user: string,
         host: string,
         database: string,
@@ -62,33 +59,7 @@ export class Settings {
         port: 5432,
         ssl: true
     }
-    public static dbClientServer: {
-        user: string,
-        host: string,
-        database: string,
-        password: string,
-        port: number
-    } ={
-        user: 'postgres',
-        host: '127.0.0.1',
-        database: 'ee',
-        password: '',
-        port: 5435
-    }
 
-    public static dbSshTunnel = {
-        host: '176.58.103.5',
-        username: 'root',
-        password: '',
-        srcPort: 5435,
-        srcAddr: '127.0.0.1',
-        dstPort: 5432,
-        dstAddr: '127.0.0.1',
-        readyTimeout: 60000,
-        forwardTimeout: 60000,
-        localPort: 5435,
-        localAddr: '127.0.0.1'
-    };
     public static imgFolder = '';
 
     /** Folder where data files are located */
@@ -134,35 +105,27 @@ export class Settings {
             Settings.read();
         }
         Settings.verify();
-        if(Settings.isDbLocal) {
+        if (Settings.isDbLocalFile) {
             if (fs.existsSync(Settings.dbPath)) {
                 Settings.openDb(Settings.dbPath);
             } else if (Settings.hasFixedDbLocation) {
                 Settings.createDb(Settings.dbPath);
-            }else {
+            } else {
                 Settings.createDb(Settings.dbPath);
             }
         }
-        if (!Settings.isDbLocal) {
-            if (Settings.isDbLocalServer) {
-                if(this.isHerokuServer){
-                    Settings.client = new Client(Settings.dbHeroku);
-                } else {
-                    Settings.client = new Client(Settings.dbClientLocal);
-                }
-                Settings.client.connect();
-            } else {
-                Settings.client = new Client(Settings.dbClientServer);
-                Settings.openATunnel();
-            }
+        if (Settings.isDbLocalServer) {
+            Settings.client = new Client(Settings.dbLocalServer);
+            Settings.client.connect().catch(() => {
+                alert('Database connection error');
+            });
         }
-    }
+        if (this.isDbWebServer) {
+            Settings.client = new Client(Settings.dbWebServer);
+            Settings.client.connect();
+        }
 
-    static async openATunnel() {
-        const server = await openSshTunnel(Settings.dbSshTunnel);
-        Settings.client.connect();
-        console.log(server);
-        //server.close();
+
     }
 
     public static queryServerAll(sql: string, cloud?: boolean): Promise<any> {
@@ -170,7 +133,7 @@ export class Settings {
             const client: Client = cloud ? Settings.cloudClient : Settings.client;
             client.query(sql, (err, row) => {
                 if (err) {
-                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql +  ' Received --> ' + err);
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql + ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve(row.rows);
@@ -182,9 +145,9 @@ export class Settings {
     public static queryServerChange(sql: string, cloud?: boolean): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             const client: Client = cloud ? Settings.cloudClient : Settings.client;
-            client.query(sql, (err,res: any) => {
+            client.query(sql, (err, res: any) => {
                 if (err) {
-                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql +  ' Received --> ' + err);
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql + ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -198,7 +161,7 @@ export class Settings {
             const client: Client = cloud ? Settings.cloudClient : Settings.client;
             client.query(sql, (err, row) => {
                 if (err) {
-                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql +  ' Received --> ' + err);
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> ' + sql + ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve(row.rows[0]);
@@ -209,9 +172,9 @@ export class Settings {
 
     public static updateAll(): Promise<void> {
         return new Promise<any>((resolve, reject) => {
-            Settings.cloudClient.query(sqlUpdate, (err,res: any) => {
+            Settings.cloudClient.query(sqlUpdate, (err, res: any) => {
                 if (err) {
-                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-UPDATE.JS ' +  ' Received --> ' + err);
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-UPDATE.JS ' + ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -222,9 +185,9 @@ export class Settings {
 
     public static createAll(): Promise<void> {
         return new Promise<any>((resolve, reject) => {
-            Settings.cloudClient.query(sqlInit, (err,res: any) => {
+            Settings.cloudClient.query(sqlInit, (err, res: any) => {
                 if (err) {
-                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-INIT.JS' +  ' Received --> ' + err);
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-INIT.JS' + ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -235,9 +198,9 @@ export class Settings {
 
     public static createAllRemote(): Promise<void> {
         return new Promise<any>((resolve, reject) => {
-            Settings.cloudClient.query(sqlInitRemote, (err,res: any) => {
+            Settings.cloudClient.query(sqlInitRemote, (err, res: any) => {
                 if (err) {
-                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-INIT-REMOTE.JS' +  ' Received --> ' + err);
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-INIT-REMOTE.JS' + ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -249,9 +212,9 @@ export class Settings {
 
     public static dropAll(): Promise<void> {
         return new Promise<any>((resolve, reject) => {
-            Settings.cloudClient.query(sqlDrop, (err,res: any) => {
+            Settings.cloudClient.query(sqlDrop, (err, res: any) => {
                 if (err) {
-                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-DROP.JS' +  ' Received --> ' + err);
+                    this.writeLogsFile(moment().format('DD-MM-YYYY-HH:mm:ss') + ': Trying --> SQL-DROP.JS' + ' Received --> ' + err);
                     reject(err);
                 } else {
                     resolve({changes: 1, id: res.rows && res.rows[0] ? res.rows[0].id : null});
@@ -267,8 +230,8 @@ export class Settings {
     }
 
     public static writeLogsFile(text: string = ''): void {
-        if(!fs.existsSync(Settings.logsPath)) {
-            writeFileSync(Settings.logsPath,text + (text ? '\n' : ''), undefined);
+        if (!fs.existsSync(Settings.logsPath)) {
+            writeFileSync(Settings.logsPath, text + (text ? '\n' : ''), undefined);
         } else {
             const data = fs.readFileSync(Settings.logsPath); //read existing contents into data
             const fd = fs.openSync(Settings.logsPath, 'w+');
@@ -285,20 +248,18 @@ export class Settings {
             JSON.stringify({
                 dbPath: Settings.dbPath,
                 serialNumber: Settings.serialNumber,
-                isDbLocal: Settings.isDbLocal,
+                isDbLocalFile: Settings.isDbLocalFile,
                 isDbLocalServer: Settings.isDbLocalServer,
-                isHerokuServer: Settings.isHerokuServer,
-                dbClientLocal: Settings.dbClientLocal,
-                dbClientServer: Settings.dbClientServer,
-                dbSshTunnel: Settings.dbSshTunnel,
-                dbHeroku: Settings.dbHeroku,
+                isHerokuServer: Settings.isDbWebServer,
+                dbLocalServer: Settings.dbLocalServer,
+                dbHeroku: Settings.dbWebServer,
                 isDebug: Settings.isDebug,
 
             }, undefined, 4));
     }
 
     public static verify() {
-        if(Settings.serialNumber !== 'ok') {
+        if (Settings.serialNumber !== 'ok') {
             const options: OpenDialogOptions = {};
             const files = remote.dialog.showOpenDialog(remote.getCurrentWindow(), options);
             if (!files) {
@@ -422,14 +383,12 @@ export class Settings {
 
     private static fromJson(settings: object) {
         Settings.dbPath = settings['dbPath'];
-        Settings.isDbLocal = settings['isDbLocal'];
+        Settings.isDbLocalFile = settings['isDbLocalFile'];
         Settings.isDbLocalServer = settings['isDbLocalServer'];
-        Settings.isHerokuServer = settings['isHerokuServer'];
+        Settings.isDbWebServer = settings['isDbWebServer'];
         Settings.isDebug = settings['isDebug'];
-        Settings.dbClientLocal = settings['dbClientLocal'];
-        Settings.dbClientServer = settings['dbClientServer'];
-        Settings.dbSshTunnel = settings['dbSshTunnel'];
+        Settings.dbLocalServer = settings['dbLocalServer'];
         Settings.serialNumber = settings['serialNumber'];
-        Settings.dbHeroku = settings['dbHeroku'];
+        Settings.dbWebServer = settings['dbWebServer'];
     }
 }
