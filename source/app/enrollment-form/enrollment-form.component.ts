@@ -30,6 +30,9 @@ export class EnrollmentFormComponent implements OnInit {
     public sessions: Array<Session> = [];
     public internsFiltered: Array<Intern> = [];
     public internSelected: Intern | any;
+    public payment_type: string;
+    public seance_fees: number;
+    public seance_number: number;
     public training_fees: number;
     public enrollment_fees: number;
     public books_fees: number;
@@ -81,6 +84,9 @@ export class EnrollmentFormComponent implements OnInit {
                     this.training_fees = session ? session['training_fees'] : 0;
                     this.books_fees = session ? session['books_fees'] : 0;
                     this.enrollment_fees = session ? session['enrollment_fees'] : 0;
+                    this.payment_type = session ? session['payment_type'] || 'total' : 'total';
+                    this.seance_fees = session ? session['seance_fees'] : 0;
+                    this.seance_number = session ? session['seance_number'] : 0;
                 }
             }, () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
@@ -187,7 +193,7 @@ export class EnrollmentFormComponent implements OnInit {
      * onSave
      */
     public onSave(): void {
-        const charge = Number(this.enrollment_fees) + Number(this.books_fees) + Number(this.training_fees);
+        const charge = Number(this.enrollment_fees) + Number(this.books_fees) + Number(this.training_fees) + Number(this.seance_fees);
         if (charge > 0) {
             this.onSaveOrUpdate();
         } else {
@@ -246,8 +252,10 @@ export class EnrollmentFormComponent implements OnInit {
 
     manageInternSold() {
         let charge = 0;
-        if (this.training_fees) {
+        if (this.training_fees && this.payment_type !== 'seance') {
             charge = charge + Number(this.training_fees);
+        } else {
+            charge = charge + (Number(this.seance_fees) * Number(this.seance_number));
         }
         if (this.books_fees) {
             charge = charge + Number(this.books_fees);
@@ -262,7 +270,7 @@ export class EnrollmentFormComponent implements OnInit {
             newCharge.intern = this.internSelected.id;
             newCharge.rest = charge;
             newCharge.session = this.enrollment.session_id;
-            newCharge.comment = this.chargeComment;
+            newCharge.comment = 'Calcule automatique';
             newCharge.insert().then(() => {
                 this.block = false;
                 Charge.getSold(newCharge.intern as number).then(sold => {

@@ -181,4 +181,34 @@ ALTER TABLE intern
     ALTER "isPromo" DROP NOT NULL;
 ALTER TABLE intern
     ALTER "isVip" DROP NOT NULL;
-    `;
+ALTER TABLE training
+    ADD COLUMN IF NOT EXISTS payment_type TEXT;
+ALTER TABLE training
+    ADD COLUMN IF NOT EXISTS seance_number INTEGER;
+ALTER TABLE training
+    ADD COLUMN IF NOT EXISTS seance_fees INTEGER;
+ALTER TABLE training
+    ADD COLUMN IF NOT EXISTS instructor_fees INTEGER;
+CREATE TABLE IF NOT EXISTS "charge_instructor" (
+    "id"	SERIAL NOT NULL,
+    "amount"	NUMERIC NOT NULL,
+    "rest"	NUMERIC,
+    "date"  TEXT NOT NULL,
+    "comment"  TEXT NOT NULL,
+    "session"  INTEGER NOT NULL,
+    "instructor"	INTEGER NOT NULL,
+    FOREIGN KEY(instructor) REFERENCES "instructor"(id),
+    FOREIGN KEY(session) REFERENCES "session"(id),
+    PRIMARY KEY("id")
+);
+ALTER TABLE payment_instructor
+    ADD COLUMN IF NOT EXISTS charge INTEGER REFERENCES "charge_instructor" (id); 
+ALTER TABLE payment_instructor
+    ADD COLUMN IF NOT EXISTS rest INTEGER;
+ALTER TABLE payment_instructor
+    ADD COLUMN IF NOT EXISTS username TEXT;
+ALTER TABLE payment_instructor
+    ADD COLUMN IF NOT EXISTS error INTEGER;
+ALTER TABLE payment_instructor
+    ADD COLUMN IF NOT EXISTS month TEXT;      
+`;

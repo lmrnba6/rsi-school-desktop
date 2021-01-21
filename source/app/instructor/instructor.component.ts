@@ -113,13 +113,8 @@ export class InstructorComponent implements OnInit {
                 type: 'html',
                 cell: (row: any) => `${this.handleLines(row.weekdays || '')}`
             },
-            {
-                columnDef: 'email',
-                class: 'a15',
-                header: 'instructor.placeholder.email',
-                type: 'text',
-                cell: (row: any) => `${row.email}`
-            },
+            {columnDef: 'sold',class: 'a15', header: 'intern.placeholder.sold', type: 'text', cell: (row: any) => `${row.sold || 0} DA`},
+
             {
                 columnDef: 'isFullTime',
                 class: 'a10',

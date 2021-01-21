@@ -17,6 +17,7 @@ export class InstructorManagementComponent implements OnInit {
     public color: string = 'warn';
     public mode: string = 'indeterminate';
     public value: number = 100;
+    public chargeImage = `${this.getPath()}dist/assets/images/chargeImage.png`;
     public infoImage = `${this.getPath()}dist/assets/images/infoImage.png`;
     public commentImage = `${this.getPath()}dist/assets/images/commentImage.png`;
     public sessionImage = `${this.getPath()}dist/assets/images/sessionImage.png`;

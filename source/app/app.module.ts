@@ -137,6 +137,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import {TestComponent} from "./test/test.component";
 import {ReportComponent} from "./report/report.component";
 import {LogsComponent} from "./logs/logs.component";
+import {ChargeInstructionFormComponent} from "./charge-instructor-form/charge-instructor-form.component";
 
 
 @NgModule({
@@ -270,6 +271,7 @@ import {LogsComponent} from "./logs/logs.component";
         RegisterFormComponent,
         ChargeComponent,
         ChargeFormComponent,
+        ChargeInstructionFormComponent,
         CommentInternComponent,
         CommentInternFormComponent,
         CarComponent,

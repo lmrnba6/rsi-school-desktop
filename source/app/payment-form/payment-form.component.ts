@@ -102,7 +102,7 @@ export class PaymentFormComponent implements OnInit {
     public internOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
-            Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
+            Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.internsFiltered = users
@@ -181,9 +181,13 @@ export class PaymentFormComponent implements OnInit {
         }
     }
 
+    getDate(date: number) {
+        return date && Number(date) ? new Date(Number(date)).toISOString().slice(0, 10) : ''
+    }
+
     public onChargeChange(id: number) {
         this.chargeSelected = this.charges.find(s => s.id === id);
-        if(!this.chargeSelected){
+        if (!this.chargeSelected) {
             (this.payment.charge as any) = null;
         } else {
             this.payment.charge = id as any;
@@ -222,9 +226,9 @@ export class PaymentFormComponent implements OnInit {
                 if (this.chargeSelected) {
                     this.manageInternSold();
                 } else {
-                    !this.offer && this.manageRegister(this.payment, this.payment.rest);
+                    this.manageRegister(this.payment, this.payment.rest);
                 }
-                this.goToReceipt();
+
                 this.block = false;
                 this.goBack();
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
@@ -249,20 +253,31 @@ export class PaymentFormComponent implements OnInit {
 
     async manageRegister(payment: Payment, rest: number) {
         if (!this.isOnEdit) {
-            const register: Register = new Register();
-            register.amount = payment.amount;
-            register.comment = payment.comment;
-            register.date = (payment.date as Date).getTime();
-            register.intern = this.internSelected.name;
-            register.sold = this.internSelected.sold;
-            register.training = this.chargeSelected.session_name;
-            register.username = payment.username;
-            register.rest = rest;
-            register.responsible = this.auth.getCurrentUser().username;
-            register.insert().catch(() => {
-                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                this.block = false;
-            })
+            this.dialogsService
+                .confirm('register.title', 'messages.add_to_register_message', true, 'usd')
+                .subscribe(confirm => {
+                    if (confirm) {
+                        const register: Register = new Register();
+                        register.amount = payment.amount;
+                        register.comment = payment.comment;
+                        register.date = (payment.date as Date).getTime();
+                        register.intern = this.internSelected.name;
+                        register.sold = this.internSelected.sold;
+                        register.training = this.chargeSelected?.session_name || '';
+                        register.username = payment.username;
+                        register.rest = rest;
+                        register.responsible = this.auth.getCurrentUser().username;
+                        register.insert().catch(() => {
+                            this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                            this.block = false;
+                        })
+                        this.goToReceipt();
+                    } else {
+                        this.goToReceipt();
+                    }
+                })
+        } else {
+            this.goToReceipt();
         }
     }
 
@@ -278,21 +293,21 @@ export class PaymentFormComponent implements OnInit {
 
     manageInternSold() {
         this.block = true;
-            Charge.updateRest(this.payment.rest, this.chargeSelected.id).then(() => {
-                this.block = false
-                Charge.getSold(this.chargeSelected.intern as number).then(sold => {
-                        this.internSelected.sold = sold[0].sold;
-                        Intern.updateSold(this.chargeSelected.intern as number, sold[0].sold).then();
-                        !this.offer && this.manageRegister(this.payment, this.payment.rest);
-                    }, () => {
-                        this.block = false;
-                        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                    }
-                )
-            }, () => {
-                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                this.block = false;
-            });
+        Charge.updateRest(this.payment.rest, this.chargeSelected.id).then(() => {
+            this.block = false
+            Charge.getSold(this.chargeSelected.intern as number).then(sold => {
+                    this.internSelected.sold = sold[0].sold;
+                    Intern.updateSold(this.chargeSelected.intern as number, sold[0].sold).then();
+                    this.manageRegister(this.payment, this.payment.rest);
+                }, () => {
+                    this.block = false;
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                }
+            )
+        }, () => {
+            this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+            this.block = false;
+        });
 
     }
 
@@ -304,7 +319,11 @@ export class PaymentFormComponent implements OnInit {
     /**
      * onCancel
      */
-    public onCancel(): void {
+    public
+
+    onCancel()
+        :
+        void {
         this.goBack();
     }
 

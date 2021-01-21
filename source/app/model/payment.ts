@@ -233,6 +233,62 @@ export class Payment {
             });
     }
 
+    public static getPaymentDueBySessionToDate(intern: number,session: number,seance_fees: number): Promise<number> {
+        const sql = `
+            (select count(a.*)*${seance_fees} attendances from attendance a where a.session_id = ${session} and a.intern_id = ${intern} and to_timestamp(a.date::bigint / 1000)::date >=
+            to_timestamp((select e.date from enrollment e join intern i on e.intern_id = i.id where e.session_id = ${session} and i.id = ${intern})::bigint / 1000)::date)`;
+
+        const values = {
+        };
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return row['attendances'] || 0;
+                } else {
+                    throw new Error('Expected to find 1 Charge. Found 0.');
+                }
+            });
+    }
+
+    public static getPaymentDoneBySessionToDate(intern: number,session: number): Promise<number> {
+        const sql = `
+                select sum(p.amount) payments from payment p join charge c on p.charge = c.id where p.intern_id = ${intern} and c.session = ${session}
+                and to_timestamp(p.date::bigint / 1000)::date >= to_timestamp((select e.date from enrollment e join intern i on e.intern_id = i.id
+                where e.session_id = ${session} and i.id = ${intern})::bigint / 1000)::date`;
+
+        const values = {
+        };
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return row['payments'] || 0;
+                } else {
+                    throw new Error('Expected to find 1 Charge. Found 0.');
+                }
+            });
+    }
+
+    public static getChargeDoneBySessionToDate(intern: number,session: number): Promise<number> {
+        const sql = `
+                select sum(c.amount) charges from charge c where c.intern = ${intern} and c.session = ${session}
+                and to_timestamp(c.date::bigint / 1000)::date >= to_timestamp((select e.date from enrollment e join intern i on e.intern_id = i.id
+                where c.rest != 0 and e.session_id = ${session} and i.id = ${intern})::bigint / 1000)::date`;
+
+        const values = {
+        };
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    return row['charges'] || 0;
+                } else {
+                    throw new Error('Expected to find 1 Charge. Found 0.');
+                }
+            });
+    }
+
     public fromRow(row: object): Payment {
         this.id = row['id'];
         this.amount = row['amount'];

@@ -11,6 +11,7 @@ import * as JsBarcode from "jsbarcode";
 import {Enrollment} from "../model/enrollment";
 import {Attendance} from "../model/attendance";
 import {School} from "../model/school";
+import {Payment_instructor} from "../model/paymentInstructor";
 
 @Component({
   selector: 'app-pv',
@@ -26,6 +27,7 @@ export class PvComponent implements OnInit {
     data: any;
     pvName: string;
     id: number;
+    for: string;
     date: Date = new Date;
     options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     dateDiploma: string = '';
@@ -120,18 +122,26 @@ export class PvComponent implements OnInit {
                 })
             });
         }else {
-            Intern.get(this.id as number).then(intern => {
-                this.intern = intern;
-                this.getReceipts();
-                this.getTraining();
-                this.getSessions();
-                this.pvName === 'form' && JsBarcode("#barcode2", this.intern.id.toString().padStart(10, '0'), {width:2,
-                    height:40});
-            });
+            if(this.for === 'instructor') {
+                Instructor.get(this.id as number).then(intern => {
+                    this.instructor = intern;
+                    (this.intern as any) = intern;
+                    this.getInstructorReceipts();
+                })
+            } else {
+                Intern.get(this.id as number).then(intern => {
+                    this.intern = intern;
+                    this.getInternReceipts();
+                    this.getInternTraining();
+                    this.getSessions();
+                    this.pvName === 'form' && JsBarcode("#barcode2", this.intern.id.toString().padStart(10, '0'), {width:2,
+                        height:40});
+                })
+            }
         }
     }
 
-    getTraining() {
+    getInternTraining() {
         this.block = true;
         Session.get(this.intern.id).then(session =>
             Training.get(session.training_id as number).then(
@@ -141,9 +151,22 @@ export class PvComponent implements OnInit {
                 }));
     }
 
-    getReceipts() {
+    getInternReceipts() {
         this.block = true;
         Payment.getAllByIntern(this.intern.id).then(payments => {
+            this.block = false;
+            this.payments = payments;
+            this.payments.forEach(payment => payment.date = new Date(Number(payment.date)).toLocaleDateString('fr-FR') as any);
+            if(this.payments.length) {
+                this.payment = this.payments[0];
+            }
+            this.onPaymentChange();
+        })
+    }
+
+    getInstructorReceipts() {
+        this.block = true;
+        Payment_instructor.getAllByInstructor(this.instructor.id).then((payments: any) => {
             this.block = false;
             this.payments = payments;
             this.payments.forEach(payment => payment.date = new Date(Number(payment.date)).toLocaleDateString('fr-FR') as any);
@@ -159,7 +182,7 @@ export class PvComponent implements OnInit {
         this.block = true;
         Promise.all([Enrollment.getAllBySession(this.id), Attendance.getAllBySession(this.id)])
             .then(values => {
-                this.attendances = values[1];
+                this.attendances = values[1].slice(0,5);
                 this.attendances.forEach(attendance => attendance.date = new Date(Number(attendance.date)).toLocaleDateString('fr-FR') as any);
                     this.asyncForEach(values[0], async (enrollment: any) => {
                         await Promise.all([Attendance.getAlldByIntern(enrollment.intern_id as number), Intern.get(enrollment.intern_id as number)])
@@ -210,6 +233,7 @@ export class PvComponent implements OnInit {
     public getParams(): void {
         this.route.params.subscribe(res => {
             this.pvName = res.name;
+            this.for = res.for;
             this.id = res.id;
             if(res.name === 'card'){
                 this.internsCard = res.interns;
@@ -232,7 +256,7 @@ export class PvComponent implements OnInit {
 
     getDate(date: number) {
 
-        return date ? new Date(date).toISOString().slice(0, 10) : ''
+        return date && Number(date) ? new Date(Number(date)).toISOString().slice(0, 10) : ''
 
     }
 

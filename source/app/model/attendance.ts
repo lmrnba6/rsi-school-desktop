@@ -231,7 +231,7 @@ export class Attendance {
                                                    INNER JOIN weekday AS w ON a.weekday_id = w.id                                            
                                                    INNER JOIN intern AS i ON a.intern_id = i.id
                                                    WHERE s.id = ${id}
-                                                   GROUP BY a.date`
+                                                   GROUP BY a.date order by a.date desc`
 
         const values = {};
         return TheDb.selectAll(sql, values)
@@ -312,6 +312,7 @@ export class Attendance {
                 }
             });
     }
+
 
     public fromRow(row: object): Attendance {
         this.id = row['id'];

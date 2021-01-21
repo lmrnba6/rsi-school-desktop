@@ -5,7 +5,8 @@
     </app-loader>
     <form [formGroup]="enrollmentForm">
         <div class="container">
-            <button [disabled]="enrollmentForm.invalid || !internSelected || !enrollment.session_id" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="enrollmentForm.invalid || !internSelected || !enrollment.session_id"
+                    class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
@@ -15,7 +16,7 @@
                 <mat-label>{{'enrollment.placeholder.intern_id' | translate}}</mat-label>
                 <input name="intern_id" formControlName="intern_id" matInput [ngModel]="internSelected"
                        (keyup)="internOnChange($event)" matInput [matAutocomplete]="auto"
-                        required>
+                       required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
                                   (optionSelected)="internOnSelect($event.option.value)">
@@ -23,33 +24,36 @@
                         {{intern?.name}}
                     </mat-option>
                 </mat-autocomplete>
-                <mat-error *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
+                <mat-error
+                        *ngIf="intern_id.invalid || !internSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'enrollment.placeholder.session_id' | translate}}</mat-label>
-                <mat-select (selectionChange)="onSessionChange()" formControlName="session_id" [(ngModel)]="enrollment.session_id"
+                <mat-select (selectionChange)="onSessionChange()" formControlName="session_id"
+                            [(ngModel)]="enrollment.session_id"
                             name="session_id" required>
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
                         {{session.name + ' - ' + session['training'] + ' - ' +
-                    session['instructor']}} - <span [ngStyle]="{color: session['availability']>0 ? 'green' : 'red'}">{{session['availability']}} {{'enrollment.available' | translate}}</span>
+                    session['instructor']}} - <span
+                            [ngStyle]="{color: session['availability']>0 ? 'green' : 'red'}">{{session['availability']}} {{'enrollment.available' | translate}}</span>
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
                 </mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field  appearance="outline">
+            <mat-form-field appearance="outline">
                 <mat-label>{{'enrollment.placeholder.date' | translate}}</mat-label>
                 <input name="date" formControlName="date" [(ngModel)]="enrollment.date" matInput
-                        required [matDatepicker]="picker2">
+                       required [matDatepicker]="picker2">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker2></mat-datepicker>
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field  appearance="outline" style="display: none">
+            <mat-form-field appearance="outline" style="display: none">
                 <mat-label>{{'enrollment.placeholder.comment' | translate}}</mat-label>
                 <textarea name="comment" formControlName="comment" [(ngModel)]="enrollment.comment" matInput
                 ></textarea>
@@ -58,33 +62,61 @@
         </div>
     </form>
     <br>
-    <div *ngIf="!isOnEdit" class="container">
-        <mat-form-field  appearance="outline">
+    <div *ngIf="!isOnEdit && enrollment.session_id && internSelected" class="container">
+        <h2 style="margin-top: 0 !important">{{'enrollment.fees' | translate}}</h2>
+        <hr>
+        <mat-form-field appearance="outline">
+            <mat-label>{{'training.placeholder.payment_type' | translate}}</mat-label>
+            <mat-select disabled [(ngModel)]="payment_type"
+                        name="payment_type" required>
+                <mat-option>--</mat-option>
+                <mat-option [value]="'total'">
+                    {{'training.placeholder.total' | translate}}
+                </mat-option>
+                <mat-option [value]="'seance'">
+                    {{'training.placeholder.seance' | translate}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <div *ngIf="payment_type === 'seance'">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'training.placeholder.seance_fees' | translate}}</mat-label>
+                <input disabled type="number" min="0" [(ngModel)]="seance_fees" matInput>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'training.placeholder.seance_number' | translate}}</mat-label>
+                <input disabled type="number" min="0" [(ngModel)]="seance_number" matInput>
+            </mat-form-field>
+            <br>
+        </div>
+        <mat-form-field appearance="outline">
             <mat-label>{{'training.placeholder.enrollment_fees' | translate}}</mat-label>
-            <input type="number" min="0" [(ngModel)]="enrollment_fees" matInput>
+            <input disabled type="number" min="0" [(ngModel)]="enrollment_fees" matInput>
         </mat-form-field>
         <br>
-        <mat-form-field  appearance="outline">
+        <mat-form-field appearance="outline">
             <mat-label>{{'training.placeholder.books_fees' | translate}}</mat-label>
-            <input type="number" min="0" [(ngModel)]="books_fees" matInput>
+            <input disabled type="number" min="0" [(ngModel)]="books_fees" matInput>
         </mat-form-field>
         <br>
-        <mat-form-field  appearance="outline">
+        <mat-form-field appearance="outline">
             <mat-label>{{'training.placeholder.training_fees' | translate}}</mat-label>
-            <input type="number" min="0" [(ngModel)]="training_fees" matInput>
+            <input disabled type="number" min="0" [(ngModel)]="training_fees" matInput>
         </mat-form-field>
         <br>
-        <mat-form-field  appearance="outline">
+        <mat-form-field appearance="outline">
             <mat-label>{{'enrollment.placeholder.comment' | translate}}</mat-label>
-            <textarea [(ngModel)]="chargeComment" matInput
+            <textarea disabled [(ngModel)]="chargeComment" matInput
             ></textarea>
         </mat-form-field>
-<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="training_fees">{{'intern.placeholder.fees' | translate}}</mat-checkbox>-->
-<!--        <br>-->
-<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>-->
-<!--        <br>-->
-<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>-->
-<!--        <br>-->
-<!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="backpack">{{'intern.placeholder.backpack' | translate}}</mat-checkbox>-->
+        <!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="training_fees">{{'intern.placeholder.fees' | translate}}</mat-checkbox>-->
+        <!--        <br>-->
+        <!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="enrollment_fees">{{'intern.placeholder.fees_enrollment' | translate}}</mat-checkbox>-->
+        <!--        <br>-->
+        <!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="books_fees">{{'intern.placeholder.fees_books' | translate}}</mat-checkbox>-->
+        <!--        <br>-->
+        <!--        <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="backpack">{{'intern.placeholder.backpack' | translate}}</mat-checkbox>-->
     </div>
 </mat-card>

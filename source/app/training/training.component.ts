@@ -87,7 +87,8 @@ export class TrainingComponent implements OnInit {
     this.setting.cols = [
       { columnDef: 'name', header: 'training.placeholder.name', type: 'text', cell: (row: any) => `${row.name}` },
       { columnDef: 'time', header: 'training.placeholder.time', type: 'text', cell: (row: any) => `${row.time} min`},
-      { columnDef: 'type', header: 'training.placeholder.type', type: 'text', cell: (row: any) => `${row.type}` }
+      { columnDef: 'payment_type', header: 'training.placeholder.payment_type', type: 'text', cell: (row: any) =>
+            `${row.payment_type ? this.translate.instant('training.placeholder.' + row.payment_type) : ''}` }
     ];
       this.isAdmin &&
       this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: true, editRow: true});

@@ -353,6 +353,7 @@ export class Intern{
                 }
             });
     }
+
     public static delete(id: number, cloud?: boolean): Promise<void> {
         const sql = `
             DELETE FROM "intern" WHERE id = ${id}`;

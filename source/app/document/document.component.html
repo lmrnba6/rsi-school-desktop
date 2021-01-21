@@ -74,6 +74,20 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
+                <br>
+                <mat-form-field *ngIf="open === 'receipt'" class="example-full-width" appearance="outline">
+                    <mat-label>{{'instructor.title' | translate}}</mat-label>
+                    <input matInput
+                           (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto"
+                           required>
+                    <span matSuffix class="glyphicon glyphicon-search"></span>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                      (optionSelected)="instructorOnSelect($event.option.value)">
+                        <mat-option *ngFor="let intern of instructorsFiltered" [value]="intern">
+                            {{intern?.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
             </mat-nav-list>
             <mat-nav-list>
                 <a mat-list-item [routerLink]="" (click)="handleOpen('form')">

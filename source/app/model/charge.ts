@@ -96,7 +96,7 @@ export class Charge {
     public static getAllByIntern(intern: number): Promise<Charge[]> {
         const sql = `SELECT c.*, s.name as session_name  FROM "charge" as c 
         INNER JOIN "session" as s ON s.id = c.session
-        WHERE intern = ${intern} ORDER BY date ASC`;
+        WHERE intern = ${intern} and c.rest > 0 ORDER BY date ASC`;
         const values = {};
 
         return TheDb.selectAll(sql, values)

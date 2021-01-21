@@ -16,7 +16,6 @@ import {Exam} from "../model/exam";
 import {Inbox} from "../model/inbox";
 import {Instructor} from "../model/instructor";
 import {Payment} from "../model/payment";
-import {Payment_instructor} from "../model/paymentInstructor";
 import {Room} from "../model/room";
 import {Session} from "../model/session";
 import {Training} from "../model/training";
@@ -32,6 +31,7 @@ const jspdf = require('jspdf');
 
 const html2canvas = require('html2canvas');
 import printJS = require("print-js");
+import {Payment_instructor} from "../model/paymentInstructor";
 
 @Component({
     selector: 'app-abstract-table',
@@ -359,56 +359,57 @@ export class AbstractTableComponent
     }
 
     public getStyleRow(row: any) {
+        let style: any = {}
         if (this.page === 'exam-session') {
             if (Number(row.date) < new Date().getTime()) {
-                return {background: '#ffe6e6'}
+                style = {background: '#ffe6e6'};
             } else {
-                return {background: '#d9ffe1'}
+                style =  {background: '#d9ffe1'}
             }
         } else if (this.page === 'register') {
             if (Number(row.amount) < 0) {
-                return {background: '#ffe6e6'}
+                style =  {background: '#ffe6e6'}
             } else {
-                return {background: '#d9ffe1'}
+                style =  {background: '#d9ffe1'}
             }
         } else if (this.page === 'charge') {
             if (Number(row.rest) > 0) {
-                return {background: '#ffe6e6'}
+                style =  {background: '#ffe6e6'}
             } else {
-                return {background: '#d9ffe1'}
+                style =  {background: '#d9ffe1'}
             }
         } else if (this.page === 'payment') {
             if (Number(row.error)) {
-                return {background: '#ffb0b0'}
+                style =  {background: '#ffb0b0'}
             }
         } else if (this.page === 'intern') {
             if (row.isPromo) {
-                return {background: '#c891ff'}
+                style =  {background: '#c891ff'}
             }
             if (row.isVip) {
-                return {background: '#84ff9f'}
+                style =  {background: '#84ff9f'}
             }
             if (row.closed || row.isAllowed) {
-                return {background: '#ffb0b0'}
+                style =  {background: '#ffb0b0'}
             }
             if ((row.sold !== undefined && Number(row.sold) !== 0) || row.read === 0) {
-                return {background: '#ffffa3'}
+                style =  {background: '#ffffa3'}
             }
         } else {
             if (row.isPromo) {
-                return {background: '#c891ff'}
+                style =  {background: '#c891ff'}
             }
             if (row.isVip) {
-                return {background: '#84ff9f'}
+                style =  {background: '#84ff9f'}
             }
             if (row.closed || row.isAllowed) {
-                return {background: '#ffb0b0'}
+                style =  {background: '#ffb0b0'}
             }
             if ((row.sold !== undefined && Number(row.sold) !== 0) || row.read === 0) {
-                return {background: '#ffffa3'}
+                style =  {background: '#ffffa3'}
             }
         }
-        return
+        return style
     }
 
 }

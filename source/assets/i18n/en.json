@@ -270,7 +270,7 @@
     "placeholder": {
       "rest": "Rest",
       "sold": "Sold",
-      "intern": "Student",
+      "intern": "Person",
       "training": "Training",
       "amount" : "Amount",
       "date": "Date",
@@ -334,6 +334,12 @@
     "leisure": "Leisure",
     "title": "Formation",
     "placeholder": {
+      "seance": "Per session",
+      "total": "Total",
+      "seance_number": "Number of sessions per payment",
+      "payment_type": "Payment frequency",
+      "instructor_fees": "Teacher salary per seance",
+      "seance_fees": "Session fees",
       "name": "Name",
       "time" : "Volume of the session",
       "type": "Type",
@@ -436,6 +442,7 @@
     "done": "Done",
     "start": "Begin",
     "available": "Available",
+    "fees": "Fees",
     "placeholder": {
       "comment" : "Comments",
       "date": "Date",
@@ -571,6 +578,7 @@
     "salary": "Salary"
   },
   "messages": {
+    "add_to_register_message": "Would you like to add this transaction to the register?",
     "unable_delete_relation": "Cannot delete this line because it has information linked to it",
     "zero_charge_message": "Do you really want to charge this student 0 DA",
     "next_question_warning_message": "Do you really want to validate this answer?",

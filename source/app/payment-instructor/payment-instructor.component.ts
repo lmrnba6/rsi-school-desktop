@@ -20,7 +20,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
     public data: any;
     public tableName: string;
     public setting: AbstractTableSetting;
-    public payment_instructor: Payment_instructor;
+    public paymentInstructor: Payment_instructor;
     public block: boolean;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -117,12 +117,52 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
         this.setting.addRow = this.isAdmin || this.isUser;
         this.setting.cols = [
             {columnDef: 'date', header: 'payment_instructor.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'amount', header: 'payment_instructor.placeholder.amount', type: 'text', cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`},
-            {columnDef: 'comment', header: 'payment_instructor.placeholder.comment', type: 'text', cell: (row: any) => `${row.comment}`},
-            {columnDef: 'instructor_id', header: 'payment_instructor.placeholder.instructor_id', type: 'text', cell: (row: any) => `${row.instructor_id.name}`}
+            {
+                columnDef: 'amount',
+                header: 'payment_instructor.placeholder.amount',
+                type: 'text',
+                cell: (row: any) => `${Number(row.amount).toFixed(0)} DA`
+            },
+            {
+                columnDef: 'comment',
+                header: 'payment_instructor.placeholder.comment',
+                type: 'text',
+                cell: (row: any) => `${row.comment}`
+            },
+            {
+                columnDef: 'session_name',
+                header: 'payment_instructor.placeholder.session',
+                type: 'text',
+                cell: (row: any) => `${row.session_name || ''}`
+            },
+            {
+                columnDef: 'rest',
+                header: 'register.placeholder.rest',
+                type: 'text',
+                cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''
+            },
+            {
+                columnDef: 'sold',
+                header: 'register.placeholder.sold',
+                type: 'text',
+                cell: (row: any) => row.rest ? `${Number(row.sold).toFixed(0)} DA` : ''
+            },
         ];
+        !this.instructor && this.setting.cols.push({
+            columnDef: 'instructor',
+            header: 'payment_instructor.placeholder.instructor_id',
+            type: 'text',
+            cell: (row: any) => `${row.instructor}`
+        });
         this.isAdmin &&
-        this.setting.cols.push({columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: false, editRow: true});
+        this.setting.cols.push({
+            columnDef: 'settings',
+            class: 'a10',
+            header: '',
+            type: 'settings',
+            delete: false,
+            editRow: true
+        });
     }
 
     /**
@@ -182,7 +222,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
      * onEditRow
      */
     public onEditRow(event: Payment_instructor): void {
-        this.payment_instructor = event;
+        this.paymentInstructor = event;
         this.router.navigate(['payments/instructors/form/' + event.id]);
 
     }

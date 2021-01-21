@@ -8,6 +8,8 @@ import {TranslateService} from "@ngx-translate/core";
 import {Charge} from "../model/charge";
 import {Intern} from "../model/intern";
 import {AuthenticationService} from "../_services/authentication.service";
+import {Instructor} from "../model/instructor";
+import {ChargeInstructor} from "../model/chargeInstructor";
 
 @Component({
     selector: 'app-charge',
@@ -16,6 +18,7 @@ import {AuthenticationService} from "../_services/authentication.service";
 export class ChargeComponent implements OnInit, OnChanges {
 
     @Input() public intern: Intern;
+    @Input() public instructor: Instructor;
     public filter: string = '';
     public data: any;
     public tableName: string;
@@ -31,6 +34,7 @@ export class ChargeComponent implements OnInit, OnChanges {
     public sortDirection: string = 'DESC';
     public isAdmin: boolean;
     public isIntern: boolean;
+    public isInstructor: boolean;
     public isUser: boolean;
     public backImage = `${this.getPath()}dist/assets/images/backImage.png`;
 
@@ -59,6 +63,7 @@ export class ChargeComponent implements OnInit, OnChanges {
         this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
         this.isAdmin = this.authService.getCurrentUser().role === 'admin';
         this.isIntern = this.authService.getCurrentUser().role === 'student';
+        this.isInstructor = this.authService.getCurrentUser().role === 'teacher';
         this.isUser = this.authService.getCurrentUser().role === 'user';
         this.initSetting();
     }
@@ -73,12 +78,16 @@ export class ChargeComponent implements OnInit, OnChanges {
         const offset: number = pageIndex * pageSize;
         const limit: number = pageSize;
         this.block = true;
-        Promise.all([this.intern ?
+        const promises: any = [];
+        promises.push(this.intern ?
             Charge.getAllPagedByIntern(offset, limit, sort, order, this.intern.id) :
-            Charge.getAllPaged(offset, limit, sort, order, filter), this.intern ? Charge.getCountByIntern(this.intern.id) :
-            Charge.getCount(this.filter)])
+            this.instructor ? ChargeInstructor.getAllPagedByInstructor(offset, limit, sort, order, this.instructor.id) :
+                Charge.getAllPaged(offset, limit, sort, order, filter));
+        promises.push(this.intern ? Charge.getCountByIntern(this.intern.id) : this.instructor ? ChargeInstructor.getCountByInstructor(this.instructor.id) :
+            Charge.getCount(this.filter));
+        Promise.all(promises)
             .then(
-                values => {
+                (values:any) => {
                     this.block = false;
                     this.data = {items: values[0], paging: {totalCount: (values[1][0] as any).count}};
                 },
@@ -112,7 +121,7 @@ export class ChargeComponent implements OnInit, OnChanges {
         this.setting = new AbstractTableSetting();
         this.setting.settingColumn = true;
         this.setting.tableName = this.tableName;
-        this.setting.filter = !this.isIntern;
+        this.setting.filter = !this.isIntern && !this.instructor;
         this.setting.addRow = this.isUser || this.isAdmin;
         this.setting.cols = [
             {columnDef: 'date', header: 'charge.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
@@ -201,7 +210,7 @@ export class ChargeComponent implements OnInit, OnChanges {
      * add row
      */
     public onAddRow(): void {
-        this.router.navigate(['charge/form/' + this.intern.id]);
+        this.router.navigate(this.instructor ? ['charge-instructor/form/' + this.instructor.id] : ['charge/form/' + this.intern.id]);
     }
 
     /**
@@ -209,7 +218,7 @@ export class ChargeComponent implements OnInit, OnChanges {
      */
     public onEditRow(event: Charge): void {
         this.charge = event;
-        this.router.navigate(['charge/form/' + this.intern.id + '/' + event.id]);
+        this.router.navigate(this.instructor ? ['charge-instructor/form/' + this.instructor.id + '/' + event.id] : ['charge/form/' + this.intern.id + '/' + event.id]);
 
     }
 

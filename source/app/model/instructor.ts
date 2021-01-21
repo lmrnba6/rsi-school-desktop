@@ -227,6 +227,35 @@ export class Instructor {
             });
     }
 
+    public static updateSold(id: number, sold: number): Promise<void> {
+        const sql = `
+            UPDATE "instructor" SET sold = ${sold} WHERE id = ${id}`;
+
+        const values = {
+        };
+
+        return TheDb.update(sql, values)
+            .then((result) => {
+                if (result.changes !== 1) {
+                    throw new Error(`Expected 1 instructor to be updated. Was ${result.changes}`);
+                }
+            });
+    }
+
+    public static nameExist(name: string) {
+        const sql = `SELECT * FROM "instructor" WHERE name ilike '${name}'`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    throw new Error('duplicated name');
+                } else {
+                    return null;
+                }
+            });
+    }
+
     public fromRow(row: object): Instructor {
         this.id = row['id'];
         this.name = row['name'];

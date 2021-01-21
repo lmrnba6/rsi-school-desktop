@@ -272,7 +272,7 @@
       "responsible": "Utilisateur",
       "rest": "Reste",
       "sold": "Solde",
-      "intern": "Étudiant",
+      "intern": "Personne",
       "training": "Formation",
       "amount" : "Montant",
       "date": "Date",
@@ -291,10 +291,15 @@
   "payment_instructor": {
     "title": "Paiement",
     "placeholder": {
+      "error": "Marquer ce paiement comme une erreur",
+      "offer": "Offre / Promotion (Ne l'incluez pas a la caisse)",
       "amount" : "Montant",
       "date": "Date",
       "comment": "Commentaire",
-      "intern_id": "Étudiant"
+      "session": "Group",
+      "month": "Mois",
+      "instructor_id": "Enseignant",
+      "charge": "Charge"
     }
   },
   "session": {
@@ -335,8 +340,14 @@
     "leisure": "Loisir",
     "title": "Formation",
     "placeholder": {
+      "seance": "Par séance",
+      "total": "Total",
+      "seance_number": "Nombre de séance par payment",
+      "instructor_fees": "Paie de l'ensignant par séance",
+      "payment_type": "Fréquence de paiement",
+      "seance_fees": "Frais de la séance",
       "name": "Nom",
-      "time" : "Volume de la seance",
+      "time" : "Volume de la séance",
       "type": "Type",
       "training_fees": "Frais de formation",
       "books_fees": "Frais des livres",
@@ -437,6 +448,7 @@
     "done": "Terminé",
     "start": "Commencer",
     "available": "Disponible",
+    "fees": "Frais",
     "placeholder": {
       "comment" : "Commentaire",
       "date": "Date",
@@ -569,11 +581,12 @@
     "October": "Octobre",
     "November": "Novembre",
     "December": "Décembre",
-    "classRate": "Frais par seance",
+    "classRate": "Frais par séance",
     "instructorRate": "Pourcentage de l'enseignant",
     "salary": "Salaire"
   },
   "messages": {
+    "add_to_register_message": "Souhaitez-vous ajouter cette transaction à la caisse?",
     "unable_delete_relation": "Impossible de supprimer cette ligne car des informations y sont liées",
     "zero_charge_message": "Voulez-vous vraiment facturer cet étudiant 0 DA",
     "next_question_warning_message": "Voulez-vous vraiment valider cette réponse?",

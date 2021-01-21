@@ -9,6 +9,11 @@ import {Session} from "../model/session";
 import {Room} from "../model/room";
 import {Intern} from "../model/intern";
 import {Weekday} from "../model/weekday";
+import {Payment} from "../model/payment";
+import {Charge} from "../model/charge";
+import {Payment_instructor} from "../model/paymentInstructor";
+import {ChargeInstructor} from "../model/chargeInstructor";
+import {Instructor} from "../model/instructor";
 
 @Component({
     selector: 'app-attendance-form',
@@ -28,6 +33,7 @@ export class AttendanceFormComponent implements OnInit {
     public interns: Array<Intern> = [];
     public weekdays: Array<Room> = [];
     public sessions: Array<Session> = [];
+    public sessionParamId: number;
     public internSelected: Intern;
     public instructorId: number;
     public day = '';
@@ -50,7 +56,7 @@ export class AttendanceFormComponent implements OnInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 private translate: TranslateService
-                ) {
+    ) {
     }
 
     public ngOnInit(): void {
@@ -58,7 +64,6 @@ export class AttendanceFormComponent implements OnInit {
         this.getParams();
         this.getSessions();
     }
-
 
 
     getWeekdays() {
@@ -70,7 +75,9 @@ export class AttendanceFormComponent implements OnInit {
     getSessions() {
         Session.getAll().then(sessions => {
             this.sessions = sessions;
-            if(this.instructorId) {
+            this.attendanceForm.controls['session_id'].patchValue(this.sessionParamId);
+            this.attendance.session_id = this.sessionParamId;
+            if (this.instructorId) {
                 this.sessions = this.sessions.filter(session => session.instructor_id === this.instructorId);
                 this.onInternsChange();
             }
@@ -82,17 +89,15 @@ export class AttendanceFormComponent implements OnInit {
      */
     public getParams(): void {
         this.route.params.subscribe(res => {
+            this.sessionParamId = res.sessionId
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
-            }else if(res.instructorId) {
+            } else if (res.instructorId) {
                 this.instructorId = Number(res.instructorId)
                 this.isOnEdit = false;
                 this.attendance = new Attendance();
                 this.attendance.date = new Date();
-                // if(res.sessionId) {
-                //     this.attendance.session_id = res.sessionId;
-                // }
             } else {
                 this.isOnEdit = false;
                 this.attendance = new Attendance();
@@ -140,11 +145,11 @@ export class AttendanceFormComponent implements OnInit {
      * onSave
      */
     public onSave(): void {
-      if(this.isOnEdit) {
-          this.onSaveOrUpdate();
-      } else {
-          this.saveMultiple();
-      }
+        if (this.isOnEdit) {
+            this.onSaveOrUpdate();
+        } else {
+            this.saveMultiple();
+        }
     }
 
     saveMultiple() {
@@ -158,14 +163,63 @@ export class AttendanceFormComponent implements OnInit {
         this.block = true;
         Promise.all(internsPromise).then(() => {
                 this.block = false;
-                this.goBack();
+                const session: Session | undefined = this.sessions.find(s => s.id === this.attendance.session_id);
+                if (session && session['payment_type'] === 'seance') {
+                    this.handleCharge(session);
+                } else {
+                    this.goBack();
+                }
                 this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
             },
             () => {
                 this.attendance.date = new Date(this.attendance.date);
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
-        });
+            });
+    }
+
+    async handleCharge(session: Session) {
+        try {
+            this.block = true;
+            for (const intern of this.interns) {
+                const due = await Payment.getPaymentDueBySessionToDate(intern.id, session.id, session['seance_fees']);
+                const charged = await Payment.getChargeDoneBySessionToDate(intern.id, session.id);
+                const done = await Payment.getPaymentDoneBySessionToDate(intern.id, session.id);
+                const diff = ((Number(due) || 0) + (Number(session['enrollment_fees']) || 0) + (Number(session['books_fees']) || 0)) - (Number(done) || 0) - (Number(charged) || 0);
+                if (diff >= 0) {
+                    const newCharge = new Charge();
+                    newCharge.amount = Number(session['seance_fees']) * Number(session['seance_number']);
+                    newCharge.date = new Date().getTime();
+                    newCharge.intern = intern.id;
+                    newCharge.rest = Number(session['seance_fees']) * Number(session['seance_number']);
+                    newCharge.session = session.id;
+                    newCharge.comment = 'Calcule automatique';
+                    await newCharge.insert();
+                    await Intern.updateSold(intern.id, Number(intern.sold) + Number(newCharge.amount));
+                }
+            }
+            const instructor :Instructor = await Instructor.get(session.instructor_id as number);
+            const due = await Payment_instructor.getPaymentInstructorDueBySessionToDate(instructor.id, session.id, session['instructor_fees']);
+            const charged = await Payment_instructor.getChargeDoneBySessionToDate(instructor.id, session.id);
+            const done = await Payment_instructor.getPaymentInstructorDoneBySessionToDate(instructor.id, session.id);
+            const diff = (Number(due) || 0) - (Number(done) || 0) - (Number(charged) || 0);
+            if (diff >= (Number(session['instructor_fees']) || 0) * (Number(session['seance_number']) || 0)) {
+                const newCharge = new ChargeInstructor();
+                newCharge.amount = Number(session['instructor_fees']) * Number(session['seance_number']);
+                newCharge.date = new Date().getTime();
+                newCharge.instructor = instructor.id;
+                newCharge.rest = Number(session['instructor_fees']) * Number(session['seance_number']);
+                newCharge.session = session.id;
+                newCharge.comment = 'Calcule automatique';
+                await newCharge.insert();
+                await Instructor.updateSold(instructor.id, Number(instructor.sold) + Number(newCharge.amount));
+            }
+            this.block = false;
+            this.goBack();
+        }catch (e) {
+            this.block = false;
+            this.goBack();
+        }
     }
 
     /**
@@ -199,17 +253,17 @@ export class AttendanceFormComponent implements OnInit {
     }
 
     onInternsChange() {
-        if(this.attendance.session_id) {
-                Intern.getInternBySession(this.attendance.session_id as number).then(interns => {
-                    this.interns = interns;
-                    this.interns.forEach(intern => intern['selected'] = 1);
-                    this.getWeekdays();
-                })
+        if (this.attendance.session_id) {
+            Intern.getInternBySession(this.attendance.session_id as number).then(interns => {
+                this.interns = interns;
+                this.interns.forEach(intern => intern['selected'] = 1);
+                this.getWeekdays();
+            })
         }
     }
 
     goBack() {
-        this.router.navigate([this.instructorId ? 'attendance-instructor/'+ this.instructorId : 'attendance']);
+        this.router.navigate([this.instructorId ? 'attendance-instructor/' + this.instructorId : 'attendance']);
     }
 
 

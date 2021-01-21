@@ -69,6 +69,7 @@ import {QuestionnaireFormComponent} from "./questionnaire-form/questionnaire-for
 import {TestComponent} from "./test/test.component";
 import {ReportComponent} from "./report/report.component";
 import {LogsComponent} from "./logs/logs.component";
+import {ChargeInstructionFormComponent} from "./charge-instructor-form/charge-instructor-form.component";
 
 const appRoutes: Routes = [
     {
@@ -277,6 +278,14 @@ const appRoutes: Routes = [
                 component: ChargeFormComponent
             },
             {
+                path: 'charge-instructor/form/:id',
+                component: ChargeInstructionFormComponent
+            },
+            {
+                path: 'charge-instructor/form/:id/:charge',
+                component: ChargeInstructionFormComponent
+            },
+            {
                 path: 'payment/express/:in/:tr',
                 component: PaymentFormComponent
             },
@@ -454,6 +463,10 @@ const appRoutes: Routes = [
             },
             {
                 path: 'document/pv/:name/:id',
+                component: PvComponent
+            },
+            {
+                path: 'document/pv/:name/:id/:for',
                 component: PvComponent
             },
             {

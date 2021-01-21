@@ -13,7 +13,7 @@
             </button>
             <mat-form-field appearance="outline">
                 <mat-label>{{'instructor.placeholder.name' | translate}}</mat-label>
-                <input name="name" formControlName="name" [(ngModel)]="instructor.name" matInput
+                <input name="name" formControlName="name" [(ngModel)]="instructor.name" matInput (blur)="handleName($event.target.value)"
                        required autofocus>
                 <mat-error *ngIf="name.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
@@ -46,11 +46,11 @@
                        >
                 <mat-error *ngIf="name_arabic.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-<!--            <br>-->
-            <mat-form-field appearance="outline" style="display: none">
+            <br>
+            <mat-form-field appearance="outline">
                 <mat-label>{{'instructor.placeholder.sold' | translate}}</mat-label>
                 <input name="sold" type="number" formControlName="sold" [(ngModel)]="instructor.sold" matInput
-                       [disabled]="!isAdmin">
+                       [disabled]="true">
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="sold.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>

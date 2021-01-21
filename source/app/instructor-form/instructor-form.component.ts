@@ -50,6 +50,15 @@ export class InstructorFormComponent implements OnInit, OnChanges {
         this.getParams();
     }
 
+    handleName(name: string) {
+        if(!this.isOnEdit){
+            Instructor.nameExist(name).catch(() => {
+                this.instructor.name = '';
+                this.messagesService.notifyMessage(this.translate.instant('messages.name_exist'), '', 'error');
+            });
+        }
+    }
+
     /**
      * getParams
      */

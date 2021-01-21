@@ -67,7 +67,7 @@ export class Session {
     }
 
     public static getAllNoException(): Promise<Session[]> {
-        const sql = `SELECT * FROM "session"`;
+        const sql = `SELECT * FROM "session" order by name asc`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -82,13 +82,13 @@ export class Session {
     }
 
     public static getAll(): Promise<Session[]> {
-        const sql = `SELECT distinct s.*, t.name as training, t.training_fees, t.books_fees, t.enrollment_fees, i.name as instructor, t.type as type, (s."limit" - count(e.id)) as availability
+        const sql = `SELECT distinct s.*, t.name as training,t.payment_type, t.seance_fees,instructor_fees, t.seance_number, t.training_fees, t.books_fees, t.enrollment_fees, i.name as instructor, t.type as type, (s."limit" - count(e.id)) as availability
                         FROM "session" as s 
                         inner join "training" as t on s.training_id = t.id
                         inner join "instructor" as i on s.instructor_id = i.id 
                         left join "enrollment" as e on s.id = e.session_id
                         where s.closed = false
-                        group by s.id, t.name, i.name, t.type, t.training_fees, t.books_fees, t.enrollment_fees
+                        group by s.id, t.name, i.name, t.type, t.training_fees, t.books_fees, t.enrollment_fees, t.payment_type,instructor_fees, t.seance_fees, t.seance_number  order by s.name asc
                         `;
         const values = {};
 
@@ -108,7 +108,7 @@ export class Session {
 				inner join "training" as t on s.training_id = t.id
                 inner join "instructor" as i on s.instructor_id = i.id 
                 where s.start between '${date1}' and '${date2}'  and s.closed = false
-                group by t.name;`;
+                group by t.name order by s.name asc;`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -126,7 +126,7 @@ export class Session {
         const sql = `SELECT s.id, s.name, t.name as training, i.name as instructor FROM "session" as s 
 				inner join "training" as t on s.training_id = t.id
                 inner join "instructor" as i on s.instructor_id = i.id 
-                where i.id = ${id} and s.closed = false`
+                where i.id = ${id} and s.closed = false  order by s.name asc`
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -254,7 +254,7 @@ export class Session {
                                                     INNER JOIN "instructor" AS ins ON instructor_id = ins.id
                                                     INNER JOIN "weekday" AS w ON s.id = w.session_id
                                                   
-                                                   WHERE w.room_id = ${room} AND s.closed = false`;
+                                                   WHERE w.room_id = ${room} AND s.closed = false  order by s.name asc`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -297,7 +297,7 @@ export class Session {
                                                     INNER JOIN "training" AS t ON training_id = t.id
                                                     INNER JOIN "instructor" AS ins ON instructor_id = ins.id
                                                   
-                                                   WHERE i.id = ${intern}  and s.closed = false`;
+                                                   WHERE i.id = ${intern}  and s.closed = false order by s.name asc`;
         const values = {};
 
         return TheDb.selectAll(sql, values)
@@ -407,6 +407,10 @@ export class Session {
         this['training'] = row['training'];
         this['type'] = row['type'];
         this.closed = row['closed'];
+        this['seance_number'] = row['seance_number'];
+        this['seance_fees'] = row['seance_fees'];
+        this['instructor_fees'] = row['instructor_fees'];
+        this['payment_type'] = row['payment_type'];
         this['weekdays'] = row['weekdays'];
         this['training_fees'] = row['training_fees'];
         this['books_fees'] = row['books_fees'];

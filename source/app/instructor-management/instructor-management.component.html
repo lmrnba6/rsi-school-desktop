@@ -34,14 +34,22 @@
       <app-weekday [instructor]="instructor"></app-weekday>
     </div>
   </mat-tab>
-<!--  <mat-tab>-->
-<!--    <ng-template mat-tab-label>-->
-<!--      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="paymentImage" alt=""> {{'intern-management.payment' | translate}}-->
-<!--    </ng-template>-->
-<!--    <div class="tab-content">-->
-<!--      <app-payment-instructor [instructor]="instructor"></app-payment-instructor>-->
-<!--    </div>-->
-<!--  </mat-tab>-->
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="paymentImage" alt=""> {{'intern-management.payment' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-payment-instructor [instructor]="instructor"></app-payment-instructor>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="chargeImage" alt=""> {{'intern-management.charge' | translate}}
+    </ng-template>
+    <div class="tab-content">
+      <app-charge [instructor]="instructor"></app-charge>
+    </div>
+  </mat-tab>
   <mat-tab *ngIf="!isInstructor">
     <ng-template mat-tab-label>
       <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="commentImage" alt=""> {{'intern-management.comment' | translate}}

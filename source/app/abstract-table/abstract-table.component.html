@@ -22,7 +22,7 @@
 <div *ngIf="data?.items?.length > 0" class="abstract-table-container mat-elevation-z8">
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
     </app-loader>
-    <mat-table id="contentToConvert" [dataSource]="dataSource" matSort>
+    <mat-table id="contentToConvert" [dataSource]="dataSource" matSort style="display: inline-grid">
         <ng-container *ngFor="let column of setting.cols" [matColumnDef]="column.columnDef">
             <ng-container *ngIf="column.columnDef==='settings'">
                 <mat-header-cell [ngClass]="column.class" *matHeaderCellDef mat-sort-header disabled>

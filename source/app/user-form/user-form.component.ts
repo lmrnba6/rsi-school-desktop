@@ -68,7 +68,7 @@ export class UserFormComponent implements OnInit {
     /**
      * get data
      *
-     * @param  {string} name user name
+     * @param  {string} names user name
      * @returns void
      */
     public getData(id: number): void {

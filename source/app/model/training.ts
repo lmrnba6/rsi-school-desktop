@@ -11,6 +11,10 @@ export class Training {
     public name = '';
     public time = '';
     public type = '';
+    public payment_type = 'total';
+    public seance_fees = 0;
+    public instructor_fees = 0;
+    public seance_number = 0;
     public training_fees = 0;
     public books_fees = 0;
     public enrollment_fees = 0;
@@ -71,8 +75,8 @@ export class Training {
 
     public insert(cloud?: boolean): Promise<void> {
         const sql = `
-            INSERT INTO "training" (name, time, type, training_fees, books_fees, enrollment_fees)
-            VALUES('${this.name}', '${this.time}', '${this.type}', ${this.training_fees}, ${this.books_fees}, ${this.enrollment_fees})`;
+            INSERT INTO "training" (name, time, type, training_fees,seance_number, seance_fees, instructor_fees, payment_type, books_fees, enrollment_fees)
+            VALUES('${this.name}', '${this.time}', '${this.type}', ${this.training_fees},${this.seance_number},${this.seance_fees}, ${this.instructor_fees}, '${this.payment_type}', ${this.books_fees}, ${this.enrollment_fees})`;
 
         const values = {
         };
@@ -89,8 +93,9 @@ export class Training {
 
     public insertWithId(cloud?: boolean): Promise<void> {
         const sql = `
-            INSERT INTO "training" (id,name, time, type, training_fees, books_fees, enrollment_fees)
-            VALUES(${this.id},'${this.name}', '${this.time}', '${this.type}', ${this.training_fees}, ${this.books_fees}, ${this.enrollment_fees})`;
+            INSERT INTO "training" (id,name, time, type, training_fees, seance_number,seance_fees,instructor_fees, payment_type, books_fees, enrollment_fees)
+            VALUES(${this.id},'${this.name}', '${this.time}', '${this.type}', ${this.training_fees},${this.seance_number},${this.seance_fees}, ${this.instructor_fees}, 
+            '${this.payment_type}', ${this.books_fees}, ${this.enrollment_fees})`;
 
         const values = {
         };
@@ -109,7 +114,9 @@ export class Training {
         const sql = `
             UPDATE "training"
                SET name = '${this.name}', time = '${this.time}', type = '${this.type}', 
-               training_fees = ${this.training_fees}, books_fees = ${this.books_fees}, enrollment_fees = ${this.enrollment_fees}
+               training_fees = ${this.training_fees},paymentType = '${this.payment_type}', 
+               seance_fees = ${this.seance_fees}, instructor_fees = ${this.instructor_fees}, books_fees = ${this.books_fees}, 
+               enrollment_fees = ${this.enrollment_fees},seance_number = ${this.seance_number}
              WHERE id = ${this.id}`;
 
         const values = {
@@ -119,6 +126,20 @@ export class Training {
             .then((result) => {
                 if (result.changes !== 1) {
                     throw new Error(`Expected 1 Training to be updated. Was ${result.changes}`);
+                }
+            });
+    }
+
+    public static nameExist(name: string) {
+        const sql = `SELECT * FROM "training" WHERE name = '${name}'`;
+        const values = {};
+
+        return TheDb.selectOne(sql, values)
+            .then((row) => {
+                if (row) {
+                    throw new Error('duplicated name');
+                } else {
+                    return null;
                 }
             });
     }
@@ -144,6 +165,10 @@ export class Training {
         this.time = row['time'];
         this.type = row['type'];
         this.training_fees = row['training_fees'];
+        this.seance_number = row['seance_number'];
+        this.seance_fees = row['seance_fees'];
+        this.instructor_fees = row['instructor_fees'];
+        this.payment_type = row['payment_type'];
         this.books_fees = row['books_fees'];
         this.enrollment_fees = row['enrollment_fees'];
         return this;

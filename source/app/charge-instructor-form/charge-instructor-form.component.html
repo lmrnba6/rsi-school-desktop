@@ -39,11 +39,11 @@
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">
-                <mat-label>{{isIntern ? 'charge.placeholder.intern' : 'instructor.title' | translate}}</mat-label>
-                <input name="intern" type="text"  formControlName="intern"
-                       [ngModel]="internSelected.name" matInput
+                <mat-label>{{'instructor.title' | translate}}</mat-label>
+                <input name="instructor" type="text"  formControlName="instructor"
+                       [ngModel]="instructorSelected.name" matInput
                        required autofocus>
-                <mat-error *ngIf="intern.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+                <mat-error *ngIf="instructor.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">

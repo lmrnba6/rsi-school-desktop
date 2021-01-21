@@ -6,6 +6,7 @@ import {Intern} from "../model/intern";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {MessagesService} from "../_services/messages.service";
+import {Instructor} from "../model/instructor";
 
 @Component({
     selector: 'app-document',
@@ -18,7 +19,9 @@ export class DocumentComponent implements OnInit {
     public internsToPrint: Array<Intern> = [];
     public interns: Array<Intern> = [];
     public internsFiltered: Array<Intern> = [];
+    public instructorsFiltered: Array<Instructor> = [];
     public internSelected: Intern;
+    public instructorSelected: Instructor;
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
     card: boolean;
     receipt: boolean;
@@ -37,7 +40,7 @@ export class DocumentComponent implements OnInit {
     constructor(private router: Router, private translate: TranslateService, private messagesService: MessagesService) {
     }
 
-    getPath(){
+    getPath() {
         const l = window.location.href.split('/');
         const c = l.length - l.indexOf('index.html');
         return '../'.repeat(c);
@@ -50,7 +53,8 @@ export class DocumentComponent implements OnInit {
     fixImage(event: any) {
         if (event.target.src.includes('dist')) {
             return event.target.src = event.target.src.replace('/dist', '');
-        }    }
+        }
+    }
 
     handleOpen(type: string) {
         this.open = type === this.open ? '' : type;
@@ -87,16 +91,31 @@ export class DocumentComponent implements OnInit {
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
     }
 
+    public instructorOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.block = true;
+            Instructor.getAllPaged(0, 5, 'name', '', event.target.value).then(
+                users => {
+                    this.block = false;
+                    this.instructorsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+        //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
+    }
+
     public printDiploma() {
-        const interns = this.internsToPrint.reduce((a,b,i) =>
-            a+b.id + (i < this.internsToPrint.length-1 ? ',' : ''),'');
+        const interns = this.internsToPrint.reduce((a, b, i) =>
+            a + b.id + (i < this.internsToPrint.length - 1 ? ',' : ''), '');
         this.router.navigate(['/document/pv/card/0/' + interns]);
     }
 
     public internOnSelect(intern: Intern): void {
         this.internSelected = intern;
         if (this.open === 'card') {
-            if(this.internsToPrint.length < 8){
+            if (this.internsToPrint.length < 8) {
                 this.internsToPrint.push(intern);
                 (this.internSelected as any) = null;
             }
@@ -104,8 +123,15 @@ export class DocumentComponent implements OnInit {
             this.router.navigate(['/document/pv/receipt/' + this.internSelected.id]);
         } else if (this.open === 'form') {
             this.router.navigate(['/document/pv/form/' + this.internSelected.id]);
-        }else if (this.open === 'diploma') {
+        } else if (this.open === 'diploma') {
             this.router.navigate(['/document/pv/diploma/' + this.internSelected.id]);
+        }
+    }
+
+    public instructorOnSelect(instructor: Instructor): void {
+        this.instructorSelected = instructor;
+        if (this.open === 'receipt') {
+            this.router.navigate(['/document/pv/receipt/' + this.instructorSelected.id + '/instructor']);
         }
     }
 

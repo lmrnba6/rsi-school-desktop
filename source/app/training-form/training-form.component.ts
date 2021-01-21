@@ -21,6 +21,10 @@ export class TrainingFormComponent implements OnInit {
     public training_fees: FormControl;
     public books_fees: FormControl;
     public enrollment_fees: FormControl;
+    public payment_type: FormControl;
+    public seance_fees: FormControl;
+    public instructor_fees: FormControl;
+    public seance_number: FormControl;
     public type: FormControl;
     public color: string = 'warn';
     public mode: string = 'indeterminate';
@@ -68,13 +72,27 @@ export class TrainingFormComponent implements OnInit {
             });
     }
 
+    onNameChange() {
+        if(!this.isOnEdit) {
+            Training.nameExist(this.training.name).catch(() => {
+                this.training.name = '';
+                this.messagesService.notifyMessage(this.translate.instant('messages.name_exist'), '', 'error');
+            })
+        }
+    }
+
+
     public initForm(): void {
         this.name = new FormControl(null, [Validators.required]);
         this.time = new FormControl(null, [Validators.required]);
-        this.type = new FormControl(null, [Validators.required]);
+        this.type = new FormControl(null);
         this.training_fees = new FormControl(0, [Validators.required]);
         this.books_fees = new FormControl(0, [Validators.required]);
         this.enrollment_fees = new FormControl(0, [Validators.required]);
+        this.payment_type = new FormControl(null, [Validators.required]);
+        this.seance_fees = new FormControl(0);
+        this.instructor_fees = new FormControl(0);
+        this.seance_number = new FormControl(0);
 
         this.trainingForm = this.fb.group({
             name: this.name,
@@ -82,7 +100,11 @@ export class TrainingFormComponent implements OnInit {
             type: this.type,
             training_fees: this.training_fees,
             books_fees: this.books_fees,
-            enrollment_fees: this.enrollment_fees
+            enrollment_fees: this.enrollment_fees,
+            payment_type: this.payment_type,
+            seance_fees:this.seance_fees,
+            instructor_fees: this.instructor_fees,
+            seance_number: this.seance_number
         });
     }
 

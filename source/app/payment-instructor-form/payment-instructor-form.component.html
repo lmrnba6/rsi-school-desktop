@@ -1,11 +1,11 @@
-<h2>{{'payment_instructor.title'| translate}} - {{payment_instructor?.amount}} -</h2>
+<h2>{{'payment_instructor.title'| translate}} - {{payment?.amount}} -</h2>
 <mat-divider></mat-divider>
 <mat-card>
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
     </app-loader>
     <form [formGroup]="paymentForm">
         <div class="container">
-            <button [disabled]= "paymentForm.invalid || !instructorSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="paymentForm.invalid || !instructorSelected" class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
@@ -14,7 +14,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>{{'payment_instructor.placeholder.amount' | translate}}</mat-label>
                 <input name="amount" type="number" (blur)="parseAmount($event.target['value'])" formControlName="amount"
-                       [ngModel]="payment_instructor.amount" matInput
+                       [ngModel]="payment.amount" matInput
                        required autofocus>
                 <span matSuffix>DA</span>
                 <mat-error *ngIf="amount.invalid">{{'messages.field_required_error' | translate}}</mat-error>
@@ -22,34 +22,62 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'payment_instructor.placeholder.date' | translate}}</mat-label>
-                <input name="date" formControlName="date" [(ngModel)]="payment_instructor.date" matInput
+                <input name="date" formControlName="date" [(ngModel)]="payment.date" matInput
                        required [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'payment_instructor.placeholder.comment' | translate}}</mat-label>
-                <textarea name="comment" formControlName="comment" [(ngModel)]="payment_instructor.comment" matInput
-                ></textarea>
-                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <br>
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{'payment_instructor.placeholder.instructor_id' | translate}}</mat-label>
-                <input name="instructor" formControlName="instructor" matInput
+                <input name="instructor" formControlName="instructor" matInput [ngModel]="instructorSelected"
                        (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto"
                        required>
                 <span matSuffix class="glyphicon glyphicon-search"></span>
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnInstructor.bind(this)"
                                   (optionSelected)="instructorOnSelect($event.option.value)">
                     <mat-option *ngFor="let instructor of instructorsFiltered" [value]="instructor">
-                        {{instructor.name}} <span [ngStyle]="{color: instructor.sold > 0 ? 'red' : 'green'}">{{instructor.sold}} DA</span>
+                        {{instructor?.name}} <span [ngStyle]="{color: instructor.sold > 0 ? 'red' : 'green'}">{{instructor.sold}} DA</span>
                     </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="instructor.invalid || !instructorSelected">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment_instructor.placeholder.comment' | translate}}</mat-label>
+                <textarea name="comment" formControlName="comment" [(ngModel)]="payment.comment" matInput
+                          placeholder="{{'payment_instructor.placeholder.comment' | translate}}" ></textarea>
+                <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment_instructor.placeholder.charge' | translate}}</mat-label>
+                <mat-select formControlName="charge" (selectionChange)="onChargeChange($event.value)"
+                            name="charge" required>
+                    <mat-option value="">----</mat-option>
+                    <mat-option value="-1">{{'charge.noCharge' | translate}}</mat-option>
+                    <mat-option *ngFor="let charge of charges" [value]="charge.id">
+                        {{charge['session_name']}} <span [ngStyle]="{color: charge.rest > 0 ? 'red' : 'green'}">{{charge.rest}} DA</span> {{' ' + getDate(charge.date)}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="charge.hasError('required')">{{'messages.field_required_error' | translate}}
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+                <mat-label>{{'payment_instructor.placeholder.month' | translate}}</mat-label>
+                <input name="month" formControlName="month" [(ngModel)]="payment.month" matInput
+                >
+                <mat-error *ngIf="month.invalid">{{'messages.field_required_error' | translate}}</mat-error>
+            </mat-form-field>
         </div>
     </form>
+    <div class="container">
+        <p></p>
+<!--        <br>-->
+<!--        <mat-checkbox *ngIf="!isOnEdit" style="font-size: 1.5rem" [(ngModel)]="offer">{{'payment_instructor.placeholder.offer' | translate}}</mat-checkbox>-->
+        <br>
+        <mat-checkbox *ngIf="isOnEdit" style="font-size: 1.5rem" [(ngModel)]="payment.error">{{'payment_instructor.placeholder.error' | translate}}</mat-checkbox>
+    </div>
 </mat-card>
