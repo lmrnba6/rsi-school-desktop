@@ -507,7 +507,7 @@
     "session_result": "Document de délibération  de session",
     "card": "Carte d'étudiant",
     "form": "Fiche d'inscription",
-    "receipt": "Bon de paiement",
+    "receipt": "Reçu",
     "diploma": "Diplome"
   },
   "pv": {
@@ -532,7 +532,7 @@
     "training": "Formation",
     "card": "Carte d'étudiant",
     "form": "Fiche d'inscription",
-    "receipt": "Bon de paiement",
+    "receipt": "Reçu",
     "birth": "Date de naissance",
     "name" : "Nom",
     "email": "Courriel",

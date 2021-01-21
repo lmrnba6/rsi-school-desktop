@@ -96,11 +96,11 @@ export class ChargeFormComponent implements OnInit {
                 });
                 this.charge.date = new Date(Number(this.charge.date));
                 if (this.isOnEdit) {
-                    this.chargeForm.controls['date'].disable();
                     this.chargeForm.controls['intern'].disable();
-                    this.chargeForm.controls['session'].disable();
-                    this.chargeForm.controls['amount'].disable();
-                    this.chargeForm.controls['rest'].disable();
+                    // this.chargeForm.controls['date'].disable();
+                    // this.chargeForm.controls['session'].disable();
+                    // this.chargeForm.controls['amount'].disable();
+                    // this.chargeForm.controls['rest'].disable();
                 }
             });
     }
@@ -139,8 +139,8 @@ export class ChargeFormComponent implements OnInit {
 
     updateSold() {
         this.block = true;
-        Intern.get(this.charge.intern as number).then(intern => {
-            Intern.updateSold(this.charge.intern as number, Number(intern.sold) + Number(this.charge.rest)).then(
+        Charge.getSold(this.charge.intern as number).then(total => {
+            Intern.updateSold(this.charge.intern as number, total[0].sold).then(
                 () => {
                     this.block = false;
                     this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
@@ -171,13 +171,10 @@ export class ChargeFormComponent implements OnInit {
         this.block = true;
         internPromise.then(
             () => {
-                if(this.isOnEdit){
-                    this.goBack();
-                    this.block = false;
-                    this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
-                } else {
-                    this.updateSold();
-                }
+                this.updateSold();
+                this.block = false;
+                this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
+                this.goBack();
             },
             () => {
                 this.charge.date = new Date(this.charge.date);

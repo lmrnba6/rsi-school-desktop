@@ -119,7 +119,7 @@ export class ChargeComponent implements OnInit, OnChanges {
 
     public initSetting(): void {
         this.setting = new AbstractTableSetting();
-        this.setting.settingColumn = true;
+        this.setting.settingColumn = this.isAdmin;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.isIntern && !this.instructor;
         this.setting.addRow = this.isUser || this.isAdmin;
@@ -156,7 +156,7 @@ export class ChargeComponent implements OnInit, OnChanges {
             header: '',
             type: 'settings',
             delete: false,
-            editRow: true
+            editRow: this.isAdmin
         });
     }
 

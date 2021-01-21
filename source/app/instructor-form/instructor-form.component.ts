@@ -103,7 +103,7 @@ export class InstructorFormComponent implements OnInit, OnChanges {
         this.address = new FormControl(null);
         this.phone = new FormControl(null, [Validators.required]);
         this.name_arabic = new FormControl(null);
-        this.sold = new FormControl({value: 0, disabled:!this.isAdmin});
+        this.sold = new FormControl({value: 0, disabled:true});
 
 
         this.internForm = this.fb.group({
@@ -114,6 +114,7 @@ export class InstructorFormComponent implements OnInit, OnChanges {
             email: this.email,
             sold: this.sold,
         });
+        this.internForm.controls['sold'].disable();
     }
 
     /**

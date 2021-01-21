@@ -40,6 +40,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
     public sortDirection: string = 'ASC';
     days: Array<string>;
     date: string;
+    public week: Array<any> = [];
     public sunday: any;
     public saturday: any;
     public monday: any;
@@ -125,7 +126,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
         weekdays[4] = "thursday";
         weekdays[5] = "friday";
         weekdays[6] = "saturday";
-        this.days =weekdays;
+        this.days = weekdays;
         this.date = weekdays[a.getDay()];
         return weekdays[a.getDay()];
     }
@@ -133,6 +134,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
     getSchedule(){
         this.asyncForEach(this.days, v => {
             Weekday.getScheduleByDay(v).then(value => {
+                this.week = [...this.week, {time: this.translate.instant('weekday.placeholder.' + v), name: ''}, ...value];
                 this[v] = {items: value, paging: {totalCount: value.length}}
             });
         });
@@ -189,7 +191,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
         this.weekSetting.paging = false;
         this.weekSetting.addRow = false;
         this.weekSetting.hideHeader = true;
-        this.weekSetting.tools = false;
+        this.weekSetting.tools = true;
         this.weekSetting.cols = [
             {columnDef: 'time', class:'a25', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},
             {columnDef: 'name', class:'a75', header: 'weekday.title', type: 'html', cell: (row: any) => `${this.handleLines(row.name)}`},
@@ -205,7 +207,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
         const s = list.reduce((a,b) => {
             a = a + `<li class="timeTable">${b}</li>`; return a
         },'')
-        return `<ul>${s}</ul>`
+        return text ? `<ul>${s}</ul>` : ''
     }
 
     /**

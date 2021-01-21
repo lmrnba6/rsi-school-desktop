@@ -1,81 +1,97 @@
 <h2>{{'weekday.title'| translate}}</h2>
 <mat-divider></mat-divider>
 <mat-card>
-  <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
-  </app-loader>
-<mat-tab-group *ngIf="!instructor && !intern && !session && !room" [(selectedIndex)]="tabSelected">
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-info-sign"></span> {{'weekday.title' | translate}}
-    </ng-template>
-    <div class="tab-content">
-      <app-abstract-table [page]="'weekday'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
-    </div>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <span class="glyphicon glyphicon-calendar"></span> {{'weekday.placeholder.week' | translate}}
-    </ng-template>
-    <div class="tab-content">
-      <div>
-        <p style="color: white;
+    <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
+    </app-loader>
+    <mat-tab-group *ngIf="!instructor && !intern && !session && !room" [(selectedIndex)]="tabSelected">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="glyphicon glyphicon-info-sign"></span> {{'weekday.title' | translate}}
+            </ng-template>
+            <div class="tab-content">
+                <app-abstract-table [page]="'weekday'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)"
+                                    (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting"
+                                    [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)"
+                                    (addRow)="onAddRow()"></app-abstract-table>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="glyphicon glyphicon-calendar"></span> {{'weekday.placeholder.day' | translate}}
+            </ng-template>
+            <div class="tab-content">
+                <div>
+                    <p style="color: white;
     font-size: 2rem;
     margin-top: 10px;
     padding: 10px;
     background: #007bff;
     border-radius: 10px;
     text-align: center;">{{'weekday.placeholder.sunday' | translate}}</p>
-        <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="sunday"></app-abstract-table>
-        <p style="color: white;
+                    <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="sunday"></app-abstract-table>
+                    <p style="color: white;
     font-size: 2rem;
     margin-top: 10px;
     padding: 10px;
     background: #007bff;
     border-radius: 10px;
     text-align: center;">{{'weekday.placeholder.monday' | translate}}</p>
-        <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="monday"></app-abstract-table>
-        <p style="color: white;
+                    <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="monday"></app-abstract-table>
+                    <p style="color: white;
     font-size: 2rem;
     margin-top: 10px;
     padding: 10px;
     background: #007bff;
     border-radius: 10px;
     text-align: center;">{{'weekday.placeholder.tuesday' | translate}}</p>
-        <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="tuesday"></app-abstract-table>
-        <p style="color: white;
+                    <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="tuesday"></app-abstract-table>
+                    <p style="color: white;
     font-size: 2rem;
     margin-top: 10px;
     padding: 10px;
     background: #007bff;
     border-radius: 10px;
     text-align: center;">{{'weekday.placeholder.wednesday' | translate}}</p>
-        <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="wednesday"></app-abstract-table>
-        <p style="color: white;
+                    <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="wednesday"></app-abstract-table>
+                    <p style="color: white;
     font-size: 2rem;
     margin-top: 10px;
     padding: 10px;
     background: #007bff;
     border-radius: 10px;
     text-align: center;">{{'weekday.placeholder.thursday' | translate}}</p>
-        <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="thursday"></app-abstract-table>
-        <p style="color: white;
+                    <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="thursday"></app-abstract-table>
+                    <p style="color: white;
     font-size: 2rem;
     margin-top: 10px;
     padding: 10px;
     background: #007bff;
     border-radius: 10px;
     text-align: center;">{{'weekday.placeholder.friday' | translate}}</p>
-        <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="friday"></app-abstract-table>
-        <p style="color: white;
+                    <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="friday"></app-abstract-table>
+                    <p style="color: white;
     font-size: 2rem;
     margin-top: 10px;
     padding: 10px;
     background: #007bff;
     border-radius: 10px;
     text-align: center;">{{'weekday.placeholder.saturday' | translate}}</p>
-        <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="saturday"></app-abstract-table>
-      </div>    </div>
-  </mat-tab>
-</mat-tab-group>
-  <app-abstract-table *ngIf="instructor || intern || session || room"  [page]="'weekday'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
+                    <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="saturday"></app-abstract-table>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="glyphicon glyphicon-calendar"></span> {{'weekday.placeholder.week' | translate}}
+            </ng-template>
+            <div class="tab-content">
+                  <app-abstract-table [page]="'home'" [setting]="weekSetting" [data]="{items: week, paging: {totalCount: week?.length || 0}}"></app-abstract-table>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <app-abstract-table *ngIf="instructor || intern || session || room" [page]="'weekday'" (deleteAll)="ngOnInit()"
+                        (sortChange)="sortOnChange($event)" (filter)="onFilter($event)"
+                        (pageChange)="onPageChange($event)" [setting]="setting" [data]="data"
+                        (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)"
+                        (addRow)="onAddRow()"></app-abstract-table>
 </mat-card>

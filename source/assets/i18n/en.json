@@ -500,7 +500,7 @@
     "session_result": "Document de délibération  de session",
     "card": "Student card",
     "form": "Student form",
-    "receipt": "Student Receipt",
+    "receipt": "Receipt",
     "diploma": "Diploma"
   },
   "pv": {
@@ -525,7 +525,7 @@
     "training": "Formation",
     "card": "Student card",
     "form": "Enrollment From",
-    "receipt": "Student Receipt",
+    "receipt": "Receipt",
     "birth": "Date of birth",
     "name" : "Name",
     "email": "Email",
