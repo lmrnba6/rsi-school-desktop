@@ -37,6 +37,7 @@ export class ChargeInstructor {
 
     public static getCountByInstructor(instructor: number): Promise<ChargeInstructor[]> {
         return TheDb.selectAll(`SELECT count(*) as count FROM "charge_instructor" AS p INNER JOIN "instructor" AS i ON p.instructor = i.id 
+                            LEFT JOIN "session" AS s ON p.session = s.id 
                             WHERE i.id = ${instructor}`, {})
             .then((count: any) => count);
     }
@@ -88,7 +89,7 @@ export class ChargeInstructor {
 
     public static getAllByInstructor(instructor: number): Promise<ChargeInstructor[]> {
         const sql = `SELECT c.*, s.name as session_name  FROM "charge_instructor" as c 
-        INNER JOIN "session" as s ON s.id = c.session
+        LEFT JOIN "session" as s ON s.id = c.session
         WHERE instructor = ${instructor} and c.rest > 0 ORDER BY date ASC`;
         const values = {};
 
@@ -110,10 +111,10 @@ export class ChargeInstructor {
                             WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.instructor, i.name as instructor, ,s.name as session, 
+            `SELECT p.id, p.amount, p.date, p.comment, p.instructor, i.name as instructor,s.name as session
                             FROM "charge_instructor" AS p 
                             INNER JOIN "instructor" AS i ON p.instructor = i.id
-                            INNER JOIN "session" AS s ON p.session = s.id 
+                            LEFT JOIN "session" AS s ON p.session = s.id 
                             WHERE  
                             i.name ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
@@ -135,7 +136,7 @@ export class ChargeInstructor {
         const sql = `SELECT p.id, p.amount, p.date, p.comment, p.instructor, i.name as instructor, p.rest, s.name as session 
                             FROM "charge_instructor" AS p 
                             INNER JOIN "instructor" AS i ON p.instructor = i.id
-                            INNER JOIN "session" AS s ON p.session = s.id  
+                            LEFT JOIN "session" AS s ON p.session = s.id  
                             WHERE i.id = ${instructor}
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
@@ -155,7 +156,7 @@ export class ChargeInstructor {
     public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "charge_instructor" (amount,rest, date, comment, session, instructor)
-            VALUES(${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}','${this.session}', ${this.instructor})`;
+            VALUES(${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',${this.session}, ${this.instructor})`;
 
         const values = {
         };
@@ -173,7 +174,7 @@ export class ChargeInstructor {
     public insertWithId(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "charge_instructor" (id,amount,rest, date, comment, session, instructor)
-            VALUES(${this.id},${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}','${this.session}', ${this.instructor})`;
+            VALUES(${this.id},${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',${this.session}, ${this.instructor})`;
 
         const values = {
         };
@@ -208,7 +209,7 @@ export class ChargeInstructor {
     public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "charge_instructor"
-               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', session = '${this.session}'
+               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', session = ${this.session}
                , instructor = '${this.instructor}', rest = ${this.rest}
              WHERE id = ${this.id}`;
 

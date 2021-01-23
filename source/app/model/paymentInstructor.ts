@@ -97,7 +97,7 @@ export class Payment_instructor {
             `SELECT p.id, p.amount, p.date, p.comment, p.instructor_id, i.name as instructor, p.username,s.name as session_name, p.error,p.rest, i.sold 
                             FROM payment_instructor AS p 
                             INNER JOIN "instructor" AS i ON p.instructor_id = i.id
-                            LEFT JOIN "charge" AS c ON p.charge = c.id 
+                            LEFT JOIN "charge_instructor" AS c ON p.charge = c.id 
                             LEFT JOIN "session" AS s ON c.session = s.id 
                             WHERE  
                             i.name ILIKE '%${filter}%' 
@@ -227,7 +227,7 @@ export class Payment_instructor {
 
     public static getPaymentInstructorDoneBySessionToDate(instructor: number,session: number): Promise<number> {
         const sql = `
-                select sum(p.amount) payments from payment_instructor p join charge c on p.charge = c.id 
+                select sum(p.amount) payments from payment_instructor p join charge_instructor c on p.charge = c.id 
                 where p.instructor_id = ${instructor} and c.session = ${session}
                 `;
 

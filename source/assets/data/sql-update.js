@@ -210,5 +210,9 @@ ALTER TABLE payment_instructor
 ALTER TABLE payment_instructor
     ADD COLUMN IF NOT EXISTS error INTEGER;
 ALTER TABLE payment_instructor
-    ADD COLUMN IF NOT EXISTS month TEXT;      
+    ADD COLUMN IF NOT EXISTS month TEXT; 
+alter table charge_instructor
+    alter session drop not null; 
+alter table charge
+    alter session drop not null;     
 `;

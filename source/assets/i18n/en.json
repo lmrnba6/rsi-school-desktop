@@ -578,6 +578,7 @@
     "salary": "Salary"
   },
   "messages": {
+    "payment_grater_than_charge": "The payment amount is greater than the charge amount",
     "add_to_register_message": "Would you like to add this transaction to the register?",
     "unable_delete_relation": "Cannot delete this line because it has information linked to it",
     "zero_charge_message": "Do you really want to charge this student 0 DA",

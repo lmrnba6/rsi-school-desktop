@@ -141,12 +141,12 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
                 type: 'text',
                 cell: (row: any) => row.rest ? `${Number(row.rest).toFixed(0)} DA` : ''
             },
-            {
-                columnDef: 'sold',
-                header: 'register.placeholder.sold',
-                type: 'text',
-                cell: (row: any) => row.rest ? `${Number(row.sold).toFixed(0)} DA` : ''
-            },
+            // {
+            //     columnDef: 'sold',
+            //     header: 'register.placeholder.sold',
+            //     type: 'text',
+            //     cell: (row: any) => row.rest ? `${Number(row.sold).toFixed(0)} DA` : ''
+            // },
         ];
         !this.instructor && this.setting.cols.push({
             columnDef: 'instructor',

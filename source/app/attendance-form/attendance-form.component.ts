@@ -14,6 +14,7 @@ import {Charge} from "../model/charge";
 import {Payment_instructor} from "../model/paymentInstructor";
 import {ChargeInstructor} from "../model/chargeInstructor";
 import {Instructor} from "../model/instructor";
+import {Enrollment} from "../model/enrollment";
 
 @Component({
     selector: 'app-attendance-form',
@@ -199,16 +200,17 @@ export class AttendanceFormComponent implements OnInit {
                 }
             }
             const instructor :Instructor = await Instructor.get(session.instructor_id as number);
+            const enrollments = await Enrollment.getAllBySession(session.id);
             const due = await Payment_instructor.getPaymentInstructorDueBySessionToDate(instructor.id, session.id, session['instructor_fees']);
             const charged = await Payment_instructor.getChargeDoneBySessionToDate(instructor.id, session.id);
             const done = await Payment_instructor.getPaymentInstructorDoneBySessionToDate(instructor.id, session.id);
             const diff = (Number(due) || 0) - (Number(done) || 0) - (Number(charged) || 0);
-            if (diff >= (Number(session['instructor_fees']) || 0) * (Number(session['seance_number']) || 0)) {
+            if (diff >= (enrollments?.length || 0) * (Number(session['instructor_fees']) || 0) * (Number(session['seance_number']) || 0)) {
                 const newCharge = new ChargeInstructor();
-                newCharge.amount = Number(session['instructor_fees']) * Number(session['seance_number']);
+                newCharge.amount = Number(session['instructor_fees']) * Number(session['seance_number']) * (enrollments?.length || 0);
                 newCharge.date = new Date().getTime();
                 newCharge.instructor = instructor.id;
-                newCharge.rest = Number(session['instructor_fees']) * Number(session['seance_number']);
+                newCharge.rest = Number(session['instructor_fees']) * Number(session['seance_number']) * (enrollments?.length || 0);
                 newCharge.session = session.id;
                 newCharge.comment = 'Calcule automatique';
                 await newCharge.insert();

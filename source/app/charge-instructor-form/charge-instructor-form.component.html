@@ -22,7 +22,7 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'charge.placeholder.rest' | translate}}</mat-label>
-                <input name="rest" type="number" (blur)="parseRest($event.target['value'])" formControlName="rest"
+                <input name="rest" type="number" formControlName="rest"
                        [ngModel]="charge.rest" matInput
                        required autofocus>
                 <span matSuffix>DA</span>
@@ -45,12 +45,13 @@
                        required autofocus>
                 <mat-error *ngIf="instructor.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline">
+<!--            <br>-->
+            <mat-form-field appearance="outline" style="display: none">
                 <mat-label>{{'charge.placeholder.session' | translate}}</mat-label>
                 <mat-select formControlName="session" [(ngModel)]="charge.session"
                             name="session" required>
-                    <mat-option value="">----</mat-option>
+<!--                    <mat-option value="">&#45;&#45;&#45;&#45;</mat-option>-->
+                    <mat-option value="-1">{{'charge.noCharge' | translate}}</mat-option>
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
                         {{session.name}} {{session['training_fees']}} DA {{session['books_fees']}} DA {{session['enrollment_fees']}} DA
                     </mat-option>
@@ -61,7 +62,7 @@
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'charge.placeholder.comment' | translate}}</mat-label>
-                <textarea name="comment" formControlName="comment" [(ngModel)]="charge.comment" matInput
+                <textarea name="comment" formControlName="comment" [(ngModel)]="charge.comment" matInput required
                           ></textarea>
                 <mat-error *ngIf="comment.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>

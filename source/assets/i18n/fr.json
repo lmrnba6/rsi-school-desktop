@@ -586,6 +586,7 @@
     "salary": "Salaire"
   },
   "messages": {
+    "payment_grater_than_charge": "Le montant du paiement est supérieur au montant de la charge",
     "add_to_register_message": "Souhaitez-vous ajouter cette transaction à la caisse?",
     "unable_delete_relation": "Impossible de supprimer cette ligne car des informations y sont liées",
     "zero_charge_message": "Voulez-vous vraiment facturer cet étudiant 0 DA",

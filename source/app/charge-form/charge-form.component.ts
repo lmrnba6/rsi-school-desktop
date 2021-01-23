@@ -45,6 +45,9 @@ export class ChargeFormComponent implements OnInit {
 
     parseAmount(amount: number) {
         this.charge.amount = Number(Number(amount).toFixed(0));
+        if(!this.isOnEdit) {
+            this.charge.rest = this.charge.amount;
+        }
     }
 
     parseRest(amount: number) {
@@ -64,9 +67,17 @@ export class ChargeFormComponent implements OnInit {
                 this.isOnEdit = false;
                 this.charge = new Charge();
                 this.charge.date = new Date();
+                (this.charge.session as any) = -1;
                 this.getIntern(res.id);
             }
             this.initForm();
+            this.chargeForm.controls['rest'].disable();
+            if (this.isOnEdit) {
+                this.chargeForm.controls['intern'].disable();
+                this.chargeForm.controls['date'].disable();
+                this.chargeForm.controls['session'].disable();
+                this.chargeForm.controls['amount'].disable();
+            }
         });
     }
 
@@ -95,13 +106,6 @@ export class ChargeFormComponent implements OnInit {
                     this.getSessions();
                 });
                 this.charge.date = new Date(Number(this.charge.date));
-                if (this.isOnEdit) {
-                    this.chargeForm.controls['intern'].disable();
-                    // this.chargeForm.controls['date'].disable();
-                    // this.chargeForm.controls['session'].disable();
-                    // this.chargeForm.controls['amount'].disable();
-                    // this.chargeForm.controls['rest'].disable();
-                }
             });
     }
 
@@ -160,6 +164,9 @@ export class ChargeFormComponent implements OnInit {
      * onSave
      */
     public async onSaveOrUpdate(): Promise<void> {
+        if(Number(this.charge.session) === -1) {
+            (this.charge.session as any) = null;
+        }
         this.charge.date = (this.charge.date as Date).getTime();
         this.charge.intern = this.internSelected.id;
         let internPromise: Promise<any>;

@@ -19,26 +19,26 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19ef8cb-63e0-4fec-928f-58a0802bf0b3" name="Default Changelist" comment="">
+    <list default="true" id="c19ef8cb-63e0-4fec-928f-58a0802bf0b3" name="Default Changelist" comment="v37">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/database/database.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/database/database.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/layout/layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/layout/layout.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/attendance.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/attendance.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/charge-form/charge-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/charge-instructor-form/charge-instructor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/charge-instructor-form/charge-instructor-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/charge-instructor-form/charge-instructor-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/charge-instructor-form/charge-instructor-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/charge/charge.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/charge/charge.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/model/charge.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/charge.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/exam.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/exam.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/inbox.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/inbox.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/payment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/payment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/chargeInstructor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/chargeInstructor.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/model/paymentInstructor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/paymentInstructor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/register.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/register.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/room.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/room.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/session.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/settings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/settings.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/thedb.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/thedb.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/pv/pv.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/pv/pv.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/pv/pv.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/pv/pv.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/user-form/user-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/user-form/user-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-instructor/payment-instructor.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-instructor/payment-instructor.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment/payment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment/payment.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/assets/data/sql-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/data/sql-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/assets/i18n/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/assets/i18n/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/fr.json" afterDir="false" />
     </list>
     <list id="be57fea4-9993-49e0-83b2-0064aa4d57ee" name="don't commit" comment="">
       <change beforePath="$PROJECT_DIR$/electron-builder.env" beforeDir="false" afterPath="$PROJECT_DIR$/electron-builder.env" afterDir="false" />
@@ -72,7 +72,7 @@
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../goldo/goldo-desktop" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="C:\Users\Riadh\Desktop\Workspace\school\node_modules\tslint" />
@@ -83,19 +83,19 @@
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\workspace\rsi\rsi-school-desktop\source\app" />
+      <recent name="C:\workspace\rsi\rsi-school-desktop\source\app\model" />
+      <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\images" />
+      <recent name="C:\workspace\rsi\rsi-school-desktop\source\app\_services" />
+      <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\data" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\images" />
       <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass\nova-light" />
       <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass" />
       <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass\primeng\primeicons" />
       <recent name="C:\Users\Riadh\Desktop\Workspace\school\src\assets\data" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\workspace\rsi\rsi-school-desktop\source\app" />
-      <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\images" />
-      <recent name="C:\workspace\rsi\rsi-school-desktop\source\app\_services" />
-      <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\data" />
-      <recent name="C:\workspace\rsi\rsi-school-desktop\source\app\model" />
     </key>
   </component>
   <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
@@ -224,7 +224,13 @@
       <workItem from="1603674774085" duration="130000" />
       <workItem from="1603919674219" duration="18000" />
       <workItem from="1608065915658" duration="2827000" />
-      <workItem from="1610309750318" duration="8312000" />
+      <workItem from="1610309750318" duration="9054000" />
+      <workItem from="1611009322797" duration="13784000" />
+      <workItem from="1611070689187" duration="19800000" />
+      <workItem from="1611175593021" duration="24891000" />
+      <workItem from="1611247781954" duration="8845000" />
+      <workItem from="1611331307515" duration="14489000" />
+      <workItem from="1611408048460" duration="3449000" />
     </task>
     <task id="LOCAL-00001" summary="v 1.0.6">
       <created>1593831790518</created>
@@ -520,7 +526,28 @@
       <option name="project" value="LOCAL" />
       <updated>1608068932131</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="v35">
+      <created>1610328761929</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1610328761929</updated>
+    </task>
+    <task id="LOCAL-00044" summary="v36">
+      <created>1611201692712</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1611201692712</updated>
+    </task>
+    <task id="LOCAL-00045" summary="v37">
+      <created>1611273030354</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1611273030354</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -539,9 +566,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add charge" />
-    <MESSAGE value="v1.0.19" />
-    <MESSAGE value="1.0.20" />
     <MESSAGE value="add comment" />
     <MESSAGE value="fix user account" />
     <MESSAGE value="add transport" />
@@ -564,29 +588,42 @@
     <MESSAGE value="fix enrollments + inbox reply" />
     <MESSAGE value="add logs + fix update + fix error text" />
     <MESSAGE value="v34" />
-    <option name="LAST_COMMIT_MESSAGE" value="v34" />
+    <MESSAGE value="v35" />
+    <MESSAGE value="v36" />
+    <MESSAGE value="v37" />
+    <option name="LAST_COMMIT_MESSAGE" value="v37" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2411" y="4" key="CommitChangelistDialog2" timestamp="1608068930868">
+    <state x="2610" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1611180247308">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
-    <state x="2411" y="4" key="CommitChangelistDialog2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1608068930868" />
+    <state x="2610" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611180247308" />
+    <state x="2411" y="4" key="CommitChangelistDialog2" timestamp="1611273029030">
+      <screen x="1920" y="4" width="1920" height="1040" />
+    </state>
+    <state x="2411" y="4" key="CommitChangelistDialog2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611273029030" />
     <state x="2045" y="130" width="1670" height="788" key="DiffContextDialog" timestamp="1610328128918">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
     <state x="2045" y="130" width="1670" height="788" key="DiffContextDialog/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1610328128918" />
-    <state x="2606" y="215" key="FileChooserDialogImpl" timestamp="1610309886090">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1611276916311">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/1920.4.1920.1040@0.0.1536.824" timestamp="1611276916311" />
+    <state x="2606" y="215" key="FileChooserDialogImpl/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611012087617" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1611196634061" />
+    <state x="2371" y="187" key="Vcs.Push.Dialog.v2" timestamp="1611273090014">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
-    <state x="2606" y="215" key="FileChooserDialogImpl/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1610309886090" />
-    <state x="2371" y="187" key="Vcs.Push.Dialog.v2" timestamp="1608068934014">
+    <state x="2371" y="187" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611273090014" />
+    <state x="2490" y="230" width="1049" height="788" key="find.popup" timestamp="1611351237792">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
-    <state x="2371" y="187" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1608068934014" />
-    <state x="2700" y="190" width="1049" height="788" key="find.popup" timestamp="1610327325558">
+    <state x="2490" y="230" width="1049" height="788" key="find.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611351237792" />
+    <state x="624" y="147" width="840" height="625" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1611197299605" />
+    <state x="2543" y="229" width="672" height="678" key="search.everywhere.popup" timestamp="1611009759214">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
-    <state x="556" y="139" width="840" height="625" key="find.popup/0.0.1536.824/1920.4.1920.1040@0.0.1536.824" timestamp="1602509869500" />
-    <state x="2700" y="190" width="1049" height="788" key="find.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1610327325558" />
+    <state x="2543" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611009759214" />
   </component>
 </project>

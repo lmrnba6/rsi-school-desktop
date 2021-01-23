@@ -198,6 +198,10 @@ export class PaymentFormComponent implements OnInit {
      * onSave
      */
     public async onSaveOrUpdate(): Promise<void> {
+        if(this.chargeSelected && Number(this.payment.amount) > Number(this.chargeSelected.amount)) {
+            this.messagesService.notifyMessage(this.translate.instant('messages.payment_grater_than_charge'), '', 'error');
+            return;
+        }
         this.payment.error = this.payment.error ? 1 : 0;
         this.payment.intern_id = this.internSelected.id;
         this.payment.username = this.auth.getCurrentUser().username;

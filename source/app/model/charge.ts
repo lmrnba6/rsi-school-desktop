@@ -36,7 +36,8 @@ export class Charge {
     }
 
     public static getCountByIntern(intern: number): Promise<Charge[]> {
-        return TheDb.selectAll(`SELECT count(*) as count FROM "charge" AS p INNER JOIN "intern" AS i ON p.intern = i.id 
+        return TheDb.selectAll(`SELECT count(*) as count FROM "charge" AS p INNER JOIN "intern" AS i ON p.intern = i.id
+                            LEFT JOIN "session" AS s ON p.session = s.id  
                             WHERE i.id = ${intern}`, {})
             .then((count: any) => count);
     }
@@ -44,6 +45,7 @@ export class Charge {
     public static getCountByInstructor(instructor: number): Promise<Charge[]> {
         return TheDb.selectAll(`SELECT count(*) as count FROM "charge_instructor" AS p 
                                         INNER JOIN "instructor" AS i ON p.instructor_id = i.id 
+                                        LEFT JOIN "session" AS s ON p.session = s.id 
                             WHERE i.id = ${instructor}`, {})
             .then((count: any) => count);
     }
@@ -95,7 +97,7 @@ export class Charge {
 
     public static getAllByIntern(intern: number): Promise<Charge[]> {
         const sql = `SELECT c.*, s.name as session_name  FROM "charge" as c 
-        INNER JOIN "session" as s ON s.id = c.session
+        LEFT JOIN "session" as s ON s.id = c.session
         WHERE intern = ${intern} and c.rest > 0 ORDER BY date ASC`;
         const values = {};
 
@@ -117,10 +119,10 @@ export class Charge {
                             WHERE p.amount LIKE '%${filter}%' OR 
                             p.date LIKE '%${filter}%' OR i.name LIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}` :
-            `SELECT p.id, p.amount, p.date, p.comment, p.intern, i.name as intern, ,s.name as session, 
+            `SELECT p.id, p.amount, p.date, p.comment, p.intern, i.name as intern,s.name as session
                             FROM "charge" AS p 
                             INNER JOIN "intern" AS i ON p.intern = i.id
-                            INNER JOIN "session" AS s ON p.session = s.id 
+                            LEFT JOIN "session" AS s ON p.session = s.id 
                             WHERE  
                             i.name ILIKE '%${filter}%' 
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
@@ -142,7 +144,7 @@ export class Charge {
         const sql = `SELECT p.id, p.amount, p.date, p.comment, p.intern, i.name as intern, p.rest, s.name as session 
                             FROM "charge" AS p 
                             INNER JOIN "intern" AS i ON p.intern = i.id
-                            INNER JOIN "session" AS s ON p.session = s.id  
+                            LEFT JOIN "session" AS s ON p.session = s.id  
                             WHERE i.id = ${intern}
                             ORDER BY ${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex}`;
         const values = {
@@ -181,7 +183,7 @@ export class Charge {
     public insert(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "charge" (amount,rest, date, comment, session, intern)
-            VALUES(${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}','${this.session}', ${this.intern})`;
+            VALUES(${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',${this.session}, ${this.intern})`;
 
         const values = {
         };
@@ -199,7 +201,7 @@ export class Charge {
     public insertWithId(cloud?: boolean): Promise<void> {
         const sql = `
             INSERT INTO "charge" (id,amount,rest, date, comment, session, intern)
-            VALUES(${this.id},${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}','${this.session}', ${this.intern})`;
+            VALUES(${this.id},${this.amount}, ${this.rest}, '${this.date}', '${this.comment ? this.comment.replace(/\'/g, "''") : ''}',${this.session}, ${this.intern})`;
 
         const values = {
         };
@@ -234,7 +236,7 @@ export class Charge {
     public update(cloud?: boolean): Promise<void> {
         const sql = `
             UPDATE "charge"
-               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', session = '${this.session}'
+               SET amount = ${this.amount}, date = '${this.date}', comment = '${this.comment ? this.comment.replace(/\'/g, "''") : ''}', session = ${this.session}
                , intern = '${this.intern}', rest = ${this.rest}
              WHERE id = ${this.id}`;
 
