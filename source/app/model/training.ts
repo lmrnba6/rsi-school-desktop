@@ -114,7 +114,7 @@ export class Training {
         const sql = `
             UPDATE "training"
                SET name = '${this.name}', time = '${this.time}', type = '${this.type}', 
-               training_fees = ${this.training_fees},paymentType = '${this.payment_type}', 
+               training_fees = ${this.training_fees}, payment_type = '${this.payment_type}', 
                seance_fees = ${this.seance_fees}, instructor_fees = ${this.instructor_fees}, books_fees = ${this.books_fees}, 
                enrollment_fees = ${this.enrollment_fees},seance_number = ${this.seance_number}
              WHERE id = ${this.id}`;
