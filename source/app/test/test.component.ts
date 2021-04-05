@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import './test.component.scss';
 import {DialogsService} from "../_services/dialogs.service";
 import {MessagesService} from "../_services/messages.service";
