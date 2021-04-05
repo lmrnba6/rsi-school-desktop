@@ -70,6 +70,7 @@ import {TestComponent} from "./test/test.component";
 import {ReportComponent} from "./report/report.component";
 import {LogsComponent} from "./logs/logs.component";
 import {ChargeInstructionFormComponent} from "./charge-instructor-form/charge-instructor-form.component";
+import {DeactivateGuard} from "./_guards/deactivate.guard";
 
 const appRoutes: Routes = [
     {
@@ -115,7 +116,8 @@ const appRoutes: Routes = [
             },
             {
                 path: 'test/:questionnaire/:intern/:exam',
-                component: TestComponent
+                component: TestComponent,
+                canDeactivate: [DeactivateGuard]
             },
             {
                 path: 'settings/transportation',

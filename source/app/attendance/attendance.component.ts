@@ -223,7 +223,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.setting.settingColumn = this.isUser || this.isAdmin;
         this.setting.tableName = this.tableName;
         this.setting.filter = this.isUser || this.isAdmin;
-        this.setting.addRow = this.isUser || this.isAdmin;
+        this.setting.addRow = (this.isUser || this.isAdmin) && !this.intern && !this.instructor && !this.session && !this.weekday;
         this.setting.cols = [
             {columnDef: 'date', header: 'attendance.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {
@@ -291,7 +291,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.settingByDate.settingColumn = false;
         this.settingByDate.tableName = this.tableName;
         this.settingByDate.filter = true;
-        this.settingByDate.addRow = true;
+        this.settingByDate.addRow = !this.intern && !this.instructor && !this.session && !this.weekday;
         this.settingByDate.cols = [
             {columnDef: 'name', header: 'attendance.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`}
         ];

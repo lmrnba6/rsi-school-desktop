@@ -114,7 +114,7 @@ export class InternComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.session;
         this.setting.tableName = this.tableName;
         this.setting.filter = this.isUser || this.isAdmin;
-        this.setting.addRow = this.isUser || this.isAdmin;
+        this.setting.addRow = (this.isUser || this.isAdmin) && !this.session;
         this.setting.cols = [
             {columnDef: 'name',class: this.session ? 'a40' : 'a20', header: 'intern.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`},
             {columnDef: 'phone',class: 'a10', header: 'intern.placeholder.phone', type: 'text', cell: (row: any) => `0${row.phone}`},

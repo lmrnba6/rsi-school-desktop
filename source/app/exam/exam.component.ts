@@ -202,7 +202,7 @@ export class ExamComponent implements OnInit, OnChanges {
         this.settingByInterns.settingColumn = true;
         this.settingByInterns.tableName = this.tableName;
         this.settingByInterns.filter = false;
-        this.settingByInterns.addRow = false;
+        this.settingByInterns.addRow = !this.intern && !this.session;
         this.settingByInterns.paging = false;
         this.settingByInterns.cols = [
             {columnDef: 'date', header: 'exam.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
@@ -260,7 +260,7 @@ export class ExamComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.session;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern && !this.session;
-        this.setting.addRow = !this.session && (this.isAdmin || this.isUser || this.isInstructor);
+        this.setting.addRow = !this.session &&!this.intern && (this.isAdmin || this.isUser || this.isInstructor);
         this.setting.cols = [
             {columnDef: 'date', header: 'exam.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {

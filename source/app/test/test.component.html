@@ -18,7 +18,9 @@
     </div>
 </div>
 <div *ngIf="testStarted" class="testFormContainer">
-    <div *ngIf="questionnaire.timed" class="testTime"><strong>{{'questionnaire.placeholder.timeLeft' | translate}}:</strong> {{timeLeft}} min</div>
+    <div *ngIf="questionnaire.timed"
+         [ngStyle]="{color: timeLeft/exam.time > 0.5 ? 'green' : timeLeft/exam.time < 0.5 && timeLeft/exam.time > 0.2 ? 'orange' : 'red'}"
+         class="testTime"><strong>{{'questionnaire.placeholder.timeLeft' | translate}}:</strong> {{timeLeft}} min</div>
     <br><br>
     <h1>{{questionnaire?.title}}</h1>
     <h3>{{'questionnaire.placeholder.question' | translate}} {{currentQuestion.sequence}}</h3>

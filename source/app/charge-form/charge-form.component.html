@@ -1,4 +1,4 @@
-<h2>{{'charge.title'| translate}} - {{charge?.amount}} -</h2>
+<h2>{{'charge.title'| translate}} - {{internSelected?.name}} -</h2>
 <mat-divider></mat-divider>
 <mat-card>
     <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">
@@ -38,7 +38,7 @@
                 <mat-error *ngIf="date.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" style="display: none">
                 <mat-label>{{'charge.placeholder.intern' | translate}}</mat-label>
                 <input name="intern" type="text"  formControlName="intern"
                        [ngModel]="internSelected.name" matInput

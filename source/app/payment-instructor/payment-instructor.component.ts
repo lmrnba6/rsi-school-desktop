@@ -114,7 +114,7 @@ export class PaymentInstructorComponent implements OnInit, OnChanges {
         this.setting.settingColumn = this.isAdmin;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.instructor;
-        this.setting.addRow = this.isAdmin || this.isUser;
+        this.setting.addRow = (this.isAdmin || this.isUser) && !this.instructor;
         this.setting.cols = [
             {columnDef: 'date', header: 'payment_instructor.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {

@@ -134,8 +134,8 @@ export class Exam {
         const sql = `SELECT e.*, q.title as questionnaire, i.name as intern, t.name as training
                         FROM "exam" e
                         INNER JOIN "intern" AS i ON i.id = e.intern_id 
-                        INNER JOIN "questionnaire" AS q ON q.id = e.questionnaire_id
-                        INNER JOIN "training" AS t ON t.id = q.training
+                        LEFT JOIN "questionnaire" AS q ON q.id = e.questionnaire_id
+                        LEFT JOIN "training" AS t ON t.id = q.training
                         WHERE e.id = ${id}`;
         const values = {};
 

@@ -100,7 +100,7 @@ export class EnrollmentComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.intern;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.intern;
-        this.setting.addRow = this.isAdmin || this.isUser;
+        this.setting.addRow = (this.isAdmin || this.isUser) && !this.intern;
         this.setting.cols = [
             {columnDef: 'intern', header: 'enrollment.placeholder.intern_id', type: 'text', cell: (row: any) => `${row.intern}`},
             {columnDef: 'training_id', header: 'enrollment.placeholder.training_id', type: 'text', cell: (row: any) => `${row.training_id}`},

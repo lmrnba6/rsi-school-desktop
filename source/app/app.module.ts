@@ -138,6 +138,7 @@ import {TestComponent} from "./test/test.component";
 import {ReportComponent} from "./report/report.component";
 import {LogsComponent} from "./logs/logs.component";
 import {ChargeInstructionFormComponent} from "./charge-instructor-form/charge-instructor-form.component";
+import {DeactivateGuard} from "./_guards/deactivate.guard";
 
 
 @NgModule({
@@ -296,7 +297,8 @@ import {ChargeInstructionFormComponent} from "./charge-instructor-form/charge-in
     providers: [
         { provide: MatPaginatorIntl, useClass: MatPaginatorClass },
         {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
-        MessageService
+        MessageService,
+        DeactivateGuard
     ],
     bootstrap: [
         AppComponent

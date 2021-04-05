@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import './test.component.scss';
 import {DialogsService} from "../_services/dialogs.service";
 import {MessagesService} from "../_services/messages.service";
@@ -17,7 +17,7 @@ import {Mark} from "../model/mark";
     templateUrl: './test.component.html'
 })
 export class TestComponent implements OnInit {
-
+    public interval: any;
     public intern: Intern;
     public questionnaire: Questionnaire;
     public exam: Exam;
@@ -29,6 +29,7 @@ export class TestComponent implements OnInit {
     public value: number = 100;
     public timeLeft: any;
     public testStarted: boolean;
+    public testDone: boolean;
     public currentQuestion: Question;
 
     constructor(
@@ -38,6 +39,14 @@ export class TestComponent implements OnInit {
         private route: ActivatedRoute,
         private translate: TranslateService,
         private location: Location) {
+    }
+
+    canDeactivate() {
+        if(this.testStarted && !this.testDone) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     ngOnInit() {
@@ -51,11 +60,13 @@ export class TestComponent implements OnInit {
     }
 
     startTimer() {
-        setInterval(() => {
-            if (this.timeLeft > 0) {
+        this.interval = setInterval(() => {
+            if (this.timeLeft > 1) {
                 this.timeLeft--;
             } else {
-                this.back();
+                this.testDone = true;
+                clearInterval(this.interval);
+                this.done();
             }
         }, 1000 * 60)
     }
@@ -133,6 +144,12 @@ export class TestComponent implements OnInit {
             });
     }
 
+    done() {
+        this.dialogsService
+            .confirm('messages.warning_title', 'messages.exam_done_message', true, 'warning-sign')
+            .subscribe(() => this.back());
+    }
+
     saveAnswer(exit: boolean) {
         const mark = this.currentQuestion['mark'] || new Mark();
         mark.answer = this.currentQuestion.type === 'qcm' ? this.currentQuestion['answer'].title : this.currentQuestion['answer'];
@@ -144,7 +161,8 @@ export class TestComponent implements OnInit {
             this.block = false;
             this.currentQuestion['mark'] = mark;
             if (exit) {
-                this.back()
+                this.testDone = true;
+                this.done();
             } else {
                 this.currentQuestion = this.questions[this.currentQuestion.sequence]
             }

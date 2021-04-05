@@ -111,7 +111,7 @@ export class SessionComponent implements OnInit, OnChanges {
         this.setting.settingColumn = true;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.instructor;
-        this.setting.addRow = this.isAdmin || this.isUser;
+        this.setting.addRow = (this.isAdmin || this.isUser) && !this.instructor;
         this.setting.cols = [
             {
                 columnDef: 'name',

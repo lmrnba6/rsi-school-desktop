@@ -1,6 +1,6 @@
 <h2>{{'exam.title'| translate}} - <img *ngIf="!intern && !session" (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
 <mat-divider></mat-divider>
-<mat-tab-group *ngIf="!intern" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
+<mat-tab-group *ngIf="!intern && !session" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
       <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="sessionImage" alt=""> {{'exam.placeholder.session_id' | translate}}
@@ -45,5 +45,5 @@
     </div>
   </mat-tab>
 </mat-tab-group>
-<app-abstract-table *ngIf="intern" [page]="'exam-intern'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
+<app-abstract-table *ngIf="intern || session" [page]="'exam-intern'" (deleteAll)="ngOnInit()" (sortChange)="sortOnChange($event)" (filter)="onFilter($event)" (pageChange)="onPageChange($event)" [setting]="setting" [data]="data" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)" (addRow)="onAddRow()"></app-abstract-table>
 

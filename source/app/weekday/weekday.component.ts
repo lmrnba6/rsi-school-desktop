@@ -170,7 +170,7 @@ export class WeekdayComponent implements OnInit, OnChanges {
         this.setting.settingColumn = !this.session && !this.room && !this.instructor && !this.intern;
         this.setting.tableName = this.tableName;
         this.setting.filter = !this.session && !this.room  && !this.instructor && !this.intern;
-        this.setting.addRow = this.isAdmin || this.isUser;
+        this.setting.addRow = (this.isAdmin || this.isUser) && !this.intern && !this.instructor && !this.session && !this.room;
         this.setting.cols = [
             {columnDef: 'name', header: 'weekday.placeholder.name', type: 'day', cell: (row: any) => `${this.translate.instant('weekday.placeholder.' + row.name)}`},
             {columnDef: 'time', header: 'weekday.placeholder.time', type: 'text', cell: (row: any) => `${row.time}`},

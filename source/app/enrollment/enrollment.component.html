@@ -1,4 +1,4 @@
-<h2>{{'enrollment.title'| translate}}</h2>
+<h2>{{'enrollment.title'| translate}} - {{data?.paging?.totalCount}}</h2>
 <mat-divider></mat-divider>
 <mat-card>
   <app-loader *ngIf="block" [color]="color" [mode]="mode" [value]="value" [diameter]="48">

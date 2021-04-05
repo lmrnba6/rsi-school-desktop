@@ -586,6 +586,8 @@
     "salary": "Salaire"
   },
   "messages": {
+    "quit_exam_message": "Voulez-vous vraiment quitter l'examen?",
+    "exam_done_message": "Merci, L'examen est terminé",
     "payment_grater_than_charge": "Le montant du paiement est supérieur au montant de la charge",
     "add_to_register_message": "Souhaitez-vous ajouter cette transaction à la caisse?",
     "unable_delete_relation": "Impossible de supprimer cette ligne car des informations y sont liées",

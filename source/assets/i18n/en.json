@@ -578,6 +578,8 @@
     "salary": "Salary"
   },
   "messages": {
+    "quit_exam_message": "Do you really want to leave this exam?",
+    "exam_done_message": "Thank you, The exam is finished",
     "payment_grater_than_charge": "The payment amount is greater than the charge amount",
     "add_to_register_message": "Would you like to add this transaction to the register?",
     "unable_delete_relation": "Cannot delete this line because it has information linked to it",

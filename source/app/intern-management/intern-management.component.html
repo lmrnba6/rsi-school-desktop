@@ -3,7 +3,7 @@
 </app-loader>
 <h1 *ngIf="intern?.isAllowed" class="block"> <span class="glyphicon glyphicon-ban-circle"></span>{{'messages.blocked' | translate}}</h1>
 <h2>{{'intern.title' | translate}} - {{intern?.name}} - <img *ngIf="!isIntern" (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
-<mat-tab-group [ngStyle]="{'opacity': intern?.isAllowed ? '0.4' : '1'}" *ngIf="intern" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
+<mat-tab-group *ngIf="intern" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
   <mat-tab>
     <ng-template mat-tab-label>
       <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px" [src]="infoImage" alt="">
