@@ -161,6 +161,7 @@ export class TestComponent implements OnInit {
             this.block = false;
             this.currentQuestion['mark'] = mark;
             if (exit) {
+                clearInterval(this.interval);
                 this.testDone = true;
                 this.done();
             } else {

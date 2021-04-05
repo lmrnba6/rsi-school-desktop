@@ -99,7 +99,7 @@ export class QuestionnaireComponent implements OnInit {
         this.setting.cols = [
             {columnDef: 'title', header: 'questionnaire.placeholder.title', type: 'text', cell: (row: any) => `${row.title}`},
             {columnDef: 'questions', header: 'questionnaire.placeholder.number', type: 'text', cell: (row: any) => `${row.questions}`},
-            {columnDef: 'time', header: 'questionnaire.placeholder.time', type: 'text', cell: (row: any) => `${row.time} Min`},
+            {columnDef: 'timed', header: 'questionnaire.placeholder.timed', type: 'boolean', cell: (row: any) => `${row.timed}`},
             {columnDef: 'name', header: 'questionnaire.placeholder.training', type: 'text', cell: (row: any) => `${row.name || ''}`},
             {columnDef: 'settings', header: '',class: 'a10', type: 'settings', delete: false, editRow: true},
         ];

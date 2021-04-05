@@ -106,7 +106,7 @@ export class DocumentComponent implements OnInit {
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
     }
 
-    public printDiploma() {
+    public printCards() {
         const interns = this.internsToPrint.reduce((a, b, i) =>
             a + b.id + (i < this.internsToPrint.length - 1 ? ',' : ''), '');
         this.router.navigate(['/document/pv/card/0/' + interns]);

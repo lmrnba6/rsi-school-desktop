@@ -236,7 +236,7 @@ export class PvComponent implements OnInit {
             this.for = res.for;
             this.id = res.id;
             if(res.name === 'card'){
-                this.internsCard = res.interns;
+                this.internsCard = res.for;
             }
             this.title = this.pvName === 'intern' ? this.translate.instant('pv.student_list') : this.title;
             this.getIntern();

@@ -24,7 +24,7 @@ export class Settings {
     public static api: string = ''
     public static serialNumber: string = '';
     public static isDbLocalFile = false;
-    public static isCloud = true;
+    public static isCloud = false;
     public static isDbLocalServer = true;
     public static isDbWebServer = false;
     public static client: Client;
