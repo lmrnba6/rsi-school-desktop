@@ -295,13 +295,13 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.settingByDate.cols = [
             {columnDef: 'name', header: 'attendance.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`}
         ];
-        this.attendances.forEach((attendance, index) => {
+        this.attendances.forEach((attendance) => {
             this.settingByDate.cols.push(
                 {
                     columnDef: attendance.date,
                     header: new Date(Number(attendance.date)).toLocaleDateString('fr-FR'),
                     type: 'boolean',
-                    cell: (row: any) => `${row.attendances[index] ? row.attendances[index].present : 2}`
+                    cell: (row: any) => `${row.attendances.find(s => s.date === attendance.date) ? row.attendances.find(s => s.date === attendance.date).present : 2}`
                 }
             )
         });

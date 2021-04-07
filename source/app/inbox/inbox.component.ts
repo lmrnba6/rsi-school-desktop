@@ -134,8 +134,8 @@ export class InboxComponent implements OnInit, OnChanges {
         this.setting.addRow = true;
         this.setting.cols = [
             {columnDef: 'date', header: 'inbox.date', type: 'date', cell: (row: any) => `${row.date}`},
-            {columnDef: 'subject', header: 'inbox.subject', type: 'text', cell: (row: any) => `${row.subject}`},
             {columnDef: this.sent ? 'to_user': 'from_user', header: this.sent ? 'inbox.to' : 'inbox.from', type: 'text', cell: (row: any) => `${this.sent ?  row.to_user : row.from_user}`},
+            {columnDef: 'subject', header: 'inbox.subject', type: 'text', cell: (row: any) => `${row.subject}`},
             // {columnDef: 'attachments', header: 'inbox.attachments', type: 'icon', cell: (row: any) => `${row.attachments > 0 ? 'paperclip' : 'minus'}`},
             {columnDef: 'settings',class: 'a10', header: '', type: 'settings', delete: false, editRow: true}
         ];

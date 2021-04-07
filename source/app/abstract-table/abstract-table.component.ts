@@ -162,8 +162,14 @@ export class AbstractTableComponent
                     o[this.translate.instant(col.header)] = this.translate.instant('transport.placeholder.' + obj[col.columnDef]);
                     arr.push(this.translate.instant('transport.placeholder.' + obj[col.columnDef]));
                 } else if (col.type === 'boolean') {
-                    o[this.translate.instant(col.header)] = obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no');
-                    arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : arr.push(obj[col.columnDef]) === null ? '' : this.translate.instant('buttons.no'));
+                    if(this.page === 'attendance') {
+                        const present = obj['attendances']?.find(s => s.date === col.columnDef)?.present;
+                        o[this.translate.instant(col.header)] = present === 1 ? this.translate.instant('buttons.yes') : present === 2 ? this.translate.instant('attendance.placeholder.off') : this.translate.instant('buttons.no');
+                        arr.push(present === 1 ? this.translate.instant('buttons.yes') : present === 2 ? this.translate.instant('attendance.placeholder.off') : this.translate.instant('buttons.no'));
+                    } else {
+                        o[this.translate.instant(col.header)] = obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no');
+                        arr.push(obj[col.columnDef] === 1 ? this.translate.instant('buttons.yes') : arr.push(obj[col.columnDef]) === null ? '' : this.translate.instant('buttons.no'));
+                    }
                 } else if (col.type === 'day') {
                     o[this.translate.instant(col.header)] = this.translate.instant('weekday.placeholder.' + obj[col.columnDef]);
                     arr.push(this.translate.instant('weekday.placeholder.' + obj[col.columnDef]));

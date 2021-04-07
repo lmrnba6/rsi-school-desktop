@@ -18,10 +18,10 @@
                         <app-indicator [color]="'led-red-blink'"></app-indicator>
                     </p>
                 </li>
-                <li *ngIf="isCloud && connected && (isUser || isAdmin)" (click)="syncDbServer()" class="pull-left"><p>
-                    <img *ngIf="!block" (error)="fixImage($event)" style="width: 30px" [src]="cloudImage" alt="">
-                    <img *ngIf="block" (error)="fixImage($event)" style="width: 30px" [src]="cloudSync" alt="">
-                </li>
+<!--                <li *ngIf="isCloud && connected && (isUser || isAdmin)" (click)="syncDbServer()" class="pull-left"><p>-->
+<!--                    <img *ngIf="!block" (error)="fixImage($event)" style="width: 30px" [src]="cloudImage" alt="">-->
+<!--                    <img *ngIf="block" (error)="fixImage($event)" style="width: 30px" [src]="cloudSync" alt="">-->
+<!--                </li>-->
                 <li *ngIf="isCloud && connected && (isUser || isAdmin) && block" (click)="syncDbServer()" class="pull-left"><p>
                     {{value.toFixed(0)}}%
                 </li>

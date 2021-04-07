@@ -76,8 +76,8 @@ export class AttendanceFormComponent implements OnInit {
     getSessions() {
         Session.getAll().then(sessions => {
             this.sessions = sessions;
-            this.attendanceForm.controls['session_id'].patchValue(this.sessionParamId);
-            this.attendance.session_id = this.sessionParamId;
+            this.attendanceForm.controls['session_id'].patchValue(this.sessionParamId || this.attendance.session_id);
+            this.attendance.session_id = this.sessionParamId || this.attendance.session_id;
             if (this.instructorId) {
                 this.sessions = this.sessions.filter(session => session.instructor_id === this.instructorId);
                 this.onInternsChange();
@@ -228,7 +228,6 @@ export class AttendanceFormComponent implements OnInit {
      * onSave
      */
     public onSaveOrUpdate(): void {
-        this.attendance.present = this.attendance.present ? 1 : 0;
         this.attendance.date = (this.attendance.date as Date).getTime();
         let coursePromise: Promise<any>;
         if (this.isOnEdit) {

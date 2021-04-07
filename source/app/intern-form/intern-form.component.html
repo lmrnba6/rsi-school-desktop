@@ -67,7 +67,7 @@
                 <mat-label>{{'intern.placeholder.phone' | translate}}</mat-label>
                 <input name="phone" type="number" formControlName="phone" (keyup)="phoneParse()" [(ngModel)]="intern.phone" matInput
                        required>
-                <span style="top: 0; margin-right: 5px" matPrefix>+213</span>
+                <span style="top: 0; margin-right: 5px" matPrefix>0</span>
                 <mat-error *ngIf="phone.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
 <!--            <span>-->
@@ -78,7 +78,7 @@
                 <mat-label>{{'intern.placeholder.phone2' | translate}}</mat-label>
                 <input name="phone2" type="number" formControlName="phone2" (keyup)="phoneParse()" [(ngModel)]="intern.phone2" matInput
                        >
-                <span style="top: 0; margin-right: 5px" matPrefix>+213</span>
+                <span style="top: 0; margin-right: 5px" matPrefix>0</span>
                 <mat-error *ngIf="phone2.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>

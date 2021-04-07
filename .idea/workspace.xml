@@ -22,13 +22,17 @@
     <list default="true" id="c19ef8cb-63e0-4fec-928f-58a0802bf0b3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/document/document.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/document/document.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/document/document.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/document/document.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance/attendance.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance/attendance.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/inbox/inbox.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/inbox/inbox.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/instructor-form/instructor-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/app/layout/layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/layout/layout.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/model/settings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/settings.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/pv/pv.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/pv/pv.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/questionnaire/questionnaire.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/questionnaire/questionnaire.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/test/test.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/test/test.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/nav/nav.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/nav/nav.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/visitor-form/visitor-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/visitor-form/visitor-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/assets/i18n/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/fr.json" afterDir="false" />
     </list>
     <list id="be57fea4-9993-49e0-83b2-0064aa4d57ee" name="don't commit" comment="">
       <change beforePath="$PROJECT_DIR$/electron-builder.env" beforeDir="false" afterPath="$PROJECT_DIR$/electron-builder.env" afterDir="false" />
@@ -224,6 +228,7 @@
       <workItem from="1612979867997" duration="1780000" />
       <workItem from="1617580026707" duration="4244000" />
       <workItem from="1617635641402" duration="12771000" />
+      <workItem from="1617809385491" duration="12971000" />
     </task>
     <task id="LOCAL-00001" summary="v 1.0.6">
       <created>1593831790518</created>
@@ -637,10 +642,11 @@
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
     <state x="2371" y="187" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617646205407" />
-    <state x="2491" y="230" width="1049" height="788" key="find.popup" timestamp="1617649991426">
-      <screen x="1920" y="4" width="1920" height="1040" />
+    <state x="457" y="179" width="840" height="625" key="find.popup" timestamp="1617828055905">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="2491" y="230" width="1049" height="788" key="find.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617649991426" />
+    <state x="457" y="179" width="840" height="625" key="find.popup/0.0.1536.824/1920.4.1920.1040@0.0.1536.824" timestamp="1617828055905" />
+    <state x="2491" y="230" width="1049" height="788" key="find.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617822498834" />
     <state x="624" y="147" width="840" height="625" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1611197299605" />
     <state x="2543" y="229" width="672" height="678" key="search.everywhere.popup" timestamp="1611009759214">
       <screen x="1920" y="4" width="1920" height="1040" />
