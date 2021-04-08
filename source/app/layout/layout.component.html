@@ -87,29 +87,29 @@
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="documentImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.document' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.logs' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/logs">
-                    <!--                    <span class="glyphicon glyphicon-list-alt"></span>-->
-                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="errorImage" alt="">
-                    <span *ngIf="iconsShown">{{'menu.logs' | translate}}</span>
-                </a>
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.result' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/result">
                     <!--                    <span class="glyphicon glyphicon glyphicon-stats"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="resultImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.result' | translate}}</span>
                 </a>
-                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/accounting">
-<!--                    <span class="glyphicon glyphicon-equalizer"></span>-->
-                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="accountingImage" alt="">
-                    <span *ngIf="iconsShown">{{'menu.accounting' | translate}}</span>
-                </a>
+<!--                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.accounting' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="user.role === 'admin'" routerLink="/accounting">-->
+<!--&lt;!&ndash;                    <span class="glyphicon glyphicon-equalizer"></span>&ndash;&gt;-->
+<!--                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="accountingImage" alt="">-->
+<!--                    <span *ngIf="iconsShown">{{'menu.accounting' | translate}}</span>-->
+<!--                </a>-->
                 <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.settings' | translate}}"  matTooltipPosition="after" *ngIf="user.role.includes('admin') || user.role.includes('super')" class="nav_item" routerLink="/settings">
 <!--                    <span class="glyphicon glyphicon-cog"></span>-->
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="settingsImage" alt="">
                     <span *ngIf="iconsShown">{{'menu.settings' | translate}}</span>
                 </a>
+                <a routerLinkActive="active-link" mat-list-item matTooltip="{{'menu.logs' | translate}}"  matTooltipPosition="after" class="nav_item" *ngIf="!isInstructor && !isIntern && !isParent" routerLink="/logs">
+                    <!--                    <span class="glyphicon glyphicon-list-alt"></span>-->
+                    <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="errorImage" alt="">
+                    <span *ngIf="iconsShown">{{'menu.logs' | translate}}</span>
+                </a>
                 <br>
             </mat-nav-list>
-            <p style="position: absolute; top: 0">v 1.0.42</p>
+            <p style="position: absolute; top: 0">v 1.0.43</p>
         </mat-sidenav>
         <mat-sidenav-content>
             <!-- <button mat-icon-button class="btnMenu" (click)="sidenav.toggle(); openCloseNavSide()">
