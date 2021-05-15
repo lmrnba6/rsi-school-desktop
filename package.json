@@ -109,7 +109,7 @@
     "autoprefixer": "^9.2.1",
     "awesome-typescript-loader": "^5.2.0",
     "copy-webpack-plugin": "^4.5.1",
-    "electron": "^2.0.18",
+    "electron": "^9.1.0",
     "electron-builder": "^19.26.3",
     "electron-reload": "^1.2.2",
     "extract-zip": "1.6.7",
