@@ -21,8 +21,34 @@
   <component name="ChangeListManager">
     <list default="true" id="c19ef8cb-63e0-4fec-928f-58a0802bf0b3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/layout/layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/layout/layout.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/app/pv/pv.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/pv/pv.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/abstract-table/abstract-table.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance-form/attendance-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance/attendance.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance/attendance.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/attendance/attendance.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/attendance/attendance.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/document/document.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/document/document.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/document/document.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/document/document.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/enrollment-form/enrollment-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam-form/exam-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/exam/exam.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam/exam.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/exam/exam.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/exam/exam.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/inbox-form/inbox-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-form/intern-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/intern-management/intern-management.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/intern-management/intern-management.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/model/session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/model/session.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-form/payment-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/payment-instructor-form/payment-instructor-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/questionnaire-form/questionnaire-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/questionnaire-form/questionnaire-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/questionnaire-form/questionnaire-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/questionnaire-form/questionnaire-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/session-form/session-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/session-form/session-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/session-form/session-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/session-form/session-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/session-management/session-management.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/session-management/session-management.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/user-form/user-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/user-form/user-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/weekday-form/weekday-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/weekday-form/weekday-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/app/weekday-form/weekday-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/source/app/weekday-form/weekday-form.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/assets/i18n/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/assets/i18n/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/source/assets/i18n/fr.json" afterDir="false" />
     </list>
@@ -58,7 +84,7 @@
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sauvini/sauvini-web" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="C:\Users\Riadh\Desktop\Workspace\school\node_modules\tslint" />
@@ -69,19 +95,19 @@
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\images" />
-      <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass\nova-light" />
-      <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass" />
-      <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass\primeng\primeicons" />
-      <recent name="C:\Users\Riadh\Desktop\Workspace\school\src\assets\data" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\workspace\rsi\rsi-school-desktop\source\app" />
       <recent name="C:\workspace\rsi\rsi-school-desktop\source\app\model" />
       <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\images" />
       <recent name="C:\workspace\rsi\rsi-school-desktop\source\app\_services" />
       <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\data" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\workspace\rsi\rsi-school-desktop\source\assets\images" />
+      <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass\nova-light" />
+      <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass" />
+      <recent name="C:\Users\Riadh\Desktop\Workspace\education-embassy\src\assets\sass\primeng\primeicons" />
+      <recent name="C:\Users\Riadh\Desktop\Workspace\school\src\assets\data" />
     </key>
   </component>
   <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
@@ -221,14 +247,15 @@
       <workItem from="1617580026707" duration="4244000" />
       <workItem from="1617635641402" duration="12771000" />
       <workItem from="1617809385491" duration="15321000" />
-      <workItem from="1617904744476" duration="1475000" />
-    </task>
-    <task id="LOCAL-00002" summary="v 1.0.7">
-      <created>1593832874235</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1593832874235</updated>
+      <workItem from="1617904744476" duration="2211000" />
+      <workItem from="1618669153606" duration="43000" />
+      <workItem from="1620684201901" duration="6651000" />
+      <workItem from="1620721910632" duration="48000" />
+      <workItem from="1620747638311" duration="18722000" />
+      <workItem from="1620831379676" duration="17764000" />
+      <workItem from="1621003450925" duration="9563000" />
+      <workItem from="1621086079356" duration="1258000" />
+      <workItem from="1621091889600" duration="7145000" />
     </task>
     <task id="LOCAL-00003" summary="v 1.0.9">
       <created>1593834630815</created>
@@ -566,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617828150835</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="v43">
+      <created>1617906548027</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1617906548028</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -585,7 +619,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v1.0.22" />
     <MESSAGE value="v1.0.23" />
     <MESSAGE value="v1.0.24" />
     <MESSAGE value="add testing creation" />
@@ -610,42 +643,37 @@
     <MESSAGE value="v39" />
     <MESSAGE value="v40" />
     <MESSAGE value="v42" />
-    <option name="LAST_COMMIT_MESSAGE" value="v42" />
+    <MESSAGE value="v43" />
+    <option name="LAST_COMMIT_MESSAGE" value="v43" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2610" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1611180247308">
+    <state x="2411" y="4" key="CommitChangelistDialog2" timestamp="1617906545014">
       <screen x="1920" y="4" width="1920" height="1040" />
-    </state>
-    <state x="2610" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611180247308" />
-    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1617828149514">
-      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.4.1920.1040@0.0.1536.824" timestamp="1617828149514" />
-    <state x="2411" y="4" key="CommitChangelistDialog2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617646186554" />
-    <state x="2045" y="130" width="1670" height="788" key="DiffContextDialog" timestamp="1610328128918">
+    <state x="2411" y="4" key="CommitChangelistDialog2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617906545014" />
+    <state x="2012" y="96" width="1736" height="856" key="DiffContextDialog" timestamp="1621006517746">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
-    <state x="2045" y="130" width="1670" height="788" key="DiffContextDialog/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1610328128918" />
-    <state x="2606" y="215" key="FileChooserDialogImpl" timestamp="1612982280598">
+    <state x="2012" y="96" width="1736" height="856" key="DiffContextDialog/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1621006517746" />
+    <state x="2606" y="215" key="FileChooserDialogImpl" timestamp="1621092461400">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/1920.4.1920.1040@0.0.1536.824" timestamp="1611276916311" />
-    <state x="2606" y="215" key="FileChooserDialogImpl/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1612982280598" />
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1611196634061" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1617828155041">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2606" y="215" key="FileChooserDialogImpl/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1621092461400" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1621043195151" />
+    <state x="2371" y="187" key="Vcs.Push.Dialog.v2" timestamp="1617906550745">
+      <screen x="1920" y="4" width="1920" height="1040" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.4.1920.1040@0.0.1536.824" timestamp="1617828155041" />
-    <state x="2371" y="187" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617646205407" />
-    <state x="2491" y="230" width="1049" height="788" key="find.popup" timestamp="1617906011663">
+    <state x="2371" y="187" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617906550745" />
+    <state x="2300" y="149" width="1049" height="708" key="find.popup" timestamp="1621103838023">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
     <state x="457" y="179" width="840" height="625" key="find.popup/0.0.1536.824/1920.4.1920.1040@0.0.1536.824" timestamp="1617828055905" />
-    <state x="2491" y="230" width="1049" height="788" key="find.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1617906011663" />
-    <state x="624" y="147" width="840" height="625" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1611197299605" />
-    <state x="2543" y="229" width="672" height="678" key="search.everywhere.popup" timestamp="1611009759214">
+    <state x="2300" y="149" width="1049" height="708" key="find.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1621103838023" />
+    <state x="2536" y="177" width="670" height="676" key="search.everywhere.popup" timestamp="1620685221570">
       <screen x="1920" y="4" width="1920" height="1040" />
     </state>
-    <state x="2543" y="229" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1611009759214" />
+    <state x="2536" y="177" width="670" height="676" key="search.everywhere.popup/0.0.1536.824/1920.4.1920.1040@1920.4.1920.1040" timestamp="1620685221570" />
   </component>
 </project>

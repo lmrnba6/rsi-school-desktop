@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {MessagesService} from "../_services/messages.service";
 import {Instructor} from "../model/instructor";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-document',
@@ -15,7 +16,7 @@ import {Instructor} from "../model/instructor";
 export class DocumentComponent implements OnInit {
 
     session_id: number;
-    sessions = [];
+    sessions:Array<Session> = [];
     public internsToPrint: Array<Intern> = [];
     public interns: Array<Intern> = [];
     public internsFiltered: Array<Intern> = [];
@@ -48,7 +49,34 @@ export class DocumentComponent implements OnInit {
 
     ngOnInit() {
         this.getSessions();
+        this.getInstructors();
+        this.getInterns();
     }
+
+    public getInterns(): void {
+            this.block = true;
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '').then(
+                users => {
+                    this.block = false;
+                    this.internsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+    }
+
+    public getInstructors(): void {
+            this.block = true;
+            Instructor.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '','').then(
+                users => {
+                    this.block = false;
+                    this.instructorsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+    }
+
 
     fixImage(event: any) {
         if (event.target.src.includes('dist')) {
@@ -79,7 +107,7 @@ export class DocumentComponent implements OnInit {
     public internOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
-            Intern.getAllPaged(0, 5, 'name', '', event.target.value).then(
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.internsFiltered = users
@@ -94,7 +122,7 @@ export class DocumentComponent implements OnInit {
     public instructorOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
             this.block = true;
-            Instructor.getAllPaged(0, 5, 'name', '', event.target.value).then(
+            Instructor.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.instructorsFiltered = users
@@ -133,6 +161,31 @@ export class DocumentComponent implements OnInit {
         if (this.open === 'receipt') {
             this.router.navigate(['/document/pv/receipt/' + this.instructorSelected.id + '/instructor']);
         }
+    }
+
+    public displayFn2(id: number) {
+        const session: Session | undefined= this.sessions.find(s => s.id === Number(id));
+        return session ? session.name + ' - ' + session['training'] + ' - ' +
+            session['instructor'] : '';
+    }
+
+    public sessionOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.block = true;
+            Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value, true).then(
+                users => {
+                    this.block = false;
+                    this.sessions = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+    }
+
+    onSessionSelected(session) {
+        this.session_id = session;
+        this.onAttendanceForm();
     }
 
     getSessions() {

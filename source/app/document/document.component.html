@@ -9,16 +9,32 @@
                 <a mat-list-item [routerLink]="" (click)="handleOpen('attendance')">
                     <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;"
                          [src]="internImage" alt="">{{'document.intern' | translate}}</a>
-                <mat-form-field *ngIf="open === 'attendance'" appearance="outline">
-                    <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onAttendanceForm()" *ngIf="open === 'attendance'"
-                                [(ngModel)]="session_id"
-                    >
+<!--                <mat-form-field *ngIf="open === 'attendance'" appearance="outline">-->
+<!--                    <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>-->
+<!--                    <mat-select (selectionChange)="onAttendanceForm()" *ngIf="open === 'attendance'"-->
+<!--                                [(ngModel)]="session_id"-->
+<!--                    >-->
+<!--                        <mat-option *ngFor="let session of sessions" [value]="session.id">-->
+<!--                            {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}-->
+<!--                        </mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
+
+                <mat-form-field appearance="outline" *ngIf="open === 'attendance'">
+                    <mat-label>{{'exam.placeholder.session_id' | translate}}</mat-label>
+                    <input matInput [ngModel]="session_id"
+                           (keyup)="sessionOnChange($event)" matInput [matAutocomplete]="auto1"
+                           required>
+                    <span matSuffix class="glyphicon glyphicon-search"></span>
+                    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn2.bind(this)"
+                                      (optionSelected)="onSessionSelected($event.option.value)">
                         <mat-option *ngFor="let session of sessions" [value]="session.id">
-                            {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
+                            {{session.name + ' ' + session['instructor'] + ' ' + session['training']}}
                         </mat-option>
-                    </mat-select>
+                    </mat-autocomplete>
                 </mat-form-field>
+
+
             </mat-nav-list>
             <mat-nav-list>
                 <a mat-list-item [routerLink]="" (click)="handleOpen('card')">

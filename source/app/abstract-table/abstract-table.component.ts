@@ -141,6 +141,15 @@ export class AbstractTableComponent
             });
     }
 
+    handleLines(text: string) {
+        text = text || '';
+        const list = text.split('---');
+        const s = list.reduce((a,b) => {
+            a = a + `<li class="timeTable">${b}</li>`; return a
+        },'')
+        return text ? `<ul>${s}</ul>` : ''
+    }
+
     public printOrSave(type: string, title: string) {
         window['html2canvas'] = html2canvas;
         let doc = new jspdf();
@@ -173,6 +182,9 @@ export class AbstractTableComponent
                 } else if (col.type === 'day') {
                     o[this.translate.instant(col.header)] = this.translate.instant('weekday.placeholder.' + obj[col.columnDef]);
                     arr.push(this.translate.instant('weekday.placeholder.' + obj[col.columnDef]));
+                }else if (col.type === 'html') {
+                    o[this.translate.instant(col.header)] = this.handleLines(obj[col.columnDef]) || '';
+                    arr.push(this.handleLines(obj[col.columnDef]) || '');
                 } else {
                     o[this.translate.instant(col.header)] = obj[col.columnDef] || '';
                     arr.push(obj[col.columnDef] || '');

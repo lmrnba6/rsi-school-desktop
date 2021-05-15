@@ -4,7 +4,7 @@
 <h1 *ngIf="session?.closed" class="block"> <span class="glyphicon glyphicon-ban-circle"></span>{{'session.placeholder.closed' | translate}}</h1>
 <h2 *ngIf="!session_id">{{'session.title' | translate}} - {{session?.name}} - <img (error)="fixImage($event)" style="margin-right: 5px; width: 40px; cursor: pointer;" (click)="goBack()" [src]="backImage" alt=""></h2>
 <mat-tab-group *ngIf="session" (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabSelected">
-  <mat-tab *ngIf="isAdmin">
+  <mat-tab>
     <ng-template mat-tab-label>
       <img (error)="fixImage($event)" style="margin-right: 5px; width: 50px" [src]="infoImage" alt="">
       {{'session-management.information' | translate}}

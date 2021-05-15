@@ -14,6 +14,7 @@ import {Weekday} from "../model/weekday";
 import {Enrollment} from "../model/enrollment";
 import {AuthenticationService} from "../_services/authentication.service";
 import {User} from "../model/user";
+import {Settings} from "../model/settings";
 
 
 @Component({
@@ -52,6 +53,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
     public isInstructor: boolean;
     public instructorId: number;
     public user: User;
+    public addImage;
 
     constructor(
         private dialogsService: DialogsService,
@@ -63,6 +65,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        this.addImage = `${this.getPath()}dist/assets/images/addImage.png`;
         this.user = this.authService.getCurrentUser();
         this.isAdmin = this.user.role === 'admin';
         this.isUser = this.user.role === 'user';
@@ -85,6 +88,18 @@ export class AttendanceComponent implements OnInit, OnChanges {
         }
     }
 
+    getPath() {
+        const l = window.location.href.split('/');
+        const c = l.length - l.indexOf('index.html');
+        return '../'.repeat(c);
+    }
+
+    fixImage(event: any) {
+        if (event.target.src.includes('dist')) {
+            return event.target.src = event.target.src.replace('/dist', '');
+        }
+    }
+
     /**
      * getParams
      */
@@ -94,6 +109,46 @@ export class AttendanceComponent implements OnInit, OnChanges {
                 this.instructorId = Number(res.instructorId)
             }
         });
+    }
+
+    public sessionOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.block = true;
+            Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value, true).then(
+                users => {
+                    this.block = false;
+                    this.sessions = users
+                    if(this.weekday) {
+                        this.session_id = this.weekday.session_id as number;
+                        this.onByDate();
+                    }
+                    if(this.isInstructor) {
+                        Instructor.getByUser(this.user.id).then(inst => {
+                            this.instructor = inst;
+                            this.sessions = this.sessions.filter(session => session.instructor_id === inst.id);
+                        })
+                    } else {
+                        const instructorId: number = this.instructor ? this.instructor.id : this.instructorId;
+                        if (instructorId) {
+                            this.sessions = this.sessions.filter(session => session.instructor_id === instructorId);
+                        }
+                    }
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+    }
+
+    public sessionOnSelect(id: number) {
+        this.session_id = id;
+        this.onByDate();
+    }
+
+    public displayFn(id: number) {
+        const session: Session | undefined= this.sessions.find(s => s.id === Number(id));
+        return session ? session.name + ' - ' + session['training'] + ' - ' +
+            session['instructor'] : '';
     }
 
     getSessions() {
@@ -223,7 +278,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.setting.settingColumn = this.isUser || this.isAdmin;
         this.setting.tableName = this.tableName;
         this.setting.filter = this.isUser || this.isAdmin;
-        this.setting.addRow = (this.isUser || this.isAdmin) && !this.intern && !this.instructor && !this.session && !this.weekday;
+        this.setting.addRow = false;//(this.isUser || this.isAdmin) && !this.intern && !this.instructor && !this.session && !this.weekday;
         this.setting.cols = [
             {columnDef: 'date', header: 'attendance.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
             {
@@ -291,7 +346,7 @@ export class AttendanceComponent implements OnInit, OnChanges {
         this.settingByDate.settingColumn = false;
         this.settingByDate.tableName = this.tableName;
         this.settingByDate.filter = true;
-        this.settingByDate.addRow = !this.intern && !this.instructor && !this.session && !this.weekday;
+        this.settingByDate.addRow = false; //!this.intern && !this.instructor && !this.session && !this.weekday;
         this.settingByDate.cols = [
             {columnDef: 'name', header: 'attendance.placeholder.name', type: 'text', cell: (row: any) => `${row.name}`}
         ];

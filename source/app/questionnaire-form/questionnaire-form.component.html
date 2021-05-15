@@ -38,18 +38,33 @@
                                 *ngIf="description.invalid">{{'messages.field_required_error' | translate}}</mat-error>
                     </mat-form-field>
                     <br>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>{{'questionnaire.placeholder.training' | translate}}</mat-label>
-                        <mat-select formControlName="training" [(ngModel)]="questionnaire.training"
-                                    name="training" required>
-                            <mat-option [value]="null">--</mat-option>
-                            <mat-option *ngFor="let training of trainings" [value]="training.id">
-                                {{training.name | translate}}
+                        <input name="training" formControlName="training" matInput [ngModel]="questionnaire.training"
+                               (keyup)="trainingOnChange($event)" matInput [matAutocomplete]="auto"
+                               required>
+                        <span matSuffix class="glyphicon glyphicon-search"></span>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="questionnaire.training = $event.option.value" [displayWith]="displayFn.bind(this)">
+                            <mat-option *ngFor="let t of trainings" [value]="t.id">
+                                {{t?.name}}
                             </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="training.hasError('required')">{{'messages.field_required_error' | translate}}
-                        </mat-error>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="training.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
+
                     </mat-form-field>
+
+<!--                    <mat-form-field appearance="outline">-->
+<!--                        <mat-label>{{'questionnaire.placeholder.training' | translate}}</mat-label>-->
+<!--                        <mat-select formControlName="training" [(ngModel)]="questionnaire.training"-->
+<!--                                    name="training" required>-->
+<!--                            <mat-option [value]="null">&#45;&#45;</mat-option>-->
+<!--                            <mat-option *ngFor="let training of trainings" [value]="training.id">-->
+<!--                                {{training.name | translate}}-->
+<!--                            </mat-option>-->
+<!--                        </mat-select>-->
+<!--                        <mat-error *ngIf="training.hasError('required')">{{'messages.field_required_error' | translate}}-->
+<!--                        </mat-error>-->
+<!--                    </mat-form-field>-->
                     <br>
                 </div>
             </form>

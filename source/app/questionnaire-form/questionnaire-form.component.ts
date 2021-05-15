@@ -10,6 +10,7 @@ import {Question} from "../model/question";
 import {Answer} from "../model/answer";
 import {DialogsService} from "../_services/dialogs.service";
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-questionnaire-management',
@@ -62,6 +63,7 @@ export class QuestionnaireFormComponent implements OnInit {
             .then((val) => {
                 this.trainings = val;
                 this.block = false;
+                this.questionnaireForm.controls['training'].patchValue(this.questionnaire.training);
             }, () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
@@ -78,6 +80,26 @@ export class QuestionnaireFormComponent implements OnInit {
         this.getParams();
         this.getTrainings();
         this.initForm();
+    }
+
+    public displayFn(id: number) {
+        const training: Training | undefined= this.trainings.find(s => s.id === Number(id));
+        return training ? training.name : '';
+    }
+
+    public trainingOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.questionnaireForm.controls['training'].setErrors({required: true});
+            this.block = true;
+            Training.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
+                users => {
+                    this.block = false;
+                    this.trainings = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
     }
 
     deleteAnswer(id: number) {

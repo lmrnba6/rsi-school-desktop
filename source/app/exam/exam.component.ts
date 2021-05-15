@@ -70,6 +70,7 @@ export class ExamComponent implements OnInit, OnChanges {
         this.initSetting();
         this.initSettingBySession();
         this.initSettingByInterns();
+        setTimeout(() => this.tabSelected = 0, 300);
     }
 
     ngOnChanges(): void {
@@ -202,7 +203,7 @@ export class ExamComponent implements OnInit, OnChanges {
         this.settingByInterns.settingColumn = true;
         this.settingByInterns.tableName = this.tableName;
         this.settingByInterns.filter = false;
-        this.settingByInterns.addRow = !this.intern && !this.session;
+        this.settingByInterns.addRow = false;
         this.settingByInterns.paging = false;
         this.settingByInterns.cols = [
             {columnDef: 'date', header: 'exam.placeholder.date', type: 'date', cell: (row: any) => `${row.date}`},
@@ -250,7 +251,7 @@ export class ExamComponent implements OnInit, OnChanges {
             class: 'a10',
             header: '',
             type: 'settings',
-            delete: this.isAdmin,
+            delete: this.isAdmin || this.isInstructor,
             editRow: this.isAdmin || this.isInstructor
         })
     }
@@ -307,7 +308,7 @@ export class ExamComponent implements OnInit, OnChanges {
             class: 'a10',
             header: '',
             type: 'settings',
-            delete: this.isAdmin,
+            delete: this.isAdmin || this.isInstructor,
             editRow: this.intern || this.isAdmin || this.isInstructor
         })
     }
@@ -357,7 +358,7 @@ export class ExamComponent implements OnInit, OnChanges {
             class: 'a10',
             header: '',
             type: 'settings',
-            delete: this.isAdmin,
+            delete: false,
             editRow: !this.intern
         })
     }
@@ -397,11 +398,12 @@ export class ExamComponent implements OnInit, OnChanges {
                                 } else {
                                     this.getDataTable(this.pageIndex, this.pageSize, this.sortName, this.sortDirection, this.filter);
                                 }
-                                this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relation'), '', 'success');
+                                this.internOpen = false;
+                                this.messagesService.notifyMessage(this.translate.instant('messages.operation_success_message'), '', 'success');
                             },
                             () => {
                                 this.block = false;
-                                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                                this.messagesService.notifyMessage(this.translate.instant('messages.unable_delete_relation'), '', 'error');
                             }
                         );
                 }

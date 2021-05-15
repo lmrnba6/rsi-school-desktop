@@ -10,6 +10,7 @@ import {MessagesService} from "../_services/messages.service";
 import {Attachment} from "../model/attachment";
 import {Session} from "../model/session";
 import {Intern} from "../model/intern";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-inbox-form',
@@ -24,7 +25,6 @@ export class InboxFormComponent implements OnInit {
     public content: FormControl;
     public groups: FormControl;
     public to: FormControl;
-    public users: Array<any> = [];
     public usersFiltered: Array<any> = [];
     public userSelected: User;
     public block: boolean;
@@ -36,6 +36,7 @@ export class InboxFormComponent implements OnInit {
     public groupSelected: string = 'individual';
     public groupList: Array<{ value: string, viewValue: string }> = [];
     public sessions: Array<Session> = [];
+    public interns: Array<Intern> = [];
     public isInstructor: boolean;
     public isIntern: boolean;
 
@@ -54,11 +55,21 @@ export class InboxFormComponent implements OnInit {
         this.isInstructor = this.user.role === 'teacher';
         this.getParams();
         this.initGroups();
-        this.getSessions();
+        this.getOfflineData();
     }
 
-    public getSessions() {
-        Session.getAll().then(sessions => this.sessions = sessions);
+    getOfflineData() {
+        this.block = true;
+        Promise.all([Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', ''),
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '')]).then(values => {
+            this.block = false;
+            this.sessions = values[0];
+            this.interns = values[1];
+            this.usersFiltered = this.interns;
+        }, () => {
+            this.block = false;
+            this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+        });
     }
 
     public initGroups() {
@@ -76,8 +87,11 @@ export class InboxFormComponent implements OnInit {
         if (this.groupSelected !== 'individual' && this.groupSelected !== 'groups') {
             this.inboxForm.removeControl('to');
         }
-        if (this.groupSelected !== 'groups') {
-            this.users = this.sessions;
+        if (this.groupSelected === 'individual') {
+            this.usersFiltered = this.interns;
+        } else if (this.groupSelected === 'groups') {
+            this.usersFiltered = this.sessions;
+        } else {
             this.usersFiltered = [];
         }
     }
@@ -124,9 +138,10 @@ export class InboxFormComponent implements OnInit {
 
     public userOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.inboxForm.controls['to'].setErrors({required: true});
             this.block = true;
             if (this.groupSelected === 'groups') {
-                Session.getAllPaged(0, 30, 'name', '', event.target.value).then(
+                Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
                     users => {
                         this.block = false;
                         this.usersFiltered = users
@@ -135,7 +150,7 @@ export class InboxFormComponent implements OnInit {
                         this.block = false
                     });
             } else {
-                User.getAllPaged(0, 30, 'name', '', event.target.value).then(
+                User.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
                     users => {
                         this.block = false;
                         this.usersFiltered = users

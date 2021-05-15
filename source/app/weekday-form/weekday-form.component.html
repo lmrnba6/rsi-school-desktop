@@ -11,17 +11,32 @@
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-arrow-left"></span>
             </button>
+<!--            <mat-form-field appearance="outline">-->
+<!--                <mat-label>{{'weekday.placeholder.session_id' | translate}}</mat-label>-->
+<!--                <mat-select (selectionChange)="onSessionChange()" formControlName="session_id" [(ngModel)]="weekday.session_id"-->
+<!--                            name="session_id" required>-->
+<!--                    <mat-option>&#45;&#45;</mat-option>-->
+<!--                    <mat-option *ngFor="let session of sessions" [value]="session.id">-->
+<!--                        {{session.name + ' ' + session['instructor'] + ' ' + session['training'] + ' '}} {{'training.' + session['type'] | translate}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
             <mat-form-field appearance="outline">
-                <mat-label>{{'weekday.placeholder.session_id' | translate}}</mat-label>
-                <mat-select (selectionChange)="onSessionChange()" formControlName="session_id" [(ngModel)]="weekday.session_id"
-                            name="session_id" required>
-                    <mat-option>--</mat-option>
+                <mat-label>{{'enrollment.placeholder.session_id' | translate}}</mat-label>
+                <input name="session_id" formControlName="session_id" matInput [ngModel]="weekday.session_id"
+                       (keyup)="sessionOnChange($event)" matInput [matAutocomplete]="auto1"
+                       required>
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                  (optionSelected)="sessionOnSelect($event.option.value)">
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
                         {{session.name + ' ' + session['instructor'] + ' ' + session['training'] + ' '}} {{'training.' + session['type'] | translate}}
                     </mat-option>
-                </mat-select>
-                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
-                </mat-error>
+                </mat-autocomplete>
+                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
+
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">

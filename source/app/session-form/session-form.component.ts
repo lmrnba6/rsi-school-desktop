@@ -7,6 +7,7 @@ import './session-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
 import {Instructor} from "../model/instructor";
 import {Training} from "../model/training";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-session-form',
@@ -19,8 +20,8 @@ export class SessionFormComponent implements OnInit, OnChanges {
     public isOnEdit: boolean;
     public sessionForm: FormGroup;
     public name: FormControl;
-    public start: FormControl;
-    public end: FormControl;
+    // public start: FormControl;
+    // public end: FormControl;
     public limit: FormControl;
     public instructor_id: FormControl;
     public training_id: FormControl;
@@ -49,12 +50,54 @@ export class SessionFormComponent implements OnInit, OnChanges {
         }
     }
 
+    public displayFn(id: number) {
+        const training: Training | undefined= this.trainings.find(s => s.id === Number(id));
+        return training ? training.name : '';
+    }
+
+    public displayFn2(id: number) {
+        const instructor: Instructor | undefined= this.instructors.find(s => s.id === Number(id));
+        return instructor ? instructor.name : '';
+    }
+
+    public trainingOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.sessionForm.controls['training_id'].setErrors({required: true});
+            this.block = true;
+            Training.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
+                users => {
+                    this.block = false;
+                    this.trainings = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+    }
+
+    public instructorOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.sessionForm.controls['instructor_id'].setErrors({required: true});
+            this.block = true;
+            Instructor.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
+                users => {
+                    this.block = false;
+                    this.instructors = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+    }
+
     /**
      * getParams
      */
     public getParams(): void {
         if (this.session) {
             this.isOnEdit = true;
+            this.sessionForm.controls['training_id'].disable();
+            this.sessionForm.controls['instructor_id'].disable();
         } else {
             this.isOnEdit = false;
             this.session = new Session();
@@ -69,6 +112,8 @@ export class SessionFormComponent implements OnInit, OnChanges {
                 this.trainings = val[0];
                 this.instructors = val[1];
                 this.block = false;
+                this.sessionForm.controls['training_id'].patchValue(this.session.training_id);
+                this.sessionForm.controls['instructor_id'].patchValue(this.session.instructor_id);
             }, () => {
                 this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                 this.block = false;
@@ -98,15 +143,15 @@ export class SessionFormComponent implements OnInit, OnChanges {
 
     public initForm(): void {
         this.name = new FormControl(null, [Validators.required]);
-        this.start = new FormControl(null, [Validators.required]);
-        this.end = new FormControl(null, [Validators.required]);
+        // this.start = new FormControl(null, [Validators.required]);
+        // this.end = new FormControl(null, [Validators.required]);
         this.limit = new FormControl(null, [Validators.required]);
         this.instructor_id = new FormControl(null, [Validators.required]);
         this.training_id = new FormControl(null, [Validators.required]);
         this.sessionForm = this.fb.group({
             name: this.name,
-            start: this.start,
-            end: this.end,
+            // start: this.start,
+            // end: this.end,
             limit: this.limit,
             instructor_id: this.instructor_id,
             training_id: this.training_id,
@@ -134,8 +179,8 @@ export class SessionFormComponent implements OnInit, OnChanges {
      * onSave
      */
     public onSaveOrUpdate(): void {
-        this.session.start = (this.session.start as Date).getTime();
-        this.session.end = (this.session.end as Date).getTime();
+        this.session.start = new Date().getTime();
+        this.session.end = new Date().getTime();
         let internPromise: Promise<any>;
         if (this.isOnEdit) {
             internPromise = this.session.update();

@@ -10,6 +10,7 @@ import {DialogsService} from "../_services/dialogs.service";
 import {Register} from "../model/register";
 import {AuthenticationService} from "../_services/authentication.service";
 import {Charge} from "../model/charge";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-payment-form',
@@ -50,6 +51,7 @@ export class PaymentFormComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.getInterns();
         this.getParams();
     }
 
@@ -78,6 +80,18 @@ export class PaymentFormComponent implements OnInit {
         });
     }
 
+    public getInterns(): void {
+        this.block = true;
+        Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '').then(
+            users => {
+                this.block = false;
+                this.internsFiltered = users
+            }, () => {
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                this.block = false
+            });
+    }
+
     public getInternToPay(id: number, tr: number): void {
         Intern.get(id).then((val: any) => {
             this.internSelected = val;
@@ -101,8 +115,9 @@ export class PaymentFormComponent implements OnInit {
 
     public internOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.paymentForm.controls['intern'].setErrors({required: true});
             this.block = true;
-            Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.internsFiltered = users
@@ -110,7 +125,6 @@ export class PaymentFormComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-            this.internSelected = null;
         }
     }
 
@@ -198,7 +212,7 @@ export class PaymentFormComponent implements OnInit {
      * onSave
      */
     public async onSaveOrUpdate(): Promise<void> {
-        if(this.chargeSelected && Number(this.payment.amount) > Number(this.chargeSelected.amount)) {
+        if (this.chargeSelected && Number(this.payment.amount) > Number(this.chargeSelected.amount)) {
             this.messagesService.notifyMessage(this.translate.instant('messages.payment_grater_than_charge'), '', 'error');
             return;
         }

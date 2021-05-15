@@ -12,6 +12,7 @@ import {Instructor} from "../model/instructor";
 import {User} from "../model/user";
 import {Questionnaire} from "../model/questionnaire";
 import {Mark} from "../model/mark";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-exam-form',
@@ -57,7 +58,6 @@ export class ExamFormComponent implements OnInit {
                 private auth: AuthenticationService) {
     }
 
-
     fixImage(event: any) {
         if (event.target.src.includes('dist')) {
             return event.target.src = event.target.src.replace('/dist', '');
@@ -84,15 +84,31 @@ export class ExamFormComponent implements OnInit {
         })
     }
 
+    getInterns() {
+        this.block = true;
+        const promise = this.isInstructor ? Intern.getAllPagedByInstructor(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '', this.instructor.id) :
+            Intern.getAllPagedBySessions(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '', this.sessionsString);
+        promise.then(
+            users => {
+                this.block = false;
+                this.internsFiltered = users
+            }, () => {
+                this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                this.block = false
+            });
+    }
+
     private getSessions(type: string) {
         if (this.isInstructor) {
             Instructor.getByUser(Number(this.user.id)).then((ins: Instructor) => {
                 this.instructor = ins;
+                this.getInterns();
                 Session.getAllSessionsByInstructor(ins.id).then(sessions => {
                     this.sessions = sessions;
                 });
             });
         } else {
+            this.getInterns();
             if (type === 'individual' && this.internSelected) {
                 Session.getAllSessionByIntern(this.internSelected.id).then((sessions: any) => {
                     this.sessions = sessions;
@@ -127,6 +143,17 @@ export class ExamFormComponent implements OnInit {
     onSessionChange(session: number) {
         this.sessionSelected = session;
         this.getQuestionnaires();
+    }
+
+    onSessionSelected(id) {
+        this.exam.session_id = id;
+        this.onSessionChange(id);
+    }
+
+    public displayFn2(id: number) {
+        const session: Session | undefined= this.sessions.find(s => s.id === Number(id));
+        return session ? session.name + ' - ' + session['training'] + ' - ' +
+            session['instructor'] : '';
     }
 
     getQuestionnaires() {
@@ -202,9 +229,11 @@ export class ExamFormComponent implements OnInit {
 
     public internOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.examForm.controls['intern_id']?.setErrors({required: true});
+            this.sessions = [];
             this.block = true;
-            const promise = this.isInstructor ? Intern.getAllPagedByInstructor(0, 10, 'name', '',event.target.value, this.instructor.id) :
-                Intern.getAllPagedBySessions(0, 10, 'name', '', event.target.value, this.sessionsString);
+            const promise = this.isInstructor ? Intern.getAllPagedByInstructor(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '',event.target.value, this.instructor.id) :
+                Intern.getAllPagedBySessions(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value, this.sessionsString);
             promise.then(
                 users => {
                     this.block = false;
@@ -219,9 +248,27 @@ export class ExamFormComponent implements OnInit {
 
     public internOnSelect(intern: Intern): void {
         this.internSelected = intern;
+        (this.exam.session_id as any) = null
         this.getSessions(this.type);
 
     }
+
+    public sessionOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.examForm.controls['session_id'].setErrors({required: true})
+            this.block = true;
+            Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value, true).then(
+                users => {
+                    this.block = false;
+                    this.sessions = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+    }
+
+
 
 
     public initForm(type: string): void {

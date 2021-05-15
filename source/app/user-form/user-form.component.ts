@@ -7,6 +7,7 @@ import './user-form.component.scss';
 import {TranslateService} from "@ngx-translate/core";
 import {Instructor} from "../model/instructor";
 import {Intern} from "../model/intern";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-user-form',
@@ -116,17 +117,18 @@ export class UserFormComponent implements OnInit {
     }
 
     public instructorOnChange(event: any): void {
-        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {            this.block = true;
-            Instructor.getAllPaged(0, 10, 'name', '', event.target.value).then(
-                users => {
-                    this.block = false;
-                    this.instructorsFiltered = users
-                }, () => {
-                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
-                    this.block = false
-                });
-            this.instructorSelected = null;
-        }
+        if(event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.block = true;
+            this.userForm.controls['instructor'].setErrors({required: true});
+            Instructor.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
+                    users => {
+                        this.block = false;
+                        this.instructorsFiltered = users
+                    }, () => {
+                        this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                        this.block = false
+                    });
+            }
     }
 
     public instructorOnSelect(instructor: Instructor): void {
@@ -144,8 +146,9 @@ export class UserFormComponent implements OnInit {
 
     public internOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.userForm.controls['intern'].setErrors({required: true});
             this.block = true;
-            Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.internsFiltered = users
@@ -153,14 +156,43 @@ export class UserFormComponent implements OnInit {
                     this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
                     this.block = false
                 });
-            this.internSelected = null;
         }
     }
 
     public onRoleChange() {
         this.internSelected = null;
         this.instructorSelected = null;
+        if(this.user.role === 'student') {
+            this.getInterns();
+        } else if (this.user.role === 'teacher') {
+            this.getInstructors();
+        }
     }
+
+    public getInstructors(): void {
+            this.block = true;
+            Instructor.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '').then(
+                users => {
+                    this.block = false;
+                    this.instructorsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+    }
+
+    public getInterns(): void {
+            this.block = true;
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '').then(
+                users => {
+                    this.block = false;
+                    this.internsFiltered = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+    }
+
 
     public internOnSelect(intern: Intern): void {
         this.internSelected = intern;

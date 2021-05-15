@@ -1,7 +1,7 @@
 {
   "name": "Rsi-school",
   "productName": "Rsi-school",
-  "version": "1.0.43",
+  "version": "1.0.44",
   "description": "School management software",
   "author": "rsi-technologies",
   "main": "index.js",

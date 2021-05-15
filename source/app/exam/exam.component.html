@@ -29,7 +29,7 @@
               {{sessionSelected?.session}} {{sessionSelected ? sessionSelected.interns : 0}} {{'exam.placeholder.interns' | translate}}
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <app-abstract-table [page]="'exam-intern'"  [setting]="settingByInterns" [data]="dataByInterns" (editRow)="onEditRow($event)"></app-abstract-table>
+          <app-abstract-table [page]="'exam-intern'"  [setting]="settingByInterns" [data]="dataByInterns" (editRow)="onEditRow($event)" (deleteRow)="onRowDeleted($event)"></app-abstract-table>
         </mat-expansion-panel>
       </div>
     </div>

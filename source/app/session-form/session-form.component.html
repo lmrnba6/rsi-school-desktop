@@ -26,54 +26,82 @@
                 <mat-error *ngIf="limit.invalid">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
             <br>
-            <mat-form-field appearance="outline">
+<!--            <mat-form-field appearance="outline">-->
+<!--                <mat-label>{{'session.placeholder.training_id' | translate}}</mat-label>-->
+<!--                <mat-select formControlName="training_id" [(ngModel)]="session.training_id"-->
+<!--                            name="training_id" required>-->
+<!--                    <mat-option>&#45;&#45;</mat-option>-->
+<!--                    <mat-option *ngFor="let training of trainings" [value]="training.id">-->
+<!--                        {{training.name | translate}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="training_id.hasError('required')">{{'messages.field_required_error' | translate}}-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <br>-->
+<!--            <mat-form-field appearance="outline">-->
+<!--                <mat-label>{{'session.placeholder.instructor_id' | translate}}</mat-label>-->
+<!--                <mat-select formControlName="instructor_id" [(ngModel)]="session.instructor_id"-->
+<!--                            name="instructor_id" required>-->
+<!--                    <mat-option>&#45;&#45;</mat-option>-->
+<!--                    <mat-option *ngFor="let instructor of instructors" [value]="instructor.id">-->
+<!--                        {{instructor.name | translate}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="instructor_id.hasError('required')">{{'messages.field_required_error' | translate}}-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <br>-->
+            <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{'session.placeholder.training_id' | translate}}</mat-label>
-                <mat-select formControlName="training_id" [(ngModel)]="session.training_id"
-                            name="training_id" required>
-                    <mat-option>--</mat-option>
-                    <mat-option *ngFor="let training of trainings" [value]="training.id">
-                        {{training.name | translate}}
+                <input name="training_id" formControlName="training_id" matInput [ngModel]="session.training_id"
+                       (keyup)="trainingOnChange($event)" matInput [matAutocomplete]="auto"
+                       required>
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="session.training_id = $event.option.value" [displayWith]="displayFn.bind(this)">
+                    <mat-option *ngFor="let t of trainings" [value]="t.id">
+                        {{t?.name}}
                     </mat-option>
-                </mat-select>
-                <mat-error *ngIf="training_id.hasError('required')">{{'messages.field_required_error' | translate}}
-                </mat-error>
+                </mat-autocomplete>
+                <mat-error *ngIf="training_id.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
+
             </mat-form-field>
             <br>
             <mat-form-field appearance="outline">
                 <mat-label>{{'session.placeholder.instructor_id' | translate}}</mat-label>
-                <mat-select formControlName="instructor_id" [(ngModel)]="session.instructor_id"
-                            name="instructor_id" required>
-                    <mat-option>--</mat-option>
+                <input name="instructor_id" formControlName="instructor_id" matInput [ngModel]="session.instructor_id"
+                       (keyup)="instructorOnChange($event)" matInput [matAutocomplete]="auto1"
+                       required>
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="session.instructor_id = $event.option.value" [displayWith]="displayFn2.bind(this)">
                     <mat-option *ngFor="let instructor of instructors" [value]="instructor.id">
-                        {{instructor.name | translate}}
+                        {{instructor.name}}
                     </mat-option>
-                </mat-select>
-                <mat-error *ngIf="instructor_id.hasError('required')">{{'messages.field_required_error' | translate}}
-                </mat-error>
+                </mat-autocomplete>
+                <mat-error *ngIf="instructor_id.hasError('required')">{{'messages.field_required_error' | translate}}</mat-error>
             </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'session.placeholder.start' | translate}}</mat-label>
-                <input name="start" formControlName="start" [(ngModel)]="session.start" matInput
-                       required [matDatepicker]="picker2">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker2></mat-datepicker>
-                <mat-error *ngIf="start.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="outline">
-                <mat-label>{{'session.placeholder.end' | translate}}</mat-label>
-                <input name="end" formControlName="end" [min]="session.start" [(ngModel)]="session.end" matInput
-                       placeholder="{{'session.placeholder.end' | translate}}" required [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker></mat-datepicker>
-                <mat-error *ngIf="end.invalid">{{'messages.field_required_error' | translate}}</mat-error>
-            </mat-form-field>
-            <br>
+<!--            <mat-form-field appearance="outline">-->
+<!--                <mat-label>{{'session.placeholder.start' | translate}}</mat-label>-->
+<!--                <input name="start" formControlName="start" [(ngModel)]="session.start" matInput-->
+<!--                       required [matDatepicker]="picker2">-->
+<!--                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>-->
+<!--                <mat-datepicker touchUi #picker2></mat-datepicker>-->
+<!--                <mat-error *ngIf="start.invalid">{{'messages.field_required_error' | translate}}</mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <br>-->
+<!--            <mat-form-field appearance="outline">-->
+<!--                <mat-label>{{'session.placeholder.end' | translate}}</mat-label>-->
+<!--                <input name="end" formControlName="end" [min]="session.start" [(ngModel)]="session.end" matInput-->
+<!--                       placeholder="{{'session.placeholder.end' | translate}}" required [matDatepicker]="picker">-->
+<!--                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--                <mat-datepicker touchUi #picker></mat-datepicker>-->
+<!--                <mat-error *ngIf="end.invalid">{{'messages.field_required_error' | translate}}</mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <br>-->
         </div>
     </form>
     <br>
     <div class="container">
-    <mat-checkbox style="font-size: 1.5rem" [(ngModel)]="session.closed">{{'session.placeholder.closed' | translate}}</mat-checkbox>
+    <mat-checkbox *ngIf="isOnEdit" style="font-size: 1.5rem" [(ngModel)]="session.closed">{{'session.placeholder.closed' | translate}}</mat-checkbox>
     </div>
 </mat-card>

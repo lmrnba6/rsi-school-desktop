@@ -341,7 +341,7 @@
     "title": "Formation",
     "placeholder": {
       "seance": "Par séance",
-      "total": "Total",
+      "total": "Totalité",
       "seance_number": "Nombre de séance par payment",
       "instructor_fees": "Paie de l'ensignant par séance",
       "payment_type": "Fréquence de paiement",

@@ -5,24 +5,39 @@
     </app-loader>
     <form [formGroup]="attendanceForm">
         <div class="container">
-            <button [disabled]="attendanceForm.invalid && interns.length > 0" class="pull-right save" (click)="onSave()" type="button" mat-button>
+            <button [disabled]="attendanceForm.invalid || interns.length === 0" class="pull-right save" (click)="onSave()" type="button" mat-button>
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
             <button class="pull-right cancel" type="button" (click)="onCancel()" mat-button>
                 <span class="glyphicon glyphicon-arrow-left"></span>
             </button>
+<!--            <mat-form-field appearance="outline">-->
+<!--                <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>-->
+<!--                <mat-select [(ngModel)]="attendance.session_id" (selectionChange)="onInternsChange()" formControlName="session_id"-->
+<!--                            name="session_id" required [disabled]="isOnEdit">-->
+<!--                    <mat-option>&#45;&#45;</mat-option>-->
+<!--                    <mat-option *ngFor="let session of sessions" [value]="session.id">-->
+<!--                        {{session.name + ' ' + session?.instructor + ' ' + session?.training + ' '}}-->
+<!--                    </mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+
             <mat-form-field appearance="outline">
                 <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
-                <mat-select [(ngModel)]="attendance.session_id" (selectionChange)="onInternsChange()" formControlName="session_id"
-                            name="session_id" required [disabled]="isOnEdit">
-                    <mat-option>--</mat-option>
+                <input formControlName="session_id" name="session_id" matInput [ngModel]="attendance.session_id"
+                       (keyup)="sessionOnChange($event)" matInput [matAutocomplete]="auto1"
+                       required [disabled]="isOnEdit">
+                <span matSuffix class="glyphicon glyphicon-search"></span>
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                                  (optionSelected)="sessionOnSelect($event.option.value)">
                     <mat-option *ngFor="let session of sessions" [value]="session.id">
-                        {{session.name + ' ' + session?.instructor + ' ' + session?.training + ' '}} {{'training.' + session?.type | translate}}
+                        {{session.name + ' ' + session.instructor + ' ' + session.training}}
                     </mat-option>
-                </mat-select>
-                <mat-error *ngIf="session_id.hasError('required')">{{'messages.field_required_error' | translate}}
-                </mat-error>
+                </mat-autocomplete>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>{{'attendance.placeholder.day_id' | translate}}</mat-label>
                 <mat-select (selectionChange)="onDaysChange()" formControlName="day_id" [(ngModel)]="day"

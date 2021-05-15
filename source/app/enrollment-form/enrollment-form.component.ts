@@ -9,6 +9,7 @@ import {Session} from "../model/session";
 import {Intern} from "../model/intern";
 import {DialogsService} from "../_services/dialogs.service";
 import {Charge} from "../model/charge";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-enrollment-form',
@@ -53,14 +54,16 @@ export class EnrollmentFormComponent implements OnInit {
     public ngOnInit(): void {
         this.initForm();
         this.getParams();
-        this.getSessions();
+        this.getOfflineData();
     }
 
-    getSessions() {
+    getOfflineData() {
         this.block = true;
-        Session.getAll().then(values => {
+        Promise.all([Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', ''),
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', '')]).then(values => {
             this.block = false;
-            this.sessions = values;
+            this.sessions = values[0];
+            this.internsFiltered = values[1];
         }, () => {
             this.block = false;
             this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
@@ -69,6 +72,17 @@ export class EnrollmentFormComponent implements OnInit {
 
     public displayFn(intern: Intern) {
         return intern ? intern.name : '';
+    }
+
+    public displayFn2(id: number) {
+        const session: Session | undefined= this.sessions.find(s => s.id === Number(id));
+        return session ? session.name + ' - ' + session['training'] + ' - ' +
+            session['instructor'] : '';
+    }
+
+    public sessionOnSelect(id: number) {
+        this.enrollment.session_id = id;
+        this.onSessionChange();
     }
 
     onSessionChange() {
@@ -103,9 +117,9 @@ export class EnrollmentFormComponent implements OnInit {
 
     public internOnChange(event: any): void {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
-            this.internSelected = null;
+            this.enrollmentForm.controls['intern_id'].setErrors({required: true});
             this.block = true;
-            Intern.getAllPaged(0, 10, 'name', '', event.target.value).then(
+            Intern.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value).then(
                 users => {
                     this.block = false;
                     this.internsFiltered = users
@@ -115,6 +129,21 @@ export class EnrollmentFormComponent implements OnInit {
                 });
         }
         //this.internsFiltered = this.interns.filter(interns => interns.name.toLowerCase().includes(event.toLowerCase()));
+    }
+
+    public sessionOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.enrollmentForm.controls['session_id'].setErrors({required: true});
+            this.block = true;
+            Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value, true).then(
+                users => {
+                    this.block = false;
+                    this.sessions = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
     }
 
     public internOnSelect(intern: Intern): void {

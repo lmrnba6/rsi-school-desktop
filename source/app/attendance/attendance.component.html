@@ -1,4 +1,7 @@
-<h2>{{'attendance.title'| translate}}</h2>
+<div style="display: flex">
+    <h2>{{'attendance.title'| translate}} </h2>
+    <button *ngIf="(isUser || isAdmin || (isInstructor && instructor)) && !intern && !session && !weekday" (click)="onAddRow()" class="newMessage" mat-button><span class="glyphicon glyphicon-plus"></span></button>
+</div>
 <!--<mat-accordion *ngIf="intern">-->
 <!--<mat-expansion-panel [expanded]="true">-->
 <!--<mat-expansion-panel-header>-->
@@ -17,13 +20,27 @@
 
 <div class="container">
     <br>
+<!--    <mat-form-field *ngIf="!intern && !session" appearance="outline">-->
+<!--        <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>-->
+<!--        <mat-select id="session" (selectionChange)="onByDate()" [(ngModel)]="session_id" [disabled]="weekday">-->
+<!--            <mat-option *ngFor="let session of sessions" [value]="session.id">-->
+<!--                {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}}-->
+<!--            </mat-option>-->
+<!--        </mat-select>-->
+<!--    </mat-form-field>-->
+
     <mat-form-field *ngIf="!intern && !session" appearance="outline">
         <mat-label>{{'attendance.placeholder.session_id' | translate}}</mat-label>
-        <mat-select id="session" (selectionChange)="onByDate()" [(ngModel)]="session_id" [disabled]="weekday">
+        <input name="session_id" matInput [ngModel]="session_id"
+               (keyup)="sessionOnChange($event)" matInput [matAutocomplete]="auto1"
+               required [disabled]="weekday">
+        <span matSuffix class="glyphicon glyphicon-search"></span>
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn.bind(this)"
+                          (optionSelected)="sessionOnSelect($event.option.value)">
             <mat-option *ngFor="let session of sessions" [value]="session.id">
-                {{session.name + ' ' + session.instructor + ' ' + session.training + ' '}} {{'training.' + session.type | translate}}
+                {{session.name + ' ' + session.instructor + ' ' + session.training}}
             </mat-option>
-        </mat-select>
+        </mat-autocomplete>
     </mat-form-field>
 </div>
 <mat-card *ngIf="!intern && session_id">

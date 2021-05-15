@@ -6,7 +6,7 @@
     <form [formGroup]="inboxForm">
         <div class="container">
             <button *ngIf="!isOnEdit" [disabled]="(inboxForm.invalid && userSelected)" class="pull-right save" (click)="onSave()" type="button" mat-button>
-                <span class="glyphicon glyphicon-floppy-disk"></span>
+                <span class="glyphicon glyphicon-send"></span>
             </button>
             <button *ngIf="isOnEdit && user.id !== inbox.from" [disabled]="(inboxForm.invalid && userSelected)" class="pull-right save" (click)="onReply()" type="button" mat-button>
                 <span class="glyphicon glyphicon-share-alt"></span>

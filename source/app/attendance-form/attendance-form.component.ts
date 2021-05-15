@@ -15,6 +15,7 @@ import {Payment_instructor} from "../model/paymentInstructor";
 import {ChargeInstructor} from "../model/chargeInstructor";
 import {Instructor} from "../model/instructor";
 import {Enrollment} from "../model/enrollment";
+import {Settings} from "../model/settings";
 
 @Component({
     selector: 'app-attendance-form',
@@ -80,8 +81,9 @@ export class AttendanceFormComponent implements OnInit {
             this.attendance.session_id = this.sessionParamId || this.attendance.session_id;
             if (this.instructorId) {
                 this.sessions = this.sessions.filter(session => session.instructor_id === this.instructorId);
-                this.onInternsChange();
             }
+            this.attendanceForm.controls['session_id'].patchValue(this.attendance.session_id);
+            this.onInternsChange();
         });
     }
 
@@ -94,7 +96,7 @@ export class AttendanceFormComponent implements OnInit {
             if (res.id) {
                 this.getData(res.id);
                 this.isOnEdit = true;
-            } else if (res.instructorId) {
+            } else if (Number(res.instructorId)) {
                 this.instructorId = Number(res.instructorId)
                 this.isOnEdit = false;
                 this.attendance = new Attendance();
@@ -251,6 +253,32 @@ export class AttendanceFormComponent implements OnInit {
 
     onDaysChange() {
         this.getWeekdays();
+    }
+
+    public sessionOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.attendanceForm.controls['session_id'].setErrors({required: true})
+            this.block = true;
+            Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value, true).then(
+                users => {
+                    this.block = false;
+                    this.sessions = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+    }
+
+    public sessionOnSelect(id: number) {
+        this.attendance.session_id = id;
+        this.onInternsChange();
+    }
+
+    public displayFn(id: number) {
+        const session: Session | undefined= this.sessions.find(s => s.id === Number(id));
+        return session ? session.name + ' - ' + session['training'] + ' - ' +
+            session['instructor'] : '';
     }
 
     onInternsChange() {

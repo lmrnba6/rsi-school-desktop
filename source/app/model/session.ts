@@ -171,7 +171,7 @@ export class Session {
     }
 
 
-    public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string): Promise<Session[]> {
+    public static getAllPaged(pageIndex: number, pageSize: number, sort: string, order: string, filter: string, open: boolean = false): Promise<Session[]> {
         const sql =
             `with x as (SELECT s.id, count(e.id) as interns
                                                 FROM "session" AS s 
@@ -180,9 +180,10 @@ export class Session {
                                                 INNER JOIN "training" as t ON s.training_id = t.id
                                                 group by  s.id)
 
-                                                (SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, x.interns,
+                                                (SELECT s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, x.interns, (s."limit" - interns) as availability,
                                                 i.name as instructor, t.name as training,  
-                                                STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays
+                                                STRING_AGG(w.name || ' ' || w.time || ' ' || s.name || ' ' || r.number, '---') as weekdays,
+                                                t.payment_type, t.seance_fees, instructor_fees, t.seance_number, t.training_fees, t.books_fees, t.enrollment_fees, t.type as type
                                                                                 FROM "session" AS s 
                                                 join x on x.id = s.id
                                                 LEFT JOIN weekday as w on w.session_id = s.id
@@ -193,8 +194,10 @@ export class Session {
                                                 WHERE s.name ILIKE '%${filter}%' OR                                                                        
                                                 i.name ILIKE '%${filter}%' OR                         
                                                 t.name ILIKE '%${filter}%'
+                                                ${open ? 'AND s.closed = false' : ''}
                                                 
-                            group by s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, i.name, t.name, x.interns
+                            group by s.id, s.name, s.start, s.closed, s."end", s."limit", s.instructor_id, s.training_id, i.name, t.name, x.interns,
+                            t.payment_type, t.seance_fees, instructor_fees, t.seance_number, t.training_fees, t.books_fees, t.enrollment_fees, t.type
                             ORDER BY s.${sort} ${order} LIMIT ${pageSize} OFFSET ${pageIndex})`;
         const values = {
         };

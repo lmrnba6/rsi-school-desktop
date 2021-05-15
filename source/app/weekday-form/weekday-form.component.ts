@@ -10,6 +10,7 @@ import {Room} from "../model/room";
 import {Training} from "../model/training";
 import * as  Moment from 'moment';
 import { extendMoment } from 'moment-range';
+import {Settings} from "../model/settings";
 
 const moment = extendMoment(Moment);
 
@@ -71,6 +72,7 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
     getSessions() {
         Session.getAll().then((sessions: any) => {
             this.sessions = sessions;
+            this.onSessionChange();
         });
     }
 
@@ -79,6 +81,28 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
             this.rooms = rooms;
         });
     }
+
+    public displayFn(id: number) {
+        const session: Session | undefined= this.sessions.find(s => s.id === Number(id));
+        return session ? session.name + ' - ' + session['training'] + ' - ' +
+            session['instructor'] : '';
+    }
+
+    public sessionOnChange(event: any): void {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp' && event.code !== 'NumpadEnter' && event.code !== 'Enter') {
+            this.weekdayForm.controls['session_id'].setErrors({required: true});
+            this.block = true;
+            Session.getAllPaged(0, Settings.isDbLocalServer ? Number.MAX_SAFE_INTEGER : 30, 'name', '', event.target.value, true).then(
+                users => {
+                    this.block = false;
+                    this.sessions = users
+                }, () => {
+                    this.messagesService.notifyMessage(this.translate.instant('messages.something_went_wrong_message'), '', 'error');
+                    this.block = false
+                });
+        }
+    }
+
 
     /**
      * getParams
@@ -155,6 +179,12 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
             });
     }
 
+
+    public sessionOnSelect(id: number) {
+        this.weekday.session_id = id;
+        this.onSessionChange();
+    }
+
     onSessionChange() {
         Session.get(this.weekday.session_id as number).then(session => {
             Training.get(session.training_id as number).then( training => {
@@ -162,6 +192,7 @@ export class WeekdayFormComponent implements OnInit, OnChanges {
                 //this.getTimes(this.training);
                 this.generateTime();
                 this.onChange();
+                this.weekdayForm.reset(this.weekday);
             })
         })
     }

@@ -335,7 +335,7 @@
     "title": "Formation",
     "placeholder": {
       "seance": "Per session",
-      "total": "Total",
+      "total": "Totality",
       "seance_number": "Number of sessions per payment",
       "payment_type": "Payment frequency",
       "instructor_fees": "Teacher salary per seance",
